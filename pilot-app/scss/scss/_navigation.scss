@@ -1,0 +1,532 @@
+﻿@import "_mixins.scss";
+
+.header {
+    background: $topNavLogoBackground;
+    width: 100%;
+    z-index: 10;
+    height: $menuMobileInnerHeight;
+
+    * {
+        @include defaultTransition;
+    }
+
+    picture {
+        height: 100%;
+    }
+
+    menu {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        @include clear;
+
+        .logo {
+            height: inherit;
+            display: inline-block;
+
+            a {
+                text-decoration: none;
+                height: inherit;
+                display: inherit;
+                padding: 0 0 0 10px;
+
+                img {
+                    @include verticalMiddle;
+                }
+            }
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            display: inline-block;
+            float: right;
+            padding: 25px 20px;
+            position: relative;
+            user-select: none;
+
+            .navicon {
+                background: $topNavColor;
+                display: block;
+                height: 4px;
+                position: relative;
+                @include defaultTransition;
+                width: 25px;
+
+                &:before,
+                &:after {
+                    background: $topNavColor;
+                    content: '';
+                    display: block;
+                    height: 100%;
+                    position: absolute;
+                    @include defaultTransition;
+                    width: 100%;
+                }
+
+                &:before {
+                    top: 9px;
+                }
+
+                &:after {
+                    top: -9px;
+                }
+            }
+        }
+
+        .menu-btn {
+            display: none;
+
+            &:checked ~ .menu {
+                @include defaultTransition($defaultTransition);
+                @include prefix(transform, translateY(0));
+            }
+
+            &:checked ~ .menu-icon {
+                &:not(.steps) .navicon:before,
+                &:not(.steps) .navicon:after {
+                    top: 0;
+                }
+
+                .navicon {
+                    background: transparent;
+
+                    &:before {
+                        transform: rotate(-45deg);
+                    }
+
+                    &:after {
+                        transform: rotate(45deg);
+                    }
+                }
+            }
+        }
+
+        .menu-btn:hover {
+            background: #f4f4f4;
+        }
+
+        ul.menu {
+            background: $topNavBackground;
+            color: $topNavColor;
+            clear: both;
+            margin: 0px;
+            position: absolute;
+            width: 100vw;
+            @include prefix(transform,translateX(-100%));
+            top: $menuMobileInnerHeight;
+            padding: 0 0 10px 0;
+            list-style: none;
+            overflow: hidden;
+            @include flexbox;
+            @include prefix(flex-direction, column);
+            /*MOBILE*/
+            height: calc(100vh - #{$menuMobileInnerHeight});
+            overflow-y: auto;
+            z-index: 100;
+
+            ul.sub > li,
+            > li {
+                display: block;
+                width: 100%;
+                order: 1;
+
+                a {
+                    padding: 10px 20px;
+                    text-decoration: none;
+                    display: inline-block;
+                    cursor: pointer;
+                    color: inherit;
+                }
+
+                a[href] {
+                    position: relative;
+
+                    &:after {
+                        content: '';
+                        display: block;
+                        width: 0;
+                        height: 4px;
+                        background: $primary;
+                        transition: width .3s;
+                    }
+
+                    &.active::after,
+                    &:hover::after {
+                        width: 100% !important;
+                        color: inherit;
+                    }
+
+                    &.active {
+                        border-bottom: none !important;
+                    }
+                }
+
+                &.right {
+                    order: 0 !important;
+                }
+            }
+
+            ul.sub {
+                list-style: none;
+                padding: 0 20px;
+
+                li {
+                    a {
+                        padding: 10px 20px;
+
+                        &:last-child {
+                            margin-bottom: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.channel {
+    @include defaultFont;
+    background: $channelBackground;
+    color: $channelColor !important;
+    font-weight: 400;
+    @include flexbox;
+    @include prefix(flex-wrap, wrap);
+    text-align: left;
+    padding: 20px 20px 0;
+    height: auto;
+
+    h3 {
+        width: 100%;
+        color: inherit;
+    }
+
+    picture {
+        margin-right: 20px;
+
+        img {
+            height: 100%;
+        }
+    }
+
+    div.content {
+        @include flexbox;
+        @include prefix(flex-direction, column);
+        @include prefix(flex, 1);
+
+
+        div:first-child {
+            @include prefix(flex, 1);
+        }
+    }
+}
+
+.sideNav {
+    menu {
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li.back {
+                display: none;
+            }
+        }
+    }
+}
+
+.breadcrumbs {
+    a {
+        width: auto;
+    }
+
+    .trail {
+        padding: 10px 0 0 10px;
+        display: inline;
+        margin: 0;
+
+        li {
+            list-style: none;
+            display: inline-block;
+            color: $breadcrumbsColor;
+
+            &:not(:last-child) {
+                font-weight: bold;
+
+                &:after {
+                    content: '/';
+                    padding: 0 5px;
+                    color: inherit;
+                }
+            }
+
+            a {
+                color: inherit;
+            }
+        }
+    }
+
+    + .list-details {
+        margin-top: $gutter;
+    }
+}
+
+@media (max-width:$mobileBreakpoint) {
+    .header {
+        menu {
+            ul.menu {
+                li.right {
+                    a[class^='fa-'],
+                    a[class*=' fa-'] {
+                        padding: 0;
+                        width: 100%;
+
+                        &:before {
+                            display: none;
+                        }
+
+                        .channel {
+                            background: none !important;
+                            color: inherit !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: $mobileBreakpoint) {
+    .header {
+        menu {
+            .logo {
+                display: block;
+                float: left;
+                width: $sidenavWidth;
+                text-align: center;
+
+                a {
+                    padding: 0;
+                }
+            }
+
+            .menu-icon {
+                display: none;
+            }
+
+            ul.menu {
+                clear: none;
+                max-height: none;
+                height: $menuInnerHeight;
+                width: auto;
+                top: 0;
+                position: relative;
+                padding: 0;
+                @include prefix(transform, none);
+                @include prefix(flex-direction, row);
+                @include prefix(align-items, flex-start);
+                overflow: inherit;
+
+                ul.sub {
+                    background: $topNavSubBackground;
+                    top: $menuInnerHeight;
+                    display: none;
+                    position: absolute;
+                    left: 12px;
+                    z-index: 3001;
+                    border-radius: 2px;
+                    width: 300px;
+                    @include prefix(box-shadow, 0px 0px 18px -6px #000);
+
+                    &:hover {
+                        display: block;
+                    }
+
+                    a {
+                        color: $topNavSubColor !important;
+                        padding-left: 0 !important;
+                    }
+                }
+
+                > li {
+                    @include verticalMiddle;
+                    float: left;
+                    position: relative;
+                    margin: 0;
+                    width: auto;
+                    height: 100%;
+                    order: 0 !important;
+
+                    &.right {
+                        flex: 1;
+                        text-align: right;
+                        padding: 0 20px 0 0px;
+
+                        a {
+                            /*&:before {
+                                display: block !important;
+                            }*/
+                            @include verticalMiddle;
+                            height: auto;
+
+                            &.active {
+                                background: $channelBackground;
+                                color: $channelColor;
+                                border-radius: 5px 5px 0 0;
+                            }
+                        }
+                    }
+
+                    a[href] {
+                        &:after {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                        }
+                    }
+
+                    a {
+                        padding-top: 15px;
+                        height: 100%;
+
+                        &:hover {
+                            ~ ul.sub {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .channel {
+        box-shadow: -10px 10px 14px -5px #999, /*LEFT AND BOTTOM*/
+        10px 8px 10px -5px #999; /*RIGHT AND BOTTOM*/
+        position: absolute;
+        width: 375px;
+        right: 0;
+        top: calc(100% - 1px);
+        cursor: default;
+        padding: 20px;
+
+        h3 {
+            width: 100%;
+        }
+    }
+
+    .sideNav {
+        background: $sideNavBackground;
+        display: inline-block;
+        width: 100%;
+        color: $sideNavColor;
+
+        menu {
+            padding: 0;
+
+            ul {
+                padding: 0;
+
+                li {
+                    list-style: none;
+                    position: relative;
+
+                    &.back {
+                        display: block;
+
+                        a {
+                            &:before {
+                                font-family: $fontAwesomePro;
+                                content: '\f053';
+                                position: absolute;
+                                left: 15px;
+                            }
+                        }
+                    }
+
+                    &.active {
+                        background: $sideNavActiveColor;
+                    }
+
+                    a {
+                        color: inherit !important;
+                        padding: 7px 24px 8px $sidenavLeftPadding !important;
+                        display: inline-block !important;
+
+                        &:after {
+                            content: '';
+                            display: block;
+                            width: 0;
+                            height: 1px;
+                            background: $primary;
+                            transition: width .3s;
+                            position: relative;
+                            top: -3px;
+                        }
+
+                        &:hover::after {
+                            width: 100% !important;
+                            color: inherit;
+                        }
+                    }
+
+                    ul.sub {
+                        padding: 0px !important;
+                        background: $sideNavBackground;
+
+                        li {
+                            padding-left: 20px;
+
+                            :before {
+                                font-family: $fontAwesomePro;
+                                content: "\f111";
+                                font-weight: bold;
+                                font-size: 7px;
+                                padding-right: 10px;
+                                vertical-align: middle;
+                            }
+
+                            &.active {
+                                background: $sideNavSubActiveColor !important;
+                            }
+
+                            a {
+                                padding: 3px 0 4px 0;
+                                text-transform: uppercase;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        @include clear;
+    }
+    /*override for desktop*/
+    .sideNav {
+        height: 100%;
+
+        menu {
+
+
+            ul {
+
+                li {
+                    &.back {
+                        margin-bottom: 15px;
+                    }
+
+                    ul.sub {
+                        li {
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .breadcrumbs {
+        .trail {
+        }
+    }
+}
