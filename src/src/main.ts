@@ -1,12 +1,12 @@
 import { createApp } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
+// Note we are using the Pro style here
 import {
   faChevronDown,
   faChevronLeft,
   faChevronRight,
   faFingerprint,
   faUsers,
-  faReceipt,
   faCog,
   faDonate,
   faCube,
@@ -14,11 +14,14 @@ import {
   faSortDown,
   faSortUp,
   faExchangeAlt,
-  faExclamationCircle,
+} from '@fortawesome/pro-solid-svg-icons';
+import {
+  faReceipt,
   faExclamationTriangle,
   faCheckCircle,
   faHandPaper,
-} from '@fortawesome/free-solid-svg-icons';
+  faExclamationCircle,
+} from '@fortawesome/pro-light-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import store from './store';
 import App from './App.vue';

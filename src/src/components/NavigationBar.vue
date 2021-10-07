@@ -8,7 +8,7 @@
       <NavigationMenu :items="navigationItems" />
     </div>
     <Profile/>
-    <Notification/>
+    <Notification />
   </div>
 </template>
 

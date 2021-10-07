@@ -12,7 +12,6 @@ export default createStore({
     // menu,
   },
   state: {
-    brand: '',
     site: {
       title: 'Site title - Page Title',
     },
@@ -30,8 +29,10 @@ export default createStore({
     },
     notification: {
       show: true,
-      actionText: 'Succesfully Transfered ( 3 assets - 20210811 - to VaultN',
-      actionType: 'warning',
+      hasAction: true,
+      alertText: 'Succesfully Transfered ( 3 assets - 20210811 - to VaultN',
+      actionText: 'Take action',
+      actionType: 'info',
     },
     description: '',
     menuItems: [{
@@ -109,6 +110,6 @@ export default createStore({
     openDrawer: (state) => state.drawer.open,
     profileData: (state) => state.profileData,
     brandData: (state) => state.profileData.company,
-    notification: (state) => state.notification.show,
+    notification: (state) => state.notification,
   },
 });

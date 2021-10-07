@@ -4,7 +4,7 @@
         <fa icon="sort-up" class="notification-top-icon"></fa>
         <div class="notification-bubble-content">
             <fa :icon="iconChoice"></fa> {{ notification.alertText }}
-            <button class="btn btn-notification" v-if="notification.action">
+            <button class="btn btn-notification" v-if="notification.hasAction">
               {{ notification.actionText }}
             </button>
         </div>
@@ -17,7 +17,7 @@ import { computed, defineComponent } from 'vue';
 import store from '../store/index';
 
 export default defineComponent({
-  name: 'notification Bubble',
+  name: 'Notification',
   setup() {
     const notification = computed(() => store.getters.notification);
     const iconChoice = computed(() => {
