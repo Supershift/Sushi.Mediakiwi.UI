@@ -1,0 +1,168 @@
+/**
+  Main variable document for the usage throughout the whole application
+**/
+// @font-face {
+//     font-family: 'Rajdhani Semibold';
+//     src: url('../fonts/Rajdhani-SemiBold.ttf') format('truetype');
+//     //src: url('@/assets/fonts/Rajdhani-SemiBold.woff') format('woff'), url('../../assets/fonts/Rajdhani-SemiBold.woff2') format('woff2');
+// }
+// @font-face {
+//     font-family: 'Rajdhani Regular';
+//     src: url('../fonts/Rajdhani-Regular.ttf');
+//     //src: url('../fonts/Rajdhani-Regular.woff') format('woff'), url('../fonts/Rajdhani-Regular.woff2') format('woff2');
+// }
+
+/* Element Spacing */
+$spacing-2xs: 4px;
+$spacing-xs: 8px;
+$spacing-s: 12px;
+$spacing-m: 16px;
+$spacing-l: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 40px;
+$spacing-3xl: 48px;
+
+/* Layout Spacing */
+$layout-3xs: 12px;
+$layout-2xs: 16px;
+$layout-xs: 24px;
+$layout-s: 32px;
+$layout-m: 48px;
+$layout-l: 64px;
+$layout-xl: 96px;
+$layout-xxl: 128px;
+$layout-3xl: 160px;
+
+/* Animations */
+$animation-t-200: 200ms;
+$animation-t-300: 300ms;
+$animation-t-400: 400ms;
+$animation-t-700: 700ms;
+
+$animation-progression-standard: cubic-bezier(0.5, 0, 0, 1);
+$animation-progression-easeIn: cubic-bezier(0.25, 0, 1, 1);
+$animation-progression-easeOut: cubic-bezier(0, 0, 0.25, 1);
+$animation-progression-easeInOut: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+/** 
+  Breakpoints
+**/
+
+// Breakpoint & Grid-layout
+$breakpoints: (
+    'xs': 319px,
+    's': 479px,
+    'm': 767px,
+    'l': 959px,
+    'xl': 1279px,
+    'xxl': 1439px
+);
+$grid-breakpoints: (
+    1: 'xs',
+    2: 's',
+    3: 'm',
+    4: 'l',
+    5: 'xl',
+    6: 'xxl'
+);
+$grid-layout-columns: (
+    'xs': 40px,
+    's': 67px,
+    'm': 90px,
+    'l': 136px,
+    'xl': 200px,
+    'xxl': 240px,
+);
+$grid-s: 480px;
+$grid-m: 768px;
+$grid-l: 960px;
+$grid-xl: 1280px;
+$grid-xxl: 1440px;
+
+// Gutters
+$grid-s-gutter: 16px;
+$grid-m-gutter: 16px;
+$grid-l-gutter: 24px;
+$grid-xl-gutter: 24px;
+$grid-xxl-gutter: 24px;
+
+// Alternative Gutters
+$grid-20-gutter: 20px;
+$grid-34-gutter: 34px;
+$grid-33-gutter: 33px;
+
+// Columns
+$grid-s-columns: 4;
+$grid-m-columns: 8;
+$grid-l-columns: 8;
+$grid-xl-columns: 12;
+$grid-xxl-columns: 12;
+
+/**
+  Lines & Fonts
+**/
+
+// Line Heights
+$line-height-4xl: 48px;
+$line-height-3xl: 44px;
+$line-height-2xl: 42px;
+$line-height-xxl: 32px;
+$line-height-xl: 30px;
+$line-height-l: 26px;
+$line-height-base: 24px;
+$line-height-s: 20px;
+$line-height-xs: 18px;
+$line-height-xxs: 16px;
+$line-height-2xs: 14px;
+
+// Fonts
+$font-size-xxl: 24px;
+$font-size-xl: 20px;
+$font-size-l: 18px;
+$font-size-base: 16px;
+$font-size-s: 14px;
+$font-size-xs: 12px;
+$font-size-2xs: 8px;
+
+$fontAwesome6Pro: "Font Awesome 6 Pro";
+$fontAwesomeBrands: "Font Awesome 6 Brands";
+$font-primary: 'Rajdhani', 'Arial', Sans-serif;
+$font-secundary: "Rajdhani Light",
+Arial,
+Sans-serif;
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+
+/* Colors */
+$color-percentage-80: 80;
+$color-percentage-60: 60;
+$color-percentage-40: 40;
+$color-percentage-20: 20;
+
+$color-main: #203195;
+$color-blue: #2aa1e8;
+$color-lightblue: #8cd4ff;
+$color-really-lightblue: #b5e3ff;
+$color-purple: #79119a;
+$color-drakgrey: #2f353b;
+$color-success: #3a52c9;
+$color-warning: #f1c40f;
+$color-info: #1481fe;
+$color-alert: #ff0000;
+$color-grad-success: linear-gradient(to right, #79119a, #3a52c9);
+$color-grad-warning: linear-gradient(to right, #f17a0f, #f1c40f);
+$color-grad-info: linear-gradient(to right, #29c7fd, #1481fe);
+$color-grad-alert: linear-gradient(to right, #9d1515, #ff0000);
+
+/* Hover & other colors */
+$color-hover-blue: linear-gradient(to right, #1481fe, #29c7fd);
+$color-hover-blue-invis: linear-gradient(to right, #25a6ed, #25a7ed00);
+$box-shadow: 0px 0px 10px #000; 
+$border-purple: 2px solid #203195 outset;
+$opacity-inactive: 0.5;
+
+/* MISC */
+$b-radius-4: 4px;
+$b-radius-6: 6px;
+$b-radius-circle: 50%;
+

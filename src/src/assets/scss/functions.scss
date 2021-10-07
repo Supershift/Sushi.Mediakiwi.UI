@@ -1,0 +1,33 @@
+/* Calculates the width based on the given amount of columns*/
+@function columnWidth($columns, $gridWidth, $gridGutter, $gridColumns) {
+    $calculatedGutterWith: $gridGutter * ($columns - 1);
+
+    $calculatedColumnWidth: ($gridWidth - ($gridGutter * ($gridColumns - 1))) / $gridColumns;
+    $calculatedColumnWidth: ($calculatedColumnWidth * $columns);
+
+    @return $calculatedGutterWith+$calculatedColumnWidth;
+}
+
+
+/* UNITS */
+
+@function getUnit($value) {
+    @if($value !="initial") {
+        @return str-slice($value * 0 + "", 2, -1);
+    }
+
+    @return 'nothing';
+}
+
+@function parseInt($n) {
+    @return $n / ($n * 0 + 1);
+}
+
+@function convertToRem($valueInPX, $baseFontSize: $font-size-base) {
+    @return #{($valueInPX / $baseFontSize)}rem;
+}
+
+@function convertToPX($valueInREM, $baseFontSize: $font-size-base) {
+    $value: parseInt($valueInREM) * $baseFontSize; //15px is the base size specified
+    @return round($value);
+}

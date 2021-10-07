@@ -1,0 +1,237 @@
+@import './variables.scss';
+@import './functions.scss';
+
+/// Mixin to prefix a property
+/// @author Hugo Giraudel
+/// @param {String} $property - Property name
+/// @param {*} $value - Property value
+/// usage @include vendor-prefix('box-sizing', 'border-box');
+@mixin prefix($property, $value, $important: false) {
+    @each $prefix in ('webkit', 'moz', 'ms', 'o') {
+        #{'-' + $prefix + '-' + $property}: $value;
+    }
+
+    // Output standard non-prefixed declaration
+    @if $important {
+        #{$property}: $value !important;
+    }
+
+    @else {
+        #{$property}: $value;
+    }
+}
+
+@mixin flexbox {
+    display: flex;
+    display: -moz-box;
+    display: -webkit-flexbox;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    min-height: 1px;
+    min-width: 1px;
+}
+
+@mixin container {
+    width: $grid-xxl;
+    left: 0;
+    right: 0;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none;
+    max-width: 100%;
+    padding: 0;
+}
+
+@mixin clear {
+    &:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
+
+@mixin verticalMiddle {
+    position: relative;
+    top: 50%;
+    @include prefix('transform', translateY(-50%));
+}
+
+
+@mixin buttonColor($color, $hover, $direction: toRight) {
+    background: linear-gradient(to right, $hover 50%, $color 50%);
+    background-size: 201% 100%;
+    background-position: right bottom;
+    @include prefix(transition, all .3s ease-out);
+
+    &:hover {
+        background-position: left bottom;
+    }
+}
+
+
+/* ANIMTAIONS */
+/// Apply the standard animation a property
+@mixin animation($property: all, $timing: $animation-timing-m, $progression: $animation-progression-standard) {
+    $animation: #{$property} #{$timing} #{$progression};
+    @include prefix(transition, $animation);
+}
+
+@mixin animation-standard($property: all) {
+    @include animation($property, $animation-timing-s, $animation-progression-standard)
+}
+
+
+
+@mixin font($fontSize, $lineHeight, $margin: initial, $fontFamily: $font-primary) {
+    font-family: $fontFamily;
+    margin: $margin;
+
+    $lineHeigtUnit: getUnit($lineHeight);
+
+    @if($lineHeigtUnit=='rem') {
+        @include pixel-fallback(line-height, $lineHeight);
+    }
+
+    @elseif {
+        @include rem-fallback(line-height, $lineHeight);
+    }
+
+    $fontSizeUnit: getUnit($fontSize);
+
+    @if($fontSizeUnit=='rem') {
+        @include pixel-fallback(font-size, $fontSize);
+    }
+
+    @elseif {
+        @include rem-fallback(font-size, $fontSize);
+    }
+}
+
+
+/// Mixin to include PX and REM unit to a property
+/// @param {String} $property - Property name
+/// @param {*} $value - Property value
+@mixin rem-fallback($property, $valueInPixels, $important: false) {
+    @if($valueInPixels !="initial") {
+        #{$property}: $valueInPixels !important;
+    }
+
+    @else {
+
+        // Output standard non-prefixed declaration
+        @if $important {
+            #{$property}: convertToRem($valueInPixels) !important;
+            #{$property}: $valueInPixels !important;
+        }
+
+        @else {
+            #{$property}: convertToRem($valueInPixels);
+            #{$property}: $valueInPixels;
+        }
+    }
+}
+
+/// Mixin to include PX and REM unit to a property
+/// @param {String} $property - Property name
+/// @param {*} $value - Property value
+@mixin pixel-fallback($property, $valueInREM, $important: false) {
+
+    // Output standard non-prefixed declaration
+    @if $important {
+        #{$property}: convertToPX($valueInREM) !important;
+        #{$property}: $valueInREM !important;
+    }
+
+    @else {
+        #{$property}: convertToPX($valueInREM);
+        #{$property}: $valueInREM;
+    }
+}
+
+/// Mixin to display media queries with MIN-WIDTH based on a the existing breakpoints
+/// @author Luigi Arends
+/// @param {String} $breakpoint - Property value
+/// @require $breakpoints
+@mixin media-breakpoint-up($breakpoint) {
+    // Only use existing breakpoint
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media (min-width: map-get($breakpoints, $breakpoint )) { 
+            @content;
+        }
+    }
+    // If the key doesn't exist in the map
+    @else {
+        @warn "Unfortunately, you can only use existing breakpoints and `#{$breakpoint}` doesn't exist. "
+            + "Available breakpoints are: #{map-keys($breakpoints)}.";
+    }
+}
+
+/// Mixin to display media queries with MAX-WIDTH based on a the existing breakpoints
+/// @author Luigi Arends
+/// @param {String} $breakpoint - Property value
+/// @require $breakpoints
+@mixin media-breakpoint-down($breakpoint) {
+    // Only use existing breakpoint
+    @if map-has-key($breakpoints, $breakpoint) {
+        @media (max-width: map-get($breakpoints, $breakpoint )) { 
+            @content;
+        }
+    }
+    // If the key doesn't exist in the map
+    @else {
+        @warn "Unfortunately, you can only use existing breakpoints and `#{$breakpoint}` doesn't exist. "
+            + "Available breakpoints are: #{map-keys($breakpoints)}.";
+    }
+}
+
+/// Mixin for the row of a grid system to be used in conjuction with the columns throughout the application
+/// @author Luigi Arends
+@mixin row {
+    .row {
+        @include flexbox();
+        flex-wrap: wrap;
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 0;
+        margin-top: calc(var(--bs-gutter-y) * -1);
+        margin-left: calc(var(--bs-gutter-x) * -0.5);
+        margin-right: calc(var(--bs-gutter-x) * -0.5);
+        &>* {
+            width: 100%;
+            margin-top: var(--bs-gutter-y);
+            padding-right: calc(var(--bs-gutter-x) * 0.5);
+            padding-left: calc(var(--bs-gutter-x) * 0.5);
+        }
+        @content;
+    }
+}
+
+
+/// Mixin for a generic column of a grid system to be used through the application
+/// @author Luigi Arends
+/// @param {String} $size - Property value
+/// @require $breakpoints
+@mixin col {
+    .col {
+        flex: 1 0 0%;
+        @content;
+    }
+}
+
+/// Mixin for the columns of a grid system to be used through the application
+/// @author Luigi Arends
+/// @param {String} $size - Property value
+/// @require $grid-layout-columns
+@mixin col-($size) {
+    @if map-has-key($grid-layout-columns , $size) {
+        .col-#{$size} {
+            flex: 1 0 map-get($grid-layout-columns, $size);
+            @content;
+        }
+    }
+    // If the key doesn't exist in the map
+     @else {
+        @warn "Unfortunately, you can only use existing size and `#{$size}` doesn't exist. "
+            + "Available breakpoints are: #{map-keys($breakpoints)}.";
+    }
+}

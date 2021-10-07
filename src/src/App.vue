@@ -1,26 +1,43 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<Drawer :toggler="openDrawer">
+  <template v-slot:drawer>
+      <!-- You cam place something here to display below the list, inside the drawer -->
+  </template>
+  <template v-slot:content>
+      <NavigationBar :img="''" :title="title" :profile="profile"></NavigationBar>
+      <Main/>
+  </template>
+</Drawer>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import { computed } from 'vue';
+import NavigationBar from './components/NavigationBar.vue';
+import store from './store/index';
+import Drawer from './components/Drawer.vue';
+import Main from './components/Main.vue';
 
 export default {
-  name: 'App',
+  name: 'Start',
+  setup() {
+    const imageURL = computed(() => store.profile.imageURL);
+    const title = computed(() => store.getters.title);
+    const openDrawer = computed(() => store.getters.openDrawer);
+    return {
+      imageURL,
+      title,
+      openDrawer,
+    };
+  },
   components: {
-    HelloWorld,
+    Drawer,
+    NavigationBar,
+    Main,
+  },
+  created() {
+    document.title = 'VaultN';
   },
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style scoped lang="scss"></style>
