@@ -3,8 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve --mode dev",
+    "build": "vue-cli-service build --mode dev",
+    "serve:dev": "vue-cli-service serve --mode dev",
+    "build:dev": "vue-cli-service build --mode dev",
+    "serve:preprod": "vue-cli-service serve --mode preprod",
+    "build:preprod": "vue-cli-service build --mode preprod",
+    "serve:kubernetes": "vue-cli-service serve --mode kubernetes",
+    "build:kubernetes": "vue-cli-service build --mode kubernetes",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -14,6 +20,7 @@
     "@fortawesome/pro-regular-svg-icons": "^5.15.4",
     "@fortawesome/pro-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^3.0.0-4",
+    "axios": "^0.22.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vuex": "^4.0.0-0"
