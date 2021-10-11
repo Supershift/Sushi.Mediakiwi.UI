@@ -19,7 +19,7 @@ export default createStore({
       open: false,
     },
     profileData: {
-      name: 'Luigi Arends',
+      fullName: 'Luigi Arends',
       email: 'luigi.arends@supershift.nl',
       avatar: DummyAvatar,
       company: {
@@ -28,11 +28,15 @@ export default createStore({
       },
     },
     notification: {
-      show: true,
+      show: false,
       hasAction: true,
       alertText: 'Succesfully Transfered ( 3 assets - 20210811 - to VaultN',
       actionText: 'Take action',
-      actionType: 'info',
+      actionType: 'success',
+    },
+    dialog: {
+      show: true,
+      settings: false,
     },
     description: '',
     menuItems: [{
@@ -58,7 +62,7 @@ export default createStore({
     }, {
       id: 5,
       name: 'Orders',
-      icon: 'receipt',
+      icon: ['fal', 'receipt'],
       open: false,
     }, {
       id: 6,
@@ -111,5 +115,6 @@ export default createStore({
     profileData: (state) => state.profileData,
     brandData: (state) => state.profileData.company,
     notification: (state) => state.notification,
+    dialog: (state) => state.dialog,
   },
 });

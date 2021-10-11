@@ -30,10 +30,25 @@ body {
     flex-direction: row;
 }
 .btn {
-    background-color: transparent;
+    background-color: $color-main;
     background-repeat: no-repeat;
     border: none;
     cursor: pointer;
     overflow: hidden;
     outline: none;
+    color: white;
+    padding: 15px 25px;
+    border-radius: $b-radius-6;
+    box-shadow: 0 0 10px #000;
+    &:hover {
+        background-color: $color-hover-blue !important;
+    }
+    &:active {
+        color: $color-main !important;
+        background-color: $color-hover-blue !important;
+    }
+    &:focus {
+        background-color: $color-hover-blue !important;
+        border: 2px solid $color-main outset !important;
+    }
 }

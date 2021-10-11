@@ -12,7 +12,7 @@
           <fa :icon="chevronChoice" class=" drawer-icon"></fa>
         </div>
       </div>
-      <ListMenu :items="menuItems" class="list-menu"></ListMenu>
+      <ListMenu class="list-menu"></ListMenu>
       <slot :class="customClasses" name="drawer"/><!-- Drawer opener -->
     </div>
   </transition>
@@ -49,7 +49,6 @@ export default defineComponent({
     const chevronChoice = computed(() => (!open.value ? 'chevron-right' : 'chevron-left'));
     const logoSrc = computed(() => (!open.value ? logoS : logoL));
     const logoCss = computed(() => (!open.value ? '' : 'logo-large'));
-    const menuItems = computed(() => store.getters.menuItems);
     function handletoggle() {
       open.value = !open.value;
       store.dispatch('toggleDrawer');
@@ -58,7 +57,6 @@ export default defineComponent({
       positionCss,
       collapsableCss,
       chevronChoice,
-      menuItems,
       logoSrc,
       logoCss,
       open,

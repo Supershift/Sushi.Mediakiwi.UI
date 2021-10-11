@@ -1,6 +1,6 @@
 <template>
   <ul :class="customClass">
-    <ListMenuItem v-for="item in items"
+    <ListMenuItem v-for="item in menuItems"
     :key="item.id"
     :id="item.id"
     :name="item.name"
@@ -12,6 +12,7 @@
 <script>
 import { computed, defineComponent, ref } from 'vue';
 import ListMenuItem from './ListMenuItem.vue';
+import store from '../store/index';
 
 export default defineComponent({
   components: { ListMenuItem },
@@ -24,17 +25,15 @@ export default defineComponent({
       type: String,
       required: false,
     },
-    toggler: {
-      type: Boolean,
-      required: true,
-    },
   },
   setup(props) {
     const customClass = computed(() => `${props.class} `);
+    const menuItems = computed(() => store.getters.menuItems);
     const showText = ref(props.toggler);
     return {
       customClass,
       showText,
+      menuItems,
     };
   },
 });

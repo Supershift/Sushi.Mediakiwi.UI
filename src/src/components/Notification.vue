@@ -24,22 +24,22 @@ export default defineComponent({
       let icon = '';
       switch (notification.value.actionType) {
         case 'success':
-          icon = 'check-circle';
+          icon = ['fal', 'check-circle'];
           break;
         case 'info':
-          icon = 'exclamation-circle';
+          icon = ['fal', 'exclamation-circle'];
           break;
         case 'warning':
-          icon = 'exclamation-triangle';
+          icon = ['fal', 'exclamation-triangle'];
           break;
         case 'change':
-          icon = 'exchange-alt';
+          icon = ['fal', 'exchange-alt'];
           break;
         case 'alert':
-          icon = 'hand-paper';
+          icon = ['fal', 'hand-paper'];
           break;
         default:
-          icon = 'success';
+          icon = ['fal', 'check-circle'];
           break;
       }
       return icon;
@@ -100,37 +100,39 @@ export default defineComponent({
           letter-spacing: 1.5px;
       }
     }
-    .notification-success {
-        .notification-top-icon{
-            color: $color-success;
-        }
-        .notification-bubble-content{
-            background: $color-grad-success;
-        }
-    }
-    .notification-info {
-        .notification-top-icon{
-            color: $color-info;
-        }
-        .notification-bubble-content{
-            background: $color-grad-info;
-        }
-    }
-    .notification-warning {
-        .notification-top-icon {
-            color: $color-warning;
-        }
-        .notification-bubble-content{
-            background: $color-grad-warning;
-        }
-    }
-    .notification-alert {
-        .notification-top-icon{
-            color: $color-alert;
-        }
-        .notification-bubble-content{
-            background: $color-grad-alert;
-        }
+    .notification-{
+      &success {
+          .notification-top-icon{
+              color: $color-success;
+          }
+          .notification-bubble-content{
+              background: $color-grad-success;
+          }
+      }
+      &info {
+          .notification-top-icon{
+              color: $color-info;
+          }
+          .notification-bubble-content{
+              background: $color-grad-info;
+          }
+      }
+      &warning {
+          .notification-top-icon {
+              color: $color-warning;
+          }
+          .notification-bubble-content{
+              background: $color-grad-warning;
+          }
+      }
+      &alert {
+          .notification-top-icon{
+              color: $color-alert;
+          }
+          .notification-bubble-content{
+              background: $color-grad-alert;
+          }
+      }
     }
     .btn-notification {
       border: 2px solid white;
