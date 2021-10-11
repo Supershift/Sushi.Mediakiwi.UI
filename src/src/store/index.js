@@ -1,4 +1,5 @@
 import { createStore } from 'vuex';
+import Cookies from 'js-cookies';
 // import * as profile from './modules/profile';
 // import * as menu from './modules/menu';
 // import * as navigation from './modules/navigation';
@@ -12,6 +13,7 @@ export default createStore({
     // menu,
   },
   state: {
+    isLoggedIn: false,
     site: {
       title: 'Site title - Page Title',
     },
@@ -101,10 +103,16 @@ export default createStore({
     toggleDrawer(state) {
       state.drawer.open = !state.drawer.open;
     },
+    toggleDialog(state) {
+      state.dialog.show = !state.dialog.show;
+    },
   },
   actions: {
     toggleDrawer(context) {
       context.commit('toggleDrawer');
+    },
+    toggleDialog(context) {
+      context.commit('toggleDialog');
     },
   },
   getters: {
@@ -116,5 +124,6 @@ export default createStore({
     brandData: (state) => state.profileData.company,
     notification: (state) => state.notification,
     dialog: (state) => state.dialog,
+    isLoggedIn: (state) => state.isLoggedIn && !!Cookies.get('access-token'),
   },
 });

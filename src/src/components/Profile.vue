@@ -8,7 +8,7 @@
   <img src="../assets/images/company-circle.png" class="profile-company-circle">
   <div class="profile-container">
       <div class="profile-avatar-container">
-          <div class="avatar">
+          <div class="avatar" @click="handleDialogToggle()">
             <img :src="profileData.avatar" class="avatar-image" :alt="profileData.name">
             <fa icon="sort-down" class="profile-icon"></fa>
           </div>
@@ -26,9 +26,13 @@ export default defineComponent({
   setup() {
     const profileData = computed(() => store.getters.profileData);
     const brandData = computed(() => store.getters.brandData);
+    function handleDialogToggle() {
+      store.dispatch('toggleDialog');
+    }
     return {
       profileData,
       brandData,
+      handleDialogToggle,
     };
   },
 });
