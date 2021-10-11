@@ -1,8 +1,8 @@
 import Cookies from 'js-cookies';
 import decode from 'jwt-decode';
 
-const Tokenkey = 'vue_admin_identityu_token';
-const StateKey = 'vue_admin_identityu_state';
+const Tokenkey = 'vue_admin_identity_token';
+const StateKey = 'vue_admin_identity_state';
 const TenantApplicationIdKey = 'tenant_application_id';
 
 export function getSolutionId(){
