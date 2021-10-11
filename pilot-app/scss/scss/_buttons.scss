@@ -1,0 +1,95 @@
+﻿@import "_mixins.scss";
+
+/// extendable
+%button-style {
+    -webkit-appearance: none;
+    padding: 7px 25px;
+    border: none !important;
+    outline: none !important;
+    @include prefix(box-shadow, none);
+    @include prefix(border-radius, $borderRadius);
+    @include prefix(transition, $defaultTransition);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: $fontSize;
+    font-weight: normal;
+    line-height: $fontSize;
+    text-align: center;
+}
+
+/// extendable
+%button-primary {
+    @extend %button-style;
+    background: $primary;
+    color: #fff;
+
+    &:hover {
+        background: darken($primary, 10%)
+    }
+}
+
+/// extendable
+%button-secundary {
+    @extend %button-style;
+    background: $secundary;
+    color: #fff;
+
+    &:hover {
+        background: darken($secundary, 10%)
+    }
+}
+
+/// extendable
+%button-white {
+    @extend %button-style;
+    background: #FFF;
+    border: 1px solid #bfc6ce !important;
+    color: #4e5862;
+
+    &:hover {
+        background: darken(#f4f4f4, 10%)
+    }
+}
+
+[class^='button-'], [class*=' button-'] {
+    &[class*='primary'] {
+        @extend %button-primary;
+    }
+
+    &[class*='secundary'] {
+        @extend %button-secundary;
+    }
+
+    &[class*='white'] {
+        @extend %button-white;
+    }
+
+    &[class*='fa-'] {
+        padding: 7px;
+        height: 28px;
+    }
+
+    &:not([class*='fa-']) {
+        &:empty {
+            display: none !important;
+        }
+    }
+}
+
+@media (max-width: $mobileBreakpoint) {
+    .formTable {
+        [class^='button-'], [class*=' button-'] {
+            width: 100%;
+
+            &:first-child {
+                margin-top: 5px;
+            }
+
+            + [class^='button-'],
+            + [class*=' button-'] {
+                margin-top: 10px;
+            }
+        }
+    }
+}
