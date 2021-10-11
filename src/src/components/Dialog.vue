@@ -47,7 +47,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .dialog-container {
     position: absolute;
     right: 30px;
@@ -56,7 +56,7 @@ export default defineComponent({
         position: relative;
         .dialog-top-icon {
             position: absolute;
-            right: 38px;
+            right: 30px;
             top: -5px;
             color: $color-success;
             transform: scale(1.75);
@@ -75,7 +75,7 @@ export default defineComponent({
                     margin: 0;
                     color: white;
                     font-family: $font-primary;
-                    font-size: $font-size-s;
+                    font-size: $font-size-xl;
                     font-weight: $font-weight-regular;
                 }
             }
@@ -116,7 +116,7 @@ export default defineComponent({
                 padding-bottom: 20px;
                 background: $color-grad-success;
                 border-radius: 0 0 $b-radius-6 $b-radius-6;
-                justify-content: center;
+                justify-content: end;
                 display: flex;
                 flex-direction: row;
                 a {

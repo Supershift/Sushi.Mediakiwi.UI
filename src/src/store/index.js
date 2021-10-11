@@ -42,22 +42,22 @@ export default createStore({
     menuItems: [{
       id: 1,
       name: 'Home',
-      icon: 'fingerprint',
+      icon: ['fal', 'fingerprint'],
       open: false,
     }, {
       id: 2,
       name: 'My Vault',
-      icon: 'th',
+      icon: ['fal', 'th'],
       open: false,
     }, {
       id: 3,
       name: 'Finance',
-      icon: 'donate',
+      icon: ['fal', 'donate'],
       open: false,
     }, {
       id: 4,
       name: 'My Network',
-      icon: 'users',
+      icon: ['fal', 'users'],
       open: false,
     }, {
       id: 5,
@@ -67,12 +67,12 @@ export default createStore({
     }, {
       id: 6,
       name: 'Settings',
-      icon: 'cog',
+      icon: ['fas', 'cog'],
       open: false,
     }, {
       id: 7,
       name: 'Cube',
-      icon: 'cube',
+      icon: ['fal', 'cube'],
       open: false,
     },
     ],

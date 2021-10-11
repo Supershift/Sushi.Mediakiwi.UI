@@ -38,10 +38,5 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss">
-ul {
-    padding: 0;
-    list-style-type: none;
-    margin: 0;
-}
-</style>
+
+<style scoped lang="scss"></style>
