@@ -4,7 +4,7 @@
       <!-- You cam place something here to display below the list, inside the drawer -->
   </template>
   <template v-slot:content>
-      <NavigationBar :img="''" :title="title" :profile="profile"></NavigationBar>
+      <NavigationBar />
       <Main/>
   </template>
 </Drawer>
@@ -20,12 +20,8 @@ import Main from './components/Main.vue';
 export default {
   name: 'Start',
   setup() {
-    const imageURL = computed(() => store.profile.imageURL);
-    const title = computed(() => store.getters.title);
     const openDrawer = computed(() => store.getters.openDrawer);
     return {
-      imageURL,
-      title,
       openDrawer,
     };
   },

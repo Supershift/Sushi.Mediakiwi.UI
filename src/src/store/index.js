@@ -37,7 +37,7 @@ export default createStore({
       actionType: 'success',
     },
     dialog: {
-      show: true,
+      show: false,
       settings: false,
     },
     description: '',

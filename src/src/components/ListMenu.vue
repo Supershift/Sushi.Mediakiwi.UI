@@ -17,10 +17,6 @@ import store from '../store/index';
 export default defineComponent({
   components: { ListMenuItem },
   props: {
-    items: {
-      type: Array,
-      required: true,
-    },
     class: {
       type: String,
       required: false,

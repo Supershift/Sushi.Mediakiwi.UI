@@ -2,7 +2,7 @@
 <div class="drawer-container"><!-- Sidebar -->
   <transition name="expand" mode="out-in">
     <div class="sidebar-container" :class="positionCss + collapsableCss">
-      <div class="brand-container" @click="handletoggle">
+      <div class="brand-container" @click="handleToggle">
         <img src="../assets/images/leftnav-bg-grad.png" class="topleft-nav-gradient"/>
         <div class="logo-container">
           <transition name="fade">
@@ -49,7 +49,7 @@ export default defineComponent({
     const chevronChoice = computed(() => (!open.value ? 'chevron-right' : 'chevron-left'));
     const logoSrc = computed(() => (!open.value ? logoS : logoL));
     const logoCss = computed(() => (!open.value ? '' : 'logo-large'));
-    function handletoggle() {
+    function handleToggle() {
       open.value = !open.value;
       store.dispatch('toggleDrawer');
     }
@@ -60,7 +60,7 @@ export default defineComponent({
       logoSrc,
       logoCss,
       open,
-      handletoggle,
+      handleToggle,
     };
   },
 });

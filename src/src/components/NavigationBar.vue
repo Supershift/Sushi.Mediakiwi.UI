@@ -15,7 +15,6 @@
 
 <script>
 import { computed, defineComponent } from 'vue';
-import { mapGetters } from 'vuex';
 import store from '../store/index';
 import NavigationMenu from './NavigationMenu.vue';
 import Profile from './Profile.vue';
@@ -24,11 +23,6 @@ import Dialog from './Dialog.vue';
 
 export default defineComponent({
   name: 'Navigation Bar',
-  props: {
-    title: String,
-    img: String,
-    profile: Object,
-  },
   components: {
     NavigationMenu,
     Profile,
@@ -43,7 +37,6 @@ export default defineComponent({
       siteTitle,
     };
   },
-  computed: mapGetters('profile', ['getProfile']),
 });
 </script>
 

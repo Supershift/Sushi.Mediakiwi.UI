@@ -6,9 +6,9 @@
     :alt="brandData.title">
   </div>
   <img src="../assets/images/company-circle.png" class="profile-company-circle">
-  <div class="profile-container">
+  <div class="profile-container"  @click="handleDialogToggle()">
       <div class="profile-avatar-container">
-          <div class="avatar" @click="handleDialogToggle()">
+          <div class="avatar">
             <img :src="profileData.avatar" class="avatar-image" :alt="profileData.name">
             <fa icon="sort-down" class="profile-icon"></fa>
           </div>
@@ -73,6 +73,7 @@ export default defineComponent({
     background-size: cover;
     width: 180px;
     height: 75px;
+    cursor: pointer;
     .profile-avatar-container{
         position: relative;
         display: flex;
