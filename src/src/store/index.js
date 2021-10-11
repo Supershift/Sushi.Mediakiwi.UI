@@ -124,6 +124,6 @@ export default createStore({
     brandData: (state) => state.profileData.company,
     notification: (state) => state.notification,
     dialog: (state) => state.dialog,
-    isLoggedIn: (state) => state.isLoggedIn && !!Cookies.get('access-token'),
+    isLoggedIn: (state) => !!state.isLoggedIn && !!Cookies.get('access-token'),
   },
 });
