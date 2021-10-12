@@ -13,7 +13,7 @@ export default createStore({
     // menu,
   },
   state: {
-    isLoggedIn: true,
+    isLoggedIn: false,
     site: {
       title: 'Site title - Page Title',
     },
@@ -69,12 +69,12 @@ export default createStore({
     }, {
       id: 6,
       name: 'Settings',
-      icon: ['fas', 'cog'],
+      icon: ['fal', 'cog'],
       open: false,
     }, {
       id: 7,
       name: 'Cube',
-      icon: ['fal', 'cube'],
+      icon: ['fas', 'cube'],
       open: false,
     },
     ],
@@ -98,6 +98,16 @@ export default createStore({
       name: 'Promises',
     },
     ],
+    content: {
+      login: {
+        loginCreateAccountText: 'Create an account',
+        loginForgotPasswordText: 'Forgot Password?',
+        loginPasswordPlaceholder: 'Email',
+        loginEmailPlaceholder: 'Password',
+        loginButtonText: 'Login',
+        loginHeadlineText: 'Sign in with your email',
+      },
+    },
   },
   mutations: {
     toggleDrawer(state) {
@@ -124,6 +134,7 @@ export default createStore({
     brandData: (state) => state.profileData.company,
     notification: (state) => state.notification,
     dialog: (state) => state.dialog,
+    contentLogin: (state) => state.content.login,
     isLoggedIn: (state) => state.isLoggedIn, // !!state.isLoggedIn && !!Cookies.get('access-token'),
   },
 });

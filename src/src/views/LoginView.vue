@@ -1,7 +1,7 @@
 <template>
-  <article>
+  <div class="form-container">
     <Login />
-  </article>
+  </div>
 </template>
 
 <script>
@@ -19,4 +19,12 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.form-container {
+  background: url('../assets/images/login-bg-1920x1080.png');
+  background-repeat: no-repeat;
+  background-position: 75% 50%;
+  background-size: cover;
+  height: 100vh;
+}
+</style>
