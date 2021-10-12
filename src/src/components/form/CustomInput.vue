@@ -82,7 +82,7 @@ export default defineComponent({
       let icon = '';
       switch (props.fieldIcon) {
         case 'email':
-          icon = ['fas', 'at'];
+          icon = ['fal', 'at'];
           break;
         case 'password':
           icon = ['fal', 'lock-alt'];
@@ -127,6 +127,7 @@ export default defineComponent({
 .input-container {
   position: relative;
   margin: 25px 0;
+  margin-left: -70px;
   .input-icon {
     position: absolute;
     top: 18px;
