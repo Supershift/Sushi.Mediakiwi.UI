@@ -10,13 +10,48 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import store from './store';
 import App from './App.vue';
+import router from './router';
 
 library.add(
   fas,
   fal,
 );
 
-createApp(App)
+const DEFAULT_TITLE = 'Welcome!';
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page
+    if (!store.getters.isLoggedIn) {
+      next({
+        path: '/login',
+      });
+      console.log('Please login first', store.getters.isLoggedIn);
+    } else {
+      // to.meta.title = to.params.project_name_slug;
+      next();
+    }
+    console.log('I am trying to authorize', store.getters.isLoggedIn);
+  } else if (to.matched.some((record) => record.meta.requiresVisitor)) {
+    // this route is only available to a visitor which means they should not be logged in
+    // if logged in, redirect to home page.
+    if (store.getters.isLoggedIn) {
+      next({
+        path: '/',
+      });
+    } else {
+      next();
+    }
+    console.log('I am a visitor!', store.getters.isLoggedIn);
+  }
+});
+
+router.afterEach((to, from) => {
+  document.title = `VaultN | ${to.meta.title || DEFAULT_TITLE}`;
+});
+
+createApp(App).use(router)
   .component('fa', FontAwesomeIcon)
   .use(store)
   .mount('#app');

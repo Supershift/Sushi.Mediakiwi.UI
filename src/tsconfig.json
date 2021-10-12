@@ -32,8 +32,11 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
+    "tests/**/*.tsx",
+    "src/utils/auth.js",
+    "src/utils/getConfig.js",
+    "src/store/index.js",
+    "src/router/index.js"  ],
   "exclude": [
     "node_modules"
   ]

@@ -1,5 +1,5 @@
 <template>
-<Drawer :toggler="openDrawer">
+<Drawer :toggler="openDrawer" v-if="isLoggedIn">
   <template v-slot:drawer>
       <!-- You cam place something here to display below the list, inside the drawer -->
   </template>
@@ -8,6 +8,7 @@
       <Main/>
   </template>
 </Drawer>
+<router-view v-else />
 </template>
 
 <script>
@@ -18,11 +19,13 @@ import Drawer from './components/Drawer.vue';
 import Main from './components/Main.vue';
 
 export default {
-  name: 'Start',
+  name: 'App',
   setup() {
     const openDrawer = computed(() => store.getters.openDrawer);
+    const isLoggedIn = computed(() => store.getters.isLoggedIn);
     return {
       openDrawer,
+      isLoggedIn,
     };
   },
   components: {

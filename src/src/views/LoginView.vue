@@ -9,13 +9,13 @@ import { defineComponent } from 'vue';
 import Login from '../components/Login.vue';
 
 export default defineComponent({
-    name: 'login-view',
-    components:{
-      Login,
-    },
-    setup(){
-        return {};
-    },
+  name: 'LoginView',
+  components: {
+    Login,
+  },
+  setup() {
+    return {};
+  },
 });
 </script>
 

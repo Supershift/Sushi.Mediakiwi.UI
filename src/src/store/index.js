@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import Cookies from 'js-cookies';
+// import Cookies from 'js-cookies';
 // import * as profile from './modules/profile';
 // import * as menu from './modules/menu';
 // import * as navigation from './modules/navigation';
@@ -13,7 +13,7 @@ export default createStore({
     // menu,
   },
   state: {
-    isLoggedIn: false,
+    isLoggedIn: true,
     site: {
       title: 'Site title - Page Title',
     },
@@ -124,6 +124,6 @@ export default createStore({
     brandData: (state) => state.profileData.company,
     notification: (state) => state.notification,
     dialog: (state) => state.dialog,
-    isLoggedIn: (state) => !!state.isLoggedIn && !!Cookies.get('access-token'),
+    isLoggedIn: (state) => state.isLoggedIn, // !!state.isLoggedIn && !!Cookies.get('access-token'),
   },
 });

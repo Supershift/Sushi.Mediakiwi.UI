@@ -1,7 +1,7 @@
 <template>
     <div class="content-container row">
         <div class="col main-container">
-            CONTENT
+            Content!
         </div>
     </div>
 </template>
