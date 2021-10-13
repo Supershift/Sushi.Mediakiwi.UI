@@ -23,7 +23,7 @@ export default defineComponent({
 .form-container {
   background: url('../assets/images/login-bg-1920x1080.png');
   background-repeat: no-repeat;
-  background-position: 75% 50%;
+  background-position: 70% 50%;
   background-size: cover;
   height: 100vh;
 }

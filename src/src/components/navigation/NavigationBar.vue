@@ -15,11 +15,11 @@
 
 <script>
 import { computed, defineComponent } from 'vue';
-import store from '../store/index';
+import store from '../../store/index';
 import NavigationMenu from './NavigationMenu.vue';
 import Profile from './Profile.vue';
-import Notification from './Notification.vue';
-import Dialog from './Dialog.vue';
+import Notification from '../notification/Notification.vue';
+import Dialog from '../dialog/Dialog.vue';
 
 export default defineComponent({
   name: 'Navigation Bar',

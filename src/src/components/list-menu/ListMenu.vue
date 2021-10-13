@@ -12,7 +12,7 @@
 <script>
 import { computed, defineComponent, ref } from 'vue';
 import ListMenuItem from './ListMenuItem.vue';
-import store from '../store/index';
+import store from '../../store/index';
 
 export default defineComponent({
   components: { ListMenuItem },

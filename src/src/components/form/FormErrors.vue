@@ -20,16 +20,22 @@
         </span>
     </div>
 </template>
-<script>
-import { computed, defineComponent } from 'vue';
+<script lang="ts">
+import { computed, defineComponent, PropType } from 'vue';
+import MessageModel from '../../models/MessageModel';
 
 export default defineComponent({
   name: 'FormErrors',
-  props: ['messages'],
+  props: {
+    messages: {
+      type: Object as PropType<MessageModel[]>,
+      required: true,
+    },
+  },
   setup(props) {
     const messageList = computed(() => {
       if (props.messages && props.messages.length) {
-        const msgs = props.messages.filter((message) => !message.isError);
+        const msgs = props.messages.filter((message: MessageModel) => !message.isError);
         if (msgs) {
           return props.messages.map((m) => m.message || m.isError);
         }
@@ -38,7 +44,7 @@ export default defineComponent({
     });
     const errorList = computed(() => {
       if (props.messages && props.messages.length) {
-        const errs = props.messages.filter((message) => !message.isError);
+        const errs = props.messages.filter((message: MessageModel) => !message.isError);
         if (errs) {
           return props.messages.map((m) => m.message || m.isError);
         }

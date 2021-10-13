@@ -13,7 +13,7 @@ export default createStore({
     // menu,
   },
   state: {
-    isLoggedIn: false,
+    isLoggedIn: true,
     site: {
       title: 'Site title - Page Title',
     },
@@ -30,11 +30,11 @@ export default createStore({
       },
     },
     notification: {
-      show: false,
+      show: true,
       hasAction: true,
       alertText: 'Succesfully Transfered ( 3 assets - 20210811 - to VaultN',
       actionText: 'Take action',
-      actionType: 'success',
+      actionType: 'warning',
     },
     dialog: {
       show: false,

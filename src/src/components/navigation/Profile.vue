@@ -5,7 +5,7 @@
     class="brand-image"
     :alt="brandData.title">
   </div>
-  <img src="../assets/images/company-circle.png" class="profile-company-circle">
+  <img src="../../assets/images/company-circle.png" class="profile-company-circle">
   <div class="profile-container"  @click="handleDialogToggle()">
       <div class="profile-avatar-container">
           <div class="avatar">
@@ -19,7 +19,7 @@
 
 <script>
 import { computed, defineComponent } from 'vue';
-import store from '../store/index';
+import store from '../../store/index';
 
 export default defineComponent({
   name: 'Profile',
@@ -68,7 +68,7 @@ export default defineComponent({
     top: 0;
     right: 0;
     z-index: 24;
-    background-image: url('../assets/images/user-bg.png');
+    background-image: url('../../assets/images/user-bg.png');
     background-repeat: no-repeat;
     background-size: cover;
     width: 180px;

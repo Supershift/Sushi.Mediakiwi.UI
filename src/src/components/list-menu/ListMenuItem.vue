@@ -9,7 +9,7 @@
 
 <script>
 import { computed, defineComponent } from 'vue';
-import store from '../store/index';
+import store from '../../store/index';
 
 export default defineComponent({
   name: 'List Menu Item',

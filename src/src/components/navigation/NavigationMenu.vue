@@ -44,5 +44,6 @@ export default defineComponent({
     display: flex;
     flex-direction: row;
     height: 50px;
+    margin-left: -15px;
 }
 </style>

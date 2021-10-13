@@ -1,86 +1,70 @@
 <template>
     <div :class="inputContainerClasses">
         <!-- <label v-if="returnValue(prefix)" v-html="returnValue(prefix)"></label> -->
-        <fa v-if="fieldIcon" :icon="fieldIconChoice" class="input-icon"></fa>
-        <label :for="fieldName" class="input-label">
+        <fa v-if="input.fieldIcon" :icon="fieldIconChoice" class="input-icon"></fa>
+        <label :for="input.fieldName" class="input-label">
         <input type="text"
             :value="inputText"
             @change="handleChange"
             :class="customInputClasses"
-            :name="fieldName"
+            :name="input.fieldName"
             :id="id"
-            :required="fieldRequired"
-            :placeholder="fieldPlaceholder"
-            v-bind:disabled="disabled || readOnly">
+            :required="input.fieldRequired"
+            :placeholder="input.fieldPlaceholder"
+            v-bind:disabled="input.disabled || input.readOnly">
         </label>
         <!-- <label v-if="returnValue(suffix)" v-html="returnValue(suffix)"></label> -->
     </div>
 </template>
-<script>
+<script lang="ts">
 import {
   computed,
   defineComponent,
-  onMounted,
-  ref,
+  PropType,
+  reactive,
 } from 'vue';
+import InputModel from '../../models/InputModel';
 
 export default defineComponent({
   name: 'FormInput',
   props: {
-    customClass: {
-      type: String,
-      required: false,
-    },
-    customContainerClass: {
-      type: String,
-      required: false,
-    },
-    fieldPlaceholder: {
-      type: String,
-      required: false,
-    },
-    fieldName: {
-      tpye: String,
-      required: false,
-    },
-    fieldValue: {
-      tpye: String,
-      required: false,
-    },
-    fieldIcon: {
-      type: String,
-      required: false,
-    },
-    disabled: {
-      type: Boolean,
-      required: false,
-    },
-    prefix: {
-      type: String,
-      required: false,
-    },
-    suffix: {
-      type: String,
-      required: false,
-    },
-    readOnly: {
-      type: Boolean,
-      required: false,
-    },
-    fieldRequired: {
-      type: Boolean,
-      required: false,
+    input: {
+      type: Object as PropType<InputModel>,
+      required: true,
     },
   },
   emits: ['valueChanged'],
   setup(props, context) {
-    let inputText = ref('');
-    const id = computed(() => `_ ${props.customClass}_${props.fieldName}`);
-    const inputContainerClasses = computed(() => ['input-container ', props.customContainerClass]);
-    const customInputClasses = computed(() => ['input-primary ', props.customClasses]);
+    const inputText = reactive<String>('');
+    const id = computed(() => `_${props.input.customClass}-${props.input.fieldName}`);
+    const inputContainerClasses = computed(() => {
+      let iconColor: String;
+      switch (props.input.fieldIcon) {
+        case 'email':
+          iconColor = 'normal';
+          break;
+        case 'password':
+          iconColor = 'alert';
+          break;
+        case 'warning':
+          iconColor = 'warn';
+          break;
+        case 'key':
+          iconColor = 'normal';
+          break;
+        case 'finger':
+          iconColor = 'normal';
+          break;
+        default:
+          iconColor = 'normal';
+          break;
+      }
+      return ['input-container ', iconColor];
+    });
+    const customInputClasses = computed(() => ['input-primary ', props.input.customClass]);
     const fieldIconChoice = computed(() => {
-      let icon = '';
-      switch (props.fieldIcon) {
+      let icon: any;
+      switch (props.input.fieldIcon) {
         case 'email':
           icon = ['fal', 'at'];
           break;
@@ -103,14 +87,8 @@ export default defineComponent({
       return icon;
     });
     function handleChange() {
-      console.log('TODO: Handle Click');
       context.emit('valueChanged');
     }
-    onMounted(() => {
-      if (props.fieldValue) {
-        inputText = props.fieldValue;
-      }
-    });
     return {
       id,
       inputText,

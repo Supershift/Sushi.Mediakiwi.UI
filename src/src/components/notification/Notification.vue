@@ -14,7 +14,7 @@
 
 <script>
 import { computed, defineComponent } from 'vue';
-import store from '../store/index';
+import store from '../../store/index';
 
 export default defineComponent({
   name: 'Notification',
@@ -136,14 +136,20 @@ export default defineComponent({
     }
     .btn-notification {
       border: 2px solid white;
+      box-shadow: none;
       color: white;
       font-family: $font-primary;
       font-size: $font-size-l;
       border-radius: $b-radius-6;
+      background: transparent;
       padding: 5px 15px;
       &:hover {
-        background-color: white;
-        color: $color-drakgrey;
+        background: white !important;
+        color: $color-drakgrey !important;
+      }
+      &:focus {
+        background: transparent !important;
+        color: white !important;
       }
     }
 }

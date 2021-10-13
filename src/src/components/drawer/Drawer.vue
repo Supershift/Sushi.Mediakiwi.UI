@@ -3,7 +3,7 @@
   <transition name="expand" mode="out-in">
     <div class="sidebar-container" :class="positionCss + collapsableCss">
       <div class="brand-container" @click="handleToggle">
-        <img src="../assets/images/leftnav-bg-grad.png" class="topleft-nav-gradient"/>
+        <img src="../../assets/images/leftnav-bg-grad.png" class="topleft-nav-gradient"/>
         <div class="logo-container">
           <transition name="fade">
             <img :src="logoSrc" :class="'logo-small '+ logoCss"/>
@@ -24,10 +24,10 @@
 
 <script>
 import { computed, defineComponent, ref } from 'vue';
-import store from '../store/index';
-import ListMenu from './ListMenu.vue';
-import logoS from '../assets/images/vaultN-icon.svg';
-import logoL from '../assets/images/vaultN-logo.svg';
+import store from '../../store/index';
+import ListMenu from '../list-menu/ListMenu.vue';
+import logoS from '../../assets/images/vaultN-icon.svg';
+import logoL from '../../assets/images/vaultN-logo.svg';
 
 export default defineComponent({
   name: 'Drawer',

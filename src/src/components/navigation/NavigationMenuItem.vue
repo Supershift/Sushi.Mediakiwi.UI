@@ -20,21 +20,18 @@ export default {
 
 <style scoped lang="scss">
 .navigation-link {
-    margin: 0 15px;
-    padding: 15px 0;
+    padding: 15px;
     background: white;
     cursor: pointer;
-    &:first-of-type {
-        margin-left: 0;
-    }
-    &:last-of-type {
-        margin-right: 0;
-    }
     &:hover {
         border-bottom: 4px solid #2aa1e8;
         a {
             color: $color-blue;
         }
+    }
+    &:focus-within {
+      border-style: outset;
+      border: 2px solid $color-main;
     }
     a {
         text-decoration: none;

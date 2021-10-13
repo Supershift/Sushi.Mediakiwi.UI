@@ -2,60 +2,44 @@
   <form class="login" @submit.prevent="handleLogin">
     <img src="../assets/images/vaultN-logo.svg" class="login-logo" />
     <h1>{{ contentLogin.loginHeadlineText }}</h1>
-    <CustomInput
-    :customClass="'input-password'"
-    :fieldIcon="'email'"
-    :fieldPlaceholder="'Email'"
-    :disabled="false"
-    :suffix="'*'"
-    :prefix="''"
-    :fieldName="'email'"
-    :fieldValue="''"
-    :readOnly="false"
-    :customContainerClass="'normal'" />
-    <CustomInput
-    :customClass="'input-password'"
-    :fieldIcon="'password'"
-    :fieldPlaceholder="'Password'"
-    :disabled="false"
-    :suffix="'*'"
-    :prefix="''"
-    :fieldName="'password'"
-    :fieldValue="''"
-    :readOnly="false"
-    :customContainerClass="'alert'"/>
+    <CustomInput :input="customEmailInput" @valueChanged="handleTextChanged"/>
+    <CustomInput :input="customPasswordInput" @valueChanged="handleTextChanged"/>
     <FormErrors v-if="errroMessages" :messages="errroMessages"></FormErrors>
     <a href="#/forgot" class="link">{{ contentLogin.loginForgotPasswordText }}</a>
-    <button class="btn btn-login" type="submit">{{ contentLogin.loginButtonText }}</button>
+    <CustomButton :button="customLoginButton" @buttonClicked="handleLogin"/>
+    <!-- <button class="btn btn-login" type="submit">{{ contentLogin.loginButtonText }}</button> -->
     <a href="#/reset" class="link">{{ contentLogin.loginCreateAccountText }}</a>
   </form>
 </template>
 
-<script>
+<script lang="ts">
 import {
   computed,
   defineComponent,
-  reactive,
   ref,
 } from 'vue';
 import store from '../store/index';
 import FormErrors from './form/FormErrors.vue';
 import CustomInput from './form/CustomInput.vue';
-import CustomInputModel from '../models/customInputModel';
+import CustomButton from './form/CustomButton.vue';
+import InputModel from '../models/InputModel';
+import ButtonModel from '../models/Buttonmodel';
+import MessageModel from '../models/MessageModel';
 
 export default defineComponent({
   name: 'Login',
   components: {
     FormErrors,
     CustomInput,
+    CustomButton,
   },
   setup() {
     const email = ref('');
     const password = ref('');
-    const errroMessages = ref('');
+    const errroMessages = ref<MessageModel[]>([]);
     const contentLogin = computed(() => store.getters.contentLogin);
-    const customEmailInput = reactive<CustomInputModel>({
-      customClass: 'input-password',
+    const customEmailInput = ref<InputModel>({
+      customClass: 'input-email',
       fieldIcon: 'email',
       fieldPlaceholder: 'Email',
       disabled: false,
@@ -64,10 +48,33 @@ export default defineComponent({
       fieldName: 'email',
       fieldValue: '',
       readOnly: false,
-      customContainerClass: 'normal',
+    });
+    const customPasswordInput = ref<InputModel>({
+      customClass: 'input-password',
+      fieldIcon: 'password',
+      fieldPlaceholder: 'Password',
+      disabled: false,
+      suffix: '*',
+      prefix: '',
+      fieldName: 'password',
+      fieldValue: '',
+      readOnly: false,
+    });
+    const customLoginButton = ref<ButtonModel>({
+      customClass: 'btn-login',
+      buttonIcon: '',
+      disabled: false,
+      suffix: '*',
+      prefix: '',
+      buttondName: 'login',
+      value: contentLogin.value.loginButtonText,
+      readOnly: false,
     });
     function handleLogin() {
       console.log('TODO: Fix login');
+    }
+    function handleTextChanged() {
+      console.log('TODO: Fix Text changed');
     }
     return {
       email,
@@ -75,7 +82,10 @@ export default defineComponent({
       contentLogin,
       errroMessages,
       customEmailInput,
+      customPasswordInput,
+      customLoginButton,
       handleLogin,
+      handleTextChanged,
     };
   },
 });
@@ -86,7 +96,7 @@ export default defineComponent({
   position: relative;
   width: 370px;
   margin: auto;
-  top: 50%;
+  top: 35%;
   -webkit-transform: perspective(1px) translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: perspective(1px) translateY(-50%);
@@ -108,7 +118,9 @@ export default defineComponent({
     }
   }
   .btn-login {
-    margin-bottom: 25px
+    margin-bottom: 25px;
+    width: 70%;
+    font-size: $font-size-l;
   }
   h1 {
     margin: 0;

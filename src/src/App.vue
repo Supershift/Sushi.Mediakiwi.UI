@@ -13,9 +13,9 @@
 
 <script>
 import { computed } from 'vue';
-import NavigationBar from './components/NavigationBar.vue';
+import NavigationBar from './components/navigation/NavigationBar.vue';
 import store from './store/index';
-import Drawer from './components/Drawer.vue';
+import Drawer from './components/drawer/Drawer.vue';
 import Main from './components/Main.vue';
 
 export default {
