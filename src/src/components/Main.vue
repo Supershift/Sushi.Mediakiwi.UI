@@ -1,16 +1,20 @@
 <template>
     <div class="content-container row">
         <div class="col main-container">
-            Content!
+          <CustomSelectInput />
         </div>
     </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
+import CustomSelectInput from './form/CustomSelectInput.vue';
 
 export default defineComponent({
   name: 'main-view',
+  components: {
+    CustomSelectInput,
+  },
   setup() {
     return {};
   },

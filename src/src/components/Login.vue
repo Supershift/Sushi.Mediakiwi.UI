@@ -7,7 +7,6 @@
     <FormErrors v-if="errroMessages" :messages="errroMessages"></FormErrors>
     <a href="#/forgot" class="link">{{ contentLogin.loginForgotPasswordText }}</a>
     <CustomButton :button="customLoginButton" @buttonClicked="handleLogin"/>
-    <!-- <button class="btn btn-login" type="submit">{{ contentLogin.loginButtonText }}</button> -->
     <a href="#/reset" class="link">{{ contentLogin.loginCreateAccountText }}</a>
   </form>
 </template>
@@ -72,6 +71,7 @@ export default defineComponent({
     });
     function handleLogin() {
       console.log('TODO: Fix login');
+      store.dispatch('toggleLogIn');
     }
     function handleTextChanged() {
       console.log('TODO: Fix Text changed');
@@ -96,7 +96,7 @@ export default defineComponent({
   position: relative;
   width: 370px;
   margin: auto;
-  top: 35%;
+  top: 45%;
   -webkit-transform: perspective(1px) translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: perspective(1px) translateY(-50%);

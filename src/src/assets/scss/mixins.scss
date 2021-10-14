@@ -21,23 +21,12 @@
     }
 }
 
-@mixin flexbox {
-    display: flex;
-    display: -moz-box;
-    display: -webkit-flexbox;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: -moz-flex;
-    min-height: 1px;
-    min-width: 1px;
-}
-
 @mixin container {
     width: $grid-xxl;
     left: 0;
     right: 0;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    margin-left: auto;
+    margin-right: auto;
     float: none;
     max-width: 100%;
     padding: 0;
@@ -189,7 +178,7 @@
 /// @author Luigi Arends
 @mixin row {
     .row {
-        @include flexbox();
+        display: flex;
         flex-wrap: wrap;
         --bs-gutter-x: 1.5rem;
         --bs-gutter-y: 0;

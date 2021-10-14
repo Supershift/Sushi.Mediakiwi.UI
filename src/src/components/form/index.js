@@ -1,7 +1,12 @@
-export const formMixins = {
+const useCheckUndefined = {
+  created() {
+    this.undefinedCheck();
+  },
   methods: {
-    returnValue(field) {
+    undefinedCheck(field) {
       return (typeof (field) !== 'undefined' && field) ? field : undefined;
     },
   },
 };
+
+export default useCheckUndefined;

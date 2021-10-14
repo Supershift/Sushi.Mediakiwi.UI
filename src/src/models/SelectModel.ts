@@ -1,4 +1,4 @@
-import OptionModel from "./OptionModel";
+import OptionModel from './OptionModel';
 
 export default interface SelectInputModel {
     propName: String;

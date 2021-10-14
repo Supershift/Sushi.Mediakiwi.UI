@@ -144,12 +144,12 @@ export default defineComponent({
       background: transparent;
       padding: 5px 15px;
       &:hover {
-        background: white !important;
-        color: $color-drakgrey !important;
+        background: white;
+        color: $color-drakgrey;
       }
       &:focus {
-        background: transparent !important;
-        color: white !important;
+        background: transparent;
+        color: white;
       }
     }
 }

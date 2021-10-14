@@ -47,15 +47,15 @@ ul {
     border-radius: $b-radius-6;
     box-shadow: 0 0 10px #000;
     &:hover {
-        background: $color-hover-blue !important;
+        background: $color-hover-blue;
     }
     &:active {
-        color: $color-main !important;
-        background: $color-hover-blue !important;
+        color: $color-main;
+        background: $color-hover-blue;
     }
     &:focus {
-        background: $color-hover-blue !important;
-        border: 2px solid $color-main outset !important;
+        background: $color-hover-blue;
+        border: 2px solid $color-main outset;
     }
 }
 .link {

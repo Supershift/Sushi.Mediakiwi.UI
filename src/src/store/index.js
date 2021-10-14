@@ -13,7 +13,7 @@ export default createStore({
     // menu,
   },
   state: {
-    isLoggedIn: true,
+    isLoggedIn: false,
     site: {
       title: 'Site title - Page Title',
     },
@@ -116,6 +116,9 @@ export default createStore({
     toggleDialog(state) {
       state.dialog.show = !state.dialog.show;
     },
+    toggleLogIn(state) {
+      state.isLoggedIn = !state.isLoggedIn;
+    },
   },
   actions: {
     toggleDrawer(context) {
@@ -123,6 +126,9 @@ export default createStore({
     },
     toggleDialog(context) {
       context.commit('toggleDialog');
+    },
+    toggleLogIn(context) {
+      context.commit('toggleLogIn');
     },
   },
   getters: {

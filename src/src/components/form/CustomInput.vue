@@ -1,6 +1,6 @@
 <template>
     <div :class="inputContainerClasses">
-        <!-- <label v-if="returnValue(prefix)" v-html="returnValue(prefix)"></label> -->
+        <label v-if="undefinedCheck(prefix)" v-html="undefinedCheck(prefix)"></label>
         <fa v-if="input.fieldIcon" :icon="fieldIconChoice" class="input-icon"></fa>
         <label :for="input.fieldName" class="input-label">
         <input type="text"
@@ -13,7 +13,7 @@
             :placeholder="input.fieldPlaceholder"
             v-bind:disabled="input.disabled || input.readOnly">
         </label>
-        <!-- <label v-if="returnValue(suffix)" v-html="returnValue(suffix)"></label> -->
+        <label v-if="undefinedCheck(suffix)" v-html="undefinedCheck(suffix)"></label>
     </div>
 </template>
 <script lang="ts">
@@ -24,6 +24,7 @@ import {
   reactive,
 } from 'vue';
 import InputModel from '../../models/InputModel';
+import useCheckUndefined from './index';
 
 export default defineComponent({
   name: 'FormInput',
@@ -33,6 +34,7 @@ export default defineComponent({
       required: true,
     },
   },
+  mixins: [useCheckUndefined],
   emits: ['valueChanged'],
   setup(props, context) {
     const inputText = reactive<String>('');

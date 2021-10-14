@@ -12,13 +12,14 @@
 </template>
 
 <script>
-import { computed } from 'vue';
-import NavigationBar from './components/navigation/NavigationBar.vue';
+import { computed, defineComponent, defineAsyncComponent } from 'vue';
 import store from './store/index';
-import Drawer from './components/drawer/Drawer.vue';
-import Main from './components/Main.vue';
 
-export default {
+const Drawer = defineAsyncComponent(() => import('./components/drawer/Drawer.vue'));
+const Main = defineAsyncComponent(() => import('./components/Main.vue'));
+const NavigationBar = defineAsyncComponent(() => import('./components/navigation/NavigationBar.vue'));
+
+export default defineComponent({
   name: 'App',
   setup() {
     const openDrawer = computed(() => store.getters.openDrawer);
@@ -36,7 +37,7 @@ export default {
   created() {
     document.title = 'VaultN';
   },
-};
+});
 </script>
 
 <style scoped lang="scss"></style>

@@ -8,7 +8,6 @@
           <transition name="fade">
             <img :src="logoSrc" :class="'logo-small '+ logoCss"/>
           </transition>
-          <!-- <img v-if="open" src="../assets/images/vaultN-logo.svg" class="logo-large"/> -->
           <fa :icon="chevronChoice" class=" drawer-icon"></fa>
         </div>
       </div>
@@ -85,6 +84,24 @@ export default defineComponent({
       width: -webkit-fill-available;
       z-index: 10;
     }
+    .open-drawer {
+      transition: max-height 0.25s ease-in-out;
+      transition-duration: 0.25s;
+      transition-property: width;
+      width: 225px;
+      .topleft-nav-gradient {
+        transition: width 0.25s ease-in-out;
+        transition-property: left;
+        transition-duration: 0.25s;
+        left: -80px;
+      }
+      .drawer-icon {
+        transition: max-height 0.1s ease-in-out;
+        transition-delay: 0.1s;
+        transition-property: margin-left;
+        margin-left: 45px;
+      }
+    }
 }
 .brand-container {
   position: relative;
@@ -140,24 +157,6 @@ export default defineComponent({
   left: -200px;
   z-index: 19;
   cursor: default;
-}
-.open-drawer {
-  transition: max-height 0.25s ease-in-out;
-  transition-duration: 2s;
-  transition-property: width;
-  width: 225px !important;
-  .topleft-nav-gradient {
-    transition: width 0.25s ease-in-out;
-    transition-property: left;
-    transition-duration: 0.25s;
-    left: -80px;
-  }
-  .drawer-icon {
-    transition: max-height 0.1s ease-in-out;
-    transition-delay: 0.1s;
-    transition-property: margin-left;
-    margin-left: 45px;
-  }
 }
 
 .fade-enter-active, .fade-leave-active {
