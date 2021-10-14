@@ -10,6 +10,7 @@
     "allowImportExportEverywhere": true
   },
   "extends": [
+    "plugin:vue/essential",
     "plugin:vue/recommended",
     "plugin:security/recommended",
     "@vue/typescript",
