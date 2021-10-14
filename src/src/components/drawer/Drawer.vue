@@ -1,6 +1,6 @@
 <template>
 <div class="drawer-container"><!-- Sidebar -->
-  <transition name="expand" mode="out-in">
+  <transition name="expand" mode="ease-in">
     <div class="sidebar-container" :class="positionCss + collapsableCss">
       <div class="brand-container" @click="handleToggle">
         <img src="../../assets/images/leftnav-bg-grad.png" class="topleft-nav-gradient"/>
@@ -12,7 +12,7 @@
         </div>
       </div>
       <ListMenu class="list-menu"></ListMenu>
-      <slot :class="customClasses" name="drawer"/><!-- Drawer opener -->
+      <slot name="drawer"/><!-- Drawer opener -->
     </div>
   </transition>
   <div class="slot-content-container">

@@ -1,14 +1,14 @@
 import OptionModel from './OptionModel';
 
-export default interface SelectInputModel {
-    propName: String;
+interface SelectInputModel {
     error: String;
     disabled: Boolean;
     mandatory: Boolean;
     value: String;
-    id: String;
-    tabindex: number;
-    customClasses: String;
+    tabindex: Number;
+    fieldName: String;
+    fieldIcon: string;
+    customClass: String;
     hasValidation: Boolean;
     isValid: Boolean;
     showLabel: Boolean;
@@ -16,3 +16,5 @@ export default interface SelectInputModel {
     defaultLabel: String;
     options: OptionModel[];
 };
+
+export default SelectInputModel;

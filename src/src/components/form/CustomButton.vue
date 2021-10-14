@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue';
-import ButtonModel from '../../models/Buttonmodel';
+import ButtonModel from '../../models/ButtonModel';
 
 export default defineComponent({
   name: 'FormButton',

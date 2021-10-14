@@ -58,6 +58,11 @@ ul {
         border: 2px solid $color-main outset;
     }
 }
+input,
+select {
+    margin-bottom: 15px;
+    width: 100%;
+}
 .link {
     text-decoration: none;
     color: $color-blue;

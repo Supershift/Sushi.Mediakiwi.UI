@@ -34,9 +34,6 @@ export default defineComponent({
     NavigationBar,
     Main,
   },
-  created() {
-    document.title = 'VaultN';
-  },
 });
 </script>
 

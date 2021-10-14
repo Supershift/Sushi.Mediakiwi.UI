@@ -22,7 +22,7 @@ import FormErrors from './form/FormErrors.vue';
 import CustomInput from './form/CustomInput.vue';
 import CustomButton from './form/CustomButton.vue';
 import InputModel from '../models/InputModel';
-import ButtonModel from '../models/Buttonmodel';
+import ButtonModel from '../models/ButtonModel';
 import MessageModel from '../models/MessageModel';
 
 export default defineComponent({
@@ -42,7 +42,7 @@ export default defineComponent({
       fieldIcon: 'email',
       fieldPlaceholder: 'Email',
       disabled: false,
-      suffix: '*',
+      suffix: '',
       prefix: '',
       fieldName: 'email',
       fieldValue: '',
@@ -53,7 +53,7 @@ export default defineComponent({
       fieldIcon: 'password',
       fieldPlaceholder: 'Password',
       disabled: false,
-      suffix: '*',
+      suffix: '',
       prefix: '',
       fieldName: 'password',
       fieldValue: '',
@@ -63,8 +63,6 @@ export default defineComponent({
       customClass: 'btn-login',
       buttonIcon: '',
       disabled: false,
-      suffix: '*',
-      prefix: '',
       buttondName: 'login',
       value: contentLogin.value.loginButtonText,
       readOnly: false,
@@ -107,9 +105,6 @@ export default defineComponent({
   font-family: $font-primary;
   &-logo {
     padding-bottom: 55px;
-  }
-  input {
-    margin-bottom: 15px;
   }
   .link {
     margin-bottom: 15px;

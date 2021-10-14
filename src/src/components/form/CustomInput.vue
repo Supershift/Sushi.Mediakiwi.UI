@@ -1,6 +1,10 @@
 <template>
     <div :class="inputContainerClasses">
-        <label v-if="undefinedCheck(prefix)" v-html="undefinedCheck(prefix)"></label>
+        <label
+        v-if="undefinedCheck(input.prefix)"
+        v-html="undefinedCheck(input?.prefix)"
+        class="input-prefix"
+        ></label>
         <fa v-if="input.fieldIcon" :icon="fieldIconChoice" class="input-icon"></fa>
         <label :for="input.fieldName" class="input-label">
         <input type="text"
@@ -13,7 +17,11 @@
             :placeholder="input.fieldPlaceholder"
             v-bind:disabled="input.disabled || input.readOnly">
         </label>
-        <label v-if="undefinedCheck(suffix)" v-html="undefinedCheck(suffix)"></label>
+        <label
+        v-if="undefinedCheck(input.suffix)"
+        v-html="undefinedCheck(input?.suffix)"
+        class="input-suffix"
+        ></label>
     </div>
 </template>
 <script lang="ts">
@@ -112,6 +120,20 @@ export default defineComponent({
     position: absolute;
     top: 18px;
     left: 15px;
+  }
+  .input-suffix {
+    position: absolute;
+    right: -60px;
+    top: 14px;
+    color: $color-alert;
+    font-size: $font-size-xxl;
+  }
+  .input-suffix {
+    position: absolute;
+    right: -60px;
+    top: 14px;
+    color: $color-alert;
+    font-size: $font-size-xxl;
   }
 }
 .normal {
