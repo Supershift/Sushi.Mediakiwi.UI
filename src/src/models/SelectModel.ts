@@ -1,4 +1,4 @@
-import OptionModel from './OptionModel';
+import OptionModel from "./OptionModel";
 
 interface SelectInputModel {
     error: String;
@@ -15,6 +15,6 @@ interface SelectInputModel {
     showDefault: Boolean;
     defaultLabel: String;
     options: OptionModel[];
-};
+}
 
 export default SelectInputModel;

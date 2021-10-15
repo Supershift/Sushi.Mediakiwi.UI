@@ -1,37 +1,47 @@
 <template>
   <div :class="selectContainerClasses">
     <label
-    v-if="undefinedCheck(select.prefix)"
-    v-html="undefinedCheck(select?.prefix)"
-    class="select-prefix"
-    ></label>
-    <fa v-if="select.fieldIcon" :icon="fieldIconChoice" class="select-icon"></fa>
-    <label :for="select.fieldName" class="select-label">
+      v-if="undefinedCheck(select.prefix)"
+      class="select-prefix"
+      v-html="undefinedCheck(select?.prefix)"
+    />
+    <fa
+      v-if="select.fieldIcon"
+      :icon="fieldIconChoice"
+      class="select-icon" />
+    <label
+      :for="select.fieldName"
+      class="select-label">
       <select
-          :name="select.fieldName"
-          :id="id"
-          :disabled="select.disabled"
-          :value="selectedValueState"
-          :class="customSelectClasses"
-          @change="$emit('selectValueChanged', selectedValueState)"
+        :name="select.fieldName"
+        :id="id"
+        :disabled="select.disabled"
+        :value="selectedValueState"
+        :class="customSelectClasses"
+        @change="$emit('selectValueChanged', selectedValueState)"
       >
-          <option v-if="select.showDefault" value disabled selected>
-              {{ select.defaultLabel }}
+          <option
+            v-if="select.showDefault"
+            value disabled selected>
+          {{ select.defaultLabel }}
           </option>
           <option
-              v-for="(opt, index) in select.propOptions"
-              :key="index"
-              :value="opt.propVal"
-              >
-              {{ opt.propName }}
-          <span v-if="opt.countForOption">({{ opt.countForOption }}) </span>
+            v-for="(opt, index) in select.propOptions"
+            :key="index"
+            :value="opt.propVal"
+            >
+            {{ opt.propName }}
+          <span
+            v-if="opt.countForOption">
+          ({{ opt.countForOption }})
+          </span>
           </option>
       </select>
     </label>
     <label
-    v-if="undefinedCheck(select.suffix)"
-    v-html="undefinedCheck(select?.suffix)"
-    class="select-suffix"
+      v-if="undefinedCheck(select.suffix)"
+      v-html="undefinedCheck(select?.suffix)"
+      class="select-suffix"
     ></label>
   </div>
 </template>
@@ -42,68 +52,68 @@ import {
   defineComponent,
   PropType,
   ref,
-} from 'vue';
-import SelectModel from '../../models/SelectModel';
-import useCheckUndefined from './index';
+} from "vue";
+import SelectInputModel from "../../models/SelectModel";
+import useCheckUndefined from "./index";
 
 export default defineComponent({
-  name: 'FormSelect',
+  name: "FormSelect",
   mixins: [useCheckUndefined],
   props: {
     select: {
-      type: Object as PropType<SelectModel>,
+      type: Object,
       required: true,
     },
   },
-  emits: ['selectValueChanged'],
+  emits: ["selectValueChanged"],
   setup(props) {
     const selectedValueState = ref<Number>();
     const id = computed(() => `_${props.select.customClass}-${props.select.fieldName}`);
-    const customSelectClasses = computed(() => ['select-container ', props.select.customClass]);
+    const customSelectClasses = computed(() => ["select-container ", props.select.customClass]);
     const selectContainerClasses = computed(() => {
       let iconColor: String;
       switch (props.select.fieldIcon) {
-        case 'email':
-          iconColor = 'normal';
+        case "email":
+          iconColor = "normal";
           break;
-        case 'password':
-          iconColor = 'alert';
+        case "password":
+          iconColor = "alert";
           break;
-        case 'warning':
-          iconColor = 'warn';
+        case "warning":
+          iconColor = "warn";
           break;
-        case 'key':
-          iconColor = 'normal';
+        case "key":
+          iconColor = "normal";
           break;
-        case 'finger':
-          iconColor = 'normal';
+        case "finger":
+          iconColor = "normal";
           break;
         default:
-          iconColor = 'normal';
+          iconColor = "normal";
           break;
       }
-      return ['input-container ', iconColor];
+      return ["input-container ", iconColor];
     });
     const fieldIconChoice = computed(() => {
       let icon: any;
       switch (props.select.fieldIcon) {
-        case 'email':
-          icon = ['fal', 'at'];
+        case "email":
+          icon = ["fal", "at"];
           break;
-        case 'password':
-          icon = ['fal', 'lock-alt'];
+        case "password":
+          icon = ["fal", "lock-alt"];
           break;
-        case 'warning':
-          icon = ['fal', 'exclamation-triangle'];
+        case "warning":
+          icon = ["fal", "exclamation-triangle"];
           break;
-        case 'key':
-          icon = ['fal', 'key'];
+        case "key":
+          icon = ["fal", "key"];
           break;
-        case 'finger':
-          icon = ['fal', 'fingerprint'];
+        case "finger":
+          icon = ["fal", "fingerprint"];
           break;
         default:
-          icon = [''];
+          icon = [""];
           break;
       }
       return icon;

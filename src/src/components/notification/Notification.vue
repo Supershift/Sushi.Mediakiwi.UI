@@ -1,10 +1,21 @@
 <template>
-  <div class="notification-container" v-if="notification.show">
-      <div class="notification-bubble" :class="alertCss">
-        <fa icon="sort-up" class="notification-top-icon"></fa>
+  <div
+    v-if="notification.show"
+    class="notification-container"
+  >
+    <div
+      class="notification-bubble"
+      :class="alertCss"
+    >
+        <fa 
+        icon="sort-up"
+        class="notification-top-icon"></fa>
         <div class="notification-bubble-content">
             <fa :icon="iconChoice"></fa> {{ notification.alertText }}
-            <button class="btn btn-notification" v-if="notification.hasAction">
+            <button 
+            v-if="notification.hasAction"
+            class="btn btn-notification"
+            >
               {{ notification.actionText }}
             </button>
         </div>
@@ -13,57 +24,57 @@
 </template>
 
 <script>
-import { computed, defineComponent } from 'vue';
-import store from '../../store/index';
+import { computed, defineComponent } from "vue";
+import store from "../../store/index";
 
 export default defineComponent({
-  name: 'Notification',
+  name: "Notification",
   setup() {
     const notification = computed(() => store.getters.notification);
     const iconChoice = computed(() => {
-      let icon = '';
+      let icon = "";
       switch (notification.value.actionType) {
-        case 'success':
-          icon = ['fal', 'check-circle'];
+        case "success":
+          icon = ["fal", "check-circle"];
           break;
-        case 'info':
-          icon = ['fal', 'exclamation-circle'];
+        case "info":
+          icon = ["fal", "exclamation-circle"];
           break;
-        case 'warning':
-          icon = ['fal', 'exclamation-triangle'];
+        case "warning":
+          icon = ["fal", "exclamation-triangle"];
           break;
-        case 'change':
-          icon = ['fal', 'exchange-alt'];
+        case "change":
+          icon = ["fal", "exchange-alt"];
           break;
-        case 'alert':
-          icon = ['fal', 'hand-paper'];
+        case "alert":
+          icon = ["fal", "hand-paper"];
           break;
         default:
-          icon = ['fal', 'check-circle'];
+          icon = ["fal", "check-circle"];
           break;
       }
       return icon;
     });
     const alertCss = computed(() => {
-      let alertColor = '';
+      let alertColor = "";
       switch (notification.value.actionType) {
-        case 'success':
-          alertColor = 'notification-success ';
+        case "success":
+          alertColor = "notification-success ";
           break;
-        case 'info':
-          alertColor = 'notification-info ';
+        case "info":
+          alertColor = "notification-info ";
           break;
-        case 'warning':
-          alertColor = 'notification-warning ';
+        case "warning":
+          alertColor = "notification-warning ";
           break;
-        case 'change':
-          alertColor = 'notification-change ';
+        case "change":
+          alertColor = "notification-change ";
           break;
-        case 'alert':
-          alertColor = 'notification-alert ';
+        case "alert":
+          alertColor = "notification-alert ";
           break;
         default:
-          alertColor = 'notification-success ';
+          alertColor = "notification-success ";
           break;
       }
       return alertColor;

@@ -1,10 +1,13 @@
 <template>
-  <li :id="id+'_'+name" class="navigation-link"><a href="/">{{ name }}</a></li>
+  <li 
+  :id="id+'_'+name"
+  class="navigation-link"
+  ><a href="/">{{ name }}</a></li>
 </template>
 
 <script>
 export default {
-  name: 'Navigation Menu Item',
+  name: "Navigation Menu Item",
   props: {
     name: {
       type: String,

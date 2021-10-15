@@ -1,42 +1,47 @@
 <template>
-  <div class="dialog-container" v-if="dialog.show">
-      <div class="dialog-bubble">
-          <fa icon="sort-up" class="dialog-top-icon"></fa>
-          <div class="dialog-bubble-content">
-              <div class="dialog-header">
-                  <h2>My Profile</h2>
-              </div>
-              <div class="dialog-main">
-                <div class="profile-avatar-container">
-                    <div class="avatar">
-                    <img :src="profileData.avatar" class="avatar-image" :alt="profileData.name">
-                    </div>
-                    <div class="avatar-info">
-                        {{ profileData.fullName }}
-                        <sub>{{ profileData.email }}</sub>
-                    </div>
+  <div
+    v-if="dialog.show"
+    class="dialog-container"
+    >
+    <div class="dialog-bubble">
+        <fa
+            icon="sort-up"
+            class="dialog-top-icon" />
+        <div class="dialog-bubble-content">
+            <div class="dialog-header">
+                <h2>My Profile</h2>
+            </div>
+            <div class="dialog-main">
+            <div class="profile-avatar-container">
+                <div class="avatar">
+                <img :src="profileData.avatar" class="avatar-image" :alt="profileData.name">
                 </div>
-              </div>
-              <div class="dialog-footer">
-                  <a href="" v-if="dialog.settings">Profile Settings</a>
-                  <button class="btn btn-dialog-footer" @click="handleSignOut()">Sign out</button>
-              </div>
-          </div>
-      </div>
+                <div class="avatar-info">
+                    {{ profileData.fullName }}
+                    <sub>{{ profileData.email }}</sub>
+                </div>
+            </div>
+            </div>
+            <div class="dialog-footer">
+                <a href="" v-if="dialog.settings">Profile Settings</a>
+                <button class="btn btn-dialog-footer" @click="handleSignOut()">Sign out</button>
+            </div>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue';
-import store from '../../store/index';
+import { defineComponent, computed } from "vue";
+import store from "../../store/index";
 
 export default defineComponent({
-  name: 'Dailog',
+  name: "Dailog",
   setup() {
     const profileData = computed(() => store.getters.profileData);
     const dialog = computed(() => store.getters.dialog);
     function handleSignOut() {
-      console.log('TODO: Logout!');
+    //   console.log("TODO: Logout!");
     }
     return {
       profileData,
@@ -116,7 +121,7 @@ export default defineComponent({
                 padding-bottom: 20px;
                 background: $color-grad-success;
                 border-radius: 0 0 $b-radius-6 $b-radius-6;
-                justify-content: end;
+                justify-content: flex-end;
                 display: flex;
                 flex-direction: row;
                 a {

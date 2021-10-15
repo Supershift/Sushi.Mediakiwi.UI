@@ -1,23 +1,23 @@
-import { createApp } from 'vue';
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { createApp } from "vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
 // Note we are using the Pro style here
 import {
   fas,
-} from '@fortawesome/pro-solid-svg-icons';
+} from "@fortawesome/pro-solid-svg-icons";
 import {
   fal,
-} from '@fortawesome/pro-light-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import store from './store';
-import App from './App.vue';
-import router from './router';
+} from "@fortawesome/pro-light-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import store from "./store";
+import App from "./App.vue";
+import router from "./router";
 
 library.add(
   fas,
   fal,
 );
 
-const DEFAULT_TITLE = 'Welcome!';
+const DEFAULT_TITLE = "Welcome!";
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
@@ -25,25 +25,25 @@ router.beforeEach((to, from, next) => {
     // if not, redirect to login page
     if (!store.getters.isLoggedIn) {
       next({
-        path: '/login',
+        path: "/login",
       });
-      console.log('Please login first', store.getters.isLoggedIn);
+      // console.log("Please login first", store.getters.isLoggedIn);
     } else {
       // to.meta.title = to.params.project_name_slug;
       next();
     }
-    console.log('I am trying to authorize', store.getters.isLoggedIn);
+    // console.log("I am trying to authorize", store.getters.isLoggedIn);
   } else if (to.matched.some((record) => record.meta.requiresVisitor)) {
     // this route is only available to a visitor which means they should not be logged in
     // if logged in, redirect to home page.
     if (store.getters.isLoggedIn) {
       next({
-        path: '/',
+        path: "/",
       });
     } else {
       next();
     }
-    console.log('I am a visitor!', store.getters.isLoggedIn);
+    // console.log("I am a visitor!", store.getters.isLoggedIn);
   }
 });
 
@@ -52,6 +52,6 @@ router.afterEach((to, from) => {
 });
 
 createApp(App).use(router)
-  .component('fa', FontAwesomeIcon)
+  .component("fa", FontAwesomeIcon)
   .use(store)
-  .mount('#app');
+  .mount("#app");

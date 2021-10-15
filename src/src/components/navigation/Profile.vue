@@ -18,16 +18,16 @@
 </template>
 
 <script>
-import { computed, defineComponent } from 'vue';
-import store from '../../store/index';
+import { computed, defineComponent } from "vue";
+import store from "../../store/index";
 
 export default defineComponent({
-  name: 'Profile',
+  name: "Profile",
   setup() {
     const profileData = computed(() => store.getters.profileData);
     const brandData = computed(() => store.getters.brandData);
     function handleDialogToggle() {
-      store.dispatch('toggleDialog');
+      store.dispatch("toggleDialog");
     }
     return {
       profileData,

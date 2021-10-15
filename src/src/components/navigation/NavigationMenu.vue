@@ -1,19 +1,20 @@
 <template>
   <ul :class="customClass">
-    <navigation-menu-item v-for="item in items"
-    :key="item.id"
-    :id="item.id"
-    :name="item.name"
-    ></navigation-menu-item>
+    <NavigationMenuItem
+      v-for="item in items"
+      :id="item.id"
+      :key="item.id"
+      :name="item.name"
+    />
   </ul>
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue';
-import NavigationMenuItem from './NavigationMenuItem.vue';
+import { defineComponent, computed } from "vue";
+import NavigationMenuItem from "./NavigationMenuItem.vue";
 
 export default defineComponent({
-  name: 'Navigation Menu',
+  name: "Navigation Menu",
   props: {
     items: {
       type: Array,
