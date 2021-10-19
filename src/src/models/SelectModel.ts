@@ -1,6 +1,6 @@
 import OptionModel from "./OptionModel";
 
-interface SelectInputModel {
+export interface SelectModel {
     error: String;
     disabled: Boolean;
     mandatory: Boolean;
@@ -8,6 +8,7 @@ interface SelectInputModel {
     tabindex: Number;
     fieldName: String;
     fieldIcon: string;
+    multiple: Boolean;
     customClass: String;
     hasValidation: Boolean;
     isValid: Boolean;
@@ -16,5 +17,3 @@ interface SelectInputModel {
     defaultLabel: String;
     options: OptionModel[];
 }
-
-export default SelectInputModel;

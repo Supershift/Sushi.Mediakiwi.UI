@@ -53,7 +53,7 @@ import {
   PropType,
   ref,
 } from "vue";
-import SelectInputModel from "../../models/SelectModel";
+import { SelectModel } from "../../models/SelectModel";
 import useCheckUndefined from "./index";
 
 export default defineComponent({
@@ -61,17 +61,17 @@ export default defineComponent({
   mixins: [useCheckUndefined],
   props: {
     select: {
-      type: Object,
+      type: Object as PropType<SelectModel>,
       required: true,
     },
   },
   emits: ["selectValueChanged"],
   setup(props) {
-    const selectedValueState = ref<Number>();
+    const selectedValueState = ref<number>();
     const id = computed(() => `_${props.select.customClass}-${props.select.fieldName}`);
     const customSelectClasses = computed(() => ["select-container ", props.select.customClass]);
     const selectContainerClasses = computed(() => {
-      let iconColor: String;
+      let iconColor: string;
       switch (props.select.fieldIcon) {
         case "email":
           iconColor = "normal";
@@ -177,6 +177,7 @@ export default defineComponent({
       padding-right: 35px;
       font-size: $font-size-l;
       color: $color-drakgrey;
+      border: 1px solid $color-drakgrey;
   }
 }
 </style>

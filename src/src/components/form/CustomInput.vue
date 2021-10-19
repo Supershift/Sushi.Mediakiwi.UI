@@ -1,28 +1,28 @@
 <template>
-    <div :class="inputContainerClasses">
-        <label
-        v-if="undefinedCheck(input.prefix)"
-        v-html="undefinedCheck(input?.prefix)"
-        class="input-prefix"
-        ></label>
-        <fa v-if="input.fieldIcon" :icon="fieldIconChoice" class="input-icon"></fa>
-        <label :for="input.fieldName" class="input-label">
-        <input type="text"
-            :value="inputText"
-            @change="handleChange"
-            :class="customInputClasses"
-            :name="input.fieldName"
-            :id="id"
-            :required="input.fieldRequired"
-            :placeholder="input.fieldPlaceholder"
-            v-bind:disabled="input.disabled || input.readOnly">
-        </label>
-        <label
-        v-if="undefinedCheck(input.suffix)"
-        v-html="undefinedCheck(input?.suffix)"
-        class="input-suffix"
-        ></label>
-    </div>
+  <div :class="inputContainerClasses">
+      <label
+      v-if="undefinedCheck(input.prefix)"
+      v-html="undefinedCheck(input?.prefix)"
+      class="input-prefix"
+      ></label>
+      <fa v-if="input.fieldIcon" :icon="fieldIconChoice" class="input-icon"></fa>
+      <label :for="input.fieldName" class="input-label">
+      <input type="text"
+          :value="inputText"
+          @change="handleChange"
+          :class="customInputClasses"
+          :name="input.fieldName"
+          :id="id"
+          :required="input.fieldRequired"
+          :placeholder="input.fieldPlaceholder"
+          v-bind:disabled="input.disabled || input.readOnly">
+      </label>
+      <label
+      v-if="undefinedCheck(input.suffix)"
+      v-html="undefinedCheck(input?.suffix)"
+      class="input-suffix"
+      ></label>
+  </div>
 </template>
 <script lang="ts">
 import {
@@ -30,12 +30,12 @@ import {
   defineComponent,
   PropType,
   reactive,
-} from 'vue';
-import InputModel from '../../models/InputModel';
+} from "vue";
+import InputModel from "../../models/InputModel";
 import useCheckUndefined from './index';
 
 export default defineComponent({
-  name: 'FormInput',
+  name: "FormInput",
   props: {
     input: {
       type: Object as PropType<InputModel>,
@@ -43,61 +43,61 @@ export default defineComponent({
     },
   },
   mixins: [useCheckUndefined],
-  emits: ['valueChanged'],
+  emits: ["valueChanged"],
   setup(props, context) {
     const inputText = reactive<String>('');
     const id = computed(() => `_${props.input.customClass}-${props.input.fieldName}`);
     const inputContainerClasses = computed(() => {
       let iconColor: String;
       switch (props.input.fieldIcon) {
-        case 'email':
-          iconColor = 'normal';
+        case "email":
+          iconColor = "normal";
           break;
-        case 'password':
-          iconColor = 'alert';
+        case "password":
+          iconColor = "alert";
           break;
-        case 'warning':
-          iconColor = 'warn';
+        case "warning":
+          iconColor = "warn";
           break;
-        case 'key':
-          iconColor = 'normal';
+        case "key":
+          iconColor = "normal";
           break;
-        case 'finger':
-          iconColor = 'normal';
+        case "finger":
+          iconColor = "normal";
           break;
         default:
-          iconColor = 'normal';
+          iconColor = "normal";
           break;
       }
-      return ['input-container ', iconColor];
+      return ["input-container ", iconColor];
     });
-    const customInputClasses = computed(() => ['input-primary ', props.input.customClass]);
+    const customInputClasses = computed(() => ["input-primary ", props.input.customClass]);
     const fieldIconChoice = computed(() => {
       let icon: any;
       switch (props.input.fieldIcon) {
-        case 'email':
-          icon = ['fal', 'at'];
+        case "email":
+          icon = ["fal", "at"];
           break;
-        case 'password':
-          icon = ['fal', 'lock-alt'];
+        case "password":
+          icon = ["fal", "lock-alt"];
           break;
-        case 'warning':
-          icon = ['fal', 'exclamation-triangle'];
+        case "warning":
+          icon = ["fal", "exclamation-triangle"];
           break;
-        case 'key':
-          icon = ['fal', 'key'];
+        case "key":
+          icon = ["fal", "key"];
           break;
-        case 'finger':
-          icon = ['fal', 'fingerprint'];
+        case "finger":
+          icon = ["fal", "fingerprint"];
           break;
         default:
-          icon = [''];
+          icon = [""];
           break;
       }
       return icon;
     });
     function handleChange() {
-      context.emit('valueChanged');
+      context.emit("valueChanged");
     }
     return {
       id,

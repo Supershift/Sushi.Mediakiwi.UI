@@ -8,22 +8,22 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
-import ButtonModel from '../../models/ButtonModel';
+import { computed, defineComponent, PropType } from "vue";
+import ButtonModel from "../../models/ButtonModel";
 
 export default defineComponent({
-  name: 'FormButton',
+  name: "FormButton",
   props: {
     button: {
       type: Object as PropType<ButtonModel>,
       required: true,
     },
   },
-  emits: ['buttonClicked'],
+  emits: ["buttonClicked"],
   setup(props, context) {
-    const customButtonClasses = computed(() => ['btn ', props.button.customClass]);
+    const customButtonClasses = computed(() => ["btn ", props.button.customClass]);
     function handleClicked() {
-      context.emit('buttonClicked');
+      context.emit("buttonClicked");
     }
     return {
       customButtonClasses,

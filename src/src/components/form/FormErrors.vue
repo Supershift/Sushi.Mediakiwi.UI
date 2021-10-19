@@ -21,11 +21,11 @@
     </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
-import MessageModel from '../../models/MessageModel';
+import { computed, defineComponent, PropType } from "vue";
+import MessageModel from "../../models/MessageModel";
 
 export default defineComponent({
-  name: 'FormErrors',
+  name: "FormErrors",
   props: {
     messages: {
       type: Object as PropType<MessageModel[]>,

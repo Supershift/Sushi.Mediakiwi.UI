@@ -3,16 +3,16 @@
   <transition name="expand" mode="ease-in">
     <div class="sidebar-container" :class="positionCss + collapsableCss">
       <div class="brand-container" @click="handleToggle">
-        <img src="../../assets/images/leftnav-bg-grad.png" class="topleft-nav-gradient"/>
+        <img src="../../assets/images/leftnav-bg-grad.png" class="topleft-nav-gradient" />
         <div class="logo-container">
           <transition name="fade">
-            <img :src="logoSrc" :class="'logo-small '+ logoCss"/>
+            <img :src="logoSrc" :class="'logo-small '+ logoCss" />
           </transition>
-          <fa :icon="chevronChoice" class=" drawer-icon"></fa>
+          <fa :icon="chevronChoice" class=" drawer-icon" />
         </div>
       </div>
-      <ListMenu class="list-menu"></ListMenu>
-      <slot name="drawer"/><!-- Drawer opener -->
+      <ListMenu class="list-menu" />
+      <slot name="drawer" /><!-- Drawer opener -->
     </div>
   </transition>
   <div class="slot-content-container">
@@ -22,14 +22,14 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from 'vue';
-import store from '../../store/index';
-import ListMenu from '../list-menu/ListMenu.vue';
-import logoS from '../../assets/images/vaultN-icon.svg';
-import logoL from '../../assets/images/vaultN-logo.svg';
+import { computed, defineComponent, ref } from "vue";
+import store from "../../store/index";
+import ListMenu from "../list-menu/ListMenu.vue";
+import logoS from "../../assets/images/vaultN-icon.svg";
+import logoL from "../../assets/images/vaultN-logo.svg";
 
 export default defineComponent({
-  name: 'Drawer',
+  name: "Drawer",
   components: { ListMenu },
   props: {
     toggler: {
@@ -43,14 +43,14 @@ export default defineComponent({
   },
   setup(props) {
     const open = ref(props.toggler);
-    const positionCss = computed(() => (props.right ? ['right-0 flex-row '] : ['left-0 flex-row-reverse ']));
-    const collapsableCss = computed(() => (open.value ? ['open-drawer '] : ['']));
-    const chevronChoice = computed(() => (!open.value ? 'chevron-right' : 'chevron-left'));
+    const positionCss = computed(() => (props.right ? ["right-0 flex-row "] : ["left-0 flex-row-reverse "]));
+    const collapsableCss = computed(() => (open.value ? ["open-drawer "] : [""]));
+    const chevronChoice = computed(() => (!open.value ? "chevron-right" : "chevron-left"));
     const logoSrc = computed(() => (!open.value ? logoS : logoL));
-    const logoCss = computed(() => (!open.value ? '' : 'logo-large'));
+    const logoCss = computed(() => (!open.value ? "" : "logo-large"));
     function handleToggle() {
       open.value = !open.value;
-      store.dispatch('toggleDrawer');
+      store.dispatch("toggleDrawer");
     }
     return {
       positionCss,
@@ -82,7 +82,6 @@ export default defineComponent({
     }
     .slot-content-container {
       width: -webkit-fill-available;
-      z-index: 10;
     }
     .open-drawer {
       transition: max-height 0.25s ease-in-out;

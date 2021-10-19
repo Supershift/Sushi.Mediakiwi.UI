@@ -1,6 +1,6 @@
 import OptionModel from "./OptionModel";
 
-interface RadioModel {
+interface CheckboxModel {
     customClass: String;
     fieldIcon: String;
     fieldGroupName: String;
@@ -12,4 +12,4 @@ interface RadioModel {
     options: OptionModel[];
 }
 
-export default RadioModel;
+export default CheckboxModel;
