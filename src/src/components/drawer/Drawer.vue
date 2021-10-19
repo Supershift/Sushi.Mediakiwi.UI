@@ -8,10 +8,10 @@
           <transition name="fade">
             <img :src="logoSrc" :class="'logo-small '+ logoCss" />
           </transition>
-          <fa :icon="chevronChoice" class=" drawer-icon" />
+          <fa :icon="chevronChoice" class="drawer-icon" />
         </div>
       </div>
-      <ListMenu class="list-menu" />
+      <ListMenu :customClass="customListClass" />
       <slot name="drawer" /><!-- Drawer opener -->
     </div>
   </transition>
@@ -43,6 +43,7 @@ export default defineComponent({
   },
   setup(props) {
     const open = ref(props.toggler);
+    const customListClass = ref("list-menu");
     const positionCss = computed(() => (props.right ? ["right-0 flex-row "] : ["left-0 flex-row-reverse "]));
     const collapsableCss = computed(() => (open.value ? ["open-drawer "] : [""]));
     const chevronChoice = computed(() => (!open.value ? "chevron-right" : "chevron-left"));
@@ -59,6 +60,7 @@ export default defineComponent({
       logoSrc,
       logoCss,
       open,
+      customListClass,
       handleToggle,
     };
   },

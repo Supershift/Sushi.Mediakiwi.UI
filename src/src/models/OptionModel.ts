@@ -1,7 +1,7 @@
 interface OptionModel {
-    value: Number;
-    name: String;
-    countForOption: Number;
+    value: number;
+    name: string;
+    countForOption: number;
 }
 
 export default OptionModel;

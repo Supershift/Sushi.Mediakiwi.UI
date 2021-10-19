@@ -1,10 +1,10 @@
 interface ButtonModel {
-    customClass: String;
-    buttonIcon: String;
-    disabled: Boolean;
-    buttondName: String;
-    value: String;
-    readOnly: Boolean;
+    customClass: string;
+    buttonIcon: string;
+    disabled: boolean;
+    buttondName: string;
+    value: string;
+    readOnly: boolean;
 };
 
 export default ButtonModel;

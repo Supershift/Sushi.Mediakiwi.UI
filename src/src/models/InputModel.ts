@@ -1,13 +1,13 @@
 interface InputModel {
-    customClass: String;
-    fieldIcon: String;
-    fieldPlaceholder: String;
-    disabled: Boolean;
-    suffix: String;
-    prefix: String;
-    fieldName: String;
-    fieldValue: String;
-    readOnly: Boolean;
+    customClass: string;
+    fieldIcon: string;
+    fieldPlaceholder: string;
+    disabled: boolean;
+    suffix: string;
+    prefix: string;
+    fieldName: string;
+    fieldValue: string;
+    readOnly: boolean;
 };
 
 export default InputModel;

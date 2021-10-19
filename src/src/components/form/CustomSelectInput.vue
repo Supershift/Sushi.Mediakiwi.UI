@@ -8,41 +8,47 @@
     <fa
       v-if="select.fieldIcon"
       :icon="fieldIconChoice"
-      class="select-icon" />
+      class="select-icon"
+    />
     <label
       :for="select.fieldName"
-      class="select-label">
+      class="select-label"
+    >
       <select
-        :name="select.fieldName"
         :id="id"
+        :name="select.fieldName"
         :disabled="select.disabled"
         :value="selectedValueState"
         :class="customSelectClasses"
         @change="$emit('selectValueChanged', selectedValueState)"
       >
-          <option
-            v-if="select.showDefault"
-            value disabled selected>
+        <option
+          v-if="select.showDefault"
+          value
+          disabled
+          selected
+        >
           {{ select.defaultLabel }}
-          </option>
-          <option
-            v-for="(opt, index) in select.propOptions"
-            :key="index"
-            :value="opt.propVal"
-            >
-            {{ opt.propName }}
+        </option>
+        <option
+          v-for="(opt, index) in select.propOptions"
+          :key="index"
+          :value="opt.propVal"
+        >
+          {{ opt.propName }}
           <span
-            v-if="opt.countForOption">
-          ({{ opt.countForOption }})
+            v-if="opt.countForOption"
+          >
+            ({{ opt.countForOption }})
           </span>
-          </option>
+        </option>
       </select>
     </label>
     <label
       v-if="undefinedCheck(select.suffix)"
-      v-html="undefinedCheck(select?.suffix)"
       class="select-suffix"
-    ></label>
+      v-html="undefinedCheck(select?.suffix)"
+    />
   </div>
 </template>
 
@@ -95,7 +101,7 @@ export default defineComponent({
       return ["input-container ", iconColor];
     });
     const fieldIconChoice = computed(() => {
-      let icon: any;
+      let icon: string[];
       switch (props.select.fieldIcon) {
         case "email":
           icon = ["fal", "at"];

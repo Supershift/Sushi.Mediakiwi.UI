@@ -1,14 +1,14 @@
 import OptionModel from "./OptionModel";
 
 interface CheckboxModel {
-    customClass: String;
-    fieldIcon: String;
-    fieldGroupName: String;
-    disabled: Boolean;
-    suffix: String;
-    prefix: String;
-    fieldName: String;
-    fieldValue: String;
+    customClass: string;
+    fieldIcon: string;
+    fieldGroupName: string;
+    disabled: boolean;
+    suffix: string;
+    prefix: string;
+    fieldName: string;
+    fieldValue: string;
     options: OptionModel[];
 }
 

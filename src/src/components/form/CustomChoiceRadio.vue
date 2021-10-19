@@ -1,32 +1,36 @@
 <template>
   <div :class="radioContainerClasses">         
     <label
-      v-if="undefinedCheck(radio.prefix)"
-      v-html="undefinedCheck(radio.prefix)" />
+        v-if="undefinedCheck(radio.prefix)"
+        v-html="undefinedCheck(radio.prefix)" />
     <span
-      v-for="option in radio.options"
-      :key="fieldID(option)"
-      class="radio-choice-container">
+        v-for="option in radio.options"
+        :key="fieldID(option)"
+        class="radio-choice-container"
+    >
         <input
             type="radio"
-            @change="handleChange"
-            :value="valueRef.value"
+            :id="fieldID(option)"
             :class="customRadioClasses"
             :name="radio.fieldGroupName"
+            @change="handleChange"
+            :value="valueRef.value"
             :disabled="radio.disabled"
-            :id="fieldID(option)" />
+        >
         <span class="checkmark"/>
         <label
-        :for="fieldID(option)"
-        v-html="option.name" />
+          :for="fieldID(option)"
+          v-html="option.name"
+        />
     </span>
     <fa
-      v-if="radio.fieldIcon"
-      :icon="fieldIconChoice"
-      class="radio-icon" />
+        v-if="radio.fieldIcon"
+        :icon="fieldIconChoice"
+        class="radio-icon" />
     <label
-    v-if="undefinedCheck(radio.suffix)"
-    v-html="undefinedCheck(radio.suffix)" />
+      v-if="undefinedCheck(radio.suffix)"
+      v-html="undefinedCheck(radio.suffix)" 
+    />
   </div>
 </template>
 <script lang="ts">

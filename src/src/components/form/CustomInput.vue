@@ -1,27 +1,36 @@
 <template>
   <div :class="inputContainerClasses">
-      <label
+    <label
       v-if="undefinedCheck(input.prefix)"
-      v-html="undefinedCheck(input?.prefix)"
       class="input-prefix"
-      ></label>
-      <fa v-if="input.fieldIcon" :icon="fieldIconChoice" class="input-icon"></fa>
-      <label :for="input.fieldName" class="input-label">
-      <input type="text"
-          :value="inputText"
-          @change="handleChange"
-          :class="customInputClasses"
-          :name="input.fieldName"
-          :id="id"
-          :required="input.fieldRequired"
-          :placeholder="input.fieldPlaceholder"
-          v-bind:disabled="input.disabled || input.readOnly">
-      </label>
-      <label
+      v-html="undefinedCheck(input?.prefix)"
+    />
+    <fa
+      v-if="input.fieldIcon"
+      :icon="fieldIconChoice"
+      class="input-icon"
+    />
+    <label
+      :for="input.fieldName"
+      class="input-label"
+    >
+      <input
+        :id="id"
+        type="text"
+        :class="customInputClasses"
+        :name="input.fieldName"
+        :value="inputText.value"
+        :required="input.fieldRequired"
+        :placeholder="input.fieldPlaceholder"
+        :disabled="input.disabled || input.readOnly"
+        @change="handleChange"
+      >
+    </label>
+    <label
       v-if="undefinedCheck(input.suffix)"
-      v-html="undefinedCheck(input?.suffix)"
       class="input-suffix"
-      ></label>
+      v-html="undefinedCheck(input?.suffix)"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -32,23 +41,23 @@ import {
   reactive,
 } from "vue";
 import InputModel from "../../models/InputModel";
-import useCheckUndefined from './index';
+import useCheckUndefined from "./index";
 
 export default defineComponent({
   name: "FormInput",
+  mixins: [useCheckUndefined],
   props: {
     input: {
       type: Object as PropType<InputModel>,
       required: true,
     },
   },
-  mixins: [useCheckUndefined],
   emits: ["valueChanged"],
   setup(props, context) {
-    const inputText = reactive<String>('');
+    const inputText = reactive({value: ""});
     const id = computed(() => `_${props.input.customClass}-${props.input.fieldName}`);
     const inputContainerClasses = computed(() => {
-      let iconColor: String;
+      let iconColor: string;
       switch (props.input.fieldIcon) {
         case "email":
           iconColor = "normal";
@@ -73,7 +82,7 @@ export default defineComponent({
     });
     const customInputClasses = computed(() => ["input-primary ", props.input.customClass]);
     const fieldIconChoice = computed(() => {
-      let icon: any;
+      let icon: string[];
       switch (props.input.fieldIcon) {
         case "email":
           icon = ["fal", "at"];

@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   getToken, getOrganizationId, getUsername, getUserId,
-} from '@/utils/auth';
-import { getTenant, solutionId } from '@/extension/extra';
+} from "@/utils/auth";
+import { getTenant, solutionId } from "@/extension/extra";
 
 export function getConfig(item) {
   let envUrl;

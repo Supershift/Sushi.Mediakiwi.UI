@@ -23,9 +23,9 @@
               v-html="option.name" />
             </span>
             <label
-            :for="checkbox.fieldGroupName"
-            v-if="useCheckUndefined(field)"
-            v-html="useCheckUndefined(field)" />
+              :for="checkbox.fieldGroupName"
+              v-if="useCheckUndefined(field)"
+              v-html="useCheckUndefined(field)" />
     </div>
 </template>
 <script lang="ts">

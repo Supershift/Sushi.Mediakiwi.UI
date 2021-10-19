@@ -1,24 +1,32 @@
 <template>
-    <div class="form-error-container">
-        <span class="message" v-show="messageList.length">
-            <p>
-                <fa icon="exclamation-triangle"></fa>
-                <span
-                  v-for="(message, index) in messageList"
-                  v-html="message.message"
-                  :key="index"></span>
-            </p>
-        </span>
-        <span class="error" v-show="errorList.length">
-            <p>
-                <fa icon="exclamation-triangle"></fa>
-                <span
-                v-for="(error,index) in errorList"
-                v-html="error.message"
-                :key="index"></span>
-            </p>
-        </span>
-    </div>
+  <div class="form-error-container">
+    <span
+      v-show="messageList.length"
+      class="message"
+    >
+      <p>
+        <fa icon="exclamation-triangle" />
+        <span
+          v-for="(message, index) in messageList"
+          :key="index"
+          v-html="message.message"
+        />
+      </p>
+    </span>
+    <span
+      v-show="errorList.length"
+      class="error"
+    >
+      <p>
+        <fa icon="exclamation-triangle" />
+        <span
+          v-for="(error,index) in errorList"
+          :key="index"
+          v-html="error.message"
+        />
+      </p>
+    </span>
+  </div>
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";

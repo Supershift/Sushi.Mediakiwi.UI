@@ -1,19 +1,19 @@
 import OptionModel from "./OptionModel";
 
 export interface SelectModel {
-    error: String;
-    disabled: Boolean;
-    mandatory: Boolean;
-    value: String;
-    tabindex: Number;
-    fieldName: String;
+    error: string;
+    disabled: boolean;
+    mandatory: boolean;
+    value: string;
+    tabindex: number;
+    fieldName: string;
     fieldIcon: string;
-    multiple: Boolean;
-    customClass: String;
-    hasValidation: Boolean;
-    isValid: Boolean;
-    showLabel: Boolean;
-    showDefault: Boolean;
-    defaultLabel: String;
+    multiple: boolean;
+    customClass: string;
+    hasValidation: boolean;
+    isValid: boolean;
+    showLabel: boolean;
+    showDefault: boolean;
+    defaultLabel: string;
     options: OptionModel[];
 }

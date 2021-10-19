@@ -2,11 +2,19 @@
   <form class="login" @submit.prevent="handleLogin">
     <img src="../assets/images/vaultN-logo.svg" class="login-logo" />
     <h1>{{ contentLogin.loginHeadlineText }}</h1>
-    <CustomInput :input="customEmailInput" @valueChanged="handleTextChanged"/>
-    <CustomInput :input="customPasswordInput" @valueChanged="handleTextChanged"/>
-    <FormErrors v-if="errroMessages" :messages="errroMessages"></FormErrors>
+    <CustomInput
+      :input="customEmailInput"
+      @valueChanged="handleTextChanged" />
+    <CustomInput
+      :input="customPasswordInput"
+      @valueChanged="handleTextChanged" />
+    <FormErrors
+      v-if="errroMessages"
+      :messages="errroMessages" />
     <a href="#/forgot" class="link">{{ contentLogin.loginForgotPasswordText }}</a>
-    <CustomButton :button="customLoginButton" @buttonClicked="handleLogin"/>
+    <CustomButton
+      :button="customLoginButton"
+      @buttonClicked="handleLogin" />
     <a href="#/reset" class="link">{{ contentLogin.loginCreateAccountText }}</a>
   </form>
 </template>
@@ -16,63 +24,62 @@ import {
   computed,
   defineComponent,
   ref,
-} from 'vue';
-import store from '../store/index';
-import FormErrors from './form/FormErrors.vue';
-import CustomInput from './form/CustomInput.vue';
-import CustomButton from './form/CustomButton.vue';
-import InputModel from '../models/InputModel';
-import ButtonModel from '../models/ButtonModel';
-import MessageModel from '../models/MessageModel';
+} from "vue";
+import store from "../store/index";
+import FormErrors from "./form/FormErrors.vue";
+import CustomInput from "./form/CustomInput.vue";
+import CustomButton from "./form/CustomButton.vue";
+import InputModel from "../models/InputModel";
+import ButtonModel from "../models/ButtonModel";
+import MessageModel from "../models/MessageModel";
 
 export default defineComponent({
-  name: 'Login',
+  name: "Login",
   components: {
     FormErrors,
     CustomInput,
     CustomButton,
   },
   setup() {
-    const email = ref('');
-    const password = ref('');
+    const email = ref("");
+    const password = ref("");
     const errroMessages = ref<MessageModel[]>([]);
     const contentLogin = computed(() => store.getters.contentLogin);
     const customEmailInput = ref<InputModel>({
-      customClass: 'input-email',
-      fieldIcon: 'email',
-      fieldPlaceholder: 'Email',
+      customClass: "input-email",
+      fieldIcon: "email",
+      fieldPlaceholder: "Email",
       disabled: false,
-      suffix: '',
-      prefix: '',
-      fieldName: 'email',
-      fieldValue: '',
+      suffix: "",
+      prefix: "",
+      fieldName: "email",
+      fieldValue: "",
       readOnly: false,
     });
     const customPasswordInput = ref<InputModel>({
-      customClass: 'input-password',
-      fieldIcon: 'password',
-      fieldPlaceholder: 'Password',
+      customClass: "input-password",
+      fieldIcon: "password",
+      fieldPlaceholder: "Password",
       disabled: false,
-      suffix: '',
-      prefix: '',
-      fieldName: 'password',
-      fieldValue: '',
+      suffix: "",
+      prefix: "",
+      fieldName: "password",
+      fieldValue: "",
       readOnly: false,
     });
     const customLoginButton = ref<ButtonModel>({
-      customClass: 'btn-login',
-      buttonIcon: '',
+      customClass: "btn-login",
+      buttonIcon: "",
       disabled: false,
-      buttondName: 'login',
+      buttondName: "login",
       value: contentLogin.value.loginButtonText,
       readOnly: false,
     });
     function handleLogin() {
-      console.log('TODO: Fix login');
-      store.dispatch('toggleLogIn');
+      store.dispatch("toggleLogIn");
     }
     function handleTextChanged() {
-      console.log('TODO: Fix Text changed');
+      // console.log('TODO: Fix Text changed');
     }
     return {
       email,
