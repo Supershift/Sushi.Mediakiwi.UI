@@ -1,24 +1,40 @@
 <template>
-<div class="drawer-container"><!-- Sidebar -->
-  <transition name="expand" mode="ease-in">
-    <div class="sidebar-container" :class="positionCss + collapsableCss">
-      <div class="brand-container" @click="handleToggle">
-        <img src="../../assets/images/leftnav-bg-grad.png" class="topleft-nav-gradient" />
-        <div class="logo-container">
-          <transition name="fade">
-            <img :src="logoSrc" :class="'logo-small '+ logoCss" />
-          </transition>
-          <fa :icon="chevronChoice" class="drawer-icon" />
+  <div class="drawer-container">
+    <!-- Sidebar -->
+    <transition
+      name="expand"
+      mode="ease-in"
+    >
+      <div :class="positionCss + collapsableCss">
+        <div
+          class="brand-container"
+          @click="handleToggle"
+        >
+          <img
+            src="../../assets/images/leftnav-bg-grad.png"
+            class="topleft-nav-gradient"
+          >
+          <div class="logo-container">
+            <transition name="fade">
+              <img
+                :src="logoSrc"
+                :class="logoCss"
+              >
+            </transition>
+            <fa
+              :icon="chevronChoice"
+              class="drawer-icon"
+            />
+          </div>
         </div>
+        <ListMenu :customClass="customListClass" />
+        <slot name="drawer" /><!-- Drawer opener -->
       </div>
-      <ListMenu :customClass="customListClass" />
-      <slot name="drawer" /><!-- Drawer opener -->
+    </transition>
+    <div class="slot-content-container">
+      <slot name="content" /><!-- Drawer content -->
     </div>
-  </transition>
-  <div class="slot-content-container">
-    <slot name="content" /><!-- Drawer content -->
   </div>
-</div>
 </template>
 
 <script>
@@ -44,11 +60,11 @@ export default defineComponent({
   setup(props) {
     const open = ref(props.toggler);
     const customListClass = ref("list-menu");
-    const positionCss = computed(() => (props.right ? ["right-0 flex-row "] : ["left-0 flex-row-reverse "]));
+    const positionCss = computed(() => (props.right ? ["sidebar-container right-0 flex-row "] : ["sidebar-container left-0 flex-row-reverse "]));
     const collapsableCss = computed(() => (open.value ? ["open-drawer "] : [""]));
     const chevronChoice = computed(() => (!open.value ? "chevron-right" : "chevron-left"));
     const logoSrc = computed(() => (!open.value ? logoS : logoL));
-    const logoCss = computed(() => (!open.value ? "" : "logo-large"));
+    const logoCss = computed(() => (!open.value ? "logo-small " : "logo-small logo-large"));
     function handleToggle() {
       open.value = !open.value;
       store.dispatch("toggleDrawer");

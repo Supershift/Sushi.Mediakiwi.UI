@@ -1,24 +1,28 @@
 <template>
-<div
-  v-if="notification.show"
-  class="notification-container">
   <div
-    class="notification-bubble"
-    :class="alertCss">
+    v-if="notification.show"
+    class="notification-container"
+  >
+    <div
+      class="notification-bubble"
+      :class="alertCss"
+    >
       <fa 
         icon="sort-up"
-        class="notification-top-icon" />
+        class="notification-top-icon"
+      />
       <div class="notification-bubble-content">
-          <fa :icon="iconChoice" />
-          {{ notification.alertText }}
-          <button 
-            v-if="notification.hasAction"
-            class="btn btn-notification">
-            {{ notification.actionText }}
-          </button>
+        <fa :icon="iconChoice" />
+        {{ notification.alertText }}
+        <button 
+          v-if="notification.hasAction"
+          class="btn btn-notification"
+        >
+          {{ notification.actionText }}
+        </button>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>

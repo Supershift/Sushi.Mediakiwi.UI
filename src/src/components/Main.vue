@@ -3,6 +3,7 @@
     <div class="col main-container">
       <CustomSelectInput :select="customSelectTestInput" />
       <CustomChoiceRadio :radio="customRadioTestInput" />
+      <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" />
     </div>
   </div>
 </template>
@@ -11,15 +12,17 @@
 import { defineComponent, ref } from "vue";
 import CustomSelectInput from "./form/CustomSelectInput.vue";
 import { SelectModel } from "../models/SelectModel";
-import SelectOptionModel from "../models/OptionModel";
 import RadioModel from "../models/RadioModel";
 import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
+import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
+import CheckboxModel from "../models/CheckboxModel";
 
 export default defineComponent({
   name: "MainView",
   components: {
     CustomSelectInput,
     CustomChoiceRadio,
+    CustomChoiceCheckBox,
   },
   setup() {
     const customSelectTestOptions = [{
@@ -55,15 +58,27 @@ export default defineComponent({
       fieldValue: "",
       fieldName: "main-radio",
       fieldIcon: "",
-      fieldGroupName: "main",
+      fieldGroupName: "r_main",
       suffix: "",
       prefix: "",
       customClass: "radio-primary",
       options: customSelectTestOptions,
     });
+    const customCheckboxTestInput = ref<CheckboxModel>({
+      disabled: false,
+      fieldValue: "",
+      fieldName: "main-checkbox",
+      fieldIcon: "",
+      fieldGroupName: "cb_main",
+      suffix: "",
+      prefix: "",
+      customClass: "checkbox-primary",
+      options: customSelectTestOptions,
+    });
     return {
       customSelectTestInput,
-      customRadioTestInput
+      customRadioTestInput,
+      customCheckboxTestInput,
     };
   },
 });

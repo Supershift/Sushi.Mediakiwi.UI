@@ -17,6 +17,7 @@ import ListMenuItem from "./ListMenuItem.vue";
 import store from "../../store/index";
 
 export default defineComponent({
+  name:"ListMenu",
   components: { ListMenuItem },
   props: {
     customClass: {

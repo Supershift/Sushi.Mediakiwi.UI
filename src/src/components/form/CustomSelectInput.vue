@@ -47,7 +47,7 @@
     <label
       v-if="undefinedCheck(select.suffix)"
       class="select-suffix"
-      v-html="undefinedCheck(select?.suffix)"
+      v-html="undefinedCheck(select.suffix)"
     />
   </div>
 </template>

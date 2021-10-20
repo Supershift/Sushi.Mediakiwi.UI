@@ -1,32 +1,34 @@
 <template>
   <div :class="radioContainerClasses">         
     <label
-        v-if="undefinedCheck(radio.prefix)"
-        v-html="undefinedCheck(radio.prefix)" />
+      v-if="undefinedCheck(radio.prefix)"
+      v-html="undefinedCheck(radio.prefix)"
+    />
     <span
-        v-for="option in radio.options"
-        :key="fieldID(option)"
-        class="radio-choice-container"
+      v-for="option in radio.options"
+      :key="fieldID(option)"
+      class="radio-choice-container"
     >
-        <input
-            type="radio"
-            :id="fieldID(option)"
-            :class="customRadioClasses"
-            :name="radio.fieldGroupName"
-            @change="handleChange"
-            :value="valueRef.value"
-            :disabled="radio.disabled"
-        >
-        <span class="checkmark"/>
-        <label
-          :for="fieldID(option)"
-          v-html="option.name"
-        />
+      <input
+        :id="fieldID(option)"
+        type="radio"
+        :class="customRadioClasses"
+        :name="radio.fieldGroupName"
+        :value="valueRef.value"
+        :disabled="radio.disabled"
+        @change="handleChange"
+      >
+      <span class="checkmark" />
+      <label
+        :for="fieldID(option)"
+        v-html="option.name"
+      />
     </span>
     <fa
-        v-if="radio.fieldIcon"
-        :icon="fieldIconChoice"
-        class="radio-icon" />
+      v-if="radio.fieldIcon"
+      :icon="fieldIconChoice"
+      class="radio-icon"
+    />
     <label
       v-if="undefinedCheck(radio.suffix)"
       v-html="undefinedCheck(radio.suffix)" 
@@ -41,6 +43,7 @@ import OptionModel from "../../models/OptionModel";
 
 export default defineComponent({
     name: "RadioChoice",
+    mixins: [useCheckUndefined],
     props: {
         radio: {
             type: Object as PropType<RadioModel>,
@@ -48,7 +51,6 @@ export default defineComponent({
         },
     },
     emits:["radioChanged"],
-    mixins: [useCheckUndefined],
     setup(props, context) {
         const valueRef = reactive({value: ""});
         const customRadioClasses = computed(() => ["radio-primary ", props.radio.customClass]);
@@ -97,7 +99,7 @@ export default defineComponent({
         return ["radio-container ", iconColor];
         });
         const fieldIconChoice = computed(() => {
-        let icon: any;
+        let icon: string[];
         switch (props.radio.fieldIcon) {
             case "email":
             icon = ["fal", "at"];
