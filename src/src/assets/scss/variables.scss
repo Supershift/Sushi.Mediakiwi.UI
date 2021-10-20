@@ -50,28 +50,28 @@ $animation-progression-easeInOut: cubic-bezier(0.25, 0.1, 0.25, 1);
 
 // Breakpoint & Grid-layout
 $breakpoints: (
-    'xs': 319px,
-    's': 479px,
-    'm': 767px,
-    'l': 959px,
-    'xl': 1279px,
-    'xxl': 1439px
+    "xs": 319px,
+    "s": 479px,
+    "m": 767px,
+    "l": 959px,
+    "xl": 1279px,
+    "xxl": 1439px
 );
 $grid-breakpoints: (
-    1: 'xs',
-    2: 's',
-    3: 'm',
-    4: 'l',
-    5: 'xl',
-    6: 'xxl'
+    1: "xs",
+    2: "s",
+    3: "m",
+    4: "l",
+    5: "xl",
+    6: "xxl"
 );
 $grid-layout-columns: (
-    'xs': 40px,
-    's': 67px,
-    'm': 90px,
-    'l': 136px,
-    'xl': 200px,
-    'xxl': 240px,
+    "xs": 40px,
+    "s": 67px,
+    "m": 90px,
+    "l": 136px,
+    "xl": 200px,
+    "xxl": 240px,
 );
 $grid-s: 480px;
 $grid-m: 768px;
@@ -126,7 +126,7 @@ $font-size-2xs: 8px;
 
 $fontAwesome6Pro: "Font Awesome 6 Pro";
 $fontAwesomeBrands: "Font Awesome 6 Brands";
-$font-primary: 'Rajdhani', 'Arial', Sans-serif;
+$font-primary: "Rajdhani", "Arial", Sans-serif;
 $font-secundary: "Rajdhani Light",
 Arial,
 Sans-serif;

@@ -1,17 +1,16 @@
-@import './mixins.scss';
-@import './variables.scss';
-
+@import "./mixins.scss";
+@import "./variables.scss";
 
 @include row();
 
 @include col;
 
-@include col-('s');
+@include col-("s");
 
-@include col-('m');
+@include col-("m");
 
-@include col-('l');
+@include col-("l");
 
-@include col-('xl');
+@include col-("xl");
 
-@include col-('xxl');
+@include col-("xxl");

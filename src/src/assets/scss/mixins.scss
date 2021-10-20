@@ -1,5 +1,5 @@
-@import './variables.scss';
-@import './functions.scss';
+@import "./variables.scss";
+@import "./functions.scss";
 
 /// Mixin to prefix a property
 /// @author Hugo Giraudel
@@ -7,8 +7,8 @@
 /// @param {*} $value - Property value
 /// usage @include vendor-prefix('box-sizing', 'border-box');
 @mixin prefix($property, $value, $important: false) {
-    @each $prefix in ('webkit', 'moz', 'ms', 'o') {
-        #{'-' + $prefix + '-' + $property}: $value;
+    @each $prefix in ("webkit", "moz", "ms", "o") {
+        #{"-" + $prefix + "-" + $property}: $value;
     }
 
     // Output standard non-prefixed declaration
@@ -33,8 +33,8 @@
 }
 
 @mixin clear {
-    &:after {
-        content: '';
+    &::after {
+        content: "";
         display: block;
         clear: both;
     }
@@ -43,7 +43,7 @@
 @mixin verticalMiddle {
     position: relative;
     top: 50%;
-    @include prefix('transform', translateY(-50%));
+    @include prefix("transform", translateY(-50%));
 }
 
 
@@ -78,7 +78,7 @@
 
     $lineHeigtUnit: getUnit($lineHeight);
 
-    @if($lineHeigtUnit=='rem') {
+    @if($lineHeigtUnit == "rem") {
         @include pixel-fallback(line-height, $lineHeight);
     }
 
@@ -88,7 +88,7 @@
 
     $fontSizeUnit: getUnit($fontSize);
 
-    @if($fontSizeUnit=='rem') {
+    @if($fontSizeUnit == "rem") {
         @include pixel-fallback(font-size, $fontSize);
     }
 
@@ -102,7 +102,7 @@
 /// @param {String} $property - Property name
 /// @param {*} $value - Property value
 @mixin rem-fallback($property, $valueInPixels, $important: false) {
-    @if($valueInPixels !="initial") {
+    @if($valueInPixels != "initial") {
         #{$property}: $valueInPixels !important;
     }
 
