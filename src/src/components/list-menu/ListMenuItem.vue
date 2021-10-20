@@ -1,9 +1,12 @@
 <template>
   <li :id="id">
-      <fa :icon="icon" class="menu-icon" ></fa>
-      <transition name="expand">
-        <span v-show="openDrawer">{{ name }}</span>
-      </transition>
+    <fa
+      class="menu-icon"
+      :icon="icon"
+    />
+    <transition name="expand">
+      <span v-show="openDrawer">{{ name }}</span>
+    </transition>
   </li>
 </template>
 
@@ -12,10 +15,10 @@ import { computed, defineComponent } from "vue";
 import store from "../../store/index";
 
 export default defineComponent({
-  name: "List Menu Item",
+  name: "ListMenuItem",
   props: {
     icon: {
-      type: Array<String>([]),
+      type: Array<string>([]),
       required: true,
     },
     name: {

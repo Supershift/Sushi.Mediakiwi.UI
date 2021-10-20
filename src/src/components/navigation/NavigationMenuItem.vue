@@ -1,8 +1,12 @@
 <template>
-  <li 
-  :id="id+'_'+name"
-  class="navigation-link"
-  ><a href="/">{{ name }}</a></li>
+  <li
+    :id="id+'_'+name"
+    class="navigation-link"
+  >
+    <a href="/">
+      {{ name }}
+    </a>
+  </li>
 </template>
 
 <script>

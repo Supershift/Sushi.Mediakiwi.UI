@@ -1,21 +1,41 @@
 <template>
-  <form class="login" @submit.prevent="handleLogin">
-    <img src="../assets/images/vaultN-logo.svg" class="login-logo" />
+  <form
+    class="login"
+    @submit.prevent="handleLogin"
+  >
+    <img
+      src="../assets/images/vaultN-logo.svg"
+      class="login-logo"
+    >
     <h1>{{ contentLogin.loginHeadlineText }}</h1>
     <CustomInput
       :input="customEmailInput"
-      @valueChanged="handleTextChanged" />
+      @valueChanged="handleTextChanged"
+    />
     <CustomInput
       :input="customPasswordInput"
-      @valueChanged="handleTextChanged" />
+      @valueChanged="handleTextChanged"
+    />
     <FormErrors
       v-if="errroMessages"
-      :messages="errroMessages" />
-    <a href="#/forgot" class="link">{{ contentLogin.loginForgotPasswordText }}</a>
+      :messages="errroMessages"
+    />
+    <a
+      href="#/forgot"
+      class="link"
+    >
+      {{ contentLogin.loginForgotPasswordText }}
+    </a>
     <CustomButton
       :button="customLoginButton"
-      @buttonClicked="handleLogin" />
-    <a href="#/reset" class="link">{{ contentLogin.loginCreateAccountText }}</a>
+      @buttonClicked="handleLogin"
+    />
+    <a
+      href="#/reset"
+      class="link"
+    >
+      {{ contentLogin.loginCreateAccountText }}
+    </a>
   </form>
 </template>
 

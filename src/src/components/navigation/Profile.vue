@@ -1,26 +1,35 @@
 <template>
-<div class="profile-main-container">
-  <div class="profile-brand">
+  <div class="profile-main-container">
+    <div class="profile-brand">
+      <img
+        :src="brandData.logo"
+        class="brand-image"
+        :alt="brandData.title"
+      >
+    </div>
     <img
-      :src="brandData.logo"
-      class="brand-image"
-      :alt="brandData.title" />
-  </div>
-  <img src="../../assets/images/company-circle.png" class="profile-company-circle">
-  <div
-    class="profile-container"
-    @click="handleDialogToggle">
+      src="../../assets/images/company-circle.png"
+      class="profile-company-circle"
+    >
+    <div
+      class="profile-container"
+      @click="handleDialogToggle"
+    >
       <div class="profile-avatar-container">
-          <div class="avatar">
-            <img
-              :src="profileData.avatar"
-              class="avatar-image"
-              :alt="profileData.name" />
-            <fa icon="sort-down" class="profile-icon" />
-          </div>
+        <div class="avatar">
+          <img
+            :src="profileData.avatar"
+            class="avatar-image"
+            :alt="profileData.name"
+          >
+          <fa
+            icon="sort-down"
+            class="profile-icon"
+          />
+        </div>
       </div>
+    </div>
   </div>
-</div>
 </template>
 
 <script>

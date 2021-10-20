@@ -14,7 +14,7 @@ import { defineComponent, computed } from "vue";
 import NavigationMenuItem from "./NavigationMenuItem.vue";
 
 export default defineComponent({
-  name: "Navigation Menu",
+  name: "NavigationMenu",
   props: {
     items: {
       type: Array,
