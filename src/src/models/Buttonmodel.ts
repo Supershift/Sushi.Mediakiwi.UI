@@ -1,4 +1,4 @@
-export default interface ButtonModel {
+interface ButtonModel {
     customClass: string;
     buttonIcon: string;
     disabled: boolean;
@@ -6,3 +6,5 @@ export default interface ButtonModel {
     value: string;
     readOnly: boolean;
 };
+
+export default ButtonModel;

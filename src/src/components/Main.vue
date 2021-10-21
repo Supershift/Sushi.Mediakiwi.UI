@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import CustomSelectInput from "./form/CustomSelectInput.vue";
-import { SelectModel } from "../models/SelectModel";
+import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
 import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
 import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";

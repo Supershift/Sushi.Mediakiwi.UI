@@ -1,4 +1,4 @@
-export default  interface InputModel {
+interface InputModel {
     customClass: string;
     fieldIcon: string;
     fieldPlaceholder: string;
@@ -9,3 +9,5 @@ export default  interface InputModel {
     fieldValue: string;
     readOnly: boolean;
 };
+
+export default InputModel;

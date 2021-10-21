@@ -1,7 +1,7 @@
 import MessageModel from "./MessageModel";
 import OptionModel from "./OptionModel";
 
-export default interface FieldModel {
+interface FieldModel {
   // Core
   propertyName: string;
   title: string;
@@ -30,3 +30,5 @@ export default interface FieldModel {
   event?: number | undefined | null;
   contentTypeID: number;
 };
+
+export default FieldModel;

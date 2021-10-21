@@ -1,6 +1,6 @@
 import OptionModel from "./OptionModel";
 
-export interface SelectModel {
+interface SelectModel {
     error: string;
     disabled: boolean;
     mandatory: boolean;
@@ -16,4 +16,6 @@ export interface SelectModel {
     showDefault: boolean;
     defaultLabel: string;
     options: OptionModel[];
-};
+}
+
+export default SelectModel;

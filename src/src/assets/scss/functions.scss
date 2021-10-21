@@ -1,11 +1,11 @@
 /* Calculates the width based on the given amount of columns*/
-@function column-width($columns, $gridWidth, $gridGutter, $gridColumns) {
-    $calculated-gutter-with: $gridGutter * ($columns - 1);
+@function column-width($columns, $grid-width, $grid-gutter, $grid-columns) {
+    $calculated-gutter-with:  $grid-gutter * ($columns - 1);
 
-    $calculatedColumnWidth: ($gridWidth - ($gridGutter * ($gridColumns - 1))) / $gridColumns;
-    $calculatedColumnWidth: ($calculatedColumnWidth * $columns);
+    $calculated-column-width: ($grid-columns - ( $grid-gutter * ($grid-columns - 1))) / $grid-columns;
+    $calculated-column-width: ($calculated-column-width * $columns);
 
-    @return $calculatedGutterWith+$calculatedColumnWidth;
+    @return $calculated-gutter-with+$calculated-column-width;
 }
 
 /* UNITS */
@@ -22,11 +22,11 @@
     @return $n / ($n * 0 + 1);
 }
 
-@function convert-to-rem($valueInPX, $baseFontSize: $font-size-base) {
-    @return #{($valueInPX / $baseFontSize)}rem;
+@function convert-to-rem($value-in-px, $base-font-size: $font-size-base) {
+    @return #{($value-in-px / $base-font-size)}rem;
 }
 
-@function convert-to-px($valueInREM, $baseFontSize: $font-size-base) {
-    $value: parse-int($valueInREM) * $baseFontSize; //15px is the base size specified
+@function convert-to-px($value-in-rem, $base-font-size: $font-size-base) {
+    $value: parse-int($value-in-rem) * $base-font-size; //15px is the base size specified
     @return round($value);
 }

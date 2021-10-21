@@ -1,6 +1,6 @@
 import OptionModel from "./OptionModel";
 
-export default interface RadioModel {
+interface RadioModel {
     customClass: string;
     fieldIcon: string;
     fieldGroupName: string;
@@ -11,3 +11,5 @@ export default interface RadioModel {
     fieldValue: string;
     options: OptionModel[];
 };
+
+export default RadioModel;

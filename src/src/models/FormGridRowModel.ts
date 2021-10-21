@@ -1,6 +1,8 @@
 import FieldModel from "./FieldModel";
 
-export default interface GridRowModel {
+interface GridRowModel {
     isButtonRow: boolean;
     fields: Array<FieldModel>;
 };
+
+export default GridRowModel;

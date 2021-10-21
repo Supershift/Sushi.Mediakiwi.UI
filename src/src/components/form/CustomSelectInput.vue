@@ -59,7 +59,7 @@ import {
   PropType,
   ref,
 } from "vue";
-import { SelectModel } from "../../models/SelectModel";
+import SelectModel from "../../models/SelectModel";
 import { useCheckUndefined } from "../form/index";
 
 export default defineComponent({

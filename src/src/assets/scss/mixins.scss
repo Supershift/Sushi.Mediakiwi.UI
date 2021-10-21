@@ -57,7 +57,6 @@
     }
 }
 
-
 /* ANIMTAIONS */
 /// Apply the standard animation a property
 @mixin animation($property: all, $timing: $animation-timing-m, $progression: $animation-progression-standard) {
@@ -71,28 +70,28 @@
 
 
 
-@mixin font($fontSize, $lineHeight, $margin: initial, $fontFamily: $font-primary) {
-    font-family: $fontFamily;
+@mixin font($font-size, $line-height, $margin: initial, $font-family: $font-primary) {
+    font-family: $font-family;
     margin: $margin;
 
-    $lineHeigtUnit: get-unit($lineHeight);
+    $line-heigt-unit: get-unit($line-height);
 
-    @if($lineHeigtUnit == "rem") {
-        @include pixel-fallback(line-height, $lineHeight);
+    @if ($line-heigt-unit == "rem") {
+        @include pixel-fallback(line-height, $line-height);
     }
 
-    @elseif {
-        @include rem-fallback(line-height, $lineHeight);
+    @else {
+        @include rem-fallback(line-height, $line-height);
     }
 
-    $fontSizeUnit: get-unit($fontSize);
+    $font-size-unit: get-unit($fontSize);
 
-    @if($fontSizeUnit == "rem") {
-        @include pixel-fallback(font-size, $fontSize);
+    @if($font-size-unit == "rem") {
+        @include pixel-fallback(font-size, $font-size);
     }
 
-    @elseif {
-        @include rem-fallback(font-size, $fontSize);
+    @else {
+        @include rem-fallback(font-size, $font-size);
     }
 }
 
@@ -100,22 +99,22 @@
 /// Mixin to include PX and REM unit to a property
 /// @param {String} $property - Property name
 /// @param {*} $value - Property value
-@mixin rem-fallback($property, $valueInPixels, $important: false) {
-    @if($valueInPixels != "initial") {
-        #{$property}: $valueInPixels !important;
+@mixin rem-fallback($property, $value-in-pixels, $important: false) {
+    @if ($value-in-pixels != "initial") {
+        #{$property}: $value-in-pixels !important;
     }
 
     @else {
 
         // Output standard non-prefixed declaration
         @if $important {
-            #{$property}: convertToRem($valueInPixels) !important;
-            #{$property}: $valueInPixels !important;
+            #{$property}: convert-to-rem($value-in-pixels) !important;
+            #{$property}: $value-in-pixels !important;
         }
 
         @else {
-            #{$property}: convertToRem($valueInPixels);
-            #{$property}: $valueInPixels;
+            #{$property}: convert-to-rem($value-in-pixels);
+            #{$property}: $value-in-pixels;
         }
     }
 }
@@ -123,17 +122,17 @@
 /// Mixin to include PX and REM unit to a property
 /// @param {String} $property - Property name
 /// @param {*} $value - Property value
-@mixin pixel-fallback($property, $valueInREM, $important: false) {
+@mixin pixel-fallback($property, $value-in-rem, $important: false) {
 
     // Output standard non-prefixed declaration
     @if $important {
-        #{$property}: convertToPX($valueInREM) !important;
-        #{$property}: $valueInREM !important;
+        #{$property}: convert-to-px($value-in-rem) !important;
+        #{$property}: $value-in-rem !important;
     }
 
     @else {
-        #{$property}: convertToPX($valueInREM);
-        #{$property}: $valueInREM;
+        #{$property}: convert-to-px($value-in-rem);
+        #{$property}: $value-in-rem;
     }
 }
 
@@ -144,7 +143,7 @@
 @mixin media-breakpoint-up($breakpoint) {
     // Only use existing breakpoint
     @if map-has-key($breakpoints, $breakpoint) {
-        @media (min-width: map-get($breakpoints, $breakpoint )) { 
+        @media (min-width: map-get($breakpoints, $breakpoint)) {
             @content;
         }
     }
