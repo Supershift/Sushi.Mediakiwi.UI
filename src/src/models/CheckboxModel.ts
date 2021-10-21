@@ -1,6 +1,6 @@
 import OptionModel from "./OptionModel";
 
-interface CheckboxModel {
+export default interface CheckboxModel {
     customClass: string;
     fieldIcon: string;
     fieldGroupName: string;
@@ -10,6 +10,4 @@ interface CheckboxModel {
     fieldName: string;
     fieldValue: string;
     options: OptionModel[];
-}
-
-export default CheckboxModel;
+};

@@ -4,4 +4,4 @@ export default interface SectionModel {
     canDeleteSection: boolean;
     formSection: string;
     visible: boolean;
-}
+};

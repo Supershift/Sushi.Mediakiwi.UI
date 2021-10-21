@@ -16,4 +16,4 @@ export interface SelectModel {
     showDefault: boolean;
     defaultLabel: string;
     options: OptionModel[];
-}
+};

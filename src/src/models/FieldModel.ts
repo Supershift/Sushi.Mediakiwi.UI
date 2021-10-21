@@ -29,4 +29,4 @@ export default interface FieldModel {
   error?: MessageModel | undefined | null;
   event?: number | undefined | null;
   contentTypeID: number;
-}
+};

@@ -1,7 +1,7 @@
-@import "./mixins.scss";
-@import "./grid.scss";
-@import "./functions.scss";
-@import "./variables.scss";
+@import "./mixins";
+@import "./grid";
+@import "./functions";
+@import "./variables";
 /**
 
   Main global styles file
@@ -23,10 +23,10 @@ ul {
     left: 0;
 }
 .right-0 {
-    right: 0
+    right: 0;
 }
 .left-0 {
-    left:0
+    left:0;
 }
 .flex-row-reverse {
     flex-direction: row-reverse;
@@ -37,11 +37,11 @@ ul {
 .btn {
     background: $color-main;
     background-repeat: no-repeat;
-    border: none;
+    border: 0;
     cursor: pointer;
     overflow: hidden;
     outline: none;
-    color: white;
+    color: #fff;
     padding: 15px 25px;
     padding-top: 14px;
     border-radius: $b-radius-6;

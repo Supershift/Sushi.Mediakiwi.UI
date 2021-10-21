@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "Navigation Menu Item",
+  name: "NavigationMenuItem",
   props: {
     name: {
       type: String,

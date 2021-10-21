@@ -44,7 +44,7 @@ $animation-progression-easeIn: cubic-bezier(0.25, 0, 1, 1);
 $animation-progression-easeOut: cubic-bezier(0, 0, 0.25, 1);
 $animation-progression-easeInOut: cubic-bezier(0.25, 0.1, 0.25, 1);
 
-/** 
+/**
   Breakpoints
 **/
 
@@ -124,12 +124,10 @@ $font-size-s: 14px;
 $font-size-xs: 12px;
 $font-size-2xs: 8px;
 
-$fontAwesome6Pro: "Font Awesome 6 Pro";
-$fontAwesomeBrands: "Font Awesome 6 Brands";
-$font-primary: "Rajdhani", "Arial", Sans-serif;
-$font-secundary: "Rajdhani Light",
-Arial,
-Sans-serif;
+$font-awesome-6-ro: "Font Awesome 6 Pro";
+$font-awesome-brands: "Font Awesome 6 Brands";
+$font-primary: "Rajdhani", "Arial", "Sans-serif";
+$font-secundary: "Rajdhani Light", "Arial", "Sans-serif";
 $font-weight-regular: 400;
 $font-weight-bold: 700;
 
@@ -148,16 +146,16 @@ $color-drakgrey: #2f353b;
 $color-success: #3a52c9;
 $color-warning: #f1c40f;
 $color-info: #1481fe;
-$color-alert: #ff0000;
+$color-alert: #f00;
 $color-grad-success: linear-gradient(to right, #79119a, #3a52c9);
 $color-grad-warning: linear-gradient(to right, #f17a0f, #f1c40f);
 $color-grad-info: linear-gradient(to right, #29c7fd, #1481fe);
-$color-grad-alert: linear-gradient(to right, #9d1515, #ff0000);
+$color-grad-alert: linear-gradient(to right, #9d1515, #f00);
 
 /* Hover & other colors */
 $color-hover-blue: linear-gradient(to right, #1481fe, #29c7fd);
 $color-hover-blue-invis: linear-gradient(to right, #25a6ed, #25a7ed00);
-$box-shadow: 0px 0px 10px #000; 
+$box-shadow: 0 0 10px #000;
 $border-purple: 2px solid #203195 outset;
 $opacity-inactive: 0.5;
 

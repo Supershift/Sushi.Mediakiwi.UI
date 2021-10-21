@@ -254,6 +254,7 @@ export default defineComponent({
       handleFieldsChanged,
       handleButtonClicked,
       hideLabel,
+      isHalfField,
     };
   },
 });

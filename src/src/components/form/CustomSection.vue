@@ -5,8 +5,8 @@
   >
     <h3
       @click="toggle($event)"
-      v-html="field.title"
       :class="{'toggle' : field.canToggleSection}"
+      v-html="field.title"
     />
     <span>
       <a
@@ -18,9 +18,9 @@
       <a
         v-if="field.canToggleSection"
         href=""
-        @click="toggle($event)"
-        class="list-icon"
         :class="getToggleClass"
+        class="list-icon"
+        @click="toggle($event)"        
       />
     </span>
   </th>

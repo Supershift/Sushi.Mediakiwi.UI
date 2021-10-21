@@ -1,5 +1,5 @@
-@import "./variables.scss";
-@import "./functions.scss";
+@import "./variables";
+@import "./functions";
 
 /// Mixin to prefix a property
 /// @author Hugo Giraudel
@@ -40,18 +40,17 @@
     }
 }
 
-@mixin verticalMiddle {
+@mixin vertical-middle {
     position: relative;
     top: 50%;
     @include prefix("transform", translateY(-50%));
 }
 
-
-@mixin buttonColor($color, $hover, $direction: toRight) {
+@mixin button-color($color, $hover, $direction: toRight) {
     background: linear-gradient(to right, $hover 50%, $color 50%);
     background-size: 201% 100%;
     background-position: right bottom;
-    @include prefix(transition, all .3s ease-out);
+    @include prefix(transition, all 0.3s ease-out);
 
     &:hover {
         background-position: left bottom;
@@ -67,7 +66,7 @@
 }
 
 @mixin animation-standard($property: all) {
-    @include animation($property, $animation-timing-s, $animation-progression-standard)
+    @include animation($property, $animation-timing-s, $animation-progression-standard);
 }
 
 
@@ -76,7 +75,7 @@
     font-family: $fontFamily;
     margin: $margin;
 
-    $lineHeigtUnit: getUnit($lineHeight);
+    $lineHeigtUnit: get-unit($lineHeight);
 
     @if($lineHeigtUnit == "rem") {
         @include pixel-fallback(line-height, $lineHeight);
@@ -86,7 +85,7 @@
         @include rem-fallback(line-height, $lineHeight);
     }
 
-    $fontSizeUnit: getUnit($fontSize);
+    $fontSizeUnit: get-unit($fontSize);
 
     @if($fontSizeUnit == "rem") {
         @include pixel-fallback(font-size, $fontSize);

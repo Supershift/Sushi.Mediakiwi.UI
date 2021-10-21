@@ -5,4 +5,4 @@ export default interface ButtonModel {
     buttondName: string;
     value: string;
     readOnly: boolean;
-}
+};

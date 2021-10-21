@@ -8,11 +8,10 @@
     @return $calculatedGutterWith+$calculatedColumnWidth;
 }
 
-
 /* UNITS */
 
 @function get-unit($value) {
-    @if($value !="initial") {
+    @if($value != "initial") {
         @return str-slice($value * 0 + "", 2, -1);
     }
 
@@ -23,11 +22,11 @@
     @return $n / ($n * 0 + 1);
 }
 
-@function convertToRem($valueInPX, $baseFontSize: $font-size-base) {
+@function convert-to-rem($valueInPX, $baseFontSize: $font-size-base) {
     @return #{($valueInPX / $baseFontSize)}rem;
 }
 
-@function convertToPX($valueInREM, $baseFontSize: $font-size-base) {
-    $value: parseInt($valueInREM) * $baseFontSize; //15px is the base size specified
+@function convert-to-px($valueInREM, $baseFontSize: $font-size-base) {
+    $value: parse-int($valueInREM) * $baseFontSize; //15px is the base size specified
     @return round($value);
 }
