@@ -7,21 +7,21 @@
       @click="toggle($event)"
       v-html="field.title"
       :class="{'toggle' : field.canToggleSection}"
-    ></h3>
+    />
     <span>
-        <a
-          v-if="field.canDeleteSection"
-          href="" 
-          @click="removeFields($event)"
-          class="list-btn icon-times"
-        />
-        <a
-          v-if="field.canToggleSection"
-          href=""
-          @click="toggle($event)"
-          class="list-icon"
-          :class="getToggleClass"
-        />
+      <a
+        v-if="field.canDeleteSection"
+        href="" 
+        @click="removeFields($event)"
+        class="list-btn icon-times"
+      />
+      <a
+        v-if="field.canToggleSection"
+        href=""
+        @click="toggle($event)"
+        class="list-icon"
+        :class="getToggleClass"
+      />
     </span>
   </th>
 </template>
@@ -59,9 +59,9 @@ export default defineComponent({
         }
         return false;
     }
-    function toggle(e) {
+    function toggle(e: Event) {
         if (e)
-          e.preventDefault();
+        { e.preventDefault(); }
         if (this.field.canToggleSection) {
           context.emit("toggle", props.field.formSection);
         }

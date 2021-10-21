@@ -27,7 +27,7 @@
             />
           </div>
         </div>
-        <ListMenu :customClass="customListClass" />
+        <ListMenu :custom-class="customListClass" />
         <slot name="drawer" /><!-- Drawer opener -->
       </div>
     </transition>
