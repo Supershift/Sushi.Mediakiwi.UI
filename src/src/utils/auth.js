@@ -6,7 +6,7 @@ const StateKey = "vue_admin_identity_state";
 const TenantApplicationIdKey = "tenant_application_id";
 
 export function getSolutionId() {
-
+  return;
 }
 export function getUsername() {
   return Cookies.get("vue-username");

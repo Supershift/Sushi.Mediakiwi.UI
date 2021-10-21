@@ -1,4 +1,4 @@
-const useCheckUndefined = {
+export const useCheckUndefined = {
   methods: {
     undefinedCheck(field: string): string {
       return (typeof (field) !== "undefined" && field) ? field : "";
@@ -6,4 +6,9 @@ const useCheckUndefined = {
   },
 };
 
-export default useCheckUndefined;
+export enum ExpressionType {
+  Full = 0,
+  Left = 1,
+  Right = 2,
+  Alternating = 3,
+}

@@ -18,7 +18,7 @@ export default defineComponent({
   name: "ListMenuItem",
   props: {
     icon: {
-      type: Array<string>([]),
+      type: Array,
       required: true,
     },
     name: {

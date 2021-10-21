@@ -22,8 +22,8 @@ export function getConfig(item) {
       config.headers.OrganizationId = getOrganizationId();
       config.headers.UserName = getUsername();
       config.headers.UserId = getUserId();
-      config.headers['Content-Type'] = 'application/json charset=utf-8';
-      config.headers['Access-Control-Allow-Origin'] = '*';
+      config.headers["Content-Type"] = "application/json charset=utf-8";
+      config.headers["Access-Control-Allow-Origin"] = "*";
       return config;
     }, (error) => Promise.reject(error),
   );

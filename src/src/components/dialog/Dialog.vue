@@ -72,6 +72,7 @@ export default defineComponent({
     position: absolute;
     right: 30px;
     top: 100px;
+    z-index: 999;
     .dialog-bubble {
         position: relative;
         .dialog-top-icon {

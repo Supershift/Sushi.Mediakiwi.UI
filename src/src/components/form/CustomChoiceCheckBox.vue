@@ -36,7 +36,7 @@
   </div>
 </template>
 <script lang="ts">
-import useCheckUndefined from "./index";
+import { useCheckUndefined } from "./index";
 import CheckboxModel from "../../models/CheckboxModel";
 import OptionModel from "../../models/OptionModel";
 import { computed, defineComponent, PropType, reactive } from "vue";
@@ -53,6 +53,7 @@ export default defineComponent({
   emits:["checkboxChanged"],
   setup(props, context) {
     const valueRef = reactive({value: ""});
+    const customCheckboxClasses = computed(() => ["checkbox-primary ", props.checkbox.customClass]);
     function handleChange(e: Event) {
       if (props.checkbox.fieldValue !== null) {
         context.emit("checkboxChanged", e, props.checkbox.fieldValue);
@@ -111,6 +112,7 @@ export default defineComponent({
     });
     return {
       checkboxContainerClasses,
+      customCheckboxClasses,
       fieldIconChoice,
       valueRef,
       fieldID,

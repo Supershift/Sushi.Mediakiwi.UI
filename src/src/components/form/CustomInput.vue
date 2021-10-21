@@ -41,7 +41,7 @@ import {
   reactive,
 } from "vue";
 import InputModel from "../../models/InputModel";
-import useCheckUndefined from "./index";
+import { useCheckUndefined } from "../form/index";
 
 export default defineComponent({
   name: "FormInput",

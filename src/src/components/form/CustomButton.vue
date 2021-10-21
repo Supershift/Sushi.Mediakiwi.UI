@@ -1,10 +1,10 @@
 <template>
-      <button
-      :class="customButtonClasses"
-      @click.prevent="handleClicked"
-      >
-      {{ button.value }}
-      </button>
+  <button
+    :class="customButtonClasses"
+    @click.prevent="handleClicked"
+  >
+    {{ button.value }}
+  </button>
 </template>
 
 <script lang="ts">

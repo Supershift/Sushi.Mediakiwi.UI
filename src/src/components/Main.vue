@@ -4,6 +4,7 @@
       <CustomSelectInput :select="customSelectTestInput" />
       <CustomChoiceRadio :radio="customRadioTestInput" />
       <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" />
+      <FormGrid />
     </div>
   </div>
 </template>
@@ -16,6 +17,7 @@ import RadioModel from "../models/RadioModel";
 import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
 import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
 import CheckboxModel from "../models/CheckboxModel";
+import FormGrid from "./form/FormGrid.vue";
 
 export default defineComponent({
   name: "MainView",
@@ -23,6 +25,7 @@ export default defineComponent({
     CustomSelectInput,
     CustomChoiceRadio,
     CustomChoiceCheckBox,
+    FormGrid,
   },
   setup() {
     const customSelectTestOptions = [{

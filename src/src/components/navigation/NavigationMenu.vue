@@ -1,5 +1,5 @@
 <template>
-  <ul :class="customClass">
+  <ul :class="customListClass">
     <NavigationMenuItem
       v-for="item in items"
       :id="item.id"
@@ -15,24 +15,25 @@ import NavigationMenuItem from "./NavigationMenuItem.vue";
 
 export default defineComponent({
   name: "NavigationMenu",
+  components: {
+    NavigationMenuItem,
+  },
   props: {
     items: {
       type: Array,
       required: true,
     },
-    class: {
+    customClass: {
       type: String,
       required: false,
+      default: "",
     },
   },
   setup(props) {
-    const customClass = computed(() => `${props.class} navigation-menu`);
+    const customListClass = computed(() => `${props.class} navigation-menu`);
     return {
-      customClass,
+      customListClass,
     };
-  },
-  components: {
-    NavigationMenuItem,
   },
 });
 </script>

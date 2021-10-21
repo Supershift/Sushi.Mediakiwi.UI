@@ -1,6 +1,6 @@
 /* Calculates the width based on the given amount of columns*/
 @function column-width($columns, $gridWidth, $gridGutter, $gridColumns) {
-    $calculatedGutterWith: $gridGutter * ($columns - 1);
+    $calculated-gutter-with: $gridGutter * ($columns - 1);
 
     $calculatedColumnWidth: ($gridWidth - ($gridGutter * ($gridColumns - 1))) / $gridColumns;
     $calculatedColumnWidth: ($calculatedColumnWidth * $columns);

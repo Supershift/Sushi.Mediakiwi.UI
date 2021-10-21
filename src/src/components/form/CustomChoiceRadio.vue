@@ -37,7 +37,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, reactive } from "vue";
-import useCheckUndefined from "./index";
+import { useCheckUndefined } from "../form/index";
 import RadioModel from "../../models/RadioModel";
 import OptionModel from "../../models/OptionModel";
 
