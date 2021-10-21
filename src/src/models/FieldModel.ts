@@ -7,13 +7,13 @@ export default interface FieldModel {
   title: string;
   vueType: string;
   // MK
-  propertyType: number | undefined;
+  propertyType: string | undefined |null;
   expression: number;
   value: string | null;
-  options: OptionModel | undefined;
-  className: string |undefined;
+  options: OptionModel | undefined | null;
+  className: string | undefined | null;
   event: string;
-  inputPost: string | undefined;
+  inputPost: string | undefined | null;
   section: number;
   hidden: boolean;
   groupName: string;
@@ -25,6 +25,7 @@ export default interface FieldModel {
   toggleDefaultClosed: boolean;
   readOnly: boolean;
   mandatory: boolean;
-  componentKey: number | undefined;
-  error: MessageModel | undefined;
+  componentKey: number | undefined | null;
+  error: MessageModel | undefined | null;
+  helpText: string;
 }

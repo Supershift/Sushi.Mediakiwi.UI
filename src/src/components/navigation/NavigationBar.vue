@@ -2,7 +2,10 @@
   <div class="navigation-bar ">
     <div class="navigation-content">
       <div class="navigation-logo">
-        <fa icon="fingerprint" class="navigation-icon"></fa>
+        <fa 
+          icon="fingerprint"
+          class="navigation-icon"
+        />
       </div>
       <h2>{{ siteTitle }}</h2>
       <NavigationMenu :items="navigationItems" />

@@ -4,7 +4,10 @@
       <CustomSelectInput :select="customSelectTestInput" />
       <CustomChoiceRadio :radio="customRadioTestInput" />
       <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" />
-      <FormGrid />
+      <FormGrid
+        :fields="customFields"
+        :notifications="customNotifications"
+      />
     </div>
   </div>
 </template>
@@ -18,6 +21,8 @@ import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
 import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
 import CheckboxModel from "../models/CheckboxModel";
 import FormGrid from "./form/FormGrid.vue";
+import FieldModel from "../models/FieldModel";
+import MessageModel from "../models/MessageModel";
 
 export default defineComponent({
   name: "MainView",
@@ -78,10 +83,41 @@ export default defineComponent({
       customClass: "checkbox-primary",
       options: customSelectTestOptions,
     });
+    const customFields = ref<FieldModel[]>([
+    {
+      contentTypeID: 10,
+      propertyName: "TestProperty",
+      propertyType: "string",
+      title: "Test Property",
+      vueType: "5",
+      expression: 1,
+      value: "User input",
+      options: null,
+      className: null,
+      event: 0,
+      inputPost: null,
+      section: 0,
+      hidden: null,
+      groupName: null,
+      suffix: null,
+      prefix: null,
+      formSection: null,
+      canToggleSection: false,
+      canDeleteSection: false,
+      toggleDefaultClosed: false,
+      readOnly: false,
+      helpText: "This field can do stuff",
+      componentKey: 0,
+      error: { message:"", isError: false, propertyName:"" } ,
+		},
+    ]);
+    const customNotifications = ref<MessageModel[]>([]);
     return {
       customSelectTestInput,
       customRadioTestInput,
       customCheckboxTestInput,
+      customFields,
+      customNotifications,
     };
   },
 });

@@ -1,9 +1,27 @@
 <template>
-  <th colspan="4" class="sectionHeader">
-    <h3 v-html="field.title" @click="toggle($event)" :class="{'toggle' : field.canToggleSection}"></h3>
+  <th
+    colspan="4"
+    class="sectionHeader"
+  >
+    <h3
+      @click="toggle($event)"
+      v-html="field.title"
+      :class="{'toggle' : field.canToggleSection}"
+    ></h3>
     <span>
-        <a v-if="field.canDeleteSection"  href=""  @click="removeFields($event)" class="list-btn icon-times"></a>
-        <a v-if="field.canToggleSection" href=""  @click="toggle($event)" class="list-icon" :class="getToggleClass"></a>
+        <a
+          v-if="field.canDeleteSection"
+          href="" 
+          @click="removeFields($event)"
+          class="list-btn icon-times"
+        />
+        <a
+          v-if="field.canToggleSection"
+          href=""
+          @click="toggle($event)"
+          class="list-icon"
+          :class="getToggleClass"
+        />
     </span>
   </th>
 </template>
