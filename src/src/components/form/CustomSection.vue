@@ -5,9 +5,9 @@
   >
     <h3
       :class="toggleChoice"
-      @click="toggle($event)"
-      v-html="field.title"
-    />
+      @click="toggle($event)">
+      {{ field.title }}
+    </h3>
     <span>
       <a
         v-if="field.canDeleteSection"

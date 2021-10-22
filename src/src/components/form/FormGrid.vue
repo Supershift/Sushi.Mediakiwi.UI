@@ -37,9 +37,9 @@
                   v-if="!hideLabelForType(field.vueType)"
                   :for="field.propertyName"
                   :title="field.title"
-                  :class="{ mandatory: field.mandatory }"
-                  v-html="field.title"
-                />
+                  :class="{ mandatory: field.mandatory }">
+                  {{ field.title }}
+                </label>
               </th>
               <td
                 :key="index"

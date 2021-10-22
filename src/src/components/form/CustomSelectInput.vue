@@ -2,9 +2,9 @@
   <div :class="selectContainerClasses">
     <label
       v-if="undefinedCheck(select.prefix)"
-      class="select-prefix"
-      v-html="undefinedCheck(select?.prefix)"
-    />
+      class="select-prefix">
+      {{ undefinedCheck(select.prefix) }}
+    </label>
     <fa
       v-if="select.fieldIcon"
       :icon="fieldIconChoice"
@@ -31,11 +31,11 @@
           {{ select.defaultLabel }}
         </option>
         <option
-          v-for="(opt, index) in select.propOptions"
+          v-for="(opt, index) in select.options"
           :key="index"
-          :value="opt.propVal"
+          :value="opt.value"
         >
-          {{ opt.propName }}
+          {{ opt.name }}
           <span
             v-if="opt.countForOption"
           >
@@ -46,9 +46,9 @@
     </label>
     <label
       v-if="undefinedCheck(select.suffix)"
-      class="select-suffix"
-      v-html="undefinedCheck(select.suffix)"
-    />
+      class="select-suffix">
+      {{ undefinedCheck(select.suffix) }}
+    </label>
   </div>
 </template>
 

@@ -2,9 +2,9 @@
   <div :class="inputContainerClasses">
     <label
       v-if="undefinedCheck(input.prefix)"
-      class="input-prefix"
-      v-html="undefinedCheck(input?.prefix)"
-    />
+      class="input-prefix">
+      {{ undefinedCheck(input?.prefix) }}
+    </label>
     <fa
       v-if="input.fieldIcon"
       :icon="fieldIconChoice"
@@ -28,9 +28,9 @@
     </label>
     <label
       v-if="undefinedCheck(input.suffix)"
-      class="input-suffix"
-      v-html="undefinedCheck(input?.suffix)"
-    />
+      class="input-suffix">
+      {{ undefinedCheck(input?.suffix) }}
+    </label>
   </div>
 </template>
 <script lang="ts">

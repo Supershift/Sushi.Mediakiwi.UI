@@ -67,8 +67,8 @@ export default defineComponent({
       fieldName: "main-radio",
       fieldIcon: "",
       fieldGroupName: "r_main",
-      suffix: "",
-      prefix: "",
+      prefix: "Hello",
+      suffix: "World",
       customClass: "radio-primary",
       options: customSelectTestOptions,
     });
@@ -78,8 +78,8 @@ export default defineComponent({
       fieldName: "main-checkbox",
       fieldIcon: "",
       fieldGroupName: "cb_main",
-      suffix: "",
-      prefix: "",
+      prefix: "Hello",
+      suffix: "World",
       customClass: "checkbox-primary",
       options: customSelectTestOptions,
     });

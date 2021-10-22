@@ -1,9 +1,8 @@
 <template>
   <div :class="radioContainerClasses">         
-    <label
-      v-if="undefinedCheck(radio.prefix)"
-      v-html="undefinedCheck(radio.prefix)"
-    />
+    <label v-if="undefinedCheck(radio.prefix)">
+      {{ undefinedCheck(radio.prefix) }}
+    </label>
     <span
       v-for="option in radio.options"
       :key="fieldID(option)"
@@ -19,20 +18,18 @@
         @change="handleChange"
       >
       <span class="checkmark" />
-      <label
-        :for="fieldID(option)"
-        v-html="option.name"
-      />
+      <label :for="fieldID(option)">
+        {{ option.name }}
+      </label>
     </span>
     <fa
       v-if="radio.fieldIcon"
       :icon="fieldIconChoice"
       class="radio-icon"
     />
-    <label
-      v-if="undefinedCheck(radio.suffix)"
-      v-html="undefinedCheck(radio.suffix)" 
-    />
+    <label v-if="undefinedCheck(radio.suffix)">
+      {{ undefinedCheck(radio.suffix) }}
+    </label>
   </div>
 </template>
 <script lang="ts">
@@ -141,7 +138,8 @@ export default defineComponent({
     flex-direction: column;
     align-items: flex-start;
     font-family: $font-primary;
-    font-size: $font-size-s;
+    font-size: $font-size-l;
+    margin: 15px 0;
     input {
         position: absolute;
         opacity: 0;
@@ -168,7 +166,6 @@ export default defineComponent({
         position: relative;
         margin-bottom: 12px;
         cursor: pointer;
-        font-size: $font-size-xl;
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;

@@ -1,9 +1,8 @@
 <template>
   <div :class="checkboxContainerClasses">
-    <label
-      v-if="undefinedCheck(checkbox.prefix)"
-      v-html="undefinedCheck(checkbox.prefix)"
-    />
+    <label v-if="undefinedCheck(checkbox.prefix)">
+      {{ undefinedCheck(checkbox.prefix) }}
+    </label>
     <span
       v-for="option in checkbox.options"
       :key="fieldID(option)"
@@ -18,22 +17,21 @@
         :disabled="checkbox.disabled || checkbox.readOnly"
         @change="handleChange"
       >
-      <span class="checkmark"></span>
+      <span class="checkmark" />
       <fa
         v-if="checkbox.fieldIcon"
         :icon="fieldIconChoice"
         class="checkbox-icon"
       />
-      <label
-        :for="checkbox.fieldGroupName"
-        v-html="option.name"
-      />
+      <label :for="checkbox.fieldGroupName">
+        {{ option.name }}
+      </label>
     </span>
     <label
       v-if="undefinedCheck(checkbox.suffix)"
-      :for="checkbox.fieldGroupName"
-      v-html="undefinedCheck(checkbox.suffix)"
-    />
+      :for="checkbox.fieldGroupName">
+      {{ undefinedCheck(checkbox.suffix) }}
+    </label>
   </div>
 </template>
 <script lang="ts">
@@ -132,10 +130,14 @@ export default defineComponent({
   align-items: flex-start;
   font-family: $font-primary;
   font-size: $font-size-l;
+  margin: 15px 0;
   input {
     position: absolute;
     opacity: 0;
     z-index: 30;
+    height: 100%;
+    width: 100%;
+    margin: 0;
     cursor: pointer;
   }
   .checkmark {
@@ -166,7 +168,7 @@ export default defineComponent({
       background: $color-blue;
     }
     label {
-      padding: 20px;
+      padding: 15px;
       padding-left: 35px ;
     }
     .checkmark{
