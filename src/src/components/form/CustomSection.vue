@@ -5,7 +5,8 @@
   >
     <h3
       :class="toggleChoice"
-      @click="toggle($event)">
+      @click="toggle($event)"
+    >
       {{ field.title }}
     </h3>
     <span>

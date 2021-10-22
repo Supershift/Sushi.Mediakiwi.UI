@@ -27,9 +27,7 @@
         {{ option.name }}
       </label>
     </span>
-    <label
-      v-if="undefinedCheck(checkbox.suffix)"
-      :for="checkbox.fieldGroupName">
+    <label v-if="undefinedCheck(checkbox.suffix)">
       {{ undefinedCheck(checkbox.suffix) }}
     </label>
   </div>

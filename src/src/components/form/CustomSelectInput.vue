@@ -2,7 +2,8 @@
   <div :class="selectContainerClasses">
     <label
       v-if="undefinedCheck(select.prefix)"
-      class="select-prefix">
+      class="select-prefix"
+    >
       {{ undefinedCheck(select.prefix) }}
     </label>
     <fa
@@ -46,7 +47,8 @@
     </label>
     <label
       v-if="undefinedCheck(select.suffix)"
-      class="select-suffix">
+      class="select-suffix"
+    >
       {{ undefinedCheck(select.suffix) }}
     </label>
   </div>
