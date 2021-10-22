@@ -4,16 +4,16 @@
     class="sectionHeader"
   >
     <h3
+      :class="toggleChoice"
       @click="toggle($event)"
-      :class="{'toggle' : field.canToggleSection}"
       v-html="field.title"
     />
     <span>
       <a
         v-if="field.canDeleteSection"
         href="" 
-        @click="removeFields($event)"
         class="list-btn icon-times"
+        @click="removeFields($event)"
       />
       <a
         v-if="field.canToggleSection"
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 import SectionModel from "../../models/SectionModel";
 
 export default defineComponent({
@@ -48,6 +48,9 @@ export default defineComponent({
         e.preventDefault();
         context.emit("sortDown", e, props.field.formSection);
     }
+    const toggleChoice = computed(() => {
+      return props.field.canToggleSection ? "toggle " : "";
+    });
     function removeFields(e) {
         e.preventDefault();
         if (this.field.canDeleteSection) {
@@ -81,6 +84,7 @@ export default defineComponent({
       removeFields,
       toggle,
       getToggleClass,
+      toggleChoice,
     };
   },
 });

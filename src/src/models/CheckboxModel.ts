@@ -10,6 +10,6 @@ interface CheckboxModel {
     fieldName: string;
     fieldValue: string;
     options: OptionModel[];
-};
+}
 
 export default  CheckboxModel;

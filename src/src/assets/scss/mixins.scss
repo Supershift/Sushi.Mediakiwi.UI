@@ -68,8 +68,6 @@
     @include animation($property, $animation-timing-s, $animation-progression-standard);
 }
 
-
-
 @mixin font($font-size, $line-height, $margin: initial, $font-family: $font-primary) {
     font-family: $font-family;
     margin: $margin;
@@ -86,7 +84,7 @@
 
     $font-size-unit: get-unit($fontSize);
 
-    @if($font-size-unit == "rem") {
+    @if ($font-size-unit == "rem") {
         @include pixel-fallback(font-size, $font-size);
     }
 
@@ -161,7 +159,7 @@
 @mixin media-breakpoint-down($breakpoint) {
     // Only use existing breakpoint
     @if map-has-key($breakpoints, $breakpoint) {
-        @media (max-width: map-get($breakpoints, $breakpoint )) { 
+        @media (max-width: map-get($breakpoints, $breakpoint )) {
             @content;
         }
     }
@@ -183,7 +181,7 @@
         margin-top: calc(var(--bs-gutter-y) * -1);
         margin-left: calc(var(--bs-gutter-x) * -0.5);
         margin-right: calc(var(--bs-gutter-x) * -0.5);
-        &>* {
+        >* {
             width: 100%;
             margin-top: var(--bs-gutter-y);
             padding-right: calc(var(--bs-gutter-x) * 0.5);
@@ -209,7 +207,7 @@
 /// @author Luigi Arends
 /// @param {String} $size - Property value
 /// @require $grid-layout-columns
-@mixin col-($size) {
+@mixin col-fn($size) {
     @if map-has-key($grid-layout-columns , $size) {
         .col-#{$size} {
             flex: 1 0 map-get($grid-layout-columns, $size);

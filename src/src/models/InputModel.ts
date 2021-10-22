@@ -8,6 +8,6 @@ interface InputModel {
     fieldName: string;
     fieldValue: string;
     readOnly: boolean;
-};
+}
 
 export default InputModel;

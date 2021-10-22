@@ -18,6 +18,7 @@
         :disabled="checkbox.disabled || checkbox.readOnly"
         @change="handleChange"
       >
+      <span class="checkmark"></span>
       <fa
         v-if="checkbox.fieldIcon"
         :icon="fieldIconChoice"
@@ -121,3 +122,73 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="scss">
+.checkbox-container {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: $font-primary;
+  font-size: $font-size-l;
+  input {
+    position: absolute;
+    opacity: 0;
+    z-index: 30;
+    cursor: pointer;
+  }
+  .checkmark {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background: #eee;
+    border-radius: 6px;
+    z-index: 20;
+    &:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+  }
+  .checkbox-choice-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    &:hover {
+      input ~ .checkmark {
+          background: $color-blue;
+        }
+    }
+    input:checked ~ .checkmark  {
+      background: $color-blue;
+    }
+    label {
+      padding: 20px;
+      padding-left: 35px ;
+    }
+    .checkmark{
+      &:after {
+        top: 9px;
+        left: 9px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: white;
+      }
+    }
+  }
+  .normal {
+    .checkbox-icon {
+        color: $color-blue;
+    }
+  }
+  .alert {
+    .checkbox-icon {
+        color: $color-alert;
+    }
+  }
+}
+</style>

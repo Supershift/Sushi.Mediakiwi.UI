@@ -5,12 +5,12 @@
 
 @include col;
 
-@include col-("s");
+@include col-fn("s");
 
-@include col-("m");
+@include col-fn("m");
 
-@include col-("l");
+@include col-fn("l");
 
-@include col-("xl");
+@include col-fn("xl");
 
-@include col-("xxl");
+@include col-fn("xxl");

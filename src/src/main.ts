@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
       next({
         path: "/login",
       });
-      // console.log("Please login first", store.getters.isLoggedIn);
+      // console.log("Please login first", from.fullPath);
     } else {
       // to.meta.title = to.params.project_name_slug;
       next();
@@ -36,7 +36,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some((record) => record.meta.requiresVisitor)) {
     // this route is only available to a visitor which means they should not be logged in
     // if logged in, redirect to home page.
-    if (store.getters.isLoggedIn) {
+    if (store.getters.isLoggedIn && from.fullPath) {
       next({
         path: "/",
       });
@@ -47,7 +47,7 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-router.afterEach((to, from) => {
+router.afterEach((to) => {
   document.title = `VaultN | ${to.meta.title || DEFAULT_TITLE}`;
 });
 

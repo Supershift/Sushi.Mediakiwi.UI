@@ -83,8 +83,7 @@ export default defineComponent({
       customClass: "checkbox-primary",
       options: customSelectTestOptions,
     });
-    const customFields = ref<FieldModel[]>([
-    {
+    const customFields = ref<FieldModel[]>([{
       contentTypeID: 10,
       propertyName: "TestProperty",
       propertyType: "string",
@@ -128,8 +127,9 @@ export default defineComponent({
   margin: auto;
   height: auto;
   .main-container {
-      margin: auto;
-      padding-top: 15px;
+    margin: auto;
+    padding-top: 15px;
+    padding-left: 50px;
   }
 }
 </style>

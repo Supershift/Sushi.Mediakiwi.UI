@@ -10,6 +10,6 @@ interface RadioModel {
     fieldName: string;
     fieldValue: string;
     options: OptionModel[];
-};
+}
 
 export default RadioModel;
