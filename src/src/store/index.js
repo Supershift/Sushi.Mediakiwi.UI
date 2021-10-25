@@ -41,6 +41,72 @@ export default createStore({
       settings: false,
     },
     description: "",
+    fields: [
+      {
+        contentTypeID: 10,
+        propertyName: "TestProperty",
+        propertyType: "string",
+        title: "Test Property",
+        vueType: 5,
+        expression: 1,
+        value: "User input",
+        options: null,
+        className: null,
+        event: 0,
+        inputPost: null,
+        section: 0,
+        hidden: null,
+        groupName: null,
+        suffix: null,
+        prefix: null,
+        formSection: null,
+        canToggleSection: false,
+        canDeleteSection: false,
+        toggleDefaultClosed: false,
+        readOnly: false,
+        helpText: "This field can do stuff"
+      },
+      {
+        contentTypeID: 18,
+        propertyName: "TestDropdown",
+        propertyType: "string[]",
+        title: "Test Dropdown",
+        vueType: 8,
+        expression: 0,
+        value: "1",
+        options: {
+          items: [
+            {
+              text: "Optie 1",
+              value: "1",
+              enabled: true,
+              selected: true
+            },
+            {
+              text: "Optie 2",
+              value: "2",
+              enabled: true,
+              selected: false
+            }
+          ],
+          count: 2
+        },
+        className: null,
+        event: 1,
+        inputPost: null,
+        section: 0,
+        hidden: null,
+        groupName: null,
+        suffix: null,
+        prefix: null,
+        formSection: null,
+        canToggleSection: false,
+        canDeleteSection: false,
+        toggleDefaultClosed: false,
+        readOnly: false,
+        helpText: "This field can do stuff"
+      },
+    ],
     menuItems: [{
       id: 1,
       name: "Home",
@@ -142,5 +208,6 @@ export default createStore({
     dialog: (state) => state.dialog,
     contentLogin: (state) => state.content.login,
     isLoggedIn: (state) => state.isLoggedIn, // !!state.isLoggedIn && !!Cookies.get('access-token'),
+    fields: (state) => state.fields,
   },
 });

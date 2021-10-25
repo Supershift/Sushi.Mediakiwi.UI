@@ -5,7 +5,7 @@
       <CustomChoiceRadio :radio="customRadioTestInput" />
       <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" />
       <FormGrid
-        :fields="customFields"
+        :fields="fetchedFields"
         :notifications="customNotifications"
       />
     </div>
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import CustomSelectInput from "./form/CustomSelectInput.vue";
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
@@ -23,6 +23,7 @@ import CheckboxModel from "../models/CheckboxModel";
 import FormGrid from "./form/FormGrid.vue";
 import FieldModel from "../models/FieldModel";
 import MessageModel from "../models/MessageModel";
+import store from "../store";
 
 export default defineComponent({
   name: "MainView",
@@ -33,6 +34,7 @@ export default defineComponent({
     FormGrid,
   },
   setup() {
+    const fetchedFields = computed(() => store.getters.fields);
     const customSelectTestOptions = [{
       value: 0,
       name: "test",
@@ -117,6 +119,7 @@ export default defineComponent({
       customCheckboxTestInput,
       customFields,
       customNotifications,
+      fetchedFields,
     };
   },
 });
