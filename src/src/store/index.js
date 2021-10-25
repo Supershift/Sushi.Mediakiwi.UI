@@ -173,6 +173,16 @@ export default createStore({
         loginButtonText: "Login",
         loginHeadlineText: "Sign in with your email",
       },
+      forgotten: {
+        forgottenEmailPlaceholder: "Email",
+        fogottenButtonText: "Submit",
+        forgottenHeadlineText: "Resset password with your email",
+      },
+      reset: {
+        resetEmailPlaceholder: "Email",
+        resetButtonText: "Submit",
+        resetHeadlineText: "Resset password with your email",
+      },
     },
   },
   mutations: {
@@ -209,5 +219,7 @@ export default createStore({
     contentLogin: (state) => state.content.login,
     isLoggedIn: (state) => state.isLoggedIn, // !!state.isLoggedIn && !!Cookies.get('access-token'),
     fields: (state) => state.fields,
+    contentForgottenPassword: (state) => state.content.forgotten,
+    contentResetPassword: (state) => state.content.reset,
   },
 });
