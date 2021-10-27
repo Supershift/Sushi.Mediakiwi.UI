@@ -19,10 +19,10 @@
         :id="id"
         type="text"
         :class="customInputClasses"
-        :name="input.fieldName"
+        :name="input.propertyName"
         :value="inputText.value"
         :required="input.fieldRequired"
-        :placeholder="input.fieldPlaceholder"
+        :placeholder="input.title"
         :disabled="input.disabled || input.readOnly"
         @change="handleChange"
       >
@@ -42,7 +42,7 @@ import {
   PropType,
   reactive,
 } from "vue";
-import InputModel from "../../models/InputModel";
+import FieldModel from "../../models/FieldModel";
 import { fieldMixins } from "../form/index";
 
 export default defineComponent({
@@ -50,14 +50,14 @@ export default defineComponent({
   mixins: [fieldMixins],
   props: {
     input: {
-      type: Object as PropType<InputModel>,
+      type: Object as PropType<FieldModel>,
       required: true,
     },
   },
   emits: ["valueChanged"],
   setup(props, context) {
     const inputText = reactive({value: ""});
-    const id = computed(() => `_${props.input.customClass}-${props.input.fieldName}`);
+    const id = computed(() => `_${props.input?.className}-${props.input.propertyName}`);
     const inputContainerClasses = computed(() => {
       let iconColor: string;
       switch (props.input.fieldIcon) {
@@ -82,7 +82,7 @@ export default defineComponent({
       }
       return ["input-container ", iconColor];
     });
-    const customInputClasses = computed(() => ["input-primary ", props.input.customClass]);
+    const customInputClasses = computed(() => ["input-primary ", props.input?.className]);
     const fieldIconChoice = computed(() => {
       let icon: string[];
       switch (props.input.fieldIcon) {

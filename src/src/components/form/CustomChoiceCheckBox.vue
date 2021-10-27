@@ -33,14 +33,14 @@
   </div>
 </template>
 <script lang="ts">
-import { useCheckUndefined } from "./index";
+import { fieldMixins } from "./index";
 import CheckboxModel from "../../models/CheckboxModel";
 import OptionModel from "../../models/OptionModel";
 import { computed, defineComponent, PropType, reactive } from "vue";
 
 export default defineComponent({
   name: "CheckboxChoice",
-  mixins: [useCheckUndefined],
+  mixins: [fieldMixins],
   props: {
     checkbox: {
       type: Object as PropType<CheckboxModel>,

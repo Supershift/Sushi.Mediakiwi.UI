@@ -15,6 +15,7 @@
     <CustomInput
       :input="customPasswordInput"
       @valueChanged="handleTextChanged"
+      class="password-input"
     />
     <FormErrors
       v-if="errroMessages"
@@ -31,7 +32,7 @@
       @buttonClicked="handleLogin"
     />
     <a
-      href="#/reset"
+      href="/reset"
       class="link"
     >
       {{ contentLogin.loginCreateAccountText }}
@@ -134,7 +135,7 @@ export default defineComponent({
     padding-bottom: 55px;
   }
   .link {
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     &:last-of-type {
       color: white;
     }
@@ -143,6 +144,9 @@ export default defineComponent({
     margin-bottom: 25px;
     width: 70%;
     font-size: $font-size-l;
+  }
+  .password-input {
+    margin-top: 0;
   }
   h1 {
     margin: 0;

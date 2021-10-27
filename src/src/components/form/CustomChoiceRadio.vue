@@ -34,13 +34,13 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted, PropType, reactive } from "vue";
-import { useCheckUndefined } from "../form/index";
+import { fieldMixins } from "../form/index";
 import RadioModel from "../../models/RadioModel";
 import OptionModel from "../../models/OptionModel";
 
 export default defineComponent({
     name: "RadioChoice",
-    mixins: [useCheckUndefined],
+    mixins: [fieldMixins],
     props: {
         radio: {
             type: Object as PropType<RadioModel>,

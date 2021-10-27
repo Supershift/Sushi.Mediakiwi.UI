@@ -20,10 +20,10 @@
 // import Editor from '@tinymce/tinymce-vue';
 import { defineComponent, PropType, ref, computed } from "vue";
 import OptionModel from "../../models/OptionModel";
-import RichtextModel from "../../models/RichtextModel";
 import QuillEditor from "@vueup/vue-quill";
 import BlotFormatter from "quill-blot-formatter";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import FieldModel from "../../models/FieldModel";
 
 export default defineComponent({
     name: "RichText",
@@ -33,7 +33,7 @@ export default defineComponent({
     mixins: [],
     props: {
       richtext: {
-        type: Object as PropType<RichtextModel>,
+        type: Object as PropType<FieldModel>,
         required: true,
       }
     },
@@ -47,9 +47,9 @@ export default defineComponent({
           // Here some options
         },
       };
-      const customRichtextClasses = computed(() => ["richtext-container ", props.richtext.customClass]);
+      const customRichtextClasses = computed(() => ["richtext-container ", props.richtext?.className]);
       function fieldID(option: OptionModel) {
-        return `${props.richtext?.fieldValue}_${props.richtext?.fieldName}_${option.value}`;
+        return `${props.richtext?.value}_${props.richtext?.propertyName}_${option.value}`;
       }
       function handleChange(values: string) {
         if (props.richtext?.event !== "none") {

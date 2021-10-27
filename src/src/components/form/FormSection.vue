@@ -7,17 +7,17 @@
       :class="toggleChoice"
       @click="toggle($event)"
     >
-      {{ field.title }}
+      {{ field?.title }}
     </h3>
     <span>
       <a
-        v-if="field.canDeleteSection"
+        v-if="field?.canDeleteSection"
         href="" 
         class="list-btn icon-times"
         @click="removeFields($event)"
       />
       <a
-        v-if="field.canToggleSection"
+        v-if="field?.canToggleSection"
         href=""
         :class="getToggleClass"
         class="list-icon"
@@ -29,13 +29,13 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from "vue";
-import SectionModel from "../../models/SectionModel";
+import FieldModel from "../../models/FieldModel";
 
 export default defineComponent({
   name: "FormSection",
   props: {
     field: {
-      type: Object as PropType<SectionModel>,
+      type: Object as PropType<FieldModel>,
       required: true,
     },
   },
@@ -50,7 +50,7 @@ export default defineComponent({
         context.emit("sortDown", e, props.field.formSection);
     }
     const toggleChoice = computed(() => {
-      return props.field.canToggleSection ? "toggle " : "";
+      return props.field?.canToggleSection ? "toggle " : "";
     });
     function removeFields(e: Event) {
         e.preventDefault();
@@ -72,7 +72,7 @@ export default defineComponent({
     }
     function getToggleClass() {
         // VISIBLE
-        if (typeof (props.field.visible) === "undefined" || props.field.visible) {
+        if (typeof (props.field.hidden) === "undefined" || props.field.hidden) {
             return "icon-angle-up";
         }
         else {

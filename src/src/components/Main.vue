@@ -4,26 +4,30 @@
       <CustomSelectInput :select="customSelectTestInput" />
       <CustomChoiceRadio :radio="customRadioTestInput" />
       <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" />
-      <FormGrid
+      <FormComponent
         :fields="fetchedFields"
         :notifications="customNotifications"
       />
+      <RichText :richtext="customRichText" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineAsyncComponent, defineComponent, ref } from "vue";
 import CustomSelectInput from "./form/CustomSelectInput.vue";
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
 import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
 import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
+import RichText from "../components/form/CustomRichText.vue";
 import CheckboxModel from "../models/CheckboxModel";
-import FormGrid from "./form/FormGrid.vue";
+import FormComponent from "./form/FormComponent.vue";
 import FieldModel from "../models/FieldModel";
 import MessageModel from "../models/MessageModel";
 import store from "../store";
+import RichtextModel from "../models/RichtextModel";
+
 
 export default defineComponent({
   name: "MainView",
@@ -31,7 +35,8 @@ export default defineComponent({
     CustomSelectInput,
     CustomChoiceRadio,
     CustomChoiceCheckBox,
-    FormGrid,
+    RichText,
+    FormComponent,
   },
   setup() {
     const fetchedFields = computed(() => store.getters.fields);
@@ -89,13 +94,14 @@ export default defineComponent({
       contentTypeID: 10,
       propertyName: "TestProperty",
       propertyType: "string",
+      fieldIcon: "plus",
       title: "Test Property",
       vueType: "5",
       expression: 1,
       value: "User input",
       options: null,
       className: null,
-      event: 0,
+      event: null,
       inputPost: null,
       section: 0,
       hidden: null,
@@ -112,6 +118,15 @@ export default defineComponent({
       error: { message:"", isError: false, propertyName:"" } ,
 		},
     ]);
+    const customRichText = ref<RichtextModel>({
+      customClass: "richtext",
+      fieldValue: "",
+      event: "",
+      disabled: false,
+      readonly: false,
+      fields: [],
+      fieldName: "",
+    });
     const customNotifications = ref<MessageModel[]>([]);
     return {
       customSelectTestInput,
@@ -120,6 +135,7 @@ export default defineComponent({
       customFields,
       customNotifications,
       fetchedFields,
+      customRichText,
     };
   },
 });

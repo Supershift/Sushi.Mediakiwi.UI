@@ -62,11 +62,11 @@ import {
   ref,
 } from "vue";
 import SelectModel from "../../models/SelectModel";
-import { useCheckUndefined } from "../form/index";
+import { fieldMixins } from "../form/index";
 
 export default defineComponent({
   name: "FormSelect",
-  mixins: [useCheckUndefined],
+  mixins: [fieldMixins],
   props: {
     select: {
       type: Object as PropType<SelectModel>,
