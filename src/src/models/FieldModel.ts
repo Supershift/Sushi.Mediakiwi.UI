@@ -11,7 +11,7 @@ interface FieldModel {
   propertyType: string | undefined |null;
   expression: number;
   value: string | null;
-  options: OptionModel | undefined | null;
+  options: OptionModel[] | undefined | null;
   className: string | undefined | null;
   inputPost: string | undefined | null;
   section: number;

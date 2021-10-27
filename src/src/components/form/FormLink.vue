@@ -20,7 +20,7 @@
 </template>
 <script lang="ts">
 import observer from "vue-mutation-observer";
-import { portalName } from "./../../../utils/utils";
+import { portalName } from "../../utils/utils";
 import { fieldMixins } from "./index";
 
 export default {
