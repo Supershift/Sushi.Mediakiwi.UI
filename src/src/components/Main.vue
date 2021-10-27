@@ -7,6 +7,8 @@
       <FormComponent :fields="fetchedFields" :notifications="customNotifications" />
       <RichText :richtext="customRichText" />
       <GridComponent :grid="customGrid"></GridComponent>
+      <!-- <DropDown :field="test" /> -->
+      <!-- <Link /> -->
     </div>
   </div>
 </template>
@@ -25,6 +27,8 @@ import FieldModel from "../models/FieldModel";
 import MessageModel from "../models/MessageModel";
 import store from "../store";
 import RichtextModel from "../models/RichtextModel";
+// import DropDown from "./form/FormDropDown.vue";
+// import Link from "./form/FormLink.vue";
 import GridModel from "../models/GridModel";
 
 import GridComponent from "./grid/GridComponent.vue";
@@ -38,6 +42,8 @@ export default defineComponent({
     RichText,
     FormComponent,
     GridComponent,
+    // DropDown,
+    // Link,
   },
   setup() {
     const fetchedFields = computed(() => store.getters.fields);
@@ -121,6 +127,33 @@ export default defineComponent({
         error: { message: "", isError: false, propertyName: "" },
       },
     ]);
+    const test = ref<FieldModel>({
+      contentTypeID: 10,
+      propertyName: "TestProperty",
+      propertyType: "string",
+      fieldIcon: "plus",
+      title: "Test Property",
+      vueType: "5",
+      expression: 1,
+      value: "User input",
+      options: null,
+      className: null,
+      event: null,
+      inputPost: null,
+      section: 0,
+      hidden: null,
+      groupName: null,
+      suffix: null,
+      prefix: null,
+      formSection: null,
+      canToggleSection: false,
+      canDeleteSection: false,
+      toggleDefaultClosed: false,
+      readOnly: false,
+      helpText: "This field can do stuff",
+      componentKey: 0,
+      error: { message: "", isError: false, propertyName: "" },
+    });
     const customRichText = ref<RichtextModel>({
       customClass: "richtext",
       fieldValue: "",
@@ -195,6 +228,7 @@ export default defineComponent({
       customNotifications,
       fetchedFields,
       customRichText,
+      test,
       customGrid,
     };
   },
@@ -203,10 +237,11 @@ export default defineComponent({
 
 <style lang="scss">
 .content-container {
-  margin: auto;
-  height: auto;
+  margin: 0;
+  height: 100vh;
+  overflow: auto;
   .main-container {
-    margin: auto;
+    margin: 0;
     padding-top: 15px;
     padding-left: 50px;
   }
