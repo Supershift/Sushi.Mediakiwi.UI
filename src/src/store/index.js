@@ -51,7 +51,7 @@ export default createStore({
         propertyType: "string",
         title: "Test Property",
         vueType: 5,
-        expression: 1,
+        expression: 0,
         value: "User input",
         options: null,
         className: null,

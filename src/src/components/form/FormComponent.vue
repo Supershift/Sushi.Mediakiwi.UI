@@ -1,7 +1,5 @@
 <template>
   <section>
-    <p>Hallo wereld</p>
-
     <table class="formTable">
       <tbody>
         <tr v-for="row in rowArray" :key="row.id">
@@ -86,7 +84,6 @@ export default defineComponent({
   },
   emits: ["toggle", "addFields", "removeFields", "fieldChanged", "buttonClicked"],
   setup(props, context) {
-    let rowArray = ref<Array<FormRowModel>>([]);
     function checkVueType(field: FieldModel): string {
       switch (field.vueType) {
         case vueTypes.formButton:
@@ -169,32 +166,21 @@ export default defineComponent({
       return expression !== ExpressionType.Full ? " half" : " long";
     }
 
-    // // function rows() {
-    // // let rows = null;
-    // //let rowArray = Array<GridRowModel>();
-    // // rows have an array of fields with max. 2 items
-    // // one left one right
-
-    // if (!props.fields || !props.fields.length) {
-    //   return rowArray;
-    // }
-
+    // Create the collection of rows
+    // with fields sorted according to their cofiguration
+    let rowArray = ref<Array<FormRowModel>>([]);
     let currentFormSection = "baseSection";
-
     let count = 0;
-    for (let field of props.fields) {
-      count++;
-      /* eslint no-console:0*/
-      console.log(props.fields);
+    const cellLimit = 2;
 
-      let initalRow = ref<FormRowModel>({
-        fields: [],
-      });
-      //   const keyGen = 621355968000000000;
-      //   const keyMultiply = 10000;
-      const cellLimit = 2;
-      //   // set componentKey; This should update every time the field is updated
-      //   field.componentKey = new Date().getTime() * keyMultiply + keyGen;
+    // create a new row
+    let currentRow = ref<FormRowModel>({
+      fields: [],
+    });
+
+    props.fields.forEach((field) => {
+      // increment the count
+      count++;
 
       if (!field.formSection) {
         if (field.vueType === vueTypes.formSection) {
@@ -203,75 +189,54 @@ export default defineComponent({
         field.formSection = currentFormSection;
       }
 
-      //   // Check if there is a notification for this field
-      //   if (props.notifications && props.notifications.length) {
-      //     let notification = props.notifications.find((message: MessageModel) => {
-      //       return message.propertyName === field.propertyName;
-      //     });
-      //     field.error = notification;
-      //   }
+      // Check if there is a notification for this field
+      if (props.notifications && props.notifications.length) {
+        let notification = props.notifications.find((message: MessageModel) => {
+          return message.propertyName === field.propertyName;
+        });
+        field.error = notification;
+      }
 
-      //   // is this a full width field?
+      // is this a full width field?
       if (field.expression === ExpressionType.Full) {
         // add the current row object to the list
-        if (initalRow.value.fields.length) {
-          // initalRow.isButtonRow = initalRow.fields.map((mappedField) => mappedField.vueType).every((val) => val === vueTypes.formButton);
-          rowArray.value.push(initalRow.value);
+        if (currentRow.value.fields.length) {
+          rowArray.value.push(currentRow.value);
         }
         // create a new row
-        initalRow.value = { fields: [] };
+        currentRow.value = { fields: [] };
         // add push it to the list
-        initalRow.value.fields.push(field);
+        currentRow.value.fields.push(field);
       } else {
         if (
-          initalRow.value.fields.length >= cellLimit &&
-          initalRow.value.fields.map((mappedField) => mappedField.vueType).every((val) => val === vueTypes.formButton)
+          currentRow.value.fields.length >= cellLimit &&
+          currentRow.value.fields.map((mappedField) => mappedField.vueType).every((val) => val === vueTypes.formButton)
         ) {
           if (field.vueType !== vueTypes.formButton) {
-            // initalRow.isButtonRow = true;
-            rowArray.value.push(initalRow.value);
+            // currentRow.isButtonRow = true;
+            rowArray.value.push(currentRow.value);
             // create a new row
-            initalRow.value = { fields: [] };
+            currentRow.value = { fields: [] };
           }
         }
-        //     // add to 'current' row
-        initalRow.value.fields.push(field);
+        currentRow.value.fields.push(field);
       }
-      //   // add row to rows
-      //   // when its 1 fullwith row
-      //   // or there are 2 rows added
-      //   let addRows = false;
-      //   if (field.expression === ExpressionType.Full) {
-      //     addRows = true;
-      //   }
 
-      //   if (initalRow.fields.length >= cellLimit) {
-      //       let x = initalRow.fields.map((r) => r.vueType);
-      //       if (!x) {
-      //         x = [];
-      //       }
+      // Check if we need to add the current row the rowcollection
+      // When the current field is fullwidth
+      // or the fields collection for the currentrow exceed the limit?
+      let addRows = false;
+      if (field.expression === ExpressionType.Full || currentRow.value.fields.length >= cellLimit) {
+        addRows = true;
+      }
 
-      //       if (!x.every((val) => val === vueTypes.formButton)) {
-      //         addRows = true;
-      //       }
-      //   }
+      if (addRows && currentRow.value.fields.length) {
+        // currentRow.isButtonRow = currentRow.fields.map((r) => r.vueType).every((val) => val === vueTypes.formButton);
+        rowArray.value.push(currentRow.value);
+        currentRow.value = { fields: [] };
+      }
+    });
 
-      //   if (addRows) {
-      //     if (initalRow.fields.length) {
-      //       initalRow.isButtonRow = initalRow.fields.map((r) => r.vueType).every((val) => val === vueTypes.formButton);
-      //       rowArray.push(initalRow);
-      //     }
-      //     initalRow = { isButtonRow: false, fields: [] };
-      //   }
-      // }
-
-      // // add last row
-      // if (initalRow.fields.length > 0) {
-      //   initalRow.isButtonRow = initalRow.fields.map((r) => r.vueType).every((val) => val === vueTypes.formButton);
-      rowArray.value.push(initalRow.value);
-    }
-    // return rowArray;
-    // }
     return {
       rowArray,
       expressCell,
@@ -290,4 +255,33 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.formTable {
+  tr {
+    th {
+      padding: 8px 0 2px !important;
+      text-align: left;
+      vertical-align: top;
+      width: 10%;
+      label {
+        width: 135px;
+        padding: 4px 10px 4px 0 !important;
+        display: block;
+        font-weight: 600;
+        min-height: 24px;
+      }
+    }
+    td {
+      padding: 4px 80px 4px 0;
+      vertical-align: top;
+      color: #000;
+      &.half {
+        width: 40%;
+      }
+    }
+  }
+  .input-text {
+    margin-right: 0 !important;
+  }
+}
+</style>
