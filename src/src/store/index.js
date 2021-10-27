@@ -5,6 +5,7 @@ import { createStore } from "vuex";
 // import * as navigation from './modules/navigation';
 import DummyAvatar from "@/assets/dummy-images/avatar-dummy.jpg";
 import DummyBrand from "@/assets/images/vaultN-logo.svg";
+import router from "@/router";
 
 export default createStore({
   modules: {
@@ -118,6 +119,7 @@ export default createStore({
     },
     toggleLogIn(state) {
       state.isLoggedIn = !state.isLoggedIn;
+      router.push("/");
     },
   },
   actions: {

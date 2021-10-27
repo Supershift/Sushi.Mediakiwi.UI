@@ -1,50 +1,22 @@
 <template>
-  <form
-    class="login"
-    @submit.prevent="handleLogin"
-  >
-    <img
-      src="../assets/images/vaultN-logo.svg"
-      class="login-logo"
-    >
-    <h1>{{ contentLogin.loginHeadlineText }}</h1>
-    <CustomInput
-      :input="customEmailInput"
-      @valueChanged="handleTextChanged"
-    />
-    <CustomInput
-      :input="customPasswordInput"
-      @valueChanged="handleTextChanged"
-    />
-    <FormErrors
-      v-if="errroMessages"
-      :messages="errroMessages"
-    />
-    <a
-      href="#/forgot"
-      class="link"
-    >
-      {{ contentLogin.loginForgotPasswordText }}
-    </a>
-    <CustomButton
-      :button="customLoginButton"
-      @buttonClicked="handleLogin"
-    />
-    <a
-      href="#/reset"
-      class="link"
-    >
-      {{ contentLogin.loginCreateAccountText }}
-    </a>
-  </form>
+    <form class="login" @submit.prevent="handleLogin">
+        <img src="../assets/images/vaultN-logo.svg" class="login-logo" />
+        <h1>{{ contentLogin.loginHeadlineText }}</h1>
+        <CustomInput :input="customEmailInput" @valueChanged="handleTextChanged" />
+        <CustomInput :input="customPasswordInput" @valueChanged="handleTextChanged" />
+        <FormErrors v-if="errroMessages" :messages="errroMessages" />
+        <a href="#/forgot" class="link">
+            {{ contentLogin.loginForgotPasswordText }}
+        </a>
+        <CustomButton :button="customLoginButton" @buttonClicked="handleLogin" />
+        <a href="#/reset" class="link">
+            {{ contentLogin.loginCreateAccountText }}
+        </a>
+    </form>
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  ref,
-} from "vue";
+import { computed, defineComponent, ref } from "vue";
 import store from "../store/index";
 import FormErrors from "./form/FormErrors.vue";
 import CustomInput from "./form/CustomInput.vue";
@@ -54,100 +26,100 @@ import ButtonModel from "../models/ButtonModel";
 import MessageModel from "../models/MessageModel";
 
 export default defineComponent({
-  name: "Login",
-  components: {
-    FormErrors,
-    CustomInput,
-    CustomButton,
-  },
-  setup() {
-    const email = ref("");
-    const password = ref("");
-    const errroMessages = ref<MessageModel[]>([]);
-    const contentLogin = computed(() => store.getters.contentLogin);
-    const customEmailInput = ref<InputModel>({
-      customClass: "input-email",
-      fieldIcon: "email",
-      fieldPlaceholder: "Email",
-      disabled: false,
-      suffix: "",
-      prefix: "",
-      fieldName: "email",
-      fieldValue: "",
-      readOnly: false,
-    });
-    const customPasswordInput = ref<InputModel>({
-      customClass: "input-password",
-      fieldIcon: "password",
-      fieldPlaceholder: "Password",
-      disabled: false,
-      suffix: "",
-      prefix: "",
-      fieldName: "password",
-      fieldValue: "",
-      readOnly: false,
-    });
-    const customLoginButton = ref<ButtonModel>({
-      customClass: "btn-login",
-      buttonIcon: "",
-      disabled: false,
-      buttondName: "login",
-      value: contentLogin.value.loginButtonText,
-      readOnly: false,
-    });
-    function handleLogin() {
-      store.dispatch("toggleLogIn");
-    }
-    function handleTextChanged() {
-      // console.log('TODO: Fix Text changed');
-    }
-    return {
-      email,
-      password,
-      contentLogin,
-      errroMessages,
-      customEmailInput,
-      customPasswordInput,
-      customLoginButton,
-      handleLogin,
-      handleTextChanged,
-    };
-  },
+    name: "Login",
+    components: {
+        FormErrors,
+        CustomInput,
+        CustomButton,
+    },
+    setup() {
+        const email = ref("");
+        const password = ref("");
+        const errroMessages = ref<MessageModel[]>([]);
+        const contentLogin = computed(() => store.getters.contentLogin);
+        const customEmailInput = ref<InputModel>({
+            customClass: "input-email",
+            fieldIcon: "email",
+            fieldPlaceholder: "Email",
+            disabled: false,
+            suffix: "",
+            prefix: "",
+            fieldName: "email",
+            fieldValue: "",
+            readOnly: false,
+        });
+        const customPasswordInput = ref<InputModel>({
+            customClass: "input-password",
+            fieldIcon: "password",
+            fieldPlaceholder: "Password",
+            disabled: false,
+            suffix: "",
+            prefix: "",
+            fieldName: "password",
+            fieldValue: "",
+            readOnly: false,
+        });
+        const customLoginButton = ref<ButtonModel>({
+            customClass: "btn-login",
+            buttonIcon: "",
+            disabled: false,
+            buttondName: "login",
+            value: contentLogin.value.loginButtonText,
+            readOnly: false,
+        });
+        function handleLogin() {
+            store.dispatch("toggleLogIn");
+        }
+        function handleTextChanged() {
+            // console.log('TODO: Fix Text changed');
+        }
+        return {
+            email,
+            password,
+            contentLogin,
+            errroMessages,
+            customEmailInput,
+            customPasswordInput,
+            customLoginButton,
+            handleLogin,
+            handleTextChanged,
+        };
+    },
 });
 </script>
 
 <style scoped lang="scss">
 .login {
-  position: relative;
-  width: 370px;
-  margin: auto;
-  top: 45%;
-  -webkit-transform: perspective(1px) translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: perspective(1px) translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: $font-primary;
-  &-logo {
-    padding-bottom: 55px;
-  }
-  .link {
-    margin-bottom: 15px;
-    &:last-of-type {
-      color: white;
+    position: relative;
+    width: 370px;
+    margin: auto;
+    top: 45%;
+    -webkit-transform: perspective(1px) translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: perspective(1px) translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: $font-primary;
+    &-logo {
+        padding-bottom: 55px;
     }
-  }
-  .btn-login {
-    margin-bottom: 25px;
-    width: 70%;
-    font-size: $font-size-l;
-  }
-  h1 {
-    margin: 0;
-    padding-bottom: 15px;
-    color: $color-blue;
-  }
+    .link {
+        margin-bottom: 15px;
+        &:last-of-type {
+            color: white;
+        }
+    }
+    .btn-login {
+        margin-bottom: 25px;
+        width: 70%;
+        font-size: $font-size-l;
+    }
+    h1 {
+        margin: 0;
+        padding-bottom: 15px;
+        color: $color-blue;
+    }
 }
 </style>
