@@ -6,7 +6,7 @@
       <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" />
       <FormComponent :fields="fetchedFields" :notifications="customNotifications" />
       <RichText :richtext="customRichText" />
-      <Grid :grid="customGrid"></Grid>
+      <GridComponent :grid="customGrid"></GridComponent>
     </div>
   </div>
 </template>
@@ -27,6 +27,8 @@ import store from "../store";
 import RichtextModel from "../models/RichtextModel";
 import GridModel from "../models/GridModel";
 
+import GridComponent from "./grid/GridComponent.vue";
+
 export default defineComponent({
   name: "MainView",
   components: {
@@ -35,6 +37,7 @@ export default defineComponent({
     CustomChoiceCheckBox,
     RichText,
     FormComponent,
+    GridComponent,
   },
   setup() {
     const fetchedFields = computed(() => store.getters.fields);
@@ -130,6 +133,8 @@ export default defineComponent({
     const customNotifications = ref<MessageModel[]>([]);
 
     const customGrid = reactive<GridModel>({
+      title: "custom grid",
+      layerConfiguration: null,
       columns: [
         {
           title: "Order",
@@ -144,38 +149,40 @@ export default defineComponent({
       ],
       rows: [
         {
+          href: "?edit",
+          id: "0",
           gridItems: [
             {
               column: 0,
               value: "1",
-              href: null,
               vueType: "5",
+              canWrap: false,
             },
             {
               column: 0,
               value: "12312",
-              href: null,
               vueType: "5",
+              canWrap: false,
             },
           ],
-          rowID: 0,
         },
         {
+          href: "?edit",
+          id: "1",
           gridItems: [
             {
               column: 0,
               value: "2",
-              href: null,
               vueType: "5",
+              canWrap: false,
             },
             {
               column: 0,
               value: "345345",
-              href: null,
               vueType: "5",
+              canWrap: false,
             },
           ],
-          rowID: 1,
         },
       ],
     });
