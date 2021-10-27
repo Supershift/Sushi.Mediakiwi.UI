@@ -253,6 +253,7 @@ export default createStore({
   },
   getters: {
     menuItems: (state) => state.menuItems,
+    rootPath: (state) => state.rootPath,
     navigationItems: (state) => state.navigationItems,
     siteTitle: (state) => state.site.title,
     openDrawer: (state) => state.drawer.open,

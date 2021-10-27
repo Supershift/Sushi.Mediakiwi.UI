@@ -8,9 +8,9 @@
         :fields="fetchedFields"
         :notifications="customNotifications"
       />
-      <!-- <RichText :richtext="customRichText" />
-      <DropDown :field="test" />
-      <Link /> -->
+      <RichText :richtext="customRichText" />
+      <!-- <DropDown :field="test" /> -->
+      <!-- <Link /> -->
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
 import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
 import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
-// import RichText from "../components/form/CustomRichText.vue";
+import RichText from "../components/form/CustomRichText.vue";
 import CheckboxModel from "../models/CheckboxModel";
 import FormComponent from "./form/FormComponent.vue";
 import FieldModel from "../models/FieldModel";
@@ -38,7 +38,7 @@ export default defineComponent({
     CustomSelectInput,
     CustomChoiceRadio,
     CustomChoiceCheckBox,
-    // RichText,
+    RichText,
     FormComponent,
     // DropDown,
     // Link,
