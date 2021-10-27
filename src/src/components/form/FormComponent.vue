@@ -270,8 +270,6 @@ export default defineComponent({
       //   initalRow.isButtonRow = initalRow.fields.map((r) => r.vueType).every((val) => val === vueTypes.formButton);
       rowArray.value.push(initalRow.value);
     }
-
-    alert("yoyo");
     // return rowArray;
     // }
     return {
@@ -288,9 +286,6 @@ export default defineComponent({
       isHalfField,
       checkVueType,
     };
-  },
-  created() {
-    alert("create me");
   },
 });
 </script>
