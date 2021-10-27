@@ -5,22 +5,22 @@
       <CustomChoiceRadio :radio="customRadioTestInput" />
       <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" />
       <FormComponent :fields="fetchedFields" :notifications="customNotifications" />
-      <RichText :richtext="customRichText" />
+      <!-- <RichText :richtext="customRichText" /> -->
+      <GridComponent :grid="customGrid"></GridComponent>
       <!-- <DropDown :field="test" /> -->
       <!-- <Link /> -->
-      <Grid :grid="customGrid"></Grid>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref } from "vue";
+// import RichText from "../components/form/FormRichText.vue";
 import CustomSelectInput from "./form/CustomSelectInput.vue";
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
 import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
 import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
-import RichText from "../components/form/FormRichText.vue";
 import CheckboxModel from "../models/CheckboxModel";
 import FormComponent from "./form/FormComponent.vue";
 import FieldModel from "../models/FieldModel";
@@ -30,14 +30,17 @@ import store from "../store";
 // import Link from "./form/FormLink.vue";
 import GridModel from "../models/GridModel";
 
+import GridComponent from "./grid/GridComponent.vue";
+
 export default defineComponent({
   name: "MainView",
   components: {
     CustomSelectInput,
     CustomChoiceRadio,
     CustomChoiceCheckBox,
-    RichText,
+    // RichText,
     FormComponent,
+    GridComponent,
     // DropDown,
     // Link,
   },
@@ -183,6 +186,8 @@ export default defineComponent({
     const customNotifications = ref<MessageModel[]>([]);
 
     const customGrid = reactive<GridModel>({
+      title: "custom grid",
+      layerConfiguration: null,
       columns: [
         {
           title: "Order",
@@ -197,38 +202,40 @@ export default defineComponent({
       ],
       rows: [
         {
+          href: "?edit",
+          id: "0",
           gridItems: [
             {
               column: 0,
               value: "1",
-              href: null,
               vueType: "5",
+              canWrap: false,
             },
             {
               column: 0,
               value: "12312",
-              href: null,
               vueType: "5",
+              canWrap: false,
             },
           ],
-          rowID: 0,
         },
         {
+          href: "?edit",
+          id: "1",
           gridItems: [
             {
               column: 0,
               value: "2",
-              href: null,
               vueType: "5",
+              canWrap: false,
             },
             {
               column: 0,
               value: "345345",
-              href: null,
               vueType: "5",
+              canWrap: false,
             },
           ],
-          rowID: 1,
         },
       ],
     });

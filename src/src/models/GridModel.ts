@@ -1,24 +1,10 @@
-interface GridItem {
-    column: number,
-    value: string | undefined | null,
-    href: string | undefined | null,
-    vueType: string;
-}
+import LayerConfiguration from "./LayerConfiguration";
+import GridColumnModel from "./GridColumnModel";
+import GridRowModel from "./GridRowModel";
 
-interface GridRowModel {
-    gridItems: Array<GridItem>;
-    rowID: number;
-}
-
-interface GridColumnModel {
-    title: string | undefined | null;
-    width: string | undefined | null;
-    align: number | undefined | null;
-}
-
-interface GridModel {
+export default interface GridModel {
+    title: string,
+    layerConfiguration: LayerConfiguration | undefined | null;
     columns: Array<GridColumnModel>;
     rows: Array<GridRowModel>;
 }
-
-export default GridModel;
