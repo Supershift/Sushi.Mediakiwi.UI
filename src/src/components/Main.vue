@@ -5,7 +5,7 @@
       <CustomChoiceRadio :radio="customRadioTestInput" />
       <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" />
       <FormComponent :fields="fetchedFields" :notifications="customNotifications" />
-      <!-- <RichText :richtext="customRichText" /> -->
+      <RichText :richtext="customRichText" />
       <GridComponent :grid="customGrid"></GridComponent>
       <!-- <DropDown :field="test" /> -->
       <!-- <Link /> -->
@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref } from "vue";
-// import RichText from "../components/form/FormRichText.vue";
+import RichText from "./form/FormRichText.vue";
 import CustomSelectInput from "./form/CustomSelectInput.vue";
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
@@ -38,7 +38,7 @@ export default defineComponent({
     CustomSelectInput,
     CustomChoiceRadio,
     CustomChoiceCheckBox,
-    // RichText,
+    RichText,
     FormComponent,
     GridComponent,
     // DropDown,
