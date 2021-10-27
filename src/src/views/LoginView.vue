@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <Login />
+    <router-view></router-view>
   </div>
 </template>
 
@@ -10,9 +10,6 @@ import Login from "../components/Login.vue";
 
 export default defineComponent({
   name: "LoginView",
-  components: {
-    Login,
-  },
   setup() {
     return {};
   },

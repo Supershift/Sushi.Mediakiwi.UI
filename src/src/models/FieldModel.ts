@@ -5,7 +5,8 @@ interface FieldModel {
   // Core
   propertyName: string;
   title: string;
-  vueType: string;
+  vueType: any;
+  fieldIcon: string;
   // MK
   propertyType: string | undefined |null;
   expression: number;
@@ -27,7 +28,7 @@ interface FieldModel {
   mandatory?: boolean | undefined | null;
   componentKey?: number | undefined | null;
   error?: MessageModel | undefined | null;
-  event?: number | undefined | null;
+  event?: string | undefined | null;
   contentTypeID: number;
 }
 

@@ -6,6 +6,7 @@ import { createStore } from "vuex";
 import DummyAvatar from "@/assets/dummy-images/avatar-dummy.jpg";
 import DummyBrand from "@/assets/images/vaultN-logo.svg";
 import router from "@/router";
+import axios from "axios";
 
 export default createStore({
   modules: {
@@ -15,6 +16,7 @@ export default createStore({
   },
   state: {
     isLoggedIn: false,
+    mediaKiwiLoading: false,
     site: {
       title: "Site title - Page Title",
     },
@@ -42,6 +44,72 @@ export default createStore({
       settings: false,
     },
     description: "",
+    fields: [
+      {
+        contentTypeID: 10,
+        propertyName: "TestProperty",
+        propertyType: "string",
+        title: "Test Property",
+        vueType: 5,
+        expression: 1,
+        value: "User input",
+        options: null,
+        className: null,
+        event: 0,
+        inputPost: null,
+        section: 0,
+        hidden: null,
+        groupName: null,
+        suffix: null,
+        prefix: null,
+        formSection: null,
+        canToggleSection: false,
+        canDeleteSection: false,
+        toggleDefaultClosed: false,
+        readOnly: false,
+        helpText: "This field can do stuff"
+      },
+      {
+        contentTypeID: 18,
+        propertyName: "TestDropdown",
+        propertyType: "string[]",
+        title: "Test Dropdown",
+        vueType: 8,
+        expression: 0,
+        value: "1",
+        options: {
+          items: [
+            {
+              text: "Optie 1",
+              value: "1",
+              enabled: true,
+              selected: true
+            },
+            {
+              text: "Optie 2",
+              value: "2",
+              enabled: true,
+              selected: false
+            }
+          ],
+          count: 2
+        },
+        className: null,
+        event: 1,
+        inputPost: null,
+        section: 0,
+        hidden: null,
+        groupName: null,
+        suffix: null,
+        prefix: null,
+        formSection: null,
+        canToggleSection: false,
+        canDeleteSection: false,
+        toggleDefaultClosed: false,
+        readOnly: false,
+        helpText: "This field can do stuff"
+      },
+    ],
     menuItems: [{
       id: 1,
       name: "Home",
@@ -108,6 +176,16 @@ export default createStore({
         loginButtonText: "Login",
         loginHeadlineText: "Sign in with your email",
       },
+      forgotten: {
+        forgottenEmailPlaceholder: "Email",
+        fogottenButtonText: "Submit",
+        forgottenHeadlineText: "Resset password with your email",
+      },
+      reset: {
+        resetEmailPlaceholder: "Email",
+        resetButtonText: "Submit",
+        resetHeadlineText: "Resset password with your email",
+      },
     },
   },
   mutations: {
@@ -121,6 +199,38 @@ export default createStore({
       state.isLoggedIn = !state.isLoggedIn;
       router.push("/");
     },
+    toggleMediaKiwiLoading(state) {
+      state.mediaKiwiLoading = !state.mediaKiwiLoading;
+    },
+    getMediaKiwiAPI(state, request) {
+      return new Promise((resolve, reject) => {
+        axios({ url: `${origin()}/api/mediakiwi`, data: request, method: "POST" })
+          .then((resp) => {
+            // always set channel!!
+            if (resp && resp.data && resp.data.channel && resp.data.channel.current) {
+              this.$store.dispatch("setChannel", resp.data.channel.current);
+            }
+
+            if (resp && resp.data && resp.data.resources) {
+              this.$store.addPageResources(resp.data.resources);
+            }
+
+            this.$store.dispatch("toggleMediaKiwiLoading");
+            resolve(resp);
+          })
+          .catch((err) => {
+            this.$store.dispatch("toggleMediaKiwiLoading");
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          });
+      });
+    },
+    setChannel(state, newChannel) {
+      state.channel = newChannel;
+    },
+    setPageResources(state, newResources) {
+      state.resources = newResources;
+    }
   },
   actions: {
     toggleDrawer(context) {
@@ -131,6 +241,16 @@ export default createStore({
     },
     toggleLogIn(context) {
       context.commit("toggleLogIn");
+    },
+    getMediaKiwiAPI(context, request) {
+      context.commit("toggleMediaKiwiLoading");
+      context.commit("getMediaKiwiAPI", request);
+    },
+    setChannel(context, newChannel) {
+      context.commit("setChannel", newChannel);
+    },
+    setPageResources(context, newResources) {
+      context.commit("setPageResources", newResources);
     },
   },
   getters: {
@@ -144,5 +264,8 @@ export default createStore({
     dialog: (state) => state.dialog,
     contentLogin: (state) => state.content.login,
     isLoggedIn: (state) => state.isLoggedIn, // !!state.isLoggedIn && !!Cookies.get('access-token'),
+    fields: (state) => state.fields,
+    contentForgottenPassword: (state) => state.content.forgotten,
+    contentResetPassword: (state) => state.content.reset,
   },
 });
