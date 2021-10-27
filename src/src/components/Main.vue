@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineAsyncComponent, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import CustomSelectInput from "./form/CustomSelectInput.vue";
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
@@ -143,10 +143,11 @@ export default defineComponent({
 
 <style lang="scss">
 .content-container {
-  margin: auto;
-  height: auto;
+  margin: 0;
+  height: 100vh;
+  overflow: auto;
   .main-container {
-    margin: auto;
+    margin: 0;
     padding-top: 15px;
     padding-left: 50px;
   }
