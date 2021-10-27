@@ -5,6 +5,7 @@ import { createStore } from "vuex";
 // import * as navigation from './modules/navigation';
 import DummyAvatar from "@/assets/dummy-images/avatar-dummy.jpg";
 import DummyBrand from "@/assets/images/vaultN-logo.svg";
+import router from "@/router";
 import axios from "axios";
 
 export default createStore({
@@ -196,20 +197,21 @@ export default createStore({
     },
     toggleLogIn(state) {
       state.isLoggedIn = !state.isLoggedIn;
+      router.push("/");
     },
     toggleMediaKiwiLoading(state) {
       state.mediaKiwiLoading = !state.mediaKiwiLoading;
     },
-    getMediaKiwiAPI(state, request){
+    getMediaKiwiAPI(state, request) {
       return new Promise((resolve, reject) => {
-        axios({ url: `${origin()}/api/mediakiwi`, data : request, method: "POST" })
+        axios({ url: `${origin()}/api/mediakiwi`, data: request, method: "POST" })
           .then((resp) => {
             // always set channel!!
             if (resp && resp.data && resp.data.channel && resp.data.channel.current) {
               this.$store.dispatch("setChannel", resp.data.channel.current);
             }
 
-            if (resp && resp.data && resp.data.resources){
+            if (resp && resp.data && resp.data.resources) {
               this.$store.addPageResources(resp.data.resources);
             }
 

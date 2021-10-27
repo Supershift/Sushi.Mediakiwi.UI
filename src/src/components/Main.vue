@@ -4,19 +4,17 @@
       <CustomSelectInput :select="customSelectTestInput" />
       <CustomChoiceRadio :radio="customRadioTestInput" />
       <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" />
-      <FormComponent
-        :fields="fetchedFields"
-        :notifications="customNotifications"
-      />
+      <FormComponent :fields="fetchedFields" :notifications="customNotifications" />
       <RichText :richtext="customRichText" />
       <!-- <DropDown :field="test" /> -->
       <!-- <Link /> -->
+      <Grid :grid="customGrid"></Grid>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineAsyncComponent, defineComponent, reactive, ref } from "vue";
 import CustomSelectInput from "./form/CustomSelectInput.vue";
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
@@ -31,6 +29,7 @@ import store from "../store";
 import RichtextModel from "../models/RichtextModel";
 // import DropDown from "./form/FormDropDown.vue";
 // import Link from "./form/FormLink.vue";
+import GridModel from "../models/GridModel";
 
 export default defineComponent({
   name: "MainView",
@@ -45,16 +44,17 @@ export default defineComponent({
   },
   setup() {
     const fetchedFields = computed(() => store.getters.fields);
-    const customSelectTestOptions = [{
-      value: 0,
-      name: "test",
-      countForOption: 1,
-    },
-    {
-      value: 0,
-      name: "test",
-      countForOption: 2,
-    },
+    const customSelectTestOptions = [
+      {
+        value: 0,
+        name: "test",
+        countForOption: 1,
+      },
+      {
+        value: 0,
+        name: "test",
+        countForOption: 2,
+      },
     ];
     const customSelectTestInput = ref<SelectModel>({
       error: "",
@@ -95,33 +95,34 @@ export default defineComponent({
       customClass: "checkbox-primary",
       options: customSelectTestOptions,
     });
-    const customFields = ref<FieldModel[]>([{
-      contentTypeID: 10,
-      propertyName: "TestProperty",
-      propertyType: "string",
-      fieldIcon: "plus",
-      title: "Test Property",
-      vueType: "5",
-      expression: 1,
-      value: "User input",
-      options: null,
-      className: null,
-      event: null,
-      inputPost: null,
-      section: 0,
-      hidden: null,
-      groupName: null,
-      suffix: null,
-      prefix: null,
-      formSection: null,
-      canToggleSection: false,
-      canDeleteSection: false,
-      toggleDefaultClosed: false,
-      readOnly: false,
-      helpText: "This field can do stuff",
-      componentKey: 0,
-      error: { message:"", isError: false, propertyName:"" } ,
-		},
+    const customFields = ref<FieldModel[]>([
+      {
+        contentTypeID: 10,
+        propertyName: "TestProperty",
+        propertyType: "string",
+        fieldIcon: "plus",
+        title: "Test Property",
+        vueType: "5",
+        expression: 1,
+        value: "User input",
+        options: null,
+        className: null,
+        event: null,
+        inputPost: null,
+        section: 0,
+        hidden: null,
+        groupName: null,
+        suffix: null,
+        prefix: null,
+        formSection: null,
+        canToggleSection: false,
+        canDeleteSection: false,
+        toggleDefaultClosed: false,
+        readOnly: false,
+        helpText: "This field can do stuff",
+        componentKey: 0,
+        error: { message: "", isError: false, propertyName: "" },
+      },
     ]);
     const test = ref<FieldModel>({
       contentTypeID: 10,
@@ -160,6 +161,58 @@ export default defineComponent({
       fieldName: "",
     });
     const customNotifications = ref<MessageModel[]>([]);
+
+    const customGrid = reactive<GridModel>({
+      columns: [
+        {
+          title: "Order",
+          width: "200",
+          align: 0,
+        },
+        {
+          title: "Number",
+          width: "200",
+          align: 0,
+        },
+      ],
+      rows: [
+        {
+          gridItems: [
+            {
+              column: 0,
+              value: "1",
+              href: null,
+              vueType: "5",
+            },
+            {
+              column: 0,
+              value: "12312",
+              href: null,
+              vueType: "5",
+            },
+          ],
+          rowID: 0,
+        },
+        {
+          gridItems: [
+            {
+              column: 0,
+              value: "2",
+              href: null,
+              vueType: "5",
+            },
+            {
+              column: 0,
+              value: "345345",
+              href: null,
+              vueType: "5",
+            },
+          ],
+          rowID: 1,
+        },
+      ],
+    });
+
     return {
       customSelectTestInput,
       customRadioTestInput,
@@ -168,7 +221,8 @@ export default defineComponent({
       customNotifications,
       fetchedFields,
       customRichText,
-      test
+      test,
+      customGrid,
     };
   },
 });
