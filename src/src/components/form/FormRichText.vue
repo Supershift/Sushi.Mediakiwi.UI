@@ -1,36 +1,30 @@
 <template>
   <div :class="customRichtextContainerClasses">
-    <!-- <tinymce-editor
-      v-model="richtext.value"
-      :name="id"
+    <editor
+      v-model="valueRef"
+      api-key="no-api-key"
       :id="fieldID"
+      :name="id"
       :init="tinymce"
-      :class="fieldClass(field)"
+      :class="customRichtextClasses"
       :disabled="richtext.disabled || richtext.readOnly"
       v-on="localEventHandler('handleChange')"
-    /> -->
-    <QuillEditor
-      :modules="modules"
-      toolbar="full"
-      @change="handleChange"
     />
   </div>
 </template>
 <script lang="ts">
 // import Editor from '@tinymce/tinymce-vue';
-import { defineComponent, PropType, ref, computed } from "vue";
+import { defineComponent, PropType, ref, computed, reactive } from "vue";
 import OptionModel from "../../models/OptionModel";
-import QuillEditor from "@vueup/vue-quill";
-import BlotFormatter from "quill-blot-formatter";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import FieldModel from "../../models/FieldModel";
+import Editor from "@tinymce/tinymce-vue";
+
 
 export default defineComponent({
     name: "RichText",
     components: {
-      QuillEditor,
+      "editor": Editor,
     },
-    mixins: [],
     props: {
       richtext: {
         type: Object as PropType<FieldModel>,
@@ -40,17 +34,18 @@ export default defineComponent({
     emits: ["valueChanged"],
     setup(props, context){
       let valueEvent = ref("");
-      const modules = {
-        name: "blotFormatter",
-        module: BlotFormatter,
-        options: {
-          // Here some options
-        },
-      };
+      let valueRef = ref("");
+      const tinymce = reactive({
+        language: `${props.richtext.locale}` ? `${props.richtext.locale}` : "en",
+        menubar: false,
+        statusbar: false,
+        plugins: "code link",
+        toolbar: ["bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code"],
+      });
       const customRichtextClasses = computed(() => ["richtext-container ", props.richtext?.className]);
-      function fieldID(option: OptionModel) {
-        return `${props.richtext?.value}_${props.richtext?.propertyName}_${option.value}`;
-      }
+      const fieldID = computed((option: OptionModel) => {
+        return `${props.richtext?.value}_${props.richtext?.propertyName}_${option?.value}`;
+      });
       function handleChange(values: string) {
         if (props.richtext?.event !== "none") {
           context.emit("valueChanged", values);
@@ -72,7 +67,8 @@ export default defineComponent({
         handleChange,
         localEventHandler,
         customRichtextClasses,
-        modules,
+        tinymce,
+        valueRef,
       };
     },
 });

@@ -14,19 +14,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineAsyncComponent, defineComponent, reactive, ref } from "vue";
+import { computed, defineComponent, reactive, ref } from "vue";
 import CustomSelectInput from "./form/CustomSelectInput.vue";
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
 import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
 import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
-import RichText from "../components/form/CustomRichText.vue";
+import RichText from "../components/form/FormRichText.vue";
 import CheckboxModel from "../models/CheckboxModel";
 import FormComponent from "./form/FormComponent.vue";
 import FieldModel from "../models/FieldModel";
 import MessageModel from "../models/MessageModel";
 import store from "../store";
-import RichtextModel from "../models/RichtextModel";
 // import DropDown from "./form/FormDropDown.vue";
 // import Link from "./form/FormLink.vue";
 import GridModel from "../models/GridModel";
@@ -122,6 +121,7 @@ export default defineComponent({
         helpText: "This field can do stuff",
         componentKey: 0,
         error: { message: "", isError: false, propertyName: "" },
+        locale: "",
       },
     ]);
     const test = ref<FieldModel>({
@@ -150,15 +150,35 @@ export default defineComponent({
       helpText: "This field can do stuff",
       componentKey: 0,
       error: { message:"", isError: false, propertyName:"" } ,
+      locale: "",
 		});
-    const customRichText = ref<RichtextModel>({
-      customClass: "richtext",
-      fieldValue: "",
-      event: "",
-      disabled: false,
-      readonly: false,
-      fields: [],
-      fieldName: "",
+    const customRichText = ref<FieldModel>({
+      contentTypeID: 10,
+      propertyName: "TestProperty",
+      propertyType: "string",
+      fieldIcon: "plus",
+      title: "Test Property",
+      vueType: "5",
+      expression: 1,
+      value: "User input",
+      options: null,
+      className: null,
+      event: null,
+      inputPost: null,
+      section: 0,
+      hidden: null,
+      groupName: null,
+      suffix: null,
+      prefix: null,
+      formSection: null,
+      canToggleSection: false,
+      canDeleteSection: false,
+      toggleDefaultClosed: false,
+      readOnly: false,
+      helpText: "This field can do stuff",
+      componentKey: 0,
+      error: { message:"", isError: false, propertyName:"" } ,
+      locale: "",
     });
     const customNotifications = ref<MessageModel[]>([]);
 
