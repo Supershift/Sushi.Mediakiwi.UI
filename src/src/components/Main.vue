@@ -11,6 +11,8 @@
       <Tags :tags="test" />
       <TextArea :textarea="test" :classname="'test'" />
       <Plus :field="test" />
+      <FormValue :field="test" />
+      <FormValueCollection :field="test"/>
       <!-- <Link /> -->
     </div>
   </div>
@@ -33,6 +35,8 @@ import DropDown from "./form/FormDropDown.vue";
 import Tags from "./form/FormTag.vue";
 import Plus from "./form/FormPlus.vue";
 import TextArea from "./form/FormTextArea.vue";
+import FormValue from "./form/FormValue.vue";
+import FormValueCollection from "./form/FormValueCollection.vue";
 
 // import Link from "./form/FormLink.vue";
 import GridModel from "../models/GridModel";
@@ -52,6 +56,8 @@ export default defineComponent({
     Tags,
     TextArea,
     Plus,
+    FormValue,
+    FormValueCollection,
     // Link,
   },
   setup() {

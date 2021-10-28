@@ -1,4 +1,3 @@
-import FieldModel from "@/models/FieldModel";
 
 export enum ExpressionType {
   Full = 0,
@@ -56,4 +55,33 @@ export const fieldMixins = {
       return (typeof (field) !== "undefined" && field) ? field : "";
     },
   },
+};
+
+export const emptyField = {
+  contentTypeID: 10,
+  propertyName: "TestProperty",
+  propertyType: "string",
+  fieldIcon: "plus",
+  title: "Test Property",
+  vueType: "5",
+  expression: 1,
+  value: "User input",
+  options: null,
+  className: null,
+  event: null,
+  inputPost: null,
+  section: 0,
+  hidden: null,
+  groupName: null,
+  suffix: null,
+  prefix: null,
+  formSection: null,
+  canToggleSection: false,
+  canDeleteSection: false,
+  toggleDefaultClosed: false,
+  readOnly: false,
+  helpText: "This field can do stuff",
+  componentKey: 0,
+  error: { message: "", isError: false, propertyName: "" },
+  locale: "en",
 };

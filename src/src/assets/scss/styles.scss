@@ -8,6 +8,10 @@
     *Mixin already includes the functions and variables files
 
 **/
+$input-height: 50px;
+$input-border: 1px solid #aaa;
+$input-padding: 3px 4px;
+
 body {
     margin: auto;
 }
@@ -59,9 +63,49 @@ ul {
     }
 }
 input,
-select {
+select,
+textarea {
+    font-family: $font-primary;
+    border-radius: 0;
+    background: #fff;
+    color: #000;
+    padding: $input-padding;
+    font-size: $font-size-s;
+    height: $input-height;
+    border: $input-border;
     width: 100%;
+
+    &:focus {
+        outline: 0 !important;
+    }
+
+    &[disabled],
+    &[readonly] {
+        background-color: #eee;
+        opacity: .4;
+    }
 }
+
+input[type=radio] {
+    + label {
+        margin-right: 15px;
+    }
+}
+
+input[type=checkbox] {
+    margin: 0;
+    width: auto !important;
+    vertical-align: middle;
+
+    + label {
+        vertical-align: middle;
+
+        + label {
+            vertical-align: middle;
+        }
+    }
+}
+
 .link {
     text-decoration: none;
     color: $color-blue;
