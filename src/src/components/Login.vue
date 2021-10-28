@@ -1,51 +1,22 @@
 <template>
-  <form
-    class="login"
-    @submit.prevent="handleLogin"
-  >
-    <img
-      src="../assets/images/vaultN-logo.svg"
-      class="login-logo"
-    >
+  <form class="login" @submit.prevent="handleLogin">
+    <img src="../assets/images/vaultN-logo.svg" class="login-logo" />
     <h1>{{ contentLogin.loginHeadlineText }}</h1>
-    <CustomInput
-      :input="customEmailInput"
-      @valueChanged="handleTextChanged"
-    />
-    <CustomInput
-      :input="customPasswordInput"
-      @valueChanged="handleTextChanged"
-      class="password-input"
-    />
-    <FormErrors
-      v-if="errroMessages"
-      :messages="errroMessages"
-    />
-    <a
-      href="#/forgot"
-      class="link"
-    >
+    <CustomInput :input="customEmailInput" @valueChanged="handleTextChanged" />
+    <CustomInput :input="customPasswordInput" @valueChanged="handleTextChanged" class="password-input" />
+    <FormErrors v-if="errroMessages" :messages="errroMessages" />
+    <a href="#/forgot" class="link">
       {{ contentLogin.loginForgotPasswordText }}
     </a>
-    <CustomButton
-      :button="customLoginButton"
-      @buttonClicked="handleLogin"
-    />
-    <a
-      href="/reset"
-      class="link"
-    >
+    <CustomButton :button="customLoginButton" @buttonClicked="handleLogin" />
+    <a href="/reset" class="link">
       {{ contentLogin.loginCreateAccountText }}
     </a>
   </form>
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  ref,
-} from "vue";
+import { computed, defineComponent, ref } from "vue";
 import store from "../store/index";
 import FormErrors from "./form/FormErrors.vue";
 import CustomInput from "./form/CustomInput.vue";
@@ -119,20 +90,24 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .login {
+  padding: 50px 13px 0;
+  box-sizing: border-box;
   position: relative;
-  width: 370px;
+  width: 394px;
+  max-width: 100%;
   margin: auto;
-  top: 45%;
-  -webkit-transform: perspective(1px) translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: perspective(1px) translateY(-50%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-family: $font-primary;
+  height: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+
   &-logo {
-    padding-bottom: 55px;
+    padding-bottom: 40px;
+    max-width: 80%;
   }
   .link {
     margin-bottom: 25px;

@@ -1,20 +1,10 @@
 <template>
   <div :class="inputContainerClasses">
-    <label
-      v-if="undefinedCheck(input.prefix)"
-      class="input-prefix"
-    >
+    <label v-if="undefinedCheck(input.prefix)" class="input-prefix">
       {{ undefinedCheck(input?.prefix) }}
     </label>
-    <fa
-      v-if="input.fieldIcon"
-      :icon="fieldIconChoice"
-      class="input-icon"
-    />
-    <label
-      :for="input.fieldName"
-      class="input-label"
-    >
+    <fa v-if="input.fieldIcon" :icon="fieldIconChoice" class="input-icon" />
+    <label :for="input.fieldName" class="input-label">
       <input
         :id="id"
         type="text"
@@ -25,23 +15,15 @@
         :placeholder="input.fieldPlaceholder"
         :disabled="input.disabled || input.readOnly"
         @change="handleChange"
-      >
+      />
     </label>
-    <label
-      v-if="undefinedCheck(input.suffix)"
-      class="input-suffix"
-    >
+    <label v-if="undefinedCheck(input.suffix)" class="input-suffix">
       {{ undefinedCheck(input?.suffix) }}
     </label>
   </div>
 </template>
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  reactive,
-} from "vue";
+import { computed, defineComponent, PropType, reactive } from "vue";
 import InputModel from "../../models/InputModel";
 import { fieldMixins } from "../form/index";
 
@@ -56,7 +38,7 @@ export default defineComponent({
   },
   emits: ["valueChanged"],
   setup(props, context) {
-    const inputText = reactive({value: ""});
+    const inputText = reactive({ value: "" });
     const id = computed(() => `_${props.input.customClass}-${props.input.fieldName}`);
     const inputContainerClasses = computed(() => {
       let iconColor: string;
@@ -126,7 +108,7 @@ export default defineComponent({
 .input-container {
   position: relative;
   margin: 15px 0;
-  margin-left: -70px;
+  width: 100%;
   .input-icon {
     position: absolute;
     top: 18px;
@@ -162,15 +144,16 @@ export default defineComponent({
   font-weight: bold;
   text-align: center;
   .input-primary {
-      border: none;
-      height: 50px;
-      line-height: 40px;
-      width: 100%;
-      border-radius: 3px;
-      padding-left: 35px;
-      padding-right: 35px;
-      font-size: $font-size-l;
-      color: $color-drakgrey;
+    border: none;
+    height: 50px;
+    line-height: 40px;
+    width: 100%;
+    border-radius: 3px;
+    padding-left: 35px;
+    padding-right: 35px;
+    font-size: $font-size-l;
+    color: $color-drakgrey;
+    box-sizing: border-box;
   }
 }
 </style>
