@@ -3,7 +3,7 @@
     <label v-if="undefinedCheck(field)">
       {{ undefinedCheck(field.prefix) }}
     </label>
-    <v-select
+    <dropdown
       v-model="localField"
       tabindex="-1"
       :id="field.propertyName"
@@ -12,8 +12,8 @@
       :options="select2data"
       :settings="select2Settings"
       :class="customDropdownClasses"
-      ref="dropdown"
       :disabled="field.disabled || field.readOnly"
+      ref="dropdown"
       @change="handleChange"
     />
     <label v-if="undefinedCheck(field.suffix)">
@@ -25,11 +25,15 @@
 import { fieldMixins } from "./index";
 import { computed, defineComponent, onBeforeMount, PropType, reactive, ref } from "vue";
 import FieldModel from "../../models/FieldModel";
+import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
 
 export default defineComponent({
     name: "DropDown",
     mixins: [fieldMixins],
+    components: {
+      "dropdown": Dropdown
+    },
     props: {
       field: {
         type: Object as PropType<FieldModel>,
@@ -43,25 +47,25 @@ export default defineComponent({
     emits: ["onChange"],
     setup(props, context) {
       let localField = ref<FieldModel>();
-      let select2Settings = reactive( {
+      let select2Settings = reactive({
         width: "100%",
         placeholder: "",
         allowClear: true,
       });
       const customDropdownClasses = computed(() => ["dropdown-primary ", props.classname]);
-      function select2data() {
+      const select2data = computed(() => {
         if (!localField || !localField.value?.options || !localField.value?.options) {
           return [];
         }
-
+        
         return localField.value?.options.map((r) => {
           return {
             id: r.value,
-            text: r.name,
+            label: r.name,
             disabled: false,
           };
         });
-      }
+      });
       function handleChange() {
         if (localField.value?.event !== "none") {
           context.emit("onChange", null, localField);

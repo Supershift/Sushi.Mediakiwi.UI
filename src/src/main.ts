@@ -7,7 +7,6 @@ import {
 import {
   fal,
 } from "@fortawesome/pro-light-svg-icons";
-import vSelect from "vue-select";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import store from "./store";
 import App from "./App.vue";
@@ -54,6 +53,5 @@ router.afterEach((to) => {
 
 createApp(App).use(router)
   .component("fa", FontAwesomeIcon)
-  .component("v-select", vSelect)
   .use(store)
   .mount("#app");

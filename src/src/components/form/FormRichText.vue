@@ -1,56 +1,54 @@
 <template>
   <div :class="customRichtextContainerClasses">
-    <!-- <tinymce-editor
-      v-model="richtext.value"
-      :name="id"
+    <editor
+      v-model="valueRef"
       :id="fieldID"
-      :init="tinymce"
-      :class="fieldClass(field)"
+      :name="fieldID"
+      toolbar= "bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code"
+      :class="customRichtextClasses"
       :disabled="richtext.disabled || richtext.readOnly"
       v-on="localEventHandler('handleChange')"
-    /> -->
-    <QuillEditor
-      :modules="modules"
-      toolbar="full"
-      @change="handleChange"
     />
   </div>
 </template>
 <script lang="ts">
 // import Editor from '@tinymce/tinymce-vue';
-import { defineComponent, PropType, ref, computed } from "vue";
+import { defineComponent, PropType, ref, computed, reactive } from "vue";
 import OptionModel from "../../models/OptionModel";
-import QuillEditor from "@vueup/vue-quill";
-import BlotFormatter from "quill-blot-formatter";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import FieldModel from "../../models/FieldModel";
+import Editor from "@tinymce/tinymce-vue";
+
 
 export default defineComponent({
     name: "RichText",
     components: {
-      QuillEditor,
+      "editor": Editor,
     },
-    mixins: [],
     props: {
       richtext: {
         type: Object as PropType<FieldModel>,
         required: true,
-      }
+      },
+      classname: {
+        type: String,
+        required: true,
+      },
     },
     emits: ["valueChanged"],
     setup(props, context){
       let valueEvent = ref("");
-      const modules = {
-        name: "blotFormatter",
-        module: BlotFormatter,
-        options: {
-          // Here some options
-        },
-      };
-      const customRichtextClasses = computed(() => ["richtext-container ", props.richtext?.className]);
-      function fieldID(option: OptionModel) {
-        return `${props.richtext?.value}_${props.richtext?.propertyName}_${option.value}`;
-      }
+      let valueRef = ref("");
+      const tinymce = reactive({
+        language: `${props.richtext.locale}` ? `${props.richtext.locale}` : "en",
+        menubar: false,
+        statusbar: false,
+        plugins: ["code link"],
+      });
+      const customRichtextContainerClasses = computed(() => ["richtext-container ", props.richtext?.className]);
+      const customRichtextClasses = computed(() => ["richtext-primary ", props.classname]);
+      const fieldID = computed((option: OptionModel) => {
+        return `${props.richtext?.value}_${props.richtext?.propertyName}_${option?.value}`;
+      });
       function handleChange(values: string) {
         if (props.richtext?.event !== "none") {
           context.emit("valueChanged", values);
@@ -72,7 +70,9 @@ export default defineComponent({
         handleChange,
         localEventHandler,
         customRichtextClasses,
-        modules,
+        customRichtextContainerClasses,
+        tinymce,
+        valueRef,
       };
     },
 });

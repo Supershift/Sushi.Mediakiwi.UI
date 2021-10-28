@@ -30,6 +30,7 @@ interface FieldModel {
   error?: MessageModel | undefined | null;
   event?: string | undefined | null;
   contentTypeID: number;
+  locale: string;
 }
 
 export default FieldModel;
