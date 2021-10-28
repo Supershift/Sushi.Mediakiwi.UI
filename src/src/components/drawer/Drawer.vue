@@ -1,39 +1,22 @@
 <template>
   <div class="drawer-container">
     <!-- Sidebar -->
-    <transition
-      name="expand"
-      mode="ease-in"
-    >
+    <transition name="expand" mode="ease-in">
       <div :class="positionCss + collapsableCss">
-        <div
-          class="brand-container"
-          @click="handleToggle"
-        >
-          <img
-            src="../../assets/images/leftnav-bg-grad.png"
-            class="topleft-nav-gradient"
-          >
+        <div class="brand-container" @click="handleToggle">
+          <img src="../../assets/images/leftnav-bg-grad.png" class="topleft-nav-gradient" />
           <div class="logo-container">
             <transition name="fade">
-              <img
-                :src="logoSrc"
-                :class="logoCss"
-              >
+              <img :src="logoSrc" :class="logoCss" />
             </transition>
-            <fa
-              :icon="chevronChoice"
-              class="drawer-icon"
-            />
+            <fa :icon="chevronChoice" class="drawer-icon" />
           </div>
         </div>
         <ListMenu :custom-class="customListClass" />
         <slot name="drawer" /><!-- Drawer opener -->
       </div>
     </transition>
-    <div class="slot-content-container">
-      <slot name="content" /><!-- Drawer content -->
-    </div>
+    <div class="slot-content-container"><slot name="content" /><!-- Drawer content --></div>
   </div>
 </template>
 
@@ -85,40 +68,42 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .drawer-container {
-    position: fixed;
+  position: fixed;
+  display: flex;
+  z-index: 40;
+  height: 100%;
+  width: 100%;
+  .sidebar-container {
+    transition: max-height 0.25s ease-in-out;
+    transition-property: width;
+    max-height: 100vh;
+    width: 80px;
+    background-color: $color-main;
+    z-index: 20;
+  }
+  .slot-content-container {
+    width: -webkit-fill-available;
     display: flex;
-    z-index: 40;
-    height: 100%;
-    width: 100%;
-    .sidebar-container {
-      transition: max-height 0.25s ease-in-out;
-      transition-property: width;
-      max-height: 100vh;
-      width: 80px;
-      background-color: $color-main;
-      z-index: 20;
-    }
-    .slot-content-container {
-      width: -webkit-fill-available;
-    }
-    .open-drawer {
-      transition: max-height 0.25s ease-in-out;
+    flex-direction: column;
+  }
+  .open-drawer {
+    transition: max-height 0.25s ease-in-out;
+    transition-duration: 0.25s;
+    transition-property: width;
+    width: 225px;
+    .topleft-nav-gradient {
+      transition: width 0.25s ease-in-out;
+      transition-property: left;
       transition-duration: 0.25s;
-      transition-property: width;
-      width: 225px;
-      .topleft-nav-gradient {
-        transition: width 0.25s ease-in-out;
-        transition-property: left;
-        transition-duration: 0.25s;
-        left: -80px;
-      }
-      .drawer-icon {
-        transition: max-height 0.1s ease-in-out;
-        transition-delay: 0.1s;
-        transition-property: margin-left;
-        margin-left: 45px;
-      }
+      left: -80px;
     }
+    .drawer-icon {
+      transition: max-height 0.1s ease-in-out;
+      transition-delay: 0.1s;
+      transition-property: margin-left;
+      margin-left: 45px;
+    }
+  }
 }
 .brand-container {
   position: relative;
@@ -137,7 +122,7 @@ export default defineComponent({
   top: 30px;
   z-index: 20;
   .logo {
-    &-small{
+    &-small {
       transition: width 0.25s ease-in-out;
       height: 38px;
       width: 38px;
@@ -176,7 +161,8 @@ export default defineComponent({
   cursor: default;
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 5s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {

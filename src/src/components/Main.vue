@@ -146,12 +146,7 @@ export default defineComponent({
       vueType: "5",
       expression: 1,
       value: "User input",
-      options: [
-        {name: "test",
-        value: 2,
-        countForOption: 1
-        }
-      ],
+      options: [{ name: "test", value: 2, countForOption: 1 }],
       className: null,
       event: null,
       inputPost: null,
@@ -167,9 +162,9 @@ export default defineComponent({
       readOnly: false,
       helpText: "This field can do stuff",
       componentKey: 0,
-      error: { message:"", isError: false, propertyName:"" } ,
+      error: { message: "", isError: false, propertyName: "" },
       locale: "",
-		});
+    });
     const customRichText = ref<FieldModel>({
       contentTypeID: 10,
       propertyName: "TestProperty",
@@ -195,7 +190,7 @@ export default defineComponent({
       readOnly: false,
       helpText: "This field can do stuff",
       componentKey: 0,
-      error: { message:"", isError: false, propertyName:"" } ,
+      error: { message: "", isError: false, propertyName: "" },
       locale: "",
     });
     const customNotifications = ref<MessageModel[]>([]);
@@ -273,7 +268,6 @@ export default defineComponent({
 <style lang="scss">
 .content-container {
   margin: 0;
-  height: 100vh;
   overflow: auto;
   .main-container {
     margin: 0;
