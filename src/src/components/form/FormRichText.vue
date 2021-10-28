@@ -2,10 +2,9 @@
   <div :class="customRichtextContainerClasses">
     <editor
       v-model="valueRef"
-      api-key="no-api-key"
       :id="fieldID"
-      :name="id"
-      :init="tinymce"
+      :name="fieldID"
+      toolbar= "bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code"
       :class="customRichtextClasses"
       :disabled="richtext.disabled || richtext.readOnly"
       v-on="localEventHandler('handleChange')"
@@ -29,7 +28,11 @@ export default defineComponent({
       richtext: {
         type: Object as PropType<FieldModel>,
         required: true,
-      }
+      },
+      classname: {
+        type: String,
+        required: true,
+      },
     },
     emits: ["valueChanged"],
     setup(props, context){
@@ -39,10 +42,10 @@ export default defineComponent({
         language: `${props.richtext.locale}` ? `${props.richtext.locale}` : "en",
         menubar: false,
         statusbar: false,
-        plugins: "code link",
-        toolbar: ["bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code"],
+        plugins: ["code link"],
       });
-      const customRichtextClasses = computed(() => ["richtext-container ", props.richtext?.className]);
+      const customRichtextContainerClasses = computed(() => ["richtext-container ", props.richtext?.className]);
+      const customRichtextClasses = computed(() => ["richtext-primary ", props.classname]);
       const fieldID = computed((option: OptionModel) => {
         return `${props.richtext?.value}_${props.richtext?.propertyName}_${option?.value}`;
       });
@@ -67,6 +70,7 @@ export default defineComponent({
         handleChange,
         localEventHandler,
         customRichtextClasses,
+        customRichtextContainerClasses,
         tinymce,
         valueRef,
       };

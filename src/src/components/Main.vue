@@ -7,7 +7,9 @@
       <FormComponent :fields="fetchedFields" :notifications="customNotifications" />
       <RichText :richtext="customRichText" />
       <GridComponent :grid="customGrid"></GridComponent>
-      <!-- <DropDown :field="test" /> -->
+      <DropDown :field="test" :classname="'test'" />
+      <Tags :tags="test" />
+      <TextArea :textarea="test" :classname="'test'" />
       <!-- <Link /> -->
     </div>
   </div>
@@ -26,7 +28,10 @@ import FormComponent from "./form/FormComponent.vue";
 import FieldModel from "../models/FieldModel";
 import MessageModel from "../models/MessageModel";
 import store from "../store";
-// import DropDown from "./form/FormDropDown.vue";
+import DropDown from "./form/FormDropDown.vue";
+import Tags from "./form/FormTag.vue";
+import TextArea from "./form/FormTextArea.vue";
+
 // import Link from "./form/FormLink.vue";
 import GridModel from "../models/GridModel";
 
@@ -41,7 +46,9 @@ export default defineComponent({
     RichText,
     FormComponent,
     GridComponent,
-    // DropDown,
+    DropDown,
+    Tags,
+    TextArea,
     // Link,
   },
   setup() {
@@ -136,7 +143,12 @@ export default defineComponent({
       vueType: "5",
       expression: 1,
       value: "User input",
-      options: null,
+      options: [
+        {name: "test",
+        value: 2,
+        countForOption: 1
+        }
+      ],
       className: null,
       event: null,
       inputPost: null,

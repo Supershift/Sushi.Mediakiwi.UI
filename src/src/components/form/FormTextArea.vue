@@ -1,50 +1,70 @@
 <template>
-  <div :class="classname">
+  <div :class="customTextAreaContainerClasses">
     <textarea
+      :id="id"
+      ref="root"
+      v-model="valueRef"
       cols="32"
       rows="3"
       type="text"
-      v-model="textarea.value"
-      v-on="eventHandler(textarea, 'handleChange')"
-      :class="fieldClass(textarea)"
+      :class="customTextAreaClasses"
       :name="textarea.propertyName"
-      :id="textarea.propertyName"
-      v-bind:disabled="textarea.disabled || textarea.readOnly"
-      ref="root">
-    </textarea>
+      :disabled="textarea.disabled || textarea.readOnly"
+      @change="handleChange"
+    />
   </div>
 </template>
 <script lang="ts">
-import { onMounted, PropType, ref } from '@vue/runtime-core';
-import { fieldMixins } from './index';
-import FieldModel from '../../models/FieldModel';
+import { computed, defineComponent, onBeforeMount, PropType, ref } from "vue";
+import { fieldMixins } from "./index";
+import FieldModel from "../../models/FieldModel";
 
-export default {
+export default defineComponent({
+  name: "TextArea",
+  mixins: [fieldMixins],
   props: {
     textarea: {
       type: Object as PropType<FieldModel>,
       required: true,
-    }
+    },
+    classname: {
+      type: String,
+      required: true,
+    },
   },
-  mixins: [fieldMixins],
   setup(props, context) {
-    let offset = ref<number>(null);
-    const root = ref(null);
+    let offset = ref<number>(0);
+    let valueRef = ref("");
+    // const root = ref(null);
+    const id = computed(() => `_${props.textarea?.className}-${props.textarea.propertyName}`);
+    const customTextAreaClasses = computed(() => ["textarea-primary ", props.textarea?.className]);
+    const customTextAreaContainerClasses = computed(() => ["textarea-container ", props.classname]);
     function handleChange(e: Event) {
-      context.emit('onchange', e, props.textarea);
+      context.emit("onChange", e, props.textarea);
     }
     function autoResize(element: HTMLElement) {
-      element.style.height = 'auto';
-      element.style.height = element.scrollHeight + offset.value + 'px';
+      element.style.height = "auto";
+      element.style.height = element.scrollHeight + offset.value + "px";
     }
-    onMounted(() => {
-      root.addEventListener("input", (e) => autoResize(e.target));
+    onBeforeMount(() => {
+      // root.addEventListener("input", (e) => autoResize(e.target));
     });
     return {
+      id,
+      valueRef,
+      // root,
       offset,
+      customTextAreaClasses,
+      customTextAreaContainerClasses,
       handleChange,
       autoResize
     };
   },
-}
+});
 </script>
+
+<style scoped lang="scss">
+.textarea-container {
+  margin-top: $grid-s-gutter;;
+}
+</style>
