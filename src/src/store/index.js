@@ -4,7 +4,7 @@ import { createStore } from "vuex";
 // import * as menu from './modules/menu';
 // import * as navigation from './modules/navigation';
 import DummyAvatar from "@/assets/dummy-images/avatar-dummy.jpg";
-import DummyBrand from "@/assets/images/vaultN-logo.svg";
+import DummyBrand from "@/assets/images/ananda.png";
 import router from "@/router";
 import axios from "axios";
 
