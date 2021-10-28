@@ -10,6 +10,7 @@
       <DropDown :field="test" :classname="'test'" />
       <Tags :tags="test" />
       <TextArea :textarea="test" :classname="'test'" />
+      <Plus :field="test" />
       <!-- <Link /> -->
     </div>
   </div>
@@ -30,6 +31,7 @@ import MessageModel from "../models/MessageModel";
 import store from "../store";
 import DropDown from "./form/FormDropDown.vue";
 import Tags from "./form/FormTag.vue";
+import Plus from "./form/FormPlus.vue";
 import TextArea from "./form/FormTextArea.vue";
 
 // import Link from "./form/FormLink.vue";
@@ -49,6 +51,7 @@ export default defineComponent({
     DropDown,
     Tags,
     TextArea,
+    Plus,
     // Link,
   },
   setup() {

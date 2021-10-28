@@ -144,6 +144,7 @@ export default {
   font-family: $font-primary;
   font-size: $font-size-l;
 }
+
 ul {
   list-style: none;
   display: flex;
