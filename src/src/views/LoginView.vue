@@ -110,6 +110,8 @@ export default defineComponent({
 
     p {
       position: initial;
+
+      font-family: "Rajdhani", "Arial", Sans-serif;
     }
   }
 }
