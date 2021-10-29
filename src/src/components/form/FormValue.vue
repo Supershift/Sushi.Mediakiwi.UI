@@ -43,7 +43,7 @@ export default defineComponent({
     const valueContainerClasses = computed(() => `name-value ${props.classname}`);
     const valueClasses = computed(() => `long short ${props.field.className}`);
     const fieldID = computed(() => `${props.field.propertyName}_id`);
-    const valueRef = ref(props.field);
+    const valueRef = ref(props.field.value);
     function  handleChange(e: Event) {
       context.emit("onChange", e, valueRef);
     }

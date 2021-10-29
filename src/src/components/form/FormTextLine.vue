@@ -1,55 +1,57 @@
 <template>
-    <div :class="classname">
-        <label v-if="prefix(textline)" v-html="prefix(textline)"></label>
-        <label 
-          :class="getClass(textline)"
-          :name="textline.propertyName"
-          :id="textline.propertyName"
-        >
-          {{ valueRef.value }}
-        </label>
-        <label v-if="suffix(textline)" v-html="suffix(textline)"></label>
-    </div>
+  <div :class="textlineContainerClasses">
+    <label v-if="undefinedCheck(textline.prefix)">{{ undefinedCheck(textline.prefix) }}</label>
+    <label
+      :id="textline.propertyName"
+      :class="textlineClasses"
+      :name="textline.propertyName"
+    >
+      {{ valueRef }}
+    </label>
+    <label v-if="undefinedCheck(textline)">{{ undefinedCheck(textline.suffix) }}</label>
+  </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType, ref } from 'vue';
-import FieldModel from '../../models/FieldModel';
-import { fieldMixins, vueTypes } from './index';
+import { computed, defineComponent, PropType, ref } from "vue";
+import FieldModel from "../../models/FieldModel";
+import { fieldMixins, vueTypes } from "./index";
 
 export default defineComponent({
+  name: "TextLine",
+  mixins: [fieldMixins],
   props: {
     textline: {
       type: Object as PropType<FieldModel>,
       required: true,
     },
+    classname: {
+      type: String,
+      required: true,
+    },
   },
-  mixins: [fieldMixins],
-  setup(props, context) {
-    let valueRef = ref("");
-    let classes = ref("");
-    const id = computed(() => {
-      return props.textline.propertyName;
-    });
-    onMounted(() => {
-      valueRef.value = props.textline.value;
-      !valueRef.value ? valueRef.value = "&nbsp;" : false;
-      if (props.textline.vueType == vueTypes.formChoiceCheckbox) {
-        classes.value.concat(" half short");
-        props.textline.value ? valueRef.value = "Yes" : "No";
-      }
-    })
-    function getClass(field: FieldModel) {
-      let expression = ''; //this.expressCell(field.expression);
-      if (typeof (field.className) !== 'undefined' && field.className) {
-        expression += ` ${field.className}`;
-      }
-      return expression;
+  setup(props) {
+    let valueRef = ref(props.textline.value);
+    const fieldID = computed(() => `${props.textline.propertyName}_id`);
+    const textlineContainerClasses = computed(() => `textline-container ${props.classname}`);
+    if (props.textline.expression && props.textline.vueType === vueTypes.formChoiceRadio) {props.textline.value ? valueRef.value = "Yes" : "No";
     }
+    const textlineClasses = computed(() => {
+      if (props.textline.expression && props.textline.vueType === vueTypes.formChoiceCheckbox) {
+        return `textline-primary half short ${props.textline.className}`;
+      }
+      return `textline-primary ${props.textline.className}`;
+    });
     return {
-      id,
-      classes,
-      getClass,
+      fieldID,
+      textlineContainerClasses,
+      textlineClasses,
     };
   },
-})
+});
 </script>
+
+<style scoped lang="scss">
+.textline-primary {
+  margin-bottom: 15px;
+}
+</style>

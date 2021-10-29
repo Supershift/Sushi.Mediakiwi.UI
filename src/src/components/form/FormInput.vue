@@ -125,7 +125,8 @@ export default defineComponent({
 <style scoped lang="scss">
 .input-container {
   position: relative;
-  margin: 15px 0;
+  margin: 0;
+  margin-bottom: 15px;
   margin-left: -70px;
   .input-icon {
     position: absolute;

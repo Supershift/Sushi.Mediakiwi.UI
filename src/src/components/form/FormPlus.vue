@@ -48,7 +48,7 @@ export default defineComponent({
 
 .plusBtn {
     margin: 0 auto;
-    margin-top: $grid-s-gutter;
+    margin-bottom: 15px;
     background: $color-success;
     color: #fff;
     text-align: center;

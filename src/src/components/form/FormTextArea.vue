@@ -65,6 +65,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .textarea-container {
-  margin-top: $grid-s-gutter;;
+  margin-bottom: 15px;;
 }
 </style>

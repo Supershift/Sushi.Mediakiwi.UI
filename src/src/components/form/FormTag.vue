@@ -17,11 +17,11 @@
 import { fieldMixins } from "./index";
 import {  computed, defineComponent,  PropType, ref } from "vue";
 import FieldModel from "../../models/FieldModel";
-import TagsInput from "./TagsInput.vue";
+import TagsInput from "./FormTagsInput.vue";
 
 
 export default defineComponent({
-  name: "Tags",
+  name: "FormTags",
   components: {
     // VueTagsInput,
     TagsInput,
@@ -56,7 +56,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .tags-container {
-  margin-top: $grid-s-gutter;
+  margin-bottom: 15px;
   width: 50%;
 }
 </style>

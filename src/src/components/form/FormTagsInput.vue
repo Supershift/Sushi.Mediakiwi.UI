@@ -143,6 +143,7 @@ export default {
   position: relative;
   font-family: $font-primary;
   font-size: $font-size-l;
+
 }
 
 ul {
@@ -215,8 +216,8 @@ input {
   }
 }
 .tag.duplicate {
-  background: rgb(235, 27, 27);
-  animation: shake 1s;
+  background: $color-grad-alert;
+  animation: shake 1.5s;
 }
 .count {
   position: absolute;

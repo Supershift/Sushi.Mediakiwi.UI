@@ -72,3 +72,9 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped lang="scss">
+.richtext-container {
+  margin-bottom: 15px;
+}
+</style>

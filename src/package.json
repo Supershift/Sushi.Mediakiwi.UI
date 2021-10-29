@@ -30,6 +30,7 @@
     "vue-mutation-observer": "^0.1.2",
     "vue-router": "^4.0.0-0",
     "vue-select": "^4.0.0-beta.1",
+    "vue3-datepicker": "^0.2.5",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
