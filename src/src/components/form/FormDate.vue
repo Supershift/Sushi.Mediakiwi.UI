@@ -1,5 +1,5 @@
 <template>
-  <FormDateTime :field="field" :classname="classname" :valueType="'time'" @onChange="handleChange" />
+  <FormDateTime :field="field" :classname="classname" :valueType="'date'" @onChange="handleChange" />
 </template>
 
 <script lang="ts">
@@ -8,7 +8,7 @@ import { defineComponent, PropType } from "vue";
 import FieldModel from "../../models/FieldModel";
 
 export default defineComponent({
-  name:"FormTime",
+  name: "FormDate",
   components: {
     FormDateTime,
   },

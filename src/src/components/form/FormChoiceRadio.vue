@@ -27,7 +27,7 @@ import OptionModel from "../../models/OptionModel";
 import { fieldMixins } from "./index";
 
 export default defineComponent({
-    name:"FormRadio",
+    name:"ChoiceRadio",
     mixins: [fieldMixins],
     props: {
       field: {

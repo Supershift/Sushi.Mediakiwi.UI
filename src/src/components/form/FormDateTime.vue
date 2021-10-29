@@ -1,28 +1,28 @@
 <template>
   <div :class="datetimeContainerClasses">
     <label v-if="undefinedCheck(field.prefix)">{{ undefinedCheck(field.prefix) }}</label>
-    <datepicker
+    <datetimepicker
       v-model="valueRef"
-      :inputFormat="componentFormat"
-      :typeable="true"
-      :phrases="settings.phrases"
+      :format="componentFormat"
       @change="handleChange"
     >
-    </datepicker>
+      <template #input-icon></template>
+    </datetimepicker>
     <label v-if="undefinedCheck(field.suffix)">{{ undefinedCheck(field.suffix) }}</label>
   </div>
 </template>
 
 <script lang="ts">
 import { fieldMixins } from "./index";
-import Datepicker  from "vue3-datepicker";
+import DateTimePicker from "vue3-date-time-picker";
+import "vue3-date-time-picker/src/Vue3DatePicker/style/main.scss";
 
 import { computed, defineComponent, onBeforeMount, PropType, reactive, ref } from "vue";
 import FieldModel from "../../models/FieldModel";
 
 export default defineComponent({
   components: {
-    "datepicker": Datepicker
+    "datetimepicker": DateTimePicker 
   },
   mixins: [fieldMixins],
   props: {
@@ -84,6 +84,7 @@ export default defineComponent({
     });
     return {
       settings,
+      valueRef,
       componentFormat,
       datetimeContainerClasses,
       handleChange,

@@ -44,6 +44,7 @@ export default defineComponent({
     });
     return {
       fieldID,
+      valueRef,
       textlineContainerClasses,
       textlineClasses,
     };
@@ -52,7 +53,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.textline-primary {
+.textline-container {
   margin-bottom: 15px;
 }
 </style>

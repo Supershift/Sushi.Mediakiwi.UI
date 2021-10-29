@@ -24,8 +24,18 @@
         :textarea="test"
         :classname="'test'"
       />
-      <FormValueCollection :field="test" />
-      <FormDateTime :field="test" />
+      <FormValueCollection
+        :field="test"
+        :classname="'test'"
+      />
+      <FormDate
+        :field="test"
+        :valueType="'date'"
+      />
+      <FormTime
+        :field="test"
+        :valueType="'time'"
+      />
       <FormNameValueCollection
         :field="test"
         :classname="'test'"
@@ -34,7 +44,14 @@
         :textline="test"
         :classname="'test'"
       />
-      <FormChoiceRadio :field="test" />
+      <FormChoiceRadio
+        :field="test"
+        :classname="'test'"
+      />
+      <FormChoiceCheckBox
+        :field="test"
+        :classname="'test'"
+      />
       <GridComponent :grid="customGrid" />
     </div>
   </div>
@@ -53,11 +70,13 @@ import FormDropDown from "./form/FormDropDown.vue";
 import FormTags from "./form/FormTag.vue";
 import FormTextArea from "./form/FormTextArea.vue";
 import FormValueCollection from "./form/FormValueCollection.vue";
-import FormDateTime from "./form/FormDateTime.vue";
+import FormDate from "./form/FormDate.vue";
 import FormNameValueCollection from "./form/FormNameValueCollection.vue";
 import FormTextLine from "./form/FormTextLine.vue";
 import FormRichText from "./form/FormRichText.vue";
 import FormChoiceRadio from "./form/FormChoiceRadio.vue";
+import FormChoiceCheckBox from "./form/FormChoiceCheckBox.vue";
+import FormTime from "./form/FormTime.vue";
 
 import GridModel from "../models/GridModel";
 import SelectModel from "../models/SelectModel";
@@ -85,9 +104,11 @@ export default defineComponent({
     FormTags,
     FormTextArea,
     FormValueCollection,
-    FormDateTime,
+    FormDate,
+    FormTime,
     FormNameValueCollection,
-    FormTextLine, 
+    FormTextLine,
+    FormChoiceCheckBox, 
   },
   setup() {
     const fetchedFields = computed(() => store.getters.fields);
@@ -187,7 +208,7 @@ export default defineComponent({
       options: [{ name: "test", text: "test", value: "wd", countForOption: 1 },{ text: "test2", name: "test2", value: "daw", countForOption: 1 }],
       className: null,
       event: null,
-      inputPost: null,
+      inputPost: "test123",
       section: 0,
       hidden: null,
       groupName: null,

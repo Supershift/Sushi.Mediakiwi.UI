@@ -29,7 +29,7 @@ import { PropType, defineComponent, ref, computed } from "vue";
 import { fieldMixins } from "./../form";    
 import FieldModel from "../../models/FieldModel";
 export default defineComponent({
-    name: "FormNamEValue",
+    name: "FormNamValue",
     props: {
       field: {
         type: Object as PropType<FieldModel>,
