@@ -1,89 +1,74 @@
 <template>
-  <div :class="customRichtextContainerClasses">
-    <Editor
-      apiKey="4w7n1fpw2lpcb86gkmkqfpsrefktlebicr8wc1lzwuy0evy4"
-      :id="fieldID"
-      :name="fieldID"
-      :init="{
-        language: `${richtext.locale}` ? `${richtext.locale}` : 'en',
-        menubar: false,
-        statusbar: false,
-        plugins: ['code link'],
-        selector: 'textarea',
-        toolbar: 'bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code',
-      }"
-      :class="customRichtextClasses"
-      :disabled="richtext.disabled || richtext.readOnly"
-      @change="handleChange"
-    />
-  </div>
+    <div :class="customRichtextContainerClasses">
+        <editor
+            api-key="4w7n1fpw2lpcb86gkmkqfpsrefktlebicr8wc1lzwuy0evy4"
+            :id="richtext.propertyName"
+            :init="tinymceInit"
+            v-model="valueRef"
+            :class="customRichtextClasses"
+            :disabled="richtext.disabled || richtext.readOnly"
+            @blur="handleChange"
+        />
+    </div>
 </template>
 <script lang="ts">
 // import Editor from '@tinymce/tinymce-vue';
 import { defineComponent, PropType, ref, computed, reactive } from "vue";
-import OptionModel from "../../models/OptionModel";
 import FieldModel from "../../models/FieldModel";
 import Editor from "@tinymce/tinymce-vue";
-
 
 export default defineComponent({
     name: "RichText",
     components: {
-      Editor,
+        editor: Editor,
     },
     props: {
-      richtext: {
-        type: Object as PropType<FieldModel>,
-        required: true,
-      },
-      classname: {
-        type: String,
-        required: true,
-      },
+        richtext: {
+            type: Object as PropType<FieldModel>,
+            required: true,
+        },
+        classname: {
+            type: String,
+            required: true,
+        },
     },
     emits: ["valueChanged"],
-    setup(props, context){
-      let valueEvent = ref("");
-      let valueRef = ref("");
-      const tinymce = reactive({
-        apikey: "4w7n1fpw2lpcb86gkmkqfpsrefktlebicr8wc1lzwuy0evy4",
-        language: `${props.richtext.locale}` ? `${props.richtext.locale}` : "en",
-        menubar: false,
-        statusbar: false,
-        plugins: ["code link"],
-        selector: "textarea",
-        toolbar: "bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code",
-      });
-      const customRichtextContainerClasses = computed(() => ["richtext-container ", props.classname]);
-      const customRichtextClasses = computed(() => ["richtext-primary ", props.richtext?.className]);
-      const fieldID = computed((option: OptionModel) => {
-        return `${props.richtext?.value}_${props.richtext?.propertyName}_${option?.value}`;
-      });
-      function handleChange() {
-        if (props.richtext?.event !== "none") {
-          context.emit("valueChanged", valueRef);
+    setup(props, context) {
+        let valueRef = ref("");
+
+        const customRichtextContainerClasses = computed(() => [
+            "richtext-container ",
+            props.richtext?.className,
+        ]);
+        const customRichtextClasses = computed(() => [
+            "richtext-primary ",
+            props.classname,
+        ]);
+
+        function handleChange(values: string) {
+            if (props.richtext?.event !== "none") {
+                context.emit("valueChanged", values);
+            }
         }
-      }
-      function localEventHandler(method: string) {
-        switch (props.richtext?.event) {
-          case "blur":
-            valueEvent.value = "onBlur";
-            //props.richtext.event = "onBlur";
-            break;
-          default:
-            break;                     
-        }
-        return method; //this.eventHandler(this.field, method);
-      }
-      return {
-        fieldID,
-        handleChange,
-        localEventHandler,
-        customRichtextClasses,
-        customRichtextContainerClasses,
-        tinymce,
-        valueRef,
-      };
+        const tinymceInit = {
+            menubar: false,
+            statusbar: false,
+            plugins: [
+                "advlist autolink lists link image charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table paste code help wordcount",
+            ],
+            toolbar:
+                "bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code",
+        };
+
+        return {
+            handleChange,
+            customRichtextClasses,
+            customRichtextContainerClasses,
+            valueRef,
+            tinymceInit,
+        };
     },
 });
 </script>
