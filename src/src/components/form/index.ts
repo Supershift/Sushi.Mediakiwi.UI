@@ -1,3 +1,4 @@
+import FieldModel from "@/models/FieldModel";
 
 export enum ExpressionType {
   Full = 0,
@@ -51,8 +52,12 @@ export enum FieldType {
 
 export const fieldMixins = {
   methods: {
-    undefinedCheck(field: string): string {
-      return (typeof (field) !== "undefined" && field) ? field : "";
+    undefinedCheck(param: string): string {
+      return (typeof (param) !== "undefined" && param) ? param : "";
+    },
+    errorClass(field: FieldModel) {
+      if (field.error) { return " error "; }
+      return "";
     },
   },
 };
@@ -84,4 +89,4 @@ export const emptyField = {
   componentKey: 0,
   error: { message: "", isError: false, propertyName: "" },
   locale: "en",
-};
+} as FieldModel;

@@ -1,13 +1,20 @@
 <template>
   <div :class="customRichtextContainerClasses">
-    <editor
-      v-model="valueRef"
+    <Editor
+      apiKey="4w7n1fpw2lpcb86gkmkqfpsrefktlebicr8wc1lzwuy0evy4"
       :id="fieldID"
       :name="fieldID"
-      toolbar= "bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code"
+      :init="{
+        language: `${richtext.locale}` ? `${richtext.locale}` : 'en',
+        menubar: false,
+        statusbar: false,
+        plugins: ['code link'],
+        selector: 'textarea',
+        toolbar: 'bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code',
+      }"
       :class="customRichtextClasses"
       :disabled="richtext.disabled || richtext.readOnly"
-      v-on="localEventHandler('handleChange')"
+      @change="handleChange"
     />
   </div>
 </template>
@@ -22,7 +29,7 @@ import Editor from "@tinymce/tinymce-vue";
 export default defineComponent({
     name: "RichText",
     components: {
-      "editor": Editor,
+      Editor,
     },
     props: {
       richtext: {
@@ -39,19 +46,22 @@ export default defineComponent({
       let valueEvent = ref("");
       let valueRef = ref("");
       const tinymce = reactive({
+        apikey: "4w7n1fpw2lpcb86gkmkqfpsrefktlebicr8wc1lzwuy0evy4",
         language: `${props.richtext.locale}` ? `${props.richtext.locale}` : "en",
         menubar: false,
         statusbar: false,
         plugins: ["code link"],
+        selector: "textarea",
+        toolbar: "bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code",
       });
-      const customRichtextContainerClasses = computed(() => ["richtext-container ", props.richtext?.className]);
-      const customRichtextClasses = computed(() => ["richtext-primary ", props.classname]);
+      const customRichtextContainerClasses = computed(() => ["richtext-container ", props.classname]);
+      const customRichtextClasses = computed(() => ["richtext-primary ", props.richtext?.className]);
       const fieldID = computed((option: OptionModel) => {
         return `${props.richtext?.value}_${props.richtext?.propertyName}_${option?.value}`;
       });
-      function handleChange(values: string) {
+      function handleChange() {
         if (props.richtext?.event !== "none") {
-          context.emit("valueChanged", values);
+          context.emit("valueChanged", valueRef);
         }
       }
       function localEventHandler(method: string) {
@@ -78,4 +88,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.richtext-container {
+  margin-bottom: 15px;
+}
+</style>

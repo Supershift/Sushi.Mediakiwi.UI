@@ -1,64 +1,92 @@
 <template>
   <div class="content-container row">
     <div class="col main-container">
-      <CustomSelectInput :select="customSelectTestInput" />
+      <!-- <CustomSelectInput :select="customSelectTestInput" />
       <CustomChoiceRadio :radio="customRadioTestInput" />
-      <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" />
-      <FormComponent :fields="fetchedFields" :notifications="customNotifications" />
-      <RichText :richtext="customRichText" />
-      <GridComponent :grid="customGrid"></GridComponent>
-      <DropDown :field="test" :classname="'test'" />
-      <Tags :tags="test" />
-      <TextArea :textarea="test" :classname="'test'" />
-      <Plus :field="test" />
-      <FormValue :field="test" />
-      <FormValueCollection :field="test"/>
-      <!-- <Link /> -->
+      <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" /> -->
+      <FormComponent
+        :fields="fetchedFields"
+        :notifications="customNotifications"
+      />
+      <FormRichText
+        :richtext="customRichText"
+        :classname="'test'"
+      />
+      <FormDropDown
+        :field="test"
+        :classname="'test'"
+      />
+      <FormTags
+        :tags="test"
+        :classname="'test'"
+      />
+      <FormTextArea
+        :textarea="test"
+        :classname="'test'"
+      />
+      <FormValueCollection :field="test" />
+      <FormDateTime :field="test" />
+      <FormNameValueCollection
+        :field="test"
+        :classname="'test'"
+      />
+      <FormTextLine
+        :textline="test"
+        :classname="'test'"
+      />
+      <!-- <FormChoiceRadio :radio="test" /> -->
+      <GridComponent :grid="customGrid" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, ref } from "vue";
-import RichText from "./form/FormRichText.vue";
-import CustomSelectInput from "./form/CustomSelectInput.vue";
+
+// import CustomSelectInput from "./form/CustomSelectInput.vue";
+// import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
+// import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
+
+import store from "../store";
+
+import FormDropDown from "./form/FormDropDown.vue";
+import FormTags from "./form/FormTag.vue";
+import FormTextArea from "./form/FormTextArea.vue";
+import FormValueCollection from "./form/FormValueCollection.vue";
+import FormDateTime from "./form/FormDateTime.vue";
+import FormNameValueCollection from "./form/FormNameValueCollection.vue";
+import FormTextLine from "./form/FormTextLine.vue";
+import FormRichText from "./form/FormRichText.vue";
+// import FormChoiceRadio from "./form/FormChoiceRadio.vue";
+
+import GridModel from "../models/GridModel";
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
-import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
-import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
 import CheckboxModel from "../models/CheckboxModel";
-import FormComponent from "./form/FormComponent.vue";
 import FieldModel from "../models/FieldModel";
 import MessageModel from "../models/MessageModel";
-import store from "../store";
-import DropDown from "./form/FormDropDown.vue";
-import Tags from "./form/FormTag.vue";
-import Plus from "./form/FormPlus.vue";
-import TextArea from "./form/FormTextArea.vue";
-import FormValue from "./form/FormValue.vue";
-import FormValueCollection from "./form/FormValueCollection.vue";
-
-// import Link from "./form/FormLink.vue";
-import GridModel from "../models/GridModel";
 
 import GridComponent from "./grid/GridComponent.vue";
+import FormComponent from "./form/FormComponent.vue";
+
 
 export default defineComponent({
   name: "MainView",
   components: {
-    CustomSelectInput,
-    CustomChoiceRadio,
-    CustomChoiceCheckBox,
-    RichText,
+    // CustomSelectInput,
+    // CustomChoiceRadio,
+    // CustomChoiceCheckBox,
+    // FormChoiceRadio,
+    FormRichText,
     FormComponent,
     GridComponent,
-    DropDown,
-    Tags,
-    TextArea,
-    Plus,
-    FormValue,
+    FormDropDown,
+    FormTags,
+    FormTextArea,
     FormValueCollection,
-    // Link,
+    FormDateTime,
+    FormNameValueCollection,
+    FormTextLine, 
   },
   setup() {
     const fetchedFields = computed(() => store.getters.fields);
@@ -141,6 +169,7 @@ export default defineComponent({
         componentKey: 0,
         error: { message: "", isError: false, propertyName: "" },
         locale: "",
+        weekStart: 7,
       },
     ]);
     const test = ref<FieldModel>({
@@ -170,6 +199,7 @@ export default defineComponent({
       componentKey: 0,
       error: { message: "", isError: false, propertyName: "" },
       locale: "",
+      weekStart: 7,
     });
     const customRichText = ref<FieldModel>({
       contentTypeID: 10,
@@ -198,6 +228,7 @@ export default defineComponent({
       componentKey: 0,
       error: { message: "", isError: false, propertyName: "" },
       locale: "",
+      weekStart: 7,
     });
     const customNotifications = ref<MessageModel[]>([]);
 

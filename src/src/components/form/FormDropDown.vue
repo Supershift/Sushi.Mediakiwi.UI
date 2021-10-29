@@ -1,5 +1,5 @@
 <template>
-  <div :class="classname">
+  <div :class="customDropdownContainerClasses">
     <label v-if="undefinedCheck(field)">
       {{ undefinedCheck(field.prefix) }}
     </label>
@@ -52,7 +52,8 @@ export default defineComponent({
         placeholder: "",
         allowClear: true,
       });
-      const customDropdownClasses = computed(() => ["dropdown-primary ", props.classname]);
+      const customDropdownClasses = computed(() => ["dropdown-primary ", props.field.className]);
+      const customDropdownContainerClasses = computed(() => ["dropdown-container ", props.classname]);
       const select2data = computed(() => {
         if (!localField || !localField.value?.options || !localField.value?.options) {
           return [];
@@ -78,8 +79,17 @@ export default defineComponent({
         select2data,
         handleChange,
         customDropdownClasses,
+        customDropdownContainerClasses,
         select2Settings,
       };
   },
 });
 </script>
+
+<style scoped lang="scss">
+.dropdown-container {
+  font-family: $font-primary;
+  font-size: $font-size-s;
+  margin-bottom: 15px;
+}
+</style>

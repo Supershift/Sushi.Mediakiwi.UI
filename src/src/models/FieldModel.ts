@@ -10,7 +10,7 @@ interface FieldModel {
   // MK
   propertyType: string | undefined |null;
   expression: number;
-  value: string | null;
+  value: any;
   options: OptionModel[] | undefined | null;
   className: string | undefined | null;
   inputPost: string | undefined | null;
@@ -31,6 +31,7 @@ interface FieldModel {
   event?: string | undefined | null;
   contentTypeID: number;
   locale: string;
+  weekStart: number;
 }
 
 export default FieldModel;
