@@ -3,39 +3,11 @@
     <label v-if="undefinedCheck(field.prefix)">{{ undefinedCheck(field.prefix) }}</label>
     <datepicker
       v-model="valueRef"
-      :type="valueType"
-      :format="componentFormat"
+      :inputFormat="componentFormat"
+      :typeable="true"
       :phrases="settings.phrases"
       @change="handleChange"
     >
-      <!-- <template slot="button-cancel">
-        <a class="button-white">
-          {{ settings.phrases.cancel }}
-        </a>
-      </template>
-      <template
-        slot="button-confirm"
-        slot-scope="scope"
-      >
-        <a
-          v-if="scope.step === &quot;date&quot;"
-          class="button-primary"
-        >
-          {{ settings.phrases.next }}
-        </a>
-        <a
-          v-else-if="scope.step === &quot;month&quot;"
-          class="button-primary"
-        >
-        {{ settings.phrases.next }}
-        </a>
-        <a
-          v-else
-          class="button-primary"
-        >
-          {{ settings.phrases.ok }}
-        </a>
-      </template> -->
     </datepicker>
     <label v-if="undefinedCheck(field.suffix)">{{ undefinedCheck(field.suffix) }}</label>
   </div>
@@ -81,7 +53,7 @@ export default defineComponent({
       weekStart: props.field.weekStart ? props.field.weekStart : daysOfTheWeek,
       defaultlocale: props.field.locale ? props.field.locale : "en-US",
     });
-    let valueRef = ref("");
+    let valueRef = ref(new Date());
     const componentFormat = computed(() => {
       switch (props.valueType) {
         case "date":

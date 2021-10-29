@@ -1,6 +1,6 @@
 <template>
   <div :class="classname">        
-    <label v-if="prefix(field)">{{ prefix(field) }}</label>
+    <label v-if="undefinedCheck(field.prefix)">{{ undefinedCheck(field.prefix) }}</label>
     <span
       v-for="option in field.options"
       :key="fieldID(option)"
@@ -15,14 +15,15 @@
         :disabled="field.disabled || field.readOnly"
         @change="handleChage"
       >
-      <label :for="fieldID(option)">{{ option.text }}</label>
+      <label :for="fieldID(option)">{{ option.name }}</label>
     </span>
-    <label v-if="suffix(field.suffix)">{{ suffix(field.suffix) }}</label>
+    <label v-if="undefinedCheck(field.suffix)">{{ undefinedCheck(field.suffix) }}</label>
   </div>
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
 import FieldModel from "../../models/FieldModel";
+import OptionModel from "../../models/OptionModel";
 import { fieldMixins } from "./index";
 
 export default defineComponent({
@@ -40,10 +41,10 @@ export default defineComponent({
     },
     emits: ["onChange"],
     setup(props, context) {
-      const valueRef = ref(0);
+      let valueRef = ref(0);
       const radioContainerClasses = computed(() => `radio-container ${props.classname}`);
       const radioClasses = computed(() => `radio-primary radio ${props.field.className}`);
-      if (typeof (props.field.value) === "string") {
+      if (typeof props.field?.value === "string") {
         if (props.field.value.toLowerCase() === "false") {
           valueRef.value = 0;
         }
@@ -51,7 +52,7 @@ export default defineComponent({
           valueRef.value = 1;
         }
       }
-      const fieldID = computed((option) => `${props.field.propertyName}_${option.value}`);
+      function fieldID(option: OptionModel) { return `${props.field.propertyName}_${option.value}`; }
       function handleChange(e: Event) {
         if (props.field.event !== "none") {
           context.emit("onChange", e, valueRef);

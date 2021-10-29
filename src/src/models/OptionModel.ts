@@ -1,6 +1,7 @@
 interface OptionModel {
-    value: number;
+    value: any;
     name: string;
+    text: string;
     countForOption: number;
 }
 

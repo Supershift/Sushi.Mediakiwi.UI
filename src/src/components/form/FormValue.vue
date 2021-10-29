@@ -8,7 +8,7 @@
     </label>
     <input
       :id="fieldID"
-      v-model="valueRef.value"
+      v-model="valueRef"
       type="text"
       :name="fieldName"
       :disabled="field.disabled || field.readOnly"
@@ -43,7 +43,7 @@ export default defineComponent({
     const valueContainerClasses = computed(() => `name-value ${props.classname}`);
     const valueClasses = computed(() => `long short ${props.field.className}`);
     const fieldID = computed(() => `${props.field.propertyName}_id`);
-    const valueRef = ref(props.field.value);
+    const valueRef = ref(props.field.value.text);
     function  handleChange(e: Event) {
       context.emit("onChange", e, valueRef);
     }

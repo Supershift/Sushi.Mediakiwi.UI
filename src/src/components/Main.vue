@@ -34,7 +34,7 @@
         :textline="test"
         :classname="'test'"
       />
-      <!-- <FormChoiceRadio :radio="test" /> -->
+      <FormChoiceRadio :field="test" />
       <GridComponent :grid="customGrid" />
     </div>
   </div>
@@ -57,7 +57,7 @@ import FormDateTime from "./form/FormDateTime.vue";
 import FormNameValueCollection from "./form/FormNameValueCollection.vue";
 import FormTextLine from "./form/FormTextLine.vue";
 import FormRichText from "./form/FormRichText.vue";
-// import FormChoiceRadio from "./form/FormChoiceRadio.vue";
+import FormChoiceRadio from "./form/FormChoiceRadio.vue";
 
 import GridModel from "../models/GridModel";
 import SelectModel from "../models/SelectModel";
@@ -68,6 +68,7 @@ import MessageModel from "../models/MessageModel";
 
 import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
+import OptionModel from "../models/OptionModel";
 
 
 export default defineComponent({
@@ -76,7 +77,7 @@ export default defineComponent({
     // CustomSelectInput,
     // CustomChoiceRadio,
     // CustomChoiceCheckBox,
-    // FormChoiceRadio,
+    FormChoiceRadio,
     FormRichText,
     FormComponent,
     GridComponent,
@@ -94,14 +95,16 @@ export default defineComponent({
       {
         value: 0,
         name: "test",
+        text: "test",
         countForOption: 1,
       },
       {
-        value: 0,
+        value: 1,
         name: "test",
+        text: "test",
         countForOption: 2,
       },
-    ];
+    ] as OptionModel[];
     const customSelectTestInput = ref<SelectModel>({
       error: "",
       disabled: false,
@@ -181,7 +184,7 @@ export default defineComponent({
       vueType: "5",
       expression: 1,
       value: "User input",
-      options: [{ name: "test", value: 2, countForOption: 1 }],
+      options: [{ name: "test", text: "test", value: "wd", countForOption: 1 },{ text: "test2", name: "test2", value: "daw", countForOption: 1 }],
       className: null,
       event: null,
       inputPost: null,

@@ -33,7 +33,8 @@ export default defineComponent({
     let valueRef = ref(props.textline.value);
     const fieldID = computed(() => `${props.textline.propertyName}_id`);
     const textlineContainerClasses = computed(() => `textline-container ${props.classname}`);
-    if (props.textline.expression && props.textline.vueType === vueTypes.formChoiceRadio) {props.textline.value ? valueRef.value = "Yes" : "No";
+    if (props.textline.expression && props.textline.vueType === vueTypes.formChoiceRadio) {
+      props.textline.value ? valueRef.value = "Yes" : valueRef.value + "No";
     }
     const textlineClasses = computed(() => {
       if (props.textline.expression && props.textline.vueType === vueTypes.formChoiceCheckbox) {
