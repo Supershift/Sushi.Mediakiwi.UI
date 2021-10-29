@@ -1,3 +1,9 @@
 {
-    "terminal.integrated.cwd": "src"
+    "terminal.integrated.cwd": "src",
+    "eslint.validate": [
+        "javascript",
+        "typescript",
+        "vue",
+        "html",
+    ]
 }
