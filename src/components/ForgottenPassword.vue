@@ -1,15 +1,31 @@
 <template>
   <form action="" class="forgotten-password">
-    <img src="../assets/images/vaultN-logo.svg" class="forgotten-logo" />
-    <h1>{{ contentForgottenPassword.forgottenHeadlineText }}</h1>
-    <CustomInput :input="customEmailInput" @valueChanged="handleTextChanged" />
-    <FormErrors v-if="errroMessages" :messages="errroMessages" />
-    <CustomButton :button="customLoginButton" @buttonClicked="handleSubmit" />
+    <img
+      src="../assets/images/vaultN-logo.svg"
+      class="forgotten-logo" />
+    <h1>
+      {{
+        contentForgottenPassword.forgottenHeadlineText
+      }}
+    </h1>
+    <CustomInput
+      :input="customEmailInput"
+      @valueChanged="handleTextChanged" />
+    <FormErrors
+      v-if="errroMessages"
+      :messages="errroMessages" />
+    <CustomButton
+      :button="customLoginButton"
+      @buttonClicked="handleSubmit" />
   </form>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import {
+  defineComponent,
+  ref,
+  computed,
+} from "vue";
 import CustomButton from "./form/CustomButton.vue";
 import CustomInput from "./form/CustomInput.vue";
 import FormErrors from "./form/FormErrors.vue";
@@ -47,7 +63,9 @@ export default defineComponent({
       buttonIcon: "",
       disabled: false,
       buttondName: "submit",
-      value: contentForgottenPassword.value.submitButtonText,
+      value:
+        contentForgottenPassword.value
+          .submitButtonText,
       readOnly: false,
     });
 
