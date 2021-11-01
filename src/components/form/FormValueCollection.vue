@@ -18,7 +18,7 @@
     </section>
     <FormPlus
       :field="plusField"
-      :classname="'small'"
+      classname="small"
       @click="addNameValuePair"
     />
     <label v-if="undefinedCheck(field.suffix)">{{ undefinedCheck(field.suffix) }}</label>
@@ -33,11 +33,6 @@ import FieldModel from "../../models/FieldModel";
 
 export default defineComponent({
     name: "FormValueCollection",
-    components: {
-      FormValue,
-      FormPlus
-    },
-    mixins: [fieldMixins],
     props: {
       field: {
         type: Object as PropType<FieldModel>,
@@ -47,6 +42,11 @@ export default defineComponent({
         type: String,
         required: true,
       },
+    },
+    mixins: [fieldMixins],
+    components: {
+      FormValue,
+      FormPlus,
     },
     emits: ["onChange"],
     setup(props, context) {
@@ -109,6 +109,7 @@ export default defineComponent({
     .delete {
         margin-left: 10px;
         font-size: 125%;
+        color: $color-success;
     }
 }
 </style>

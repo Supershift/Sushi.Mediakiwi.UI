@@ -62,7 +62,7 @@ ul {
         border: 2px solid $color-main outset;
     }
 }
-input:not([type=radio]),
+input:not([type=radio]):not([class=vs__search]),
 select,
 textarea {
     font-family: $font-primary;

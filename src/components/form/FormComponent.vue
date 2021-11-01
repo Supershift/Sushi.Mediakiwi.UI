@@ -59,7 +59,17 @@ import FormSection from "./FormSection.vue";
 
 export default defineComponent({
   name: "FormComponent",
-  mixin: [ExpressionType, fieldMixins],
+  props: {
+    fields: {
+      type: Array as PropType<Array<FieldModel>>,
+      required: true,
+    },
+    notifications: {
+      type: Object as PropType<Array<MessageModel>>,
+      required: true,
+    },
+  },
+  mixins: [fieldMixins],
   components: {
     // CustomButton,
     // CustomInput,
@@ -71,16 +81,6 @@ export default defineComponent({
     // FormButton,
     // FormInput,
     // FormSection,
-  },
-  props: {
-    fields: {
-      type: Array as PropType<Array<FieldModel>>,
-      required: true,
-    },
-    notifications: {
-      type: Object as PropType<Array<MessageModel>>,
-      required: true,
-    },
   },
   emits: ["toggle", "addFields", "removeFields", "fieldChanged", "buttonClicked"],
   setup(props, context) {
@@ -257,6 +257,8 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .formTable {
+  font-family: $font-primary;
+  font-family: $font-size-l;
   tr {
     th {
       padding: 8px 0 2px !important;

@@ -8,13 +8,14 @@
       tabindex="-1"
       :id="field.propertyName"
       :name="field.propertyName"
-      :value="field.value"
       :options="select2data"
-      :settings="select2Settings"
+      placeholder=""
+      clearable="true"
+      taggable="false"
       :class="customDropdownClasses"
       :disabled="field.disabled || field.readOnly"
       ref="dropdown"
-      @change="handleChange"
+      @input="handleChange"
     />
     <label v-if="undefinedCheck(field.suffix)">
       {{ undefinedCheck(field.suffix) }}
@@ -28,7 +29,6 @@ import {
   defineComponent,
   onBeforeMount,
   PropType,
-  reactive,
   ref,
 } from "vue";
 import FieldModel from "../../models/FieldModel";
@@ -37,10 +37,6 @@ import "vue-select/dist/vue-select.css";
 
 export default defineComponent({
   name: "DropDown",
-  mixins: [fieldMixins],
-  components: {
-    dropdown: Dropdown,
-  },
   props: {
     field: {
       type: Object as PropType<FieldModel>,
@@ -51,14 +47,13 @@ export default defineComponent({
       required: true,
     },
   },
+  mixins: [fieldMixins],
+  components: {
+    dropdown: Dropdown,
+  },
   emits: ["onChange"],
   setup(props, context) {
-    let localField = ref<FieldModel>();
-    let select2Settings = reactive({
-      width: "100%",
-      placeholder: "",
-      allowClear: true,
-    });
+    let localField = ref<FieldModel>(props.field.value);
     const customDropdownClasses = computed(() => [
       "dropdown-primary ",
       props.field.className,
@@ -80,9 +75,9 @@ export default defineComponent({
         };
       });
     });
-    function handleChange() {
+    function handleChange(e: Event) {
       if (localField.value?.event !== "none") {
-        context.emit("onChange", null, localField);
+        context.emit("onChange", e, localField);
       }
     }
     onBeforeMount(() => {
@@ -93,16 +88,24 @@ export default defineComponent({
       handleChange,
       customDropdownClasses,
       customDropdownContainerClasses,
-      select2Settings,
     };
   },
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .dropdown-container {
   font-family: $font-primary;
   font-size: $font-size-s;
   margin-bottom: 15px;
+  width: 100%;
+}
+.vs__dropdown-toggle{
+  height: 50px;
+  border: 1px solid #aaa;
+  border-radius: $b-radius-6;
+}
+.vs__actions svg {
+  fill: $color-success !important;
 }
 </style>

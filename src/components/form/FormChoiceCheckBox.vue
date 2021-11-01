@@ -11,7 +11,7 @@
       :disabled="field.disabled || field.readOnly"
       @change="handleChange"
     >
-    <label :for="field.propertyName">{{ field.inputPost }}</label>
+    <label :for="field.propertyName"> {{ field.inputPost }}</label>
     <label
       v-if="undefinedCheck(field.suffix)"
       :for="field.propertyName"
@@ -27,7 +27,6 @@ import FieldModel from "../../models/FieldModel";
 
 export default defineComponent({
     name:"ChoiceCheckBox",
-    mixins: [fieldMixins],
     props: {
       field: {
         type: Object as PropType<FieldModel>,
@@ -38,6 +37,8 @@ export default defineComponent({
         required: true,
       },
     },
+    mixins: [fieldMixins],
+    emits: ["onChange"],
     setup(props, context){
       const valueRef = ref(props.field.value);
       const checkboxClasses = computed(() => `checkbox-primary radio ${props.field.className}`);
@@ -56,3 +57,13 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped lang="scss">
+.checkbox-container {
+  font-family: $font-primary;
+  font-size: $font-size-l;
+  label {
+    margin-left: 15px;
+  }
+}
+</style>

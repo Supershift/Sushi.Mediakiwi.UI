@@ -29,13 +29,13 @@ import { fieldMixins } from "../form/index";
 
 export default defineComponent({
   name: "FormInput",
-  mixins: [fieldMixins],
   props: {
     input: {
       type: Object as PropType<InputModel>,
       required: true,
     },
   },
+  mixins: [fieldMixins],
   emits: ["valueChanged"],
   setup(props, context) {
     const inputText = reactive({ value: "" });
@@ -149,7 +149,7 @@ export default defineComponent({
     line-height: 40px;
     width: 100%;
     border-radius: 3px;
-    padding-left: 35px;
+    padding-left: 35px !important;
     padding-right: 35px;
     font-size: $font-size-l;
     color: $color-drakgrey;

@@ -18,7 +18,6 @@ import { fieldMixins, vueTypes } from "./index";
 
 export default defineComponent({
   name: "TextLine",
-  mixins: [fieldMixins],
   props: {
     textline: {
       type: Object as PropType<FieldModel>,
@@ -29,6 +28,7 @@ export default defineComponent({
       required: true,
     },
   },
+  mixins: [fieldMixins],
   setup(props) {
     let valueRef = ref(props.textline.value);
     const fieldID = computed(() => `${props.textline.propertyName}_id`);
@@ -55,5 +55,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .textline-container {
   margin-bottom: 15px;
+  font-family: $font-primary;
+  font-size: $font-size-l;
 }
 </style>

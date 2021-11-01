@@ -5,7 +5,7 @@
       v-model="valueRef"
       :format="componentFormat"
       @change="handleChange"
-      :timePicker="valueType === 'time'"
+      :time-picker="valueType === 'time'"
       :enableTimePicker="valueType === 'time'"
     >
       <template #input-icon></template>
@@ -116,5 +116,8 @@ export default defineComponent({
   --dp-success-color: #3A52AC;
   --dp-icon-color: #3A52AC;
   --dp-danger-color: #f00;
+}
+input:not([type=radio]):not([class=vs__search])[readonly] {
+  border-radius: $b-radius-6;
 }
 </style>

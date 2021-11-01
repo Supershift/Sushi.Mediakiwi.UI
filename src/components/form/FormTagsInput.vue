@@ -8,6 +8,7 @@
       type="text"
       :list="id"
       autocomplete="off"
+      :name="name"
       :style="{ 'padding-left': `${paddingLeft}px` }"
       @keydown.enter="addTag(newTag)"
       @keydown.prevent.tab="addTag(newTag)"
@@ -40,9 +41,8 @@
         {{ tag }}
         <button
           class="delete"
-          @click="removeTag(index)"
-        >
-          x
+          @click="removeTag(index)">
+          <fa icon="times"></fa>
         </button>
       </li>
     </ul>
@@ -50,7 +50,7 @@
       v-if="showCount"
       class="count"
     >
-      <span>{{ tags.length }}</span> tags
+      <span>{{ tagsLength }}</span>
     </div>
   </div>
 </template>
@@ -76,6 +76,7 @@ export default {
     const tags = ref(props.modelValue);
     const newTag = ref("");
     const id = Math.random().toString(radixNumber).substring(startubstring);
+    const tagsLength = computed(() => `${tags.value.length} tags`);
 
     // handling duplicates
     const duplicate = ref(null);
@@ -134,6 +135,7 @@ export default {
       availableOptions,
       id,
       duplicate,
+      tagsLength,
     };
   },
 };
@@ -168,21 +170,18 @@ ul {
   white-space: nowrap;
   transition: 0.1s ease;
 }
-input {
-  width: 100%;
-  padding: 10px;
-}
 
 .tag-input {
-  input{
+  input {
     height: 50px;
-    line-height: 40px;
     width: 100%;
-    border-radius: 3px;
-    padding-left: 35px;
-    padding-right: 35px;
     font-size: $font-size-l;
     color: $color-drakgrey;
+    padding: 0 !important;
+    border-radius: 6px !important;
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+    }
   }
 }
 
