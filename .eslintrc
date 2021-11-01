@@ -12,9 +12,11 @@
   "extends": [
     "plugin:vue/essential",
     "plugin:vue/recommended",
+    "plugin:vue3/essential",
+    "plugin:vue3/recommended",
     "plugin:security/recommended",
     "@vue/typescript",
-    "@vue/typescript/recommended",
+    "@vue/typescript/recommended"
   ],
   "plugins": [
     "node",
@@ -23,7 +25,7 @@
     "no-unsanitized",
     "security",
     "scanjs-rules",
-    "@typescript-eslint",
+    "@typescript-eslint"
   ],
   "env": {
     "amd": true,

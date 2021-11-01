@@ -4,5 +4,6 @@
         "typescript",
         "vue",
         "html",
-    ]
+    ],
+    "vetur.format.options.tabSize": 2
 }
