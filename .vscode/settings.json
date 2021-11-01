@@ -5,5 +5,5 @@
         "vue",
         "html",
     ],
-    "vetur.format.options.tabSize": 2
+    "vetur.format.options.tabSize": 2,
 }
