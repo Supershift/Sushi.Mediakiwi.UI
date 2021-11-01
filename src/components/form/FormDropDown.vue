@@ -23,65 +23,78 @@
 </template>
 <script lang="ts">
 import { fieldMixins } from "./index";
-import { computed, defineComponent, onBeforeMount, PropType, reactive, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  onBeforeMount,
+  PropType,
+  reactive,
+  ref,
+} from "vue";
 import FieldModel from "../../models/FieldModel";
 import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
 
 export default defineComponent({
-    name: "DropDown",
-    mixins: [fieldMixins],
-    components: {
-      "dropdown": Dropdown
+  name: "DropDown",
+  mixins: [fieldMixins],
+  components: {
+    dropdown: Dropdown,
+  },
+  props: {
+    field: {
+      type: Object as PropType<FieldModel>,
+      required: true,
     },
-    props: {
-      field: {
-        type: Object as PropType<FieldModel>,
-        required: true,
-      },
-      classname: {
-        type: String,
-        required: true,
-      },
+    classname: {
+      type: String,
+      required: true,
     },
-    emits: ["onChange"],
-    setup(props, context) {
-      let localField = ref<FieldModel>();
-      let select2Settings = reactive({
-        width: "100%",
-        placeholder: "",
-        allowClear: true,
-      });
-      const customDropdownClasses = computed(() => ["dropdown-primary ", props.field.className]);
-      const customDropdownContainerClasses = computed(() => ["dropdown-container ", props.classname]);
-      const select2data = computed(() => {
-        if (!localField || !localField.value?.options || !localField.value?.options) {
-          return [];
-        }
-        
-        return localField.value?.options.map((r) => {
-          return {
-            id: r.value,
-            label: r.name,
-            disabled: false,
-          };
-        });
-      });
-      function handleChange() {
-        if (localField.value?.event !== "none") {
-          context.emit("onChange", null, localField);
-        }
+  },
+  emits: ["onChange"],
+  setup(props, context) {
+    let localField = ref<FieldModel>();
+    let select2Settings = reactive({
+      width: "100%",
+      placeholder: "",
+      allowClear: true,
+    });
+    const customDropdownClasses = computed(() => [
+      "dropdown-primary ",
+      props.field.className,
+    ]);
+    const customDropdownContainerClasses = computed(() => [
+      "dropdown-container ",
+      props.classname,
+    ]);
+    const select2data = computed(() => {
+      if (!localField.value?.options) {
+        return [];
       }
-      onBeforeMount(() => {
-        localField.value = props.field;
+
+      return localField.value?.options.map((r) => {
+        return {
+          id: r.value,
+          label: r.name,
+          disabled: false,
+        };
       });
-      return {
-        select2data,
-        handleChange,
-        customDropdownClasses,
-        customDropdownContainerClasses,
-        select2Settings,
-      };
+    });
+    function handleChange() {
+      if (localField.value?.event !== "none") {
+        context.emit("onChange", null, localField);
+      }
+    }
+    onBeforeMount(() => {
+      localField.value = props.field;
+    });
+    return {
+      select2data,
+      handleChange,
+      customDropdownClasses,
+      customDropdownContainerClasses,
+      select2Settings,
+    };
   },
 });
 </script>
