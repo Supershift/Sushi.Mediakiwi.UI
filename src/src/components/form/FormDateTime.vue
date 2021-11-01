@@ -5,6 +5,8 @@
       v-model="valueRef"
       :format="componentFormat"
       @change="handleChange"
+      :timePicker="valueType === 'time'"
+      :enableTimePicker="valueType === 'time'"
     >
       <template #input-icon></template>
     </datetimepicker>

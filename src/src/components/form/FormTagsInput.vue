@@ -175,7 +175,7 @@ input {
 
 .tag-input {
   input{
-    height: 30px;
+    height: 50px;
     line-height: 40px;
     width: 100%;
     border-radius: 3px;
