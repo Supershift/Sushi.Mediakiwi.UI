@@ -3,7 +3,11 @@
     <img src="../assets/images/vaultN-logo.svg" class="login-logo" />
     <h1>{{ contentLogin.loginHeadlineText }}</h1>
     <CustomInput :input="customEmailInput" @valueChanged="handleTextChanged" />
-    <CustomInput :input="customPasswordInput" @valueChanged="handleTextChanged" class="password-input" />
+    <CustomInput
+      :input="customPasswordInput"
+      @valueChanged="handleTextChanged"
+      class="password-input"
+    />
     <FormErrors v-if="errroMessages" :messages="errroMessages" />
     <a href="#/forgot" class="link">
       {{ contentLogin.loginForgotPasswordText }}

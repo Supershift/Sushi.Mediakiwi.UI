@@ -1,29 +1,14 @@
 <template>
-  <form
-    action=""
-    class="resset-password"
-  >
-    <img
-      src="../assets/images/vaultN-logo.svg"
-      class="reset-logo"
-    >
+  <form action="" class="resset-password">
+    <img src="../assets/images/vaultN-logo.svg" class="reset-logo" />
     <h1>{{ contentResetPassword.resetHeadlineText }}</h1>
-    <CustomInput
-      :input="customEmailInput"
-      @valueChanged="handleTextChanged"
-    />
-    <FormErrors
-      v-if="errroMessages"
-      :messages="errroMessages"
-    />
-    <CustomButton
-      :button="customLoginButton"
-      @buttonClicked="handleSubmit"
-    />
+    <CustomInput :input="customEmailInput" @valueChanged="handleTextChanged" />
+    <FormErrors v-if="errroMessages" :messages="errroMessages" />
+    <CustomButton :button="customLoginButton" @buttonClicked="handleSubmit" />
   </form>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref, computed } from "vue";
 import MessageModel from "../models/MessageModel";
 import InputModel from "../models/InputModel";
@@ -41,7 +26,7 @@ export default defineComponent({
     CustomButton,
   },
   setup() {
-    const errroMessages = ref<Array<MessageModel>>([]);
+    const errroMessages = ref<MessageModel[]>([]);
     const contentResetPassword = computed(() => store.getters.contentResetPassword);
     const customEmailInput = ref<InputModel>({
         customClass: "input-email",

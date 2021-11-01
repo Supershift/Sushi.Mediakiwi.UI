@@ -4,17 +4,43 @@
       <tbody>
         <tr v-for="row in rowArray" :key="row.id">
           <td v-if="row.isButtonRow">
-            <component :is="checkVueType(field)" v-for="field in row.fields" :key="field.propertyName" v-bind="field" @onclick="handleButtonClicked" />
+            <component
+              :is="checkVueType(field)"
+              v-for="field in row.fields"
+              :key="field.propertyName"
+              v-bind="field"
+              @onclick="handleButtonClicked"
+            />
           </td>
           <template v-for="field in row.fields" v-else>
-            <component :is="checkVueType(field)" v-if="checkVueType(field) === 'FormSection'" :key="field.propertyName" v-model="field.value" v-bind="field" />
+            <component
+              :is="checkVueType(field)"
+              v-if="checkVueType(field) === 'FormSection'"
+              :key="field.propertyName"
+              v-model="field.value"
+              v-bind="field"
+            />
             <template v-else>
-              <th v-show="showField(field)" :key="field.propertyName" :class="expressCell(field.expression)" colspan="1">
-                <label v-if="!hideLabelForType(field.vueType)" :for="field.propertyName" :title="field.title" :class="{ mandatory: field.mandatory }">
+              <th
+                v-show="showField(field)"
+                :key="field.propertyName"
+                :class="expressCell(field.expression)"
+                colspan="1"
+              >
+                <label
+                  v-if="!hideLabelForType(field.vueType)"
+                  :for="field.propertyName"
+                  :title="field.title"
+                  :class="{ mandatory: field.mandatory }"
+                >
                   {{ field.title }}
                 </label>
               </th>
-              <td :key="field.propertyName" :class="expressCell(field.expression)" :colspan="getColspan(row)">
+              <td
+                :key="field.propertyName"
+                :class="expressCell(field.expression)"
+                :colspan="getColspan(row)"
+              >
                 <component
                   :is="checkVueType(field)"
                   v-if="field.vueType === 'FormButton'"
@@ -23,7 +49,11 @@
                   @onclick="handleButtonClicked"
                 />
                 <component
-                  :is="checkVueType(field) === 'undefined' ? 'FormInput' : checkVueType(field)"
+                  :is="
+                    checkVueType(field) === 'undefined'
+                      ? 'FormInput'
+                      : checkVueType(field)
+                  "
                   v-else
                   :key="field.componentKey"
                   v-model="field.value"
@@ -59,7 +89,17 @@ import FormSection from "./FormSection.vue";
 
 export default defineComponent({
   name: "FormComponent",
-  mixin: [ExpressionType, fieldMixins],
+  props: {
+    fields: {
+      type: Array as PropType<Array<FieldModel>>,
+      required: true,
+    },
+    notifications: {
+      type: Object as PropType<Array<MessageModel>>,
+      required: true,
+    },
+  },
+  mixins: [ExpressionType, fieldMixins],
   components: {
     // CustomButton,
     // CustomInput,
@@ -72,17 +112,13 @@ export default defineComponent({
     // FormInput,
     // FormSection,
   },
-  props: {
-    fields: {
-      type: Array as PropType<Array<FieldModel>>,
-      required: true,
-    },
-    notifications: {
-      type: Object as PropType<Array<MessageModel>>,
-      required: true,
-    },
-  },
-  emits: ["toggle", "addFields", "removeFields", "fieldChanged", "buttonClicked"],
+  emits: [
+    "toggle",
+    "addFields",
+    "removeFields",
+    "fieldChanged",
+    "buttonClicked",
+  ],
   setup(props, context) {
     function checkVueType(field: FieldModel): string {
       switch (field.vueType) {
@@ -184,7 +220,9 @@ export default defineComponent({
 
       if (!field.formSection) {
         if (field.vueType === vueTypes.formSection) {
-          currentFormSection = `${clean(field.title)}_${props.fields.indexOf(field)}`;
+          currentFormSection = `${clean(field.title)}_${props.fields.indexOf(
+            field
+          )}`;
         }
         field.formSection = currentFormSection;
       }
@@ -210,7 +248,9 @@ export default defineComponent({
       } else {
         if (
           currentRow.value.fields.length >= cellLimit &&
-          currentRow.value.fields.map((mappedField) => mappedField.vueType).every((val) => val === vueTypes.formButton)
+          currentRow.value.fields
+            .map((mappedField) => mappedField.vueType)
+            .every((val) => val === vueTypes.formButton)
         ) {
           if (field.vueType !== vueTypes.formButton) {
             // currentRow.isButtonRow = true;
@@ -226,7 +266,10 @@ export default defineComponent({
       // When the current field is fullwidth
       // or the fields collection for the currentrow exceed the limit?
       let addRows = false;
-      if (field.expression === ExpressionType.Full || currentRow.value.fields.length >= cellLimit) {
+      if (
+        field.expression === ExpressionType.Full ||
+        currentRow.value.fields.length >= cellLimit
+      ) {
         addRows = true;
       }
 
