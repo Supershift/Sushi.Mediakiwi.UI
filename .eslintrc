@@ -40,6 +40,7 @@
   ],
   "rules": {
     // The below are some, but not all, of the rules from eslint:recommended https://github.com/eslint/eslint/blob/master/conf/eslint-recommended.js (all errors set to warning)
+    "@typescript-eslint/explicit-module-boundary-types": 0,
     "constructor-super": 1,
     "for-direction": 1,
     "getter-return": 1,

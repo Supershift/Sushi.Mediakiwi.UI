@@ -1,0 +1,177 @@
+{
+  "listTitle": null,
+  "isEditMode": false,
+  "buttons": [
+    {
+      "contentTypeID": 27,
+      "propertyName": "TestButton",
+      "propertyType": "bool",
+      "title": "Test Button",
+      "vueType": 1,
+      "expression": 1,
+      "value": null,
+      "options": null,
+      "className": null,
+      "event": 1,
+      "inputPost": null,
+      "section": 0,
+      "hidden": null,
+      "groupName": null,
+      "suffix": null,
+      "prefix": null,
+      "formSection": null,
+      "canToggleSection": false,
+      "canDeleteSection": false,
+      "toggleDefaultClosed": false,
+      "readOnly": false,
+      "helpText": "This button triggers something"
+    }
+  ],
+  "notifications": [
+    {
+      "message": "The data has been saved",
+      "isError": false,
+      "propertyName": null
+    },
+    {
+      "message": "This is an error!",
+      "isError": true,
+      "propertyName": "TestProperty"
+    }
+  ],
+  "topNavigation": {
+    "logoUrl": "https://cdn-tst.vaultn.nl/images/logo.svg",
+    "homeUrl": "/webcontent",
+    "items": [
+      {
+        "text": "Website",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
+        "items": null
+      },
+      {
+        "text": "Data Lists",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
+        "items": null
+      },
+      {
+        "text": "Galleries",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
+        "items": null
+      },
+      {
+        "text": "Admin",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
+        "items": [
+          {
+            "text": "Settings",
+            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10"
+          }
+        ]
+      }
+    ]
+  },
+  "sideNavigation": {
+    "items": [
+      {
+        "text": "Some list",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
+        "items": null,
+        "isBack": true,
+        "isActive": false,
+        "iconClass": "fingerprint"
+      },
+      {
+        "text": "Page Property",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
+        "isBack": false,
+        "isActive": true,
+        "iconClass": "receipt",
+        "items": [
+          {
+            "text": "Content",
+            "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
+            "items": null,
+            "isBack": false,
+            "iconClass": "users",
+            "isActive": true
+          }
+        ]
+      },
+      {
+        "text": "Admin",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
+        "iconClass": "donate",
+        "items": [
+          {
+            "text": "Settings",
+            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10",
+            "iconClass": "th"
+          }
+        ]
+      }
+    ]
+  },
+  "folders": [
+    {
+      "folderId": 1,
+      "folderName": "",
+      "description": "This folder contains items",
+      "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=1",
+      "items": [
+        {
+          "text": "Page X",
+          "id": 1,
+          "href": "https://portal-dev.vaultn.nl/webcontent/website?page=1",
+          "isPublished": true,
+          "isEdited": true
+        },
+        {
+          "text": "List X",
+          "id": 2,
+          "href": "https://portal-dev.vaultn.nl/webcontent/website?list=2",
+          "isPublished": null,
+          "isEdited": null
+        }
+      ]
+    }
+  ],
+  "profile": {
+    "displayName": "Jean-Paul Kommers",
+    "email": "jean-paul.kommers@supershift.nl",
+    "roleID": 1,
+    "roleName": "Super Admin"
+  },
+  "redirectUrl": null,
+  "listDescription": null,
+  "listSettingsUrl": null,
+  "breadcrumbs": [
+    {
+      "text": "Back",
+      "href": "https://portal-dev.vaultn.nl/webcontent/website?list=2",
+      "isBack": true
+    },
+    {
+      "text": "Home",
+      "href": "https://portal-dev.vaultn.nl/webcontent/website?list=1",
+      "isBack": false
+    },
+    {
+      "text": "Layer 1",
+      "href": "https://portal-dev.vaultn.nl/webcontent/website?list=4",
+      "isBack": false
+    }
+  ],
+  "currentSiteID": 1,
+  "sites": [
+    {
+      "name": "Site A",
+      "id": 1
+    },
+    {
+      "name": "Site B",
+      "id": 2
+    }
+  ],
+  "isSharedField": false,
+  "sharedFieldValue": null
+}

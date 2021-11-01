@@ -6,59 +6,46 @@
       <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" /> -->
       <FormComponent
         :fields="fetchedFields"
-        :notifications="customNotifications"
-      />
+        :notifications="customNotifications" />
       <FormRichText
         :richtext="customRichText"
-        :classname="'test'"
-      />
+        classname="test" />
       <FormDropDown
         :field="test"
-        :classname="'test'"
-      />
-      <FormTags
-        :tags="test"
-        :classname="'test'"
-      />
+        classname="test" />
+      <FormTags :tags="test" classname="test" />
       <FormTextArea
         :textarea="test"
-        :classname="'test'"
-      />
+        classname="test" />
       <FormValueCollection
         :field="test"
-        :classname="'test'"
-      />
-      <FormDate
-        :field="test"
-        :valueType="'date'"
-      />
-      <FormTime
-        :field="test"
-        :valueType="'time'"
-      />
+        classname="test" />
+      <FormDate :field="test" valueType="date" />
+      <FormTime :field="test" valueType="time" />
       <FormNameValueCollection
         :field="test"
-        :classname="'test'"
-      />
+        classname="test" />
       <FormTextLine
         :textline="test"
-        :classname="'test'"
-      />
+        classname="test" />
       <FormChoiceRadio
         :field="test"
-        :classname="'test'"
-      />
+        classname="test" />
       <FormChoiceCheckBox
         :field="test"
-        :classname="'test'"
-      />
+        classname="test" />
       <GridComponent :grid="customGrid" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  reactive,
+  ref,
+} from "vue";
 
 // import CustomSelectInput from "./form/CustomSelectInput.vue";
 // import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
@@ -78,7 +65,6 @@ import FormChoiceRadio from "./form/FormChoiceRadio.vue";
 import FormChoiceCheckBox from "./form/FormChoiceCheckBox.vue";
 import FormTime from "./form/FormTime.vue";
 
-import GridModel from "../models/GridModel";
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
 import CheckboxModel from "../models/CheckboxModel";
@@ -88,7 +74,7 @@ import MessageModel from "../models/MessageModel";
 import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
 import OptionModel from "../models/OptionModel";
-
+import GridModel from "@/models/Mediakiwi/GridModel";
 
 export default defineComponent({
   name: "MainView",
@@ -108,10 +94,12 @@ export default defineComponent({
     FormTime,
     FormNameValueCollection,
     FormTextLine,
-    FormChoiceCheckBox, 
+    FormChoiceCheckBox,
   },
   setup() {
-    const fetchedFields = computed(() => store.getters.fields);
+    const fetchedFields = computed(
+      () => store.getters.fields
+    );
     const customSelectTestOptions = [
       {
         value: 0,
@@ -126,23 +114,24 @@ export default defineComponent({
         countForOption: 2,
       },
     ] as OptionModel[];
-    const customSelectTestInput = ref<SelectModel>({
-      error: "",
-      disabled: false,
-      mandatory: false,
-      value: "",
-      tabindex: 0,
-      fieldName: "main-select",
-      fieldIcon: "",
-      customClass: "select-primary",
-      hasValidation: false,
-      isValid: true,
-      showLabel: true,
-      showDefault: true,
-      defaultLabel: "",
-      options: customSelectTestOptions,
-      multiple: false,
-    });
+    const customSelectTestInput =
+      ref<SelectModel>({
+        error: "",
+        disabled: false,
+        mandatory: false,
+        value: "",
+        tabindex: 0,
+        fieldName: "main-select",
+        fieldIcon: "",
+        customClass: "select-primary",
+        hasValidation: false,
+        isValid: true,
+        showLabel: true,
+        showDefault: true,
+        defaultLabel: "",
+        options: customSelectTestOptions,
+        multiple: false,
+      });
     const customRadioTestInput = ref<RadioModel>({
       disabled: false,
       fieldValue: "",
@@ -154,17 +143,18 @@ export default defineComponent({
       customClass: "radio-primary",
       options: customSelectTestOptions,
     });
-    const customCheckboxTestInput = ref<CheckboxModel>({
-      disabled: false,
-      fieldValue: "",
-      fieldName: "main-checkbox",
-      fieldIcon: "",
-      fieldGroupName: "cb_main",
-      prefix: "Hello",
-      suffix: "World",
-      customClass: "checkbox-primary",
-      options: customSelectTestOptions,
-    });
+    const customCheckboxTestInput =
+      ref<CheckboxModel>({
+        disabled: false,
+        fieldValue: "",
+        fieldName: "main-checkbox",
+        fieldIcon: "",
+        fieldGroupName: "cb_main",
+        prefix: "Hello",
+        suffix: "World",
+        customClass: "checkbox-primary",
+        options: customSelectTestOptions,
+      });
     const customFields = ref<FieldModel[]>([
       {
         contentTypeID: 10,
@@ -191,7 +181,11 @@ export default defineComponent({
         readOnly: false,
         helpText: "This field can do stuff",
         componentKey: 0,
-        error: { message: "", isError: false, propertyName: "" },
+        error: {
+          message: "",
+          isError: false,
+          propertyName: "",
+        },
         locale: "",
         weekStart: 7,
       },
@@ -205,7 +199,20 @@ export default defineComponent({
       vueType: "5",
       expression: 1,
       value: "User input",
-      options: [{ name: "test", text: "test", value: "wd", countForOption: 1 },{ text: "test2", name: "test2", value: "daw", countForOption: 1 }],
+      options: [
+        {
+          name: "test",
+          text: "test",
+          value: "wd",
+          countForOption: 1,
+        },
+        {
+          text: "test2",
+          name: "test2",
+          value: "daw",
+          countForOption: 1,
+        },
+      ],
       className: null,
       event: null,
       inputPost: "test123",
@@ -221,7 +228,11 @@ export default defineComponent({
       readOnly: false,
       helpText: "This field can do stuff",
       componentKey: 0,
-      error: { message: "", isError: false, propertyName: "" },
+      error: {
+        message: "",
+        isError: false,
+        propertyName: "",
+      },
       locale: "",
       weekStart: 7,
     });
@@ -250,11 +261,17 @@ export default defineComponent({
       readOnly: false,
       helpText: "This field can do stuff",
       componentKey: 0,
-      error: { message: "", isError: false, propertyName: "" },
+      error: {
+        message: "",
+        isError: false,
+        propertyName: "",
+      },
       locale: "",
       weekStart: 7,
     });
-    const customNotifications = ref<MessageModel[]>([]);
+    const customNotifications = ref<
+      MessageModel[]
+    >([]);
 
     const customGrid = reactive<GridModel>({
       title: "custom grid",

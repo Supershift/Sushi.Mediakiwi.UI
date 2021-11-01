@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import store from "./store";
 import App from "./App.vue";
 import router from "./router";
+import { api } from "./utils/api";
 
 library.add(
   fas,
@@ -30,7 +31,12 @@ router.beforeEach((to, from, next) => {
       // console.log("Please login first", from.fullPath);
     } else {
       // to.meta.title = to.params.project_name_slug;
-      next();
+      // Fetch the Mediakiwi data
+      api.fetchMediakiwiAPIByUrl(to.fullPath).then(() => {
+        next();
+      }).catch(() => {
+        // redirect to 500 page 
+      });
     }
     // console.log("I am trying to authorize", store.getters.isLoggedIn);
   } else if (to.matched.some((record) => record.meta.requiresVisitor)) {

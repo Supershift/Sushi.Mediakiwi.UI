@@ -1,15 +1,37 @@
 <template>
-  <section class="search-table" v-if="grid && grid.rows.length">
+  <section
+    class="search-table"
+    v-if="grid && grid.rows.length">
     <article class="data-block">
       <table class="selections">
         <thead>
           <tr class="first">
-            <th v-for="(col, index) in grid.columns" :key="index" :width="col.width" :align="col.align">{{ col.title }}</th>
+            <th
+              v-for="(col, index) in grid.columns"
+              :key="index"
+              :width="col.width"
+              :align="col.align">
+              {{ col.title }}
+            </th>
           </tr>
         </thead>
-        <tbody :data-layer="gridLayerData" :data-title="gridTitle">
-          <tr v-for="(row, rowIndex) in grid.rows" :key="rowIndex" class="parent hand" :id="row.id" :data-link="getGridRowHref(row)" @click="onRowClick(row)">
-            <td v-for="(gridItem, gridItemIndex) in row.gridItems" :key="gridItemIndex" :style="getGridItemStyle(gridItem)" v-html="gridItem.value"></td>
+        <tbody
+          :data-layer="gridLayerData"
+          :data-title="gridTitle">
+          <tr
+            v-for="(row, rowIndex) in grid.rows"
+            :key="rowIndex"
+            class="parent hand"
+            :id="row.id"
+            :data-link="getGridRowHref(row)"
+            @click="onRowClick(row)">
+            <td
+              v-for="(
+                gridItem, gridItemIndex
+              ) in row.gridItems"
+              :key="gridItemIndex"
+              :style="getGridItemStyle(gridItem)"
+              v-html="gridItem.value"></td>
           </tr>
         </tbody>
       </table>
@@ -21,10 +43,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import GridModel from "../../models/GridModel";
-import GridRowModel from "../../models/GridRowModel";
-import GridItemModel from "../../models/GridItemModel";
+import GridItemModel from "@/models/Mediakiwi/GridItemModel";
+import GridModel from "@/models/Mediakiwi/GridModel";
+import GridRowModel from "@/models/Mediakiwi/GridRowModel";
+import {defineComponent, PropType} from "vue";
 
 export default defineComponent({
   name: "Grid",
@@ -36,7 +58,10 @@ export default defineComponent({
   },
   computed: {
     gridLayerData() {
-      if (this.grid && this.grid.layerConfiguration) {
+      if (
+        this.grid &&
+        this.grid.layerConfiguration
+      ) {
         return `width: ${this.grid.layerConfiguration.width}; height: ${this.grid.layerConfiguration.height}`;
       }
       return null;

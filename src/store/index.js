@@ -8,6 +8,8 @@ import DummyBrand from "@/assets/images/ananda.png";
 import router from "@/router";
 import axios from "axios";
 
+const loggedinKey = "ananda_vaultn_loggedin";
+
 export default createStore({
   modules: {
     // profile,
@@ -16,7 +18,7 @@ export default createStore({
   },
   state: {
     isLoggedIn: false,
-    mediaKiwiLoading: false,
+    mediakiwiLoading: false,
     site: {
       title: "Site title - Page Title",
     },
@@ -113,36 +115,43 @@ export default createStore({
     menuItems: [{
       id: 1,
       name: "Home",
+      href: "",
       icon: ["fal", "fingerprint"],
       open: false,
     }, {
       id: 2,
       name: "My Vault",
+      href: "",
       icon: ["fal", "th"],
       open: false,
     }, {
       id: 3,
       name: "Finance",
+      href: "",
       icon: ["fal", "donate"],
       open: false,
     }, {
       id: 4,
       name: "My Network",
+      href: "",
       icon: ["fal", "users"],
       open: false,
     }, {
       id: 5,
       name: "Orders",
+      href: "",
       icon: ["fal", "receipt"],
       open: false,
     }, {
       id: 6,
       name: "Settings",
+      href: "",
       icon: ["fal", "cog"],
       open: false,
     }, {
       id: 7,
       name: "Cube",
+      href: "",
       icon: ["fas", "cube"],
       open: false,
     },
@@ -197,12 +206,14 @@ export default createStore({
     },
     toggleLogIn(state) {
       state.isLoggedIn = !state.isLoggedIn;
+      // Temp solution
+      sessionStorage.setItem(loggedinKey, state.isLoggedIn);
       router.push("/");
     },
-    toggleMediaKiwiLoading(state) {
-      state.mediaKiwiLoading = !state.mediaKiwiLoading;
+    toggleMediakiwiLoading(state) {
+      state.mediakiwiLoading = !state.mediakiwiLoading;
     },
-    getMediaKiwiAPI(state, request) {
+    getMediakiwiAPI(state, request) {
       return new Promise((resolve, reject) => {
         axios({ url: `${origin()}/api/mediakiwi`, data: request, method: "POST" })
           .then((resp) => {
@@ -215,11 +226,11 @@ export default createStore({
               this.$store.addPageResources(resp.data.resources);
             }
 
-            this.$store.dispatch("toggleMediaKiwiLoading");
+            this.$store.dispatch("toggleMediakiwiLoading");
             resolve(resp);
           })
           .catch((err) => {
-            this.$store.dispatch("toggleMediaKiwiLoading");
+            this.$store.dispatch("toggleMediakiwiLoading");
             alert("Something went wrong while fetching the page");
             reject(err);
           });
@@ -230,7 +241,33 @@ export default createStore({
     },
     setPageResources(state, newResources) {
       state.resources = newResources;
-    }
+    },
+    setProfileInfomation(state, data) {
+      if (data) {
+        state.profileData.fullName = data.displayName;
+        state.profileData.email = data.email;
+      }
+    },
+    setTopNavigation(state, data) {
+      // TODO
+    },
+    setSideNavigation(state, data) {
+      state.menuItems = [];
+      // eslint-disable-next-line no-console
+      console.log(data)
+      if (data && data.items) {
+        let id = 0;
+        data.items.forEach((item) => {
+          state.menuItems.push({
+            id,
+            name: item.text,
+            href: item.href,
+            icon: ["fal", item.iconClass]
+          });
+          id++;
+        });
+      }
+    },
   },
   actions: {
     toggleDrawer(context) {
@@ -242,15 +279,51 @@ export default createStore({
     toggleLogIn(context) {
       context.commit("toggleLogIn");
     },
-    getMediaKiwiAPI(context, request) {
-      context.commit("toggleMediaKiwiLoading");
-      context.commit("getMediaKiwiAPI", request);
+    getMediakiwiAPI(context, request) {
+      context.commit("toggleMediakiwiLoading");
+      context.commit("getMediakiwiAPI", request);
+    },
+    getMediakiwiAPIByUrl(context, request) {
+      // Activate the loader
+      context.commit("toggleMediakiwiLoading");
+
+      // TEMP; Determine what JSON to serve
+      let apiPath = "/grids.json";
+      if (request.url && request.url.indexOf("folder") > -1) {
+        apiPath = "/folders.json";
+      }
+      else if (request.url && request.url.indexOf("?item=") > -1) {
+        apiPath = "/fields.json";
+      }
+
+      // Start a promise with an axios call
+      // to fetch the mediakiwi json      
+      return new Promise((resolve, reject) => {
+        axios.get(apiPath)
+          .then((response) => resolve(response.data))
+          .catch((err) => {
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          });
+      });
+    },
+    toggleMediakiwiLoading(context) {
+      context.commit("toggleMediakiwiLoading");
     },
     setChannel(context, newChannel) {
       context.commit("setChannel", newChannel);
     },
     setPageResources(context, newResources) {
       context.commit("setPageResources", newResources);
+    },
+    setProfileInfomation(context, data) {
+      context.commit("setProfileInfomation", data);
+    },
+    setTopNavigation(context, data) {
+      context.commit("setTopNavigation", data);
+    },
+    setSideNavigation(context, data) {
+      context.commit("setSideNavigation", data);
     },
   },
   getters: {
@@ -264,7 +337,11 @@ export default createStore({
     notification: (state) => state.notification,
     dialog: (state) => state.dialog,
     contentLogin: (state) => state.content.login,
-    isLoggedIn: (state) => state.isLoggedIn, // !!state.isLoggedIn && !!Cookies.get('access-token'),
+    isLoggedIn: () => {
+      // Temp
+      let isLoggedIn = sessionStorage.getItem(loggedinKey);
+      return isLoggedIn; // !!state.isLoggedIn && !!Cookies.get('access-token'),
+    },
     fields: (state) => state.fields,
     contentForgottenPassword: (state) => state.content.forgotten,
     contentResetPassword: (state) => state.content.reset,

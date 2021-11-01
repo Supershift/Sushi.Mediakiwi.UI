@@ -3,13 +3,15 @@
     <router-view></router-view>
 
     <div class="login-ellipse">
-      <p>Take back control of your digital assets.</p>
+      <p>
+        Take back control of your digital assets.
+      </p>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import Login from "../components/Login.vue";
 
 export default defineComponent({
@@ -66,6 +68,7 @@ export default defineComponent({
     text-align: left;
     width: 380px;
     max-width: calc(100vw - 30px);
+    font-family: "Rajdhani", "Arial", Sans-serif;
   }
 }
 
@@ -110,8 +113,6 @@ export default defineComponent({
 
     p {
       position: initial;
-
-      font-family: "Rajdhani", "Arial", Sans-serif;
     }
   }
 }
