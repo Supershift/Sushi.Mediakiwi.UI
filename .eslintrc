@@ -170,7 +170,7 @@
   },
   "overrides": [
     {
-      "files": "**/app/**/*.{js,vue}",
+      "files": "**/src/**/*.{js,vue}",
       "excludedFiles": [
         "**/wwwroot/**/*.js"
       ],

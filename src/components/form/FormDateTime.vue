@@ -23,11 +23,8 @@ import { computed, defineComponent, onBeforeMount, PropType, reactive, ref } fro
 import FieldModel from "../../models/FieldModel";
 
 export default defineComponent({
-  components: {
-    "datetimepicker": DateTimePicker 
-  },
-  mixins: [fieldMixins],
-  props: {
+  name: "FormDateTime",
+   props: {
     field: {
       type: Object as PropType<FieldModel>,
       required: true,
@@ -41,6 +38,10 @@ export default defineComponent({
       required: false,
       default: "",
     }
+  },
+  mixins: [fieldMixins],
+  components: {
+    "datetimepicker": DateTimePicker 
   },
   emits: ["onChange"],
   setup(props, context) {
@@ -95,8 +96,25 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss">
 .datetime-container {
   margin-bottom: 15px;
+}
+/* Overwrites the datepicker defaults: https://vue3datepicker.com/customization/theming/  */
+.dp__theme_light {
+  --dp-background-color: #ffffff;
+  --dp-text-color: #212121;
+  --dp-hover-color: #f3f3f3;
+  --dp-primary-color: #1481fe;
+  --dp-primary-text-color: #f8f5f5;
+  --dp-secondary-color: #c0c4cc;
+  --dp-border-color: #ddd;
+  --dp-border-color-hover: #aaaeb7;
+  --dp-disabled-color: #f6f6f6;
+  --dp-scroll-bar-background: #f3f3f3;
+  --dp-scroll-bar-color: #3A52AC;
+  --dp-success-color: #3A52AC;
+  --dp-icon-color: #3A52AC;
+  --dp-danger-color: #f00;
 }
 </style>
