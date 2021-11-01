@@ -1,46 +1,57 @@
 <template>
   <div :class="customRichtextContainerClasses">
-    <label v-if="undefinedCheck(tags.prefix)">{{ undefinedCheck(tags.prefix) }}</label>
+    <label v-if="undefinedCheck(tags.prefix)">{{
+      undefinedCheck(tags.prefix)
+    }}</label>
     <TagsInput
       :name="tags.propertyName"
-      :modelValue="valueRef"
+      :model-value="valueRef"
       :options="tags.options"
-      :allowCustom="true"
-      :showCount="false"
-      @changeMade="handleChange"
-    />
-    <label v-if="undefinedCheck(tags.suffix)">{{ undefinedCheck(tags.suffix) }}</label>
+      :allow-custom="true"
+      :show-count="false"
+      @changeMade="handleChange" />
+    <label v-if="undefinedCheck(tags.suffix)">{{
+      undefinedCheck(tags.suffix)
+    }}</label>
   </div>
 </template>
 
 <script lang="ts">
-import { fieldMixins } from "./index";
-import {  computed, defineComponent,  PropType, ref } from "vue";
+import {fieldMixins} from "./index";
+import {
+  computed,
+  defineComponent,
+  PropType,
+  ref,
+} from "vue";
 import FieldModel from "../../models/FieldModel";
 import TagsInput from "./FormTagsInput.vue";
 
-
 export default defineComponent({
   name: "FormTags",
-  components: {
-    // VueTagsInput,
-    TagsInput,
-  },
-  mixins: [fieldMixins],
   props: {
     tags: {
       type: Object as PropType<FieldModel>,
       required: true,
     },
-    classname: {
-      type: String,
-      required: true,
-    },
+    // classname: {
+    //   type: String,
+    //   required: true,
+    // },
+  },
+  mixins: [fieldMixins],
+  components: {
+    // VueTagsInput,
+    TagsInput,
   },
   setup(props, context) {
     let valueRef = ref([]);
     let tagRef = ref("");
-    const customRichtextContainerClasses = computed(() => ["tags-container ", props.tags?.className]);
+    const customRichtextContainerClasses =
+      computed(() => [
+        "tags-container ",
+        props.tags?.className,
+      ]);
     function handleChange() {
       context.emit("tagsUpdated", valueRef);
     }
@@ -48,7 +59,7 @@ export default defineComponent({
       valueRef,
       tagRef,
       customRichtextContainerClasses,
-      handleChange
+      handleChange,
     };
   },
 });
