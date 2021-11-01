@@ -1,14 +1,27 @@
 <template>
-  <form class="login" @submit.prevent="handleLogin">
-    <img src="../assets/images/vaultN-logo.svg" class="login-logo" />
+  <form
+    class="login"
+    @submit.prevent="handleLogin">
+    <img
+      src="../assets/images/vaultN-logo.svg"
+      class="login-logo" />
     <h1>{{ contentLogin.loginHeadlineText }}</h1>
-    <CustomInput :input="customEmailInput" @valueChanged="handleTextChanged" />
-    <CustomInput :input="customPasswordInput" @valueChanged="handleTextChanged" class="password-input" />
-    <FormErrors v-if="errroMessages" :messages="errroMessages" />
+    <CustomInput
+      :input="customEmailInput"
+      @valueChanged="handleTextChanged" />
+    <CustomInput
+      :input="customPasswordInput"
+      @valueChanged="handleTextChanged"
+      class="password-input" />
+    <FormErrors
+      v-if="errroMessages"
+      :messages="errroMessages" />
     <a href="#/forgot" class="link">
       {{ contentLogin.loginForgotPasswordText }}
     </a>
-    <CustomButton :button="customLoginButton" @buttonClicked="handleLogin" />
+    <CustomButton
+      :button="customLoginButton"
+      @buttonClicked="handleLogin" />
     <a href="/reset" class="link">
       {{ contentLogin.loginCreateAccountText }}
     </a>
@@ -16,7 +29,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  ref,
+} from "vue";
 import store from "../store/index";
 import FormErrors from "./form/FormErrors.vue";
 import CustomInput from "./form/CustomInput.vue";
@@ -36,7 +53,9 @@ export default defineComponent({
     const email = ref("");
     const password = ref("");
     const errroMessages = ref<MessageModel[]>([]);
-    const contentLogin = computed(() => store.getters.contentLogin);
+    const contentLogin = computed(
+      () => store.getters.contentLogin
+    );
     const customEmailInput = ref<InputModel>({
       customClass: "input-email",
       fieldIcon: "email",
