@@ -2,11 +2,8 @@
   <ul :class="customContainerClass">
     <SideNavigationItem
       v-for="item in sideNavigationItems"
-      :id="item.id"
       :key="item.id"
-      :text="item.text"
-      :href="item.href"
-      :icon-class="item.iconClass"
+      :item="item"
       :toggler="showText" />
   </ul>
 </template>

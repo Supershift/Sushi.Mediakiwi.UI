@@ -26,7 +26,7 @@ export const api = {
           store.dispatch("setTopNavigation", response.topNavigation);
           store.dispatch("setSideNavigation", response.sideNavigation);
           store.dispatch("setGrids", response.grids);
-          store.dispatch("setFolders", response.folders)
+          store.dispatch("setFolders", response.folders);
 
           // finally resolve the response
           store.dispatch("toggleMediakiwiLoading");

@@ -105,30 +105,30 @@
       "propertyName": "TestProperty"
     }
   ],
-  "topNavigation": {
+  "folderNavigation": {
     "logoUrl": "https://cdn-tst.vaultn.nl/images/logo.svg",
     "homeUrl": "/webcontent",
     "items": [
       {
         "id": 1,
         "text": "Website",
-        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
+        "href": "?folder=1",
         "items": null
       },
       {
         "id": 2,
         "text": "Data Lists",
-        "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
+        "href": "?folder=31",
         "items": null
       },
       {
         "id": 4,
         "text": "Admin",
-        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
+        "href": "?folder=4",
         "items": [
           {
             "text": "Settings",
-            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10"
+            "href": "?list=10"
           }
         ]
       }
@@ -137,38 +137,41 @@
   "sideNavigation": {
     "items": [
       {
-        "text": "Some list",
-        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
+        "text": "Back to list",
+        "href": "?folder=1",
         "items": null,
         "isBack": true,
         "isActive": false,
-        "iconClass": "fal users"
+        "iconClass": "fas angle-left"
       },
       {
         "text": "Page Property",
-        "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
+        "href": "?folder=31",
         "isBack": false,
         "isActive": true,
         "iconClass": "fal fingerprint",
         "items": [
           {
             "text": "Content",
-            "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
+            "href": "?folder=3",
             "items": null,
             "isBack": false,
-            "isActive": true,
+            "isActive": false,
             "iconClass": "fal donate"
           }
         ]
       },
       {
         "text": "Admin",
-        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
+        "href": "?folder=4",
+        "iconClass": "fal fingerprint",
+        "isActive": false,
         "items": [
           {
             "text": "Settings",
-            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10",
-            "iconClass": "fal th"
+            "href": "?list=10",
+            "iconClass": "fas cogs",
+            "isActive": false
           }
         ]
       }
@@ -186,17 +189,17 @@
   "breadcrumbs": [
     {
       "text": "Back",
-      "href": "https://portal-dev.vaultn.nl/webcontent/website?list=2",
+      "href": "?list=2",
       "isBack": true
     },
     {
       "text": "Home",
-      "href": "https://portal-dev.vaultn.nl/webcontent/website?list=1",
+      "href": "?list=1",
       "isBack": false
     },
     {
       "text": "Layer 1",
-      "href": "https://portal-dev.vaultn.nl/webcontent/website?list=4",
+      "href": "?list=4",
       "isBack": false
     }
   ],
