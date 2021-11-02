@@ -1,17 +1,17 @@
 <template>
   <div :class="customRichtextContainerClasses">
-    <label v-if="undefinedCheck(tags.prefix)">{{
-      undefinedCheck(tags.prefix)
-    }}</label>
+    <label v-if="undefinedCheck(field?.prefix)">
+      {{ undefinedCheck(field.prefix) }}
+    </label>
     <TagsInput
-      :name="tags.propertyName"
+      :name="field?.propertyName"
       :model-value="valueRef"
-      :options="tags.options"
+      :options="field?.options"
       :allow-custom="true"
       :show-count="false"
       @changeMade="handleChange" />
-    <label v-if="undefinedCheck(tags.suffix)">{{
-      undefinedCheck(tags.suffix)
+    <label v-if="undefinedCheck(field?.suffix)">{{
+      undefinedCheck(field.suffix)
     }}</label>
   </div>
 </template>
@@ -28,29 +28,29 @@ import FieldModel from "../../models/FieldModel";
 import TagsInput from "./FormTagsInput.vue";
 
 export default defineComponent({
-  name: "FormTags",
+  name: "FormTag",
   props: {
-    tags: {
+    field: {
       type: Object as PropType<FieldModel>,
       required: true,
     },
-    // classname: {
-    //   type: String,
-    //   required: true,
-    // },
+    classname: {
+      type: String,
+      required: false,
+    },
   },
-  mixins: [fieldMixins],
+  mixins: [fieldMixins],  
   components: {
-    // VueTagsInput,
     TagsInput,
   },
+  emits:["tagsUpdated"],
   setup(props, context) {
     let valueRef = ref([]);
     let tagRef = ref("");
     const customRichtextContainerClasses =
       computed(() => [
         "tags-container ",
-        props.tags?.className,
+        props.classname,
       ]);
     function handleChange() {
       context.emit("tagsUpdated", valueRef);
@@ -68,6 +68,5 @@ export default defineComponent({
 <style scoped lang="scss">
 .tags-container {
   margin-bottom: 15px;
-  width: 50%;
 }
 </style>

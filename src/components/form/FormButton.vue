@@ -3,7 +3,7 @@
     :class="customButtonClasses"
     @click.prevent="handleClicked"
   >
-    {{ button?.value }}
+    {{ field?.value }}
   </button>
 </template>
 
@@ -14,7 +14,7 @@ import FieldModel from "../../models/FieldModel";
 export default defineComponent({
   name: "FormButton",
   props: {
-    button: {
+    field: {
       type: Object as PropType<FieldModel>,
       required: true,
     },
@@ -22,8 +22,8 @@ export default defineComponent({
   emits: ["buttonClicked"],
   setup(props, context) {
     /* eslint no-console: 0*/
-    console.log(props.button);
-    const customButtonClasses = computed(() => ["btn ", props.button?.className]);
+    console.log(props.field);
+    const customButtonClasses = computed(() => ["btn ", props.field?.className]);
     function handleClicked() {
       context.emit("buttonClicked");
     }

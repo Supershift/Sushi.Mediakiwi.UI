@@ -1,8 +1,8 @@
+import ItemModel from "./ItemModel";
+
 interface OptionModel {
-    value: any;
-    name: string;
-    text: string;
-    countForOption: number;
+    items: ItemModel[];
+    count: number;
 }
 
 export default OptionModel;

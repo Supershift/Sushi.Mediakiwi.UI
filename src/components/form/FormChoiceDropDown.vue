@@ -4,8 +4,8 @@
       {{ undefinedCheck(field.prefix) }}
     </label>
     <dropdown
-      v-model="localField"
-      tabindex="-1"
+      :value="localField"
+      tabindex="1"
       :id="field.propertyName"
       :name="field.propertyName"
       :options="select2data"
@@ -34,9 +34,10 @@ import {
 import FieldModel from "../../models/FieldModel";
 import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
+import OptionModel from "../../models/OptionModel";
 
 export default defineComponent({
-  name: "DropDown",
+  name: "FormChoiceDropdown",
   props: {
     field: {
       type: Object as PropType<FieldModel>,
@@ -53,7 +54,7 @@ export default defineComponent({
   },
   emits: ["onChange"],
   setup(props, context) {
-    let localField = ref<FieldModel>(props.field.value);
+    let localField = ref<FieldModel>(props.field);
     const customDropdownClasses = computed(() => [
       "dropdown-primary ",
       props.field.className,
@@ -67,10 +68,10 @@ export default defineComponent({
         return [];
       }
 
-      return localField.value?.options.map((r) => {
+      return localField.value.options.items.map((r) => {
         return {
           id: r.value,
-          label: r.name,
+          label: r.text,
           disabled: false,
         };
       });

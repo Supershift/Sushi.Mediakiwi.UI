@@ -10,17 +10,14 @@ export enum ExpressionType {
 export enum vueTypes {
   /* eslint no-undefined: 0*/
   "undefined" = 0,
-  "formButton" = 8,
+  "formButton" = 1,
   "formChoiceDropdown" = 2,
   "formPlus" = 3,
   "formRichText" = 4,
   "formText" = 5,
   "formTextline" = 6,
-
   "formTag" = 7,
-  "formChoiceCheckbox" = 1,
-
-  "formTagVue" = 9,
+  "formChoiceCheckbox" = 8,
   "formTextArea" = 10,
   "formChoiceRadio" = 11,        
   "formDateTime" = 12,
@@ -40,7 +37,7 @@ export enum FieldType {
   formPlus = "formPlus",
   formRichText = "formRichText",
   formSection = "formSection",
-  formTagVue = "formTagVue",
+  formTag = "formTag",
   formText = "formText",
   formTextline = "formTextline",
   formTextArea = "formTextArea",

@@ -23,7 +23,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
 import FieldModel from "../../models/FieldModel";
-import OptionModel from "../../models/OptionModel";
+import ItemModel from "../../models/ItemModel";
 import { fieldMixins } from "./index";
 
 export default defineComponent({
@@ -52,7 +52,7 @@ export default defineComponent({
           valueRef.value = 1;
         }
       }
-      function fieldID(option: OptionModel) { return `${props.field.propertyName}_${option.value}`; }
+      function fieldID(option: ItemModel) { return `${props.field.propertyName}_${option.value}`; }
       function handleChange(e: Event) {
         if (props.field.event !== "none") {
           context.emit("onChange", e, valueRef);

@@ -1,7 +1,7 @@
 <template>
   <th
     colspan="4"
-    class="sectionHeader"
+    :class="sectionContainerClasses"
   >
     <h3
       :class="toggleChoice"
@@ -38,9 +38,14 @@ export default defineComponent({
       type: Object as PropType<FieldModel>,
       required: true,
     },
+    classname:{
+      type: String,
+      required: false,
+    }
   },
   emits: ["sortUp", "sortDown", "removeFields", "toggle"],
   setup(props, context) {
+    const sectionContainerClasses = computed(() => ["section-container " + props.classname ]);
     function sortUp (e: Event) {
       e.preventDefault();
       context.emit("sortUp", e, props.field.formSection);
@@ -86,9 +91,17 @@ export default defineComponent({
       toggle,
       getToggleClass,
       toggleChoice,
+      sectionContainerClasses
     };
   },
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.section-container {
+  h3 {
+    margin: 0;
+  }
+}
+
+</style>

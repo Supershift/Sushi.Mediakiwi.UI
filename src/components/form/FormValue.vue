@@ -67,6 +67,7 @@ export default defineComponent({
 
   input:first-child {
       width: 33%;
+      padding-left: 15px;
   }
 
   input:nth-child(2) {

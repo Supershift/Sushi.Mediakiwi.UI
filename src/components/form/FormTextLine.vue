@@ -1,19 +1,19 @@
 <template>
   <div :class="textlineContainerClasses">
     <label
-      v-if="undefinedCheck(textline.prefix)"
+      v-if="undefinedCheck(field?.prefix)"
       >{{
-        undefinedCheck(textline.prefix)
+        undefinedCheck(field.prefix)
       }}</label
     >
     <label
-      :id="textline.propertyName"
+      :id="fieldID"
       :class="textlineClasses"
-      :name="textline.propertyName">
+      :name="field.propertyName">
       {{ valueRef }}
     </label>
-    <label v-if="undefinedCheck(textline)">{{
-      undefinedCheck(textline.suffix)
+    <label v-if="undefinedCheck(field.suffix)">{{
+      undefinedCheck(field.suffix)
     }}</label>
   </div>
 </template>
@@ -28,9 +28,9 @@ import FieldModel from "../../models/FieldModel";
 import {fieldMixins, vueTypes} from "./index";
 
 export default defineComponent({
-  name: "TextLine",
+  name: "FormTextLine",
   props: {
-    textline: {
+    field: {
       type: Object as PropType<FieldModel>,
       required: true,
     },
@@ -41,32 +41,32 @@ export default defineComponent({
   },
   mixins: [fieldMixins],
   setup(props) {
-    let valueRef = ref(props.textline.value);
+    let valueRef = ref(props.field?.value);
     const fieldID = computed(
-      () => `${props.textline.propertyName}_id`
+      () => `${props.field?.propertyName}_id`
     );
     const textlineContainerClasses = computed(
       () =>
         `textline-container ${props.classname}`
     );
     if (
-      props.textline.expression &&
-      props.textline.vueType ===
+      props.field?.expression &&
+      props.field.vueType ===
         vueTypes.formChoiceRadio
     ) {
-      props.textline.value
+      props.field.value
         ? (valueRef.value = "Yes")
         : valueRef.value + "No";
     }
     const textlineClasses = computed(() => {
       if (
-        props.textline.expression &&
-        props.textline.vueType ===
+        props.field?.expression &&
+        props.field.vueType ===
           vueTypes.formChoiceCheckbox
       ) {
-        return `textline-primary half short ${props.textline.className}`;
+        return `textline-primary half short ${props.field?.className}`;
       }
-      return `textline-primary ${props.textline.className}`;
+      return `textline-primary ${props.field?.className}`;
     });
     return {
       fieldID,

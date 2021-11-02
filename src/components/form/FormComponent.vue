@@ -8,7 +8,7 @@
               :is="checkVueType(field)"
               v-for="field in row.fields"
               :key="field.propertyName"
-              v-bind="field"
+              v-bind:field="field"
               @onclick="handleButtonClicked"
             />
           </td>
@@ -18,7 +18,7 @@
               v-if="checkVueType(field) === 'FormSection'"
               :key="field.propertyName"
               v-model="field.value"
-              v-bind="field"
+              v-bind:field="field"
             />
             <template v-else>
               <th
@@ -44,7 +44,7 @@
                 <component
                   :is="checkVueType(field)"
                   v-if="field.vueType === 'FormButton'"
-                  v-bind="field"
+                  v-bind:field="field"
                   :key="field.propertyName"
                   @onclick="handleButtonClicked"
                 />
@@ -56,8 +56,8 @@
                   "
                   v-else
                   :key="field.componentKey"
+                  v-bind:field="field"
                   v-model="field.value"
-                  v-bind="field"
                   @onchange="handleFieldsChanged"
                 />
               </td>
@@ -79,6 +79,20 @@ import { ExpressionType, fieldMixins, FieldType, vueTypes } from "./index";
 import FormButton from "./FormButton.vue";
 import FormInput from "./FormInput.vue";
 import FormSection from "./FormSection.vue";
+import FormChoiceDropdown from "./FormChoiceDropDown.vue";
+import FormTag from "./FormTag.vue";
+import FormTextArea from "./FormTextArea.vue";
+import FormValueCollection from "./FormValueCollection.vue";
+import FormDate from "./FormDate.vue";
+import FormPlus from "./FormPlus.vue";
+import FormNameValueCollection from "./FormNameValueCollection.vue";
+import FormText from "./FormText.vue";
+import FormTextLine from "./FormTextLine.vue";
+import FormRichText from "./FormRichText.vue";
+import FormChoiceRadio from "./FormChoiceRadio.vue";
+import FormChoiceCheckbox from "./FormChoiceCheckBox.vue";
+import FormTime from "./FormTime.vue";
+import FormDateTime from "./FormDateTime.vue";
 
 export default defineComponent({
   name: "FormComponent",
@@ -94,9 +108,23 @@ export default defineComponent({
   },
   mixins: [ExpressionType, fieldMixins],
   components: {
+    FormPlus,
     FormButton,
     FormInput,
     FormSection,
+    FormChoiceCheckbox,
+    FormChoiceDropdown,
+    FormTag,
+    FormTextArea,
+    FormValueCollection,
+    FormNameValueCollection,
+    FormDate,
+    FormTime,
+    FormDateTime,
+    FormText,
+    FormTextLine,
+    FormRichText,
+    FormChoiceRadio,
   },
   emits: [
     "toggle",
@@ -122,10 +150,16 @@ export default defineComponent({
           return FieldType.formDateTime;
         case vueTypes.formRichText:
           return FieldType.formRichText;
+        case vueTypes.formTextArea:
+          return FieldType.formTextArea;
+        case vueTypes.formText:
+          return FieldType.formText;
+        case vueTypes.formTextline:
+          return FieldType.formTextline;
         case vueTypes.formPlus:
           return FieldType.formPlus;
         case vueTypes.formTag:
-          return FieldType.formTagVue;
+          return FieldType.formTag;
         default:
           return FieldType.formSection;
       }

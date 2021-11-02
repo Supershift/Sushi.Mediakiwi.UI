@@ -2,11 +2,10 @@
     <div :class="customRichtextContainerClasses">
         <editor
             api-key="4w7n1fpw2lpcb86gkmkqfpsrefktlebicr8wc1lzwuy0evy4"
-            :id="richtext.propertyName"
+            :id="field?.propertyName"
             :init="tinymceInit"
             v-model="valueRef"
             :class="customRichtextClasses"
-            :disabled="richtext.disabled || richtext.readOnly"
             @blur="handleChange"
         />
     </div>
@@ -20,7 +19,7 @@ import Editor from "@tinymce/tinymce-vue";
 export default defineComponent({
   name: "RichText",
   props: {
-    richtext: {
+    field: {
         type: Object as PropType<FieldModel>,
         required: true,
     },
@@ -38,7 +37,7 @@ export default defineComponent({
 
     const customRichtextContainerClasses = computed(() => [
       "richtext-container ",
-      props.richtext?.className,
+      props.field?.className,
     ]);
     const customRichtextClasses = computed(() => [
       "richtext-primary ",
@@ -46,7 +45,7 @@ export default defineComponent({
     ]);
 
     function handleChange(values: string) {
-      if (props.richtext?.event !== "none") {
+      if (props.field?.event !== "none") {
         context.emit("valueChanged", values);
       }
     }

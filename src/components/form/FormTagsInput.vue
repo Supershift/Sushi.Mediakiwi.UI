@@ -59,9 +59,9 @@ import { ref, watch, nextTick, onMounted, computed } from "vue";
 export default {
   name: "TagsInput",
   props: {
-    name: { type: String, default: "" },
+    name: { type: String, required: true},
     modelValue: { type: Array, default: () => { return []; } },
-    options: { type: [Array, Boolean], default: false },
+    options: { type: Array, required:true },
     allowCustom: { type: Boolean, default: true },
     showCount: { type: Boolean, default: false },
   },
