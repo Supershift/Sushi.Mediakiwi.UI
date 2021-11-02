@@ -6,7 +6,7 @@
         :notifications="customNotifications"
       />
       <FormRichText
-        :richtext="customRichText"
+        :field="customRichText"
         classname="test"
       />
       <FormChoiceDropdown
@@ -14,11 +14,11 @@
         classname="test"
       />
       <FormTags
-        :tags="test"
+        :field="test"
         classname="test"
       />
       <FormTextArea
-        :textarea="test"
+        :field="test"
         classname="test"
       />
       <FormValueCollection
@@ -38,7 +38,7 @@
         classname="test"
       />
       <FormTextLine
-        :textline="test"
+        :field="test"
         classname="test"
       />
       <FormChoiceRadio
