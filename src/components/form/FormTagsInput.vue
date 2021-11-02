@@ -141,13 +141,6 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.tag-input {
-  position: relative;
-  font-family: $font-primary;
-  font-size: $font-size-l;
-
-}
-
 ul {
   list-style: none;
   display: flex;
@@ -172,13 +165,15 @@ ul {
 }
 
 .tag-input {
+  position: relative;
+  font-family: $font-primary;
+  font-size: $font-size-l;
   input {
     height: 50px;
     width: 100%;
     font-size: $font-size-l;
     color: $color-drakgrey;
-    padding: 0 !important;
-    border-radius: 6px !important;
+    padding-left: 1rem;
     &::-webkit-calendar-picker-indicator {
       display: none;
     }

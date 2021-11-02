@@ -62,6 +62,9 @@ export default defineComponent({
 .checkbox-container {
   font-family: $font-primary;
   font-size: $font-size-l;
+  input {
+    width: auto;
+  }
   label {
     margin-left: 15px;
   }

@@ -94,15 +94,15 @@ export default defineComponent({
   display: inline-flex;
   width: 100%;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 
   .name-value {
     input:first-child {
-      width: calc(33% + 7px) !important;
+      width: calc(33% + 7px);
     }
 
     input:only-child {
-      width: 100% !important;
+      width: 100%;
     }
   }
 

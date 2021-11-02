@@ -91,25 +91,24 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .name-value-collection {
-    display: inline-flex;
-    width: 100%;
-    align-items: center;
-    margin-bottom: 5px;
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 5px;
 
-    .name-value {
-        input:first-child {
-            width: calc(33% + 7px) !important;
-        }
-
-        input:only-child {
-            width: 100% !important;
-        }
+  .name-value {
+    input:first-child {
+      width: calc(33% + 7px);
     }
-
-    .delete {
-        margin-left: 10px;
-        font-size: 125%;
-        color: $color-success;
+    input:only-child {
+      width: 100%;
     }
+  }
+
+  .delete {
+    margin-left: 10px;
+    font-size: 125%;
+    color: $color-success;
+  }
 }
 </style>

@@ -26,7 +26,6 @@ import { fieldMixins } from "./../form";
 
 export default defineComponent({
   name: "FormValue",
-  mixins: [fieldMixins],
   props: {
     field: {
       type: Object as PropType<FieldModel>,
@@ -37,6 +36,7 @@ export default defineComponent({
       required: true,
     },
   },
+  mixins: [fieldMixins],
   emits: ["onChange"],
   setup(props, context) {
     const fieldName = computed(() => `${props.field.propertyName}_value`);
@@ -66,17 +66,17 @@ export default defineComponent({
   display: inline-flex;
 
   input:first-child {
-      width: 33% !important;
+      width: 33%;
   }
 
   input:nth-child(2) {
       flex: 1;
-      width: auto !important;
+      width: auto;
       margin-left: 5px;
   }
 
   input:only-child {
-      width: 100% !important;
+      width: 100%;
   }
 }
 </style>

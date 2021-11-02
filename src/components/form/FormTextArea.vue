@@ -21,7 +21,6 @@ import FieldModel from "../../models/FieldModel";
 
 export default defineComponent({
   name: "TextArea",
-  mixins: [fieldMixins],
   props: {
     textarea: {
       type: Object as PropType<FieldModel>,
@@ -32,6 +31,7 @@ export default defineComponent({
       required: true,
     },
   },
+  mixins: [fieldMixins],
   setup(props, context) {
     let offset = ref<number>(0);
     let valueRef = ref("");
@@ -65,6 +65,11 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .textarea-container {
-  margin-bottom: 15px;;
+  margin-bottom: 15px;
+  textarea {
+    width: calc(100% - 22px);
+    padding: 7px;
+    padding-left: 15px;
+  }
 }
 </style>
