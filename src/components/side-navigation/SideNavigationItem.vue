@@ -18,7 +18,7 @@ import {store} from "@/store";
 import {computed, defineComponent} from "vue";
 
 export default defineComponent({
-  name: "ListMenuItem",
+  name: "SideNavigationItem",
   props: {
     iconClass: {
       type: String,

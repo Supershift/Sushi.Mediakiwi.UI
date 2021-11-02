@@ -1,6 +1,6 @@
 <template>
   <ul :class="customContainerClass">
-    <ListMenuItem
+    <SideNavigationItem
       v-for="item in sideNavigationItems"
       :id="item.id"
       :key="item.id"
@@ -17,10 +17,10 @@ import {
   defineComponent,
   ref,
 } from "vue";
-import ListMenuItem from "./ListMenuItem.vue";
+import SideNavigationItem from "./SideNavigationItem.vue";
 import {store} from "@/store";
 export default defineComponent({
-  name: "ListMenu",
+  name: "SideNavigation",
   props: {
     customClass: {
       type: String,
@@ -28,7 +28,7 @@ export default defineComponent({
       default: "",
     },
   },
-  components: {ListMenuItem},
+  components: {SideNavigationItem},
   setup(props) {
     const customContainerClass = computed(
       () => `${props.customClass} `

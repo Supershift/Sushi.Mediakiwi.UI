@@ -20,7 +20,7 @@
               class="drawer-icon" />
           </div>
         </div>
-        <ListMenu
+        <SideNavigation
           :custom-class="customListClass" />
         <slot
           name="drawer" /><!-- Drawer opener -->
@@ -40,7 +40,7 @@ import {
   ref,
 } from "vue";
 import {store} from "@/store";
-import ListMenu from "../list-menu/ListMenu.vue";
+import SideNavigation from "../side-navigation/SideNavigation.vue";
 import logoS from "../../assets/images/vaultN-icon.svg";
 import logoL from "../../assets/images/vaultN-logo.svg";
 
@@ -56,7 +56,9 @@ export default defineComponent({
       required: false,
     },
   },
-  components: {ListMenu},
+  components: {
+    SideNavigation,
+  },
   setup(props) {
     const open = ref(props.toggler);
     const customListClass = ref("list-menu");
