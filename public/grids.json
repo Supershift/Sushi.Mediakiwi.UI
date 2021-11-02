@@ -1,5 +1,5 @@
 {
-  "listTitle": null,
+  "listTitle": "List grid A",
   "isEditMode": false,
   "buttons": [
     {
@@ -105,21 +105,25 @@
     "homeUrl": "/webcontent",
     "items": [
       {
+        "id": 1,
         "text": "Website",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
         "items": null
       },
       {
+        "id": 2,
         "text": "Data Lists",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
         "items": null
       },
       {
+        "id": 3,
         "text": "Galleries",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
         "items": null
       },
       {
+        "id": 4,
         "text": "Admin",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
         "items": [
@@ -138,20 +142,23 @@
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
         "items": null,
         "isBack": true,
-        "isActive": false
+        "isActive": false,
+        "iconClass": "fal receipt"
       },
       {
         "text": "Page Property",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
         "isBack": false,
         "isActive": true,
+        "iconClass": "fal th",
         "items": [
           {
             "text": "Content",
             "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
             "items": null,
             "isBack": false,
-            "isActive": true
+            "isActive": true,
+            "iconClass": "fal donate"
           }
         ]
       },
@@ -161,7 +168,8 @@
         "items": [
           {
             "text": "Settings",
-            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10"
+            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10",
+            "iconClass": "fal users"
           }
         ]
       }

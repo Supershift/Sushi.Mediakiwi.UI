@@ -51,8 +51,7 @@ import {
 // import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
 // import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
 
-import store from "../store";
-
+import {store} from "@/store";
 import FormDropDown from "./form/FormDropDown.vue";
 import FormTags from "./form/FormTag.vue";
 import FormTextArea from "./form/FormTextArea.vue";

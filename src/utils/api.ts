@@ -1,27 +1,27 @@
 import MediakiwiModel from "@/models/Mediakiwi/MediakiwiModel";
-import store from "../store/index";
+import { store } from "@/store";
+import PageModel from "@/store/modules/PageModel";
 
 export const api = {
-  fetchMediakiwiAPI(listID: string, itemID: string, queryString: string) {
-    const request = {
-      queryString,
-      channel: store.getters.channel,
-      listID,
-      itemID,
-    };
-    return store.dispatch("getMediakiwiAPI", request);
-  },
-  fetchMediakiwiAPIByUrl(url: string) {
+  fetchMediakiwiAPI(url: string) {
     const request = {
       channel: store.getters.channel,
       url
     };
 
     return new Promise((resolve, reject) => {
-      store.dispatch("getMediakiwiAPIByUrl", request).then((response: MediakiwiModel) => {
+      store.dispatch("getMediakiwiAPI", request).then((response: MediakiwiModel) => {
         if (response) {
           // Handle response
           store.dispatch("setChannel", response.currentSiteID);
+
+          // Create the page model
+          const pageData: PageModel = {
+            title: response.listTitle ? response.listTitle : "",
+            description: response.listDescription ? response.listDescription : "",
+            settingsUrl: response.listSettingsUrl
+          }
+          store.dispatch("setPage", pageData);
           store.dispatch("setProfileInfomation", response.profile);
           store.dispatch("setTopNavigation", response.topNavigation);
           store.dispatch("setSideNavigation", response.sideNavigation);
@@ -34,7 +34,7 @@ export const api = {
           store.dispatch("toggleMediakiwiLoading");
           reject(response);
         }
-      }).catch((error) => {
+      }).catch((error: unknown) => {
         // reject the response
         store.dispatch("toggleMediakiwiLoading");
         reject(error);

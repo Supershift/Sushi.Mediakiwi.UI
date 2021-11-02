@@ -3,33 +3,49 @@
     <!-- Sidebar -->
     <transition name="expand" mode="ease-in">
       <div :class="positionCss + collapsableCss">
-        <div class="brand-container" @click="handleToggle">
-          <img src="../../assets/images/leftnav-bg-grad.png" class="topleft-nav-gradient" />
+        <div
+          class="brand-container"
+          @click="handleToggle">
+          <img
+            src="../../assets/images/leftnav-bg-grad.png"
+            class="topleft-nav-gradient" />
           <div class="logo-container">
             <transition name="fade">
-              <img :src="logoSrc" :class="logoCss" />
+              <img
+                :src="logoSrc"
+                :class="logoCss" />
             </transition>
-            <fa :icon="chevronChoice" class="drawer-icon" />
+            <fa
+              :icon="chevronChoice"
+              class="drawer-icon" />
           </div>
         </div>
-        <ListMenu :custom-class="customListClass" />
-        <slot name="drawer" /><!-- Drawer opener -->
+        <ListMenu
+          :custom-class="customListClass" />
+        <slot
+          name="drawer" /><!-- Drawer opener -->
       </div>
     </transition>
-    <div class="slot-content-container"><slot name="content" /><!-- Drawer content --></div>
+    <div class="slot-content-container">
+      <slot
+        name="content" /><!-- Drawer content -->
+    </div>
   </div>
 </template>
 
 <script>
-import { computed, defineComponent, ref } from "vue";
-import store from "../../store/index";
+import {
+  computed,
+  defineComponent,
+  ref,
+} from "vue";
+import {store} from "@/store";
 import ListMenu from "../list-menu/ListMenu.vue";
 import logoS from "../../assets/images/vaultN-icon.svg";
 import logoL from "../../assets/images/vaultN-logo.svg";
 
 export default defineComponent({
   name: "Drawer",
-  components: { ListMenu },
   props: {
     toggler: {
       type: Boolean,
@@ -40,14 +56,33 @@ export default defineComponent({
       required: false,
     },
   },
+  components: {ListMenu},
   setup(props) {
     const open = ref(props.toggler);
     const customListClass = ref("list-menu");
-    const positionCss = computed(() => (props.right ? ["sidebar-container right-0 flex-row "] : ["sidebar-container left-0 flex-row-reverse "]));
-    const collapsableCss = computed(() => (open.value ? ["open-drawer "] : [""]));
-    const chevronChoice = computed(() => (!open.value ? "chevron-right" : "chevron-left"));
-    const logoSrc = computed(() => (!open.value ? logoS : logoL));
-    const logoCss = computed(() => (!open.value ? "logo-small " : "logo-small logo-large"));
+    const positionCss = computed(() =>
+      props.right
+        ? ["sidebar-container right-0 flex-row "]
+        : [
+            "sidebar-container left-0 flex-row-reverse ",
+          ]
+    );
+    const collapsableCss = computed(() =>
+      open.value ? ["open-drawer "] : [""]
+    );
+    const chevronChoice = computed(() =>
+      !open.value
+        ? "chevron-right"
+        : "chevron-left"
+    );
+    const logoSrc = computed(() =>
+      !open.value ? logoS : logoL
+    );
+    const logoCss = computed(() =>
+      !open.value
+        ? "logo-small "
+        : "logo-small logo-large"
+    );
     function handleToggle() {
       open.value = !open.value;
       store.dispatch("toggleDrawer");

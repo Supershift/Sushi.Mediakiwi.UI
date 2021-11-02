@@ -1,5 +1,5 @@
 {
-  "listTitle": null,
+  "listTitle": "Folder A",
   "isEditMode": false,
   "buttons": [
     {
@@ -44,29 +44,22 @@
     "homeUrl": "/webcontent",
     "items": [
       {
+        "id": 1,
         "text": "Website",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
         "items": null
       },
       {
+        "id": 2,
         "text": "Data Lists",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
         "items": null
       },
       {
+        "id": 3,
         "text": "Galleries",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
         "items": null
-      },
-      {
-        "text": "Admin",
-        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
-        "items": [
-          {
-            "text": "Settings",
-            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10"
-          }
-        ]
       }
     ]
   },
@@ -78,21 +71,21 @@
         "items": null,
         "isBack": true,
         "isActive": false,
-        "iconClass": "fingerprint"
+        "iconClass": "fal fingerprint"
       },
       {
         "text": "Page Property",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
         "isBack": false,
         "isActive": true,
-        "iconClass": "receipt",
+        "iconClass": "fal receipt",
         "items": [
           {
             "text": "Content",
             "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
             "items": null,
             "isBack": false,
-            "iconClass": "users",
+            "iconClass": "fal users",
             "isActive": true
           }
         ]
@@ -100,12 +93,12 @@
       {
         "text": "Admin",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
-        "iconClass": "donate",
+        "iconClass": "fal donate",
         "items": [
           {
             "text": "Settings",
             "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10",
-            "iconClass": "th"
+            "iconClass": "fal th"
           }
         ]
       }

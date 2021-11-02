@@ -1,24 +1,26 @@
 <template>
   <ul :class="customContainerClass">
     <ListMenuItem
-      v-for="item in menuItems"
+      v-for="item in sideNavigationItems"
       :id="item.id"
       :key="item.id"
-      :name="item.name"
-      :icon="item.icon"
-      :toggler="showText"
-    />
+      :text="item.text"
+      :href="item.href"
+      :icon-class="item.iconClass"
+      :toggler="showText" />
   </ul>
 </template>
 
 <script>
-import { computed, defineComponent, ref } from "vue";
+import {
+  computed,
+  defineComponent,
+  ref,
+} from "vue";
 import ListMenuItem from "./ListMenuItem.vue";
-import store from "../../store/index";
-
+import {store} from "@/store";
 export default defineComponent({
-  name:"ListMenu",
-  components: { ListMenuItem },
+  name: "ListMenu",
   props: {
     customClass: {
       type: String,
@@ -26,17 +28,20 @@ export default defineComponent({
       default: "",
     },
   },
+  components: {ListMenuItem},
   setup(props) {
-    const customContainerClass = computed(() => `${props.customClass} `);
-    const menuItems = computed(() => store.getters.menuItems);
+    const customContainerClass = computed(
+      () => `${props.customClass} `
+    );
+    const sideNavigationItems = computed(
+      () => store.getters.sideNavigationItems
+    );
     const showText = ref(props.toggler);
     return {
       customContainerClass,
       showText,
-      menuItems,
+      sideNavigationItems,
     };
   },
 });
 </script>
-
-<style scoped lang="scss"></style>

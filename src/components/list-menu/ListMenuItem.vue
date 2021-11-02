@@ -1,27 +1,33 @@
 <template>
   <li :id="id">
-    <fa
-      class="menu-icon"
-      :icon="icon"
-    />
     <transition name="expand">
-      <span v-show="openDrawer">{{ name }}</span>
+      <a :href="href">
+        <!-- Global component -->
+        <!-- eslint-disable-next-line vue/no-unregistered-components -->
+        <fa class="menu-icon" :icon="icons" />
+        <span v-show="openDrawer">{{
+          text
+        }}</span>
+      </a>
     </transition>
   </li>
 </template>
 
 <script>
-import { computed, defineComponent } from "vue";
-import store from "../../store/index";
+import {store} from "@/store";
+import {computed, defineComponent} from "vue";
 
 export default defineComponent({
   name: "ListMenuItem",
   props: {
-    icon: {
-      type: Array,
+    iconClass: {
+      type: String,
       required: true,
+      default() {
+        return "";
+      },
     },
-    name: {
+    text: {
       type: String,
       required: true,
     },
@@ -29,12 +35,21 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    href: {
+      type: String,
+      required: true,
+    },
   },
   setup(props) {
-    const iconClass = computed(() => props.item.icon);
-    const openDrawer = computed(() => store.getters.openDrawer);
+    const icons = computed(() =>
+      props.iconClass.split(" ")
+    );
+
+    const openDrawer = computed(
+      () => store.getters.openDrawer
+    );
     return {
-      iconClass,
+      icons,
       openDrawer,
     };
   },
@@ -42,24 +57,27 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-li {
-    padding: 15px;
-    color: white;
-    background-color: transparent;
-    border-bottom: 2px solid;
-    border-image-slice: 1;
-    border-width: 2px;
-    border-image: $color-hover-blue-invis 1 20%;
-    &:hover {
-      background: $color-hover-blue-invis;
-    }
-    span {
-        font-family: $font-primary;
-    }
-    .menu-icon {
-        margin: 0 16px;
-        height: 18px;
-        width: 18px;
-    }
+a {
+  padding: 15px;
+  color: white;
+  background-color: transparent;
+  border-bottom: 2px solid;
+  border-image-slice: 1;
+  border-width: 2px;
+  border-image: $color-hover-blue-invis 1 20%;
+  display: block;
+  text-decoration: none;
+  &:hover {
+    background: $color-hover-blue-invis;
+  }
+
+  span {
+    font-family: $font-primary;
+  }
+  .menu-icon {
+    margin: 0 16px;
+    height: 18px;
+    width: 18px;
+  }
 }
 </style>

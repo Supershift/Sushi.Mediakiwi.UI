@@ -4,4 +4,6 @@ export default interface ProfileModel {
   roleName: string;
   email: string;
   avatarPath?: string;
+  // 
+  company: string;
 }

@@ -8,8 +8,7 @@ import {
   fal,
 } from "@fortawesome/pro-light-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import store from "./store";
-import App from "./App.vue";
+import { store } from "@/store"; import App from "./App.vue";
 import router from "./router";
 import { api } from "./utils/api";
 
@@ -32,7 +31,7 @@ router.beforeEach((to, from, next) => {
     } else {
       // to.meta.title = to.params.project_name_slug;
       // Fetch the Mediakiwi data
-      api.fetchMediakiwiAPIByUrl(to.fullPath).then(() => {
+      api.fetchMediakiwiAPI(to.fullPath).then(() => {
         next();
       }).catch(() => {
         // redirect to 500 page 
