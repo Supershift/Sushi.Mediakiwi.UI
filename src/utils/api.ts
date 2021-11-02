@@ -25,6 +25,7 @@ export const api = {
           store.dispatch("setProfileInfomation", response.profile);
           store.dispatch("setTopNavigation", response.topNavigation);
           store.dispatch("setSideNavigation", response.sideNavigation);
+          store.dispatch("setGrids", response.grids);
 
           // finally resolve the response
           store.dispatch("toggleMediakiwiLoading");

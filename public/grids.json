@@ -48,20 +48,20 @@
       },
       "columns": [
         {
-          "title": null,
-          "width": "100px",
+          "title": "Column 1",
+          "width": "100",
           "align": 0
         },
         {
-          "title": null,
-          "width": "20%",
+          "title": "Column 2",
+          "width": "20",
           "align": 1
         }
       ],
       "rows": [
         {
-          "href": "/detailUrl/0",
-          "ID": "0",
+          "href": "?item=1",
+          "ID": "1",
           "gridItems": [
             {
               "column": 0,
@@ -79,8 +79,8 @@
           ]
         },
         {
-          "ID": "1",
-          "href": "/detailUrl/1",
+          "ID": "2",
+          "href": "?item=2",
           "gridItems": [
             {
               "id": "125",

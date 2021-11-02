@@ -13,6 +13,7 @@ import PageModel from "./modules/PageModel";
 import ProfileModel from "@/models/Mediakiwi/ProfileModel";
 import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel";
 import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
+import GridModel from "@/models/Mediakiwi/GridModel";
 const loggedinKey = "ananda_vaultn_loggedin";
 
 // define your typings for the store state
@@ -32,6 +33,7 @@ export interface State {
   content: BaseContentModel,
   channel: number,
   resources: unknown[],
+  grids: GridModel[] | null,
 }
 
 // define injection key
@@ -78,6 +80,7 @@ export const store = createStore<State>({
     },
     channel: 0,
     resources: [],
+    grids: []
   },
   mutations: {
     toggleDrawer(state: State) {
@@ -122,6 +125,9 @@ export const store = createStore<State>({
         state.sideNavigationItems = data.items;
       }
     },
+    setGrids(state, data: GridModel[]) {
+      state.grids = data;
+    }
   },
   actions: {
     toggleDrawer(context) {
@@ -178,6 +184,9 @@ export const store = createStore<State>({
     setSideNavigation(context, data) {
       context.commit("setSideNavigation", data);
     },
+    setGrids(context, data) {
+      context.commit("setGrids", data);
+    }
   },
   getters: {
     sideNavigationItems: (state) => state.sideNavigationItems,
@@ -201,5 +210,6 @@ export const store = createStore<State>({
     fields: (state) => state.fields,
     contentForgottenPassword: (state) => state.content.forgotten,
     contentResetPassword: (state) => state.content.reset,
+    grids: (state) => state.grids,
   },
 });

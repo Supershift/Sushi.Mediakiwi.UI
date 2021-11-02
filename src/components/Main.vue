@@ -1,13 +1,10 @@
 <template>
   <div class="content-container row">
     <div class="col main-container">
-      <!-- <CustomSelectInput :select="customSelectTestInput" />
-      <CustomChoiceRadio :radio="customRadioTestInput" />
-      <CustomChoiceCheckBox :checkbox="customCheckboxTestInput" /> -->
       <FormComponent
         :fields="fetchedFields"
         :notifications="customNotifications" />
-      <FormRichText
+      <!-- <FormRichText
         :richtext="customRichText"
         classname="test" />
       <FormDropDown
@@ -33,8 +30,13 @@
         classname="test" />
       <FormChoiceCheckBox
         :field="test"
-        classname="test" />
-      <GridComponent :grid="customGrid" />
+        classname="test" /> -->
+      <template v-if="grids && grids.length">
+        <GridComponent
+          v-for="(grid, index) in grids"
+          :key="index"
+          :grid="grid" />
+      </template>
     </div>
   </div>
 </template>
@@ -46,10 +48,6 @@ import {
   reactive,
   ref,
 } from "vue";
-
-// import CustomSelectInput from "./form/CustomSelectInput.vue";
-// import CustomChoiceRadio from "./form/CustomChoiceRadio.vue";
-// import CustomChoiceCheckBox from "./form/CustomChoiceCheckBox.vue";
 
 import {store} from "@/store";
 import FormDropDown from "./form/FormDropDown.vue";
@@ -78,27 +76,30 @@ import GridModel from "@/models/Mediakiwi/GridModel";
 export default defineComponent({
   name: "MainView",
   components: {
-    // CustomSelectInput,
-    // CustomChoiceRadio,
-    // CustomChoiceCheckBox,
-    FormChoiceRadio,
-    FormRichText,
+    // FormChoiceRadio,
+    // FormRichText,
     FormComponent,
     GridComponent,
-    FormDropDown,
-    FormTags,
-    FormTextArea,
-    FormValueCollection,
-    FormDate,
-    FormTime,
-    FormNameValueCollection,
-    FormTextLine,
-    FormChoiceCheckBox,
+    // FormDropDown,
+    // FormTags,
+    // FormTextArea,
+    // FormValueCollection,
+    // FormDate,
+    // FormTime,
+    // FormNameValueCollection,
+    // FormTextLine,
+    // FormChoiceCheckBox,
   },
   setup() {
     const fetchedFields = computed(
       () => store.getters.fields
     );
+
+    const grids = computed(
+      () => store.getters.grids
+    );
+
+    // TODO Delete
     const customSelectTestOptions = [
       {
         value: 0,
@@ -113,6 +114,7 @@ export default defineComponent({
         countForOption: 2,
       },
     ] as OptionModel[];
+
     const customSelectTestInput =
       ref<SelectModel>({
         error: "",
@@ -272,61 +274,6 @@ export default defineComponent({
       MessageModel[]
     >([]);
 
-    const customGrid = reactive<GridModel>({
-      title: "custom grid",
-      layerConfiguration: null,
-      columns: [
-        {
-          title: "Order",
-          width: "200",
-          align: 0,
-        },
-        {
-          title: "Number",
-          width: "200",
-          align: 0,
-        },
-      ],
-      rows: [
-        {
-          href: "?edit",
-          id: "0",
-          gridItems: [
-            {
-              column: 0,
-              value: "1",
-              vueType: "5",
-              canWrap: false,
-            },
-            {
-              column: 0,
-              value: "12312",
-              vueType: "5",
-              canWrap: false,
-            },
-          ],
-        },
-        {
-          href: "?edit",
-          id: "1",
-          gridItems: [
-            {
-              column: 0,
-              value: "2",
-              vueType: "5",
-              canWrap: false,
-            },
-            {
-              column: 0,
-              value: "345345",
-              vueType: "5",
-              canWrap: false,
-            },
-          ],
-        },
-      ],
-    });
-
     return {
       customSelectTestInput,
       customRadioTestInput,
@@ -336,7 +283,7 @@ export default defineComponent({
       fetchedFields,
       customRichText,
       test,
-      customGrid,
+      grids,
     };
   },
 });
