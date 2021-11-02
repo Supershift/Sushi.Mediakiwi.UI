@@ -60,6 +60,17 @@
         "text": "Galleries",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
         "items": null
+      },
+      {
+        "id": 4,
+        "text": "Admin",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
+        "items": [
+          {
+            "text": "Settings",
+            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10"
+          }
+        ]
       }
     ]
   },

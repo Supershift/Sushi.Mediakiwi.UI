@@ -2,9 +2,8 @@
   <ul :class="customListClass">
     <NavigationMenuItem
       v-for="item in items"
-      :id="item.id"
       :key="item.id"
-      :text="item.text" />
+      :item="item" />
   </ul>
 </template>
 
