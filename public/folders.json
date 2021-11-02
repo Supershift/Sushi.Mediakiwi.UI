@@ -107,23 +107,53 @@
   "folders": [
     {
       "folderId": 1,
-      "folderName": "",
+      "folderName": "Folder A",
       "description": "This folder contains items",
-      "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=1",
+      "href": "?folder=1",
       "items": [
         {
           "text": "Page X",
           "id": 1,
-          "href": "https://portal-dev.vaultn.nl/webcontent/website?page=1",
+          "href": "pagex",
           "isPublished": true,
           "isEdited": true
         },
         {
           "text": "List X",
           "id": 2,
-          "href": "https://portal-dev.vaultn.nl/webcontent/website?list=2",
+          "href": "listx",
           "isPublished": null,
           "isEdited": null
+        }
+      ]
+    },
+    {
+      "folderId": 2,
+      "folderName": "Folder B",
+      "description": "This folder contains items",
+      "href": "?folder=2",
+      "items": [
+        {
+          "text": "Page Y",
+          "id": 1,
+          "href": "pagey",
+          "isPublished": true,
+          "isEdited": true
+        }
+      ]
+    },
+    {
+      "folderId": 3,
+      "folderName": "Folder C",
+      "description": "This folder contains items",
+      "href": "?folder=3",
+      "items": [
+        {
+          "text": "Page Z",
+          "id": 1,
+          "href": "pagez",
+          "isPublished": true,
+          "isEdited": true
         }
       ]
     }

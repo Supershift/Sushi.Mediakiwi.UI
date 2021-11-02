@@ -1,6 +1,12 @@
 <template>
   <div class="content-container row">
     <div class="col main-container">
+      <template
+        v-if="
+          fetchedFolders && fetchedFolders.length
+        ">
+        <FolderComponent />
+      </template>
       <FormComponent
         :fields="fetchedFields"
         :notifications="customNotifications" />
@@ -70,6 +76,7 @@ import MessageModel from "../models/MessageModel";
 
 import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
+import FolderComponent from "./folder/FolderComponent.vue";
 import OptionModel from "../models/OptionModel";
 import GridModel from "@/models/Mediakiwi/GridModel";
 
@@ -80,6 +87,7 @@ export default defineComponent({
     // FormRichText,
     FormComponent,
     GridComponent,
+    FolderComponent,
     // FormDropDown,
     // FormTags,
     // FormTextArea,
@@ -97,6 +105,10 @@ export default defineComponent({
 
     const grids = computed(
       () => store.getters.grids
+    );
+
+    const fetchedFolders = computed(
+      () => store.getters.folders
     );
 
     // TODO Delete
@@ -284,6 +296,7 @@ export default defineComponent({
       customRichText,
       test,
       grids,
+      fetchedFolders,
     };
   },
 });

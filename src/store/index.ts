@@ -14,6 +14,7 @@ import ProfileModel from "@/models/Mediakiwi/ProfileModel";
 import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel";
 import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
 import GridModel from "@/models/Mediakiwi/GridModel";
+import FolderModel from "@/models/Mediakiwi/FolderModel";
 const loggedinKey = "ananda_vaultn_loggedin";
 
 // define your typings for the store state
@@ -34,6 +35,7 @@ export interface State {
   channel: number,
   resources: unknown[],
   grids: GridModel[] | null,
+  folders: FolderModel[] | null
 }
 
 // define injection key
@@ -80,7 +82,8 @@ export const store = createStore<State>({
     },
     channel: 0,
     resources: [],
-    grids: []
+    grids: [],
+    folders: [],
   },
   mutations: {
     toggleDrawer(state: State) {
@@ -127,6 +130,9 @@ export const store = createStore<State>({
     },
     setGrids(state, data: GridModel[]) {
       state.grids = data;
+    },
+    setFolders(state, data: FolderModel[]) {
+      state.folders = data;
     }
   },
   actions: {
@@ -186,6 +192,9 @@ export const store = createStore<State>({
     },
     setGrids(context, data) {
       context.commit("setGrids", data);
+    },
+    setFolders(context, data) {
+      context.commit("setFolders", data);
     }
   },
   getters: {
@@ -211,5 +220,6 @@ export const store = createStore<State>({
     contentForgottenPassword: (state) => state.content.forgotten,
     contentResetPassword: (state) => state.content.reset,
     grids: (state) => state.grids,
+    folders: (state) => state.folders
   },
 });
