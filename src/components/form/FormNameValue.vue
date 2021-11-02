@@ -70,20 +70,20 @@ export default defineComponent({
   width: 100%;
   flex: 1;
   display: inline-flex;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 
   input:first-child {
-    width: 33% !important;
+    width: 33%;
   }
 
   input:nth-child(2) {
     flex: 1;
-    width: auto !important;
+    width: auto;
     margin-left: 5px;
   }
 
   input:only-child {
-    width: 100% !important;
+    width: 100%;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div :class="classname">        
+  <div :class="radioContainerClasses">        
     <label v-if="undefinedCheck(field.prefix)">{{ undefinedCheck(field.prefix) }}</label>
     <span
       v-for="option in field.options"
@@ -28,7 +28,6 @@ import { fieldMixins } from "./index";
 
 export default defineComponent({
     name:"ChoiceRadio",
-    mixins: [fieldMixins],
     props: {
       field: {
         type: Object as PropType<FieldModel>,
@@ -39,6 +38,7 @@ export default defineComponent({
         required: true,
       },
     },
+    mixins: [fieldMixins],
     emits: ["onChange"],
     setup(props, context) {
       let valueRef = ref(0);
@@ -68,3 +68,16 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped lang="scss">
+.radio-container {
+  font-family: $font-primary;
+  font-size: $font-size-l;
+  input {
+    margin: 0;
+  }
+  label {
+    margin-left: 15px;
+  }
+}
+</style>

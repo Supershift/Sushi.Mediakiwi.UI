@@ -19,7 +19,7 @@
     <FormPlus
       :field="plusField"
       @click="addNameValuePair"
-      :classname="'small'"
+      classname="small"
     />
     <label v-if="undefinedCheck(field.suffix)"> {{ undefinedCheck(field.suffix) }}</label>
   </div>
@@ -94,21 +94,22 @@ export default defineComponent({
   display: inline-flex;
   width: 100%;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 
   .name-value {
-      input:first-child {
-        width: calc(33% + 7px) !important;
-      }
+    input:first-child {
+      width: calc(33% + 7px);
+    }
 
-      input:only-child {
-        width: 100% !important;
-      }
+    input:only-child {
+      width: 100%;
+    }
   }
 
   .delete {
       margin-left: 10px;
       font-size: 125%;
+      color: $color-success;
   }
 }
 </style>

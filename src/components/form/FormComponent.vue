@@ -70,19 +70,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, ref } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import FieldModel from "../../models/FieldModel";
 import FormRowModel from "../../models/FormRowModel";
 import MessageModel from "../../models/MessageModel";
 import SectionModel from "../../models/SectionModel";
 import { ExpressionType, fieldMixins, FieldType, vueTypes } from "./index";
-import CustomButton from "./CustomButton.vue";
-import CustomInput from "./CustomInput.vue";
-import CustomChoiceCheckBox from "./CustomChoiceCheckBox.vue";
-import CustomSelectInput from "./CustomSelectInput.vue";
-import CustomChoiceRadio from "./CustomChoiceRadio.vue";
-import CustomChoiceDropdown from "./CustomChoiceDropdown.vue";
-import CustomSection from "./CustomSection.vue";
 import FormButton from "./FormButton.vue";
 import FormInput from "./FormInput.vue";
 import FormSection from "./FormSection.vue";
@@ -101,16 +94,9 @@ export default defineComponent({
   },
   mixins: [ExpressionType, fieldMixins],
   components: {
-    // CustomButton,
-    // CustomInput,
-    // CustomChoiceCheckBox,
-    // CustomSelectInput,
-    // CustomChoiceRadio,
-    // CustomSection,
-    // CustomChoiceDropdown,
-    // FormButton,
-    // FormInput,
-    // FormSection,
+    FormButton,
+    FormInput,
+    FormSection,
   },
   emits: [
     "toggle",
@@ -300,15 +286,17 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .formTable {
+  font-family: $font-primary;
+  font-family: $font-size-l;
   tr {
     th {
-      padding: 8px 0 2px !important;
+      padding: 8px 0 2px;
       text-align: left;
       vertical-align: top;
       width: 10%;
       label {
         width: 135px;
-        padding: 4px 10px 4px 0 !important;
+        padding: 4px 10px 4px 0;
         display: block;
         font-weight: 600;
         min-height: 24px;
@@ -324,7 +312,7 @@ export default defineComponent({
     }
   }
   .input-text {
-    margin-right: 0 !important;
+    margin-right: 0;
   }
 }
 </style>
