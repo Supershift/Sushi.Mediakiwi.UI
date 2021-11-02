@@ -1,13 +1,19 @@
+<!-- eslint-disable vue/no-unregistered-components -->
 <template>
   <div class="navigation-bar">
     <div class="navigation-content">
       <div class="navigation-logo">
-        <!-- eslint-disable-next-line vue/no-unregistered-components -->
         <fa
           icon="fingerprint"
           class="navigation-icon" />
       </div>
       <h2>{{ pageTitle }}</h2>
+      <a
+        v-if="pageSettings"
+        :href="pageSettings"
+        class="navigation-settings">
+        <fa icon="cogs" />
+      </a>
       <NavigationMenu
         :items="topNavigationItems" />
     </div>
@@ -42,9 +48,15 @@ export default defineComponent({
         ? store.getters.page.title
         : ""
     );
+    const pageSettings = computed(() =>
+      store.getters.page
+        ? store.getters.page.settingsUrl
+        : ""
+    );
     return {
       topNavigationItems,
       pageTitle,
+      pageSettings,
     };
   },
 });
@@ -86,5 +98,13 @@ export default defineComponent({
     vertical-align: top;
     padding-left: 15px;
   }
+}
+
+.navigation-settings {
+  color: #2aa1e8;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 10px;
+  margin-top: 5px;
 }
 </style>

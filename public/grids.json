@@ -183,7 +183,7 @@
   },
   "redirectUrl": null,
   "listDescription": null,
-  "listSettingsUrl": null,
+  "listSettingsUrl": "?settings=1",
   "breadcrumbs": [
     {
       "text": "Back",

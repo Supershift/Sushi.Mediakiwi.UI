@@ -31,7 +31,6 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .folder-collection {
-  padding: 20px;
   margin-bottom: -20px;
   min-height: 600px;
 
@@ -39,13 +38,15 @@ export default defineComponent({
     &-1 {
       width: 100%;
     }
+
     &-2 {
       column-count: 2;
       column-gap: 15px;
       column-width: 50%;
     }
+
     &-3 {
-      column-count: 2;
+      column-count: 3;
       column-gap: 15px;
       column-width: 33%;
     }
