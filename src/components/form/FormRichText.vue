@@ -18,63 +18,64 @@ import FieldModel from "../../models/FieldModel";
 import Editor from "@tinymce/tinymce-vue";
 
 export default defineComponent({
-    name: "RichText",
-    components: {
-        editor: Editor,
+  name: "RichText",
+  props: {
+    richtext: {
+        type: Object as PropType<FieldModel>,
+        required: true,
     },
-    props: {
-        richtext: {
-            type: Object as PropType<FieldModel>,
-            required: true,
-        },
-        classname: {
-            type: String,
-            required: true,
-        },
+    classname: {
+        type: String,
+        required: true,
     },
-    emits: ["valueChanged"],
-    setup(props, context) {
-        let valueRef = ref("");
+  },  
+  components: {
+    editor: Editor,
+  },
+  emits: ["valueChanged"],
+  setup(props, context) {
+    let valueRef = ref("");
 
-        const customRichtextContainerClasses = computed(() => [
-            "richtext-container ",
-            props.richtext?.className,
-        ]);
-        const customRichtextClasses = computed(() => [
-            "richtext-primary ",
-            props.classname,
-        ]);
+    const customRichtextContainerClasses = computed(() => [
+      "richtext-container ",
+      props.richtext?.className,
+    ]);
+    const customRichtextClasses = computed(() => [
+      "richtext-primary ",
+      props.classname,
+    ]);
 
-        function handleChange(values: string) {
-            if (props.richtext?.event !== "none") {
-                context.emit("valueChanged", values);
-            }
-        }
-        const tinymceInit = {
-            menubar: false,
-            statusbar: false,
-            plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table paste code help wordcount",
-            ],
-            toolbar:
-                "bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code",
-        };
+    function handleChange(values: string) {
+      if (props.richtext?.event !== "none") {
+        context.emit("valueChanged", values);
+      }
+    }
+    const tinymceInit = {
+      menubar: false,
+      statusbar: false,
+      plugins: [
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime media table paste code help wordcount",
+      ],
+      toolbar:
+        "bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code",
+    };
 
-        return {
-            handleChange,
-            customRichtextClasses,
-            customRichtextContainerClasses,
-            valueRef,
-            tinymceInit,
-        };
-    },
+    return {
+      handleChange,
+      customRichtextClasses,
+      customRichtextContainerClasses,
+      valueRef,
+      tinymceInit,
+    };
+  },
 });
 </script>
 
 <style scoped lang="scss">
 .richtext-container {
+  font-family: $font-primary;
   margin-bottom: 15px;
 }
 </style>

@@ -81,5 +81,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .textline-container {
   margin-bottom: 15px;
+  font-family: $font-primary;
+  font-size: $font-size-l;
 }
 </style>

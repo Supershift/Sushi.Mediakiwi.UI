@@ -29,13 +29,13 @@ import { fieldMixins } from "../form/index";
 
 export default defineComponent({
   name: "FormInput",
-  mixins: [fieldMixins],
   props: {
     input: {
       type: Object as PropType<InputModel>,
       required: true,
     },
   },
+  mixins: [fieldMixins],
   emits: ["valueChanged"],
   setup(props, context) {
     const inputText = reactive({ value: "" });

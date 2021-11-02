@@ -14,7 +14,7 @@
         </tbody>
       </table>
       <menu class="pager">
-        <li>{{ grid.rows.length }} results</li>
+        <li>{{ gridLength }}</li>
       </menu>
     </article>
   </section>
@@ -47,6 +47,9 @@ export default defineComponent({
       }
       return null;
     },
+    gridLength() {
+      return `${this.grid.rows.length} results`;
+    },
   },
   methods: {
     getGridItemStyle(gridItem: GridItemModel) {
@@ -78,14 +81,15 @@ export default defineComponent({
 <style scoped lang="scss">
 .search-table {
   margin-top: 20px;
-
+  font-family: $font-primary;
+  font-size: $font-size-l;
   table.selections {
     width: 100%;
     border-collapse: collapse;
 
     thead {
       tr {
-        border-bottom: solid 1 px #e3e5e6 !important;
+        border-bottom: solid 1px #e3e5e6;
       }
     }
 
@@ -135,8 +139,8 @@ export default defineComponent({
     width: 100%;
     margin-right: 0;
     padding: 10px 20px 0;
-    margin-left: 4 px;
-    border-top: solid 1 px #dcdee0;
+    margin-left: 4px;
+    border-top: solid 1px #dcdee0;
     text-align: center;
     margin-top: 0;
     -moz-box-sizing: border-box;
