@@ -64,6 +64,13 @@ export default defineComponent({
   font-size: $font-size-l;
   input {
     width: auto;
+    &:disabled {
+      cursor: not-allowed;
+    }
+    &:disabled ~ label {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
   label {
     margin-left: 15px;

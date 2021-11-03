@@ -59,9 +59,9 @@ import { ref, watch, nextTick, onMounted, computed } from "vue";
 export default {
   name: "TagsInput",
   props: {
-    name: { type: String, default: "" },
+    name: { type: String, required: true},
     modelValue: { type: Array, default: () => { return []; } },
-    options: { type: [Array, Boolean], default: false },
+    options: { type: Array, required:true },
     allowCustom: { type: Boolean, default: true },
     showCount: { type: Boolean, default: false },
   },
@@ -90,7 +90,7 @@ export default {
     const addTag = (tag) => {
       if (!tag) { return; } // prevent empty tag
       // only allow predefined tags when allowCustom is false
-      if (!props.allowCustom && !props.options.includes(tag)) { return; }
+      if (!props.allowCustom && !props.options.items.includes(tag)) { return; }
       // return early if duplicate
       if (tags.value.includes(tag)) {
         handleDuplicate(tag);
@@ -122,7 +122,7 @@ export default {
     // options
     const availableOptions = computed(() => {
       if (!props.options) { return false; }
-      return props.options.filter((option) => !tags.value.includes(option));
+      return props.options.items.filter((option) => !tags.value.includes(option));
     });
 
     return {
@@ -170,7 +170,8 @@ ul {
   font-size: $font-size-l;
   input {
     height: 50px;
-    width: 100%;
+    width: 98%;
+    max-width: calc(100vw - 80px);
     font-size: $font-size-l;
     color: $color-drakgrey;
     padding-left: 1rem;

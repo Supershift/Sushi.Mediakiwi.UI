@@ -50,6 +50,8 @@ ul {
     padding-top: 14px;
     border-radius: $b-radius-6;
     box-shadow: 0 0 10px #000;
+    font-family: $font-primary;
+
     &:hover {
         background: $color-hover-blue;
     }
@@ -62,6 +64,7 @@ ul {
         border: 2px solid $color-main outset;
     }
 }
+
 input:not([type=radio]):not([class=vs__search]),
 select,
 textarea {

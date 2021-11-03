@@ -1,8 +1,8 @@
 <template>
-  <div :class="radioContainerClasses">        
+  <div v-if="field.options && field.options.items" :class="radioContainerClasses">        
     <label v-if="undefinedCheck(field.prefix)">{{ undefinedCheck(field.prefix) }}</label>
     <span
-      v-for="option in field.options"
+      v-for="option in field.options.items"
       :key="fieldID(option)"
     >
       <input
@@ -15,19 +15,22 @@
         :disabled="field.disabled || field.readOnly"
         @change="handleChage"
       >
-      <label :for="fieldID(option)">{{ option.name }}</label>
+      <label :for="fieldID(option)">{{ option.text }}</label>
     </span>
     <label v-if="undefinedCheck(field.suffix)">{{ undefinedCheck(field.suffix) }}</label>
+  </div>
+  <div v-else :class="radioContainerClasses">
+    <label class="error-label" :for="field.propertyName">No options found for radios!</label>
   </div>
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
 import FieldModel from "../../models/FieldModel";
-import OptionModel from "../../models/OptionModel";
+import OptionItemModel from "../../models/OptionItemModel";
 import { fieldMixins } from "./index";
 
 export default defineComponent({
-    name:"ChoiceRadio",
+    name:"FormChoiceRadio",
     props: {
       field: {
         type: Object as PropType<FieldModel>,
@@ -39,9 +42,9 @@ export default defineComponent({
       },
     },
     mixins: [fieldMixins],
-    emits: ["onChange"],
+    emits: ["on-change"],
     setup(props, context) {
-      let valueRef = ref(0);
+      let valueRef = ref(props.field.value);
       const radioContainerClasses = computed(() => `radio-container ${props.classname}`);
       const radioClasses = computed(() => `radio-primary radio ${props.field.className}`);
       if (typeof props.field?.value === "string") {
@@ -52,10 +55,10 @@ export default defineComponent({
           valueRef.value = 1;
         }
       }
-      function fieldID(option: OptionModel) { return `${props.field.propertyName}_${option.value}`; }
+      function fieldID(option: OptionItemModel) { return `${props.field.propertyName}_${option.value}`; }
       function handleChange(e: Event) {
         if (props.field.event !== "none") {
-          context.emit("onChange", e, valueRef);
+          context.emit("on-change", e, valueRef);
         }
       }
       return {
@@ -75,9 +78,21 @@ export default defineComponent({
   font-size: $font-size-l;
   input {
     margin: 0;
+    &:disabled {
+      cursor: not-allowed;
+    }
+    &:disabled ~ label {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
   label {
     margin-left: 15px;
+  }
+  .error-label {
+    margin: 0;
+    opacity: 0.5;
+
   }
 }
 </style>

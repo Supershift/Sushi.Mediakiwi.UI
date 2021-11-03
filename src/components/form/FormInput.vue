@@ -1,37 +1,37 @@
 <template>
   <div :class="inputContainerClasses">
     <label
-      v-if="undefinedCheck(input.prefix)"
+      v-if="undefinedCheck(field.prefix)"
       class="input-prefix"
     >
-      {{ undefinedCheck(input?.prefix) }}
+      {{ undefinedCheck(field?.prefix) }}
     </label>
     <fa
-      v-if="input.fieldIcon"
+      v-if="field.fieldIcon"
       :icon="fieldIconChoice"
       class="input-icon"
     />
     <label
-      :for="input.fieldName"
+      :for="field.propertyName"
       class="input-label"
     >
       <input
         :id="id"
         type="text"
         :class="customInputClasses"
-        :name="input.propertyName"
+        :name="field.propertyName"
         :value="inputText.value"
-        :required="input.fieldRequired"
-        :placeholder="input.title"
-        :disabled="input.disabled || input.readOnly"
+        :required="field.fieldRequired"
+        :placeholder="field.title"
+        :disabled="field.disabled || field.readOnly"
         @change="handleChange"
       >
     </label>
     <label
-      v-if="undefinedCheck(input.suffix)"
+      v-if="undefinedCheck(field.suffix)"
       class="input-suffix"
     >
-      {{ undefinedCheck(input?.suffix) }}
+      {{ undefinedCheck(field?.suffix) }}
     </label>
   </div>
 </template>
@@ -47,20 +47,20 @@ import { fieldMixins } from "../form/index";
 
 export default defineComponent({
   name: "FormInput",
-  mixins: [fieldMixins],
   props: {
-    input: {
+    field: {
       type: Object as PropType<FieldModel>,
       required: true,
     },
   },
+  mixins: [fieldMixins],
   emits: ["valueChanged"],
   setup(props, context) {
     const inputText = reactive({value: ""});
-    const id = computed(() => `_${props.input?.className}-${props.input.propertyName}`);
+    const id = computed(() => `_${props.field?.className}-${props.field.propertyName}`);
     const inputContainerClasses = computed(() => {
       let iconColor: string;
-      switch (props.input.fieldIcon) {
+      switch (props.field.fieldIcon) {
         case "email":
           iconColor = "normal";
           break;
@@ -82,10 +82,10 @@ export default defineComponent({
       }
       return ["input-container ", iconColor];
     });
-    const customInputClasses = computed(() => ["input-primary ", props.input?.className]);
+    const customInputClasses = computed(() => ["input-primary ", props.field?.className]);
     const fieldIconChoice = computed(() => {
       let icon: string[];
-      switch (props.input.fieldIcon) {
+      switch (props.field.fieldIcon) {
         case "email":
           icon = ["fal", "at"];
           break;

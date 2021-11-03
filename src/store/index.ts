@@ -15,6 +15,7 @@ import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel"
 import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
 import GridModel from "@/models/Mediakiwi/GridModel";
 import FolderModel from "@/models/Mediakiwi/FolderModel";
+import { vueTypes } from "@/components/form";
 const loggedinKey = "ananda_vaultn_loggedin";
 
 // define your typings for the store state
@@ -58,8 +59,79 @@ export const store = createStore<State>({
       settings: false,
     },
     description: "",
-    fields: null,
     buttons: [],
+    fields: [
+      {
+        contentTypeID: 10,
+        propertyName: "TestProperty",
+        propertyType: "string",
+        title: "Choose a team",
+        vueType: vueTypes.formSection,
+        expression: 0,
+        value: "User input",
+        options: null,
+        className: "small",
+        event: "none",
+        inputPost: "Test",
+        section: 0,
+        hidden: false,
+        groupName: null,
+        suffix: null,
+        prefix: null,
+        formSection: null,
+        canToggleSection: false,
+        canDeleteSection: false,
+        toggleDefaultClosed: false,
+        readOnly: true,
+        helpText: "This field can do stuff",
+        weekStart: 7,
+        fieldIcon: "",
+        locale: "en-US",
+      },
+      {
+        contentTypeID: 18,
+        propertyName: "TestDropdown",
+        propertyType: "string[]",
+        title: "Team selection",
+        vueType: vueTypes.formChoiceRadio,
+        expression: 0,
+        value: "1",
+        options: {
+          items: [
+            {
+              text: "Ajax",
+              value: "1",
+              enabled: true,
+              selected: true
+            },
+            {
+              text: "Feyenoord",
+              value: "2",
+              enabled: true,
+              selected: false
+            }
+          ],
+          count: 2
+        },
+        className: null,
+        event: "none",
+        inputPost: null,
+        section: 0,
+        hidden: null,
+        groupName: null,
+        suffix: null,
+        prefix: null,
+        formSection: null,
+        canToggleSection: false,
+        canDeleteSection: false,
+        toggleDefaultClosed: false,
+        readOnly: false,
+        helpText: "This field can do stuff",
+        weekStart: 7,
+        fieldIcon: "",
+        locale: "en-US",
+      },
+    ],
     sideNavigationItems: null,
     topNavigationItems: null,
     content: {

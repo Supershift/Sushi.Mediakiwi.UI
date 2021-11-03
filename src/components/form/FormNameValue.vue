@@ -72,6 +72,9 @@ export default defineComponent({
   display: inline-flex;
   margin-bottom: 5px;
 
+  input {
+    padding-left: 15px;
+  }
   input:first-child {
     width: 33%;
   }
