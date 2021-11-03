@@ -1,6 +1,11 @@
 <template>
   <div class="content-container row">
     <div class="col main-container">
+      <template v-if="fetchedButtons && fetchedButtons.length">
+        <ButtonListComponent
+          :fields="fetchedButtons"
+          classname="test" />
+      </template>
       <template
         v-if="
           fetchedFolders && fetchedFolders.length
@@ -15,11 +20,6 @@
         :fields="fetchedFields"
         :notifications="customNotifications" />
       </templpate>
-      <template v-if="fetchedButtons && fetchedButtons.length">
-        <ButtonListComponent
-          :fields="fetchedButtons"
-          classname="test" />
-      </template>
       <template v-if="grids && grids.length">
         <GridComponent
           v-for="(grid, index) in grids"

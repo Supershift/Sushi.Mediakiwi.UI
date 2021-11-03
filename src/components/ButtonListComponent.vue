@@ -1,6 +1,10 @@
 <template>
   <div :class="tbbcContainerClasses">
-      <FormButton v-for="field, in fields" :key="field" />
+    <ul class="action-list">
+      <li v-for="field in fields" :key="field">
+        <FormButton :field="field" @button-clicked="handleClicked"/>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -25,14 +29,29 @@ export default defineComponent({
         FormButton,
     },
     setup(props, context) {
-      const tbbcContainerClasses = computed(() => ["tbbc-container " + props.classname])
+      const tbbcContainerClasses = computed(() => ["tbbc-container " + props.classname]);
+      function handleClicked(value: string) {
+        context.emit("button-clicked",  value);
+      }
       return {
-        tbbcContainerClasses
+        tbbcContainerClasses,
+        handleClicked
       };
     },
 })
 </script>
 
-<style>
-
+<style scoped lang="scss">
+.tbbc-container {
+  height: 60px;
+  margin-right: 15px;
+  .action-list {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    button {
+      text-transform: capitalize;
+    }
+  }
+}
 </style>

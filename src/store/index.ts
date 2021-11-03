@@ -16,6 +16,7 @@ import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
 import GridModel from "@/models/Mediakiwi/GridModel";
 import FolderModel from "@/models/Mediakiwi/FolderModel";
 import { vueTypes } from "@/components/form";
+import ButtonModel from "@/models/ButtonModel";
 const loggedinKey = "ananda_vaultn_loggedin";
 
 // define your typings for the store state
@@ -37,7 +38,7 @@ export interface State {
   resources: unknown[],
   grids: GridModel[] | null,
   folders: FolderModel[] | null,
-  buttons: FieldModel[] | null,
+  buttons: ButtonModel[] | null,
 }
 
 // define injection key
@@ -59,7 +60,24 @@ export const store = createStore<State>({
       settings: false,
     },
     description: "",
-    buttons: [],
+    buttons: [
+      {
+        customClass: "btn-delete",
+        buttonIcon: "",
+        disabled: false,
+        buttondName: "delete",
+        value: "delete",
+        readOnly: false,
+      },
+      {
+        customClass: "btn-sumbit",
+        buttonIcon: "",
+        disabled: false,
+        buttondName: "save",
+        value: "save",
+        readOnly: false,
+      }
+    ],
     fields: [
       {
         contentTypeID: 10,
