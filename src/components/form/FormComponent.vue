@@ -88,7 +88,6 @@
 import {
   defineComponent,
   PropType,
-  reactive,
   ref,
 } from "vue";
 import FieldModel from "../../models/FieldModel";
@@ -101,13 +100,6 @@ import {
   FieldType,
   vueTypes,
 } from "./index";
-import CustomButton from "./CustomButton.vue";
-import CustomInput from "./CustomInput.vue";
-import CustomChoiceCheckBox from "./CustomChoiceCheckBox.vue";
-import CustomSelectInput from "./CustomSelectInput.vue";
-import CustomChoiceRadio from "./CustomChoiceRadio.vue";
-import CustomChoiceDropdown from "./CustomChoiceDropdown.vue";
-import CustomSection from "./CustomSection.vue";
 import FormButton from "./FormButton.vue";
 import FormInput from "./FormInput.vue";
 import FormSection from "./FormSection.vue";

@@ -15,6 +15,8 @@
                 :src="logoSrc"
                 :class="logoCss" />
             </transition>
+            <!-- Global component -->
+            <!-- eslint-disable-next-line vue/no-unregistered-components -->
             <fa
               :icon="chevronChoice"
               class="drawer-icon" />

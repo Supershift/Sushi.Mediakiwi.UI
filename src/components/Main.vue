@@ -51,7 +51,6 @@
 import {
   computed,
   defineComponent,
-  reactive,
   ref,
 } from "vue";
 
@@ -78,7 +77,6 @@ import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
 import OptionModel from "../models/OptionModel";
-import GridModel from "@/models/Mediakiwi/GridModel";
 
 export default defineComponent({
   name: "MainView",
