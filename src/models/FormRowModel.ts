@@ -1,4 +1,4 @@
-import FieldModel from "./FieldModel";
+import FieldModel from "./Mediakiwi/FieldModel";
 
 interface FormRowModel {
     fields: Array<FieldModel>;

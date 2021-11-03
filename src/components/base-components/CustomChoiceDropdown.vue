@@ -3,14 +3,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import {defineComponent} from "@vue/runtime-core";
 
 export default defineComponent({
-    name: "Dropdown",
-    setup() {
-        return {};
-    },
+  name: "Dropdown",
+  setup() {
+    return {};
+  },
 });
 </script>
-
-<style lang="scss" scoped></style>

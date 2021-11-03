@@ -8,7 +8,7 @@
       :format="componentFormat"
       @change="handleChange"
       :time-picker="valueType === 'time'"
-      :enableTimePicker="valueType === 'time'"
+      :enable-time-picker="valueType === 'time'"
       :placeholder="componentFormat"
       :readonly="
         field?.disabled || field.readOnly

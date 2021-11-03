@@ -6,23 +6,23 @@
     <span
       v-for="option in field.options"
       :key="fieldID(option)"
-      class="checkbox-choice-container"
-    >
+      class="checkbox-choice-container">
       <input
         :id="fieldID(option)"
         type="checkbox"
         :name="field.fieldGroupName"
         :class="customCheckboxClasses"
         :value="valueRef.value"
-        :disabled="field.disabled || field.readOnly"
-        @change="handleChange"
-      >
+        :disabled="
+          field.disabled || field.readOnly
+        "
+        @change="handleChange" />
       <span class="checkmark" />
+      <!-- eslint-disable-next-line vue/no-unregistered-components -->
       <fa
         v-if="field.fieldIcon"
         :icon="fieldIconChoice"
-        class="checkbox-icon"
-      />
+        class="checkbox-icon" />
       <label :for="field.fieldGroupName">
         {{ option.name }}
       </label>
@@ -33,10 +33,15 @@
   </div>
 </template>
 <script lang="ts">
-import { fieldMixins } from "../form/index";
+import {fieldMixins} from "../form/index";
 import CheckboxModel from "../../models/CheckboxModel";
 import OptionItemModel from "../../models/OptionItemModel";
-import { computed, defineComponent, PropType, reactive } from "vue";
+import {
+  computed,
+  defineComponent,
+  PropType,
+  reactive,
+} from "vue";
 
 export default defineComponent({
   name: "CheckboxChoice",
@@ -47,61 +52,70 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits:["checkboxChanged"],
+  emits: ["checkboxChanged"],
   setup(props, context) {
     const valueRef = reactive({value: ""});
-    const customCheckboxClasses = computed(() => ["checkbox-primary ", props.field.customClass]);
+    const customCheckboxClasses = computed(() => [
+      "checkbox-primary ",
+      props.field.customClass,
+    ]);
     function handleChange(e: Event) {
       if (props.field.fieldValue !== null) {
-        context.emit("checkboxChanged", e, props.field.fieldValue);
+        context.emit(
+          "checkboxChanged",
+          e,
+          props.field.fieldValue
+        );
       }
     }
     function fieldID(option: OptionItemModel) {
       return `${props.field.fieldValue}_${props.field.fieldName}_${option.value}`;
     }
-    const checkboxContainerClasses = computed(() => {
-    let iconColor: string;
-      switch (props.field.fieldIcon) {
+    const checkboxContainerClasses = computed(
+      () => {
+        let iconColor: string;
+        switch (props.field.fieldIcon) {
           case "email":
-          iconColor = "normal";
-          break;
+            iconColor = "normal";
+            break;
           case "password":
-          iconColor = "alert";
-          break;
+            iconColor = "alert";
+            break;
           case "warning":
-          iconColor = "warn";
-          break;
+            iconColor = "warn";
+            break;
           case "key":
-          iconColor = "normal";
-          break;
+            iconColor = "normal";
+            break;
           case "finger":
-          iconColor = "normal";
-          break;
+            iconColor = "normal";
+            break;
           default:
-          iconColor = "normal";
-          break;
+            iconColor = "normal";
+            break;
+        }
+        return ["checkbox-container ", iconColor];
       }
-      return ["checkbox-container ", iconColor];
-    });
+    );
     const fieldIconChoice = computed(() => {
       let icon: string[];
       switch (props.field.fieldIcon) {
-          case "email":
+        case "email":
           icon = ["fal", "at"];
           break;
-          case "password":
+        case "password":
           icon = ["fal", "lock-alt"];
           break;
-          case "warning":
+        case "warning":
           icon = ["fal", "exclamation-triangle"];
           break;
-          case "key":
+        case "key":
           icon = ["fal", "key"];
           break;
-          case "finger":
+        case "finger":
           icon = ["fal", "fingerprint"];
           break;
-          default:
+        default:
           icon = [""];
           break;
       }
@@ -159,17 +173,17 @@ export default defineComponent({
     flex-direction: row;
     &:hover {
       input ~ .checkmark {
-          background: $color-blue;
-        }
+        background: $color-blue;
+      }
     }
-    input:checked ~ .checkmark  {
+    input:checked ~ .checkmark {
       background: $color-blue;
     }
     label {
       padding: 15px;
-      padding-left: 35px ;
+      padding-left: 35px;
     }
-    .checkmark{
+    .checkmark {
       &:after {
         top: 9px;
         left: 9px;
@@ -182,12 +196,12 @@ export default defineComponent({
   }
   .normal {
     .checkbox-icon {
-        color: $color-blue;
+      color: $color-blue;
     }
   }
   .alert {
     .checkbox-icon {
-        color: $color-alert;
+      color: $color-alert;
     }
   }
 }

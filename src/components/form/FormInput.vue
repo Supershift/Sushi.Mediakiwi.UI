@@ -5,6 +5,7 @@
       class="input-prefix">
       {{ undefinedCheck(field?.prefix) }}
     </label>
+    <!-- eslint-disable-next-line vue/no-unregistered-components -->
     <fa
       v-if="field.fieldIcon"
       :icon="fieldIconChoice"

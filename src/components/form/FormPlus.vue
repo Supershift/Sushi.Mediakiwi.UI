@@ -6,7 +6,8 @@
       @click="handleClick"
       :readonly="
         field?.disabled || field.readOnly
-      ">
+      "
+      ><!-- eslint-disable-next-line vue/no-unregistered-components -->
       <fa icon="plus" class="plus-svg" />
     </a>
   </div>

@@ -17,7 +17,6 @@ import {
   PropType,
   ref,
   computed,
-  reactive,
 } from "vue";
 import FieldModel from "../../models/Mediakiwi/FieldModel";
 import Editor from "@tinymce/tinymce-vue";

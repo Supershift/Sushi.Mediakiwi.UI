@@ -57,10 +57,6 @@ import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
 
 export default defineComponent({
   name: "FormLink",
-  directives: {
-    observer,
-  },
-  mixins: [fieldMixins],
   props: {
     field: {
       type: Object as PropType<FieldModel>,
@@ -71,6 +67,10 @@ export default defineComponent({
       required: true,
     },
   },
+  mixins: [fieldMixins],
+  directives: {
+    observer,
+  },
   setup(props, context) {
     let rootPath = computed(
       () => route.useRoute().path
@@ -80,14 +80,14 @@ export default defineComponent({
       return `_e125c${option._uid}`;
     });
     const newLayerUrl = computed(() => {
-      return `${rootPath}/${portalName}?list=5&openinframe=1&referid=${fieldID}`;
+      return `${rootPath.value}/${portalName}?list=5&openinframe=1&referid=${fieldID.value}`;
     });
     const itemLayerUrl = computed(() => {
       if (
         props.field.value &&
         props.field.contentTypeID
       ) {
-        return `${rootPath}/${portalName}?list=5&openinframe=1&referid=${fieldID}&item=${props.field.contentTypeID}`;
+        return `${rootPath.value}/${portalName}?list=5&openinframe=1&referid=${fieldID.value}&item=${props.field.contentTypeID}`;
       }
       return "";
     });
@@ -95,7 +95,7 @@ export default defineComponent({
       return "width:790px,height:450px,iframe:true,scrolling:false";
     });
     const itemID = computed(() => {
-      return `${fieldID}$1$0`;
+      return `${fieldID.value}$1$0`;
     });
     const valueText = computed(() => {
       if (props.field.value) {

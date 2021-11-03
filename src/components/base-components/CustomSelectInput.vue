@@ -2,44 +2,42 @@
   <div :class="selectContainerClasses">
     <label
       v-if="undefinedCheck(select.prefix)"
-      class="select-prefix"
-    >
+      class="select-prefix">
       {{ undefinedCheck(select.prefix) }}
     </label>
+    <!-- eslint-disable-next-line vue/no-unregistered-components -->
     <fa
       v-if="select.fieldIcon"
       :icon="fieldIconChoice"
-      class="select-icon"
-    />
+      class="select-icon" />
     <label
       :for="select.fieldName"
-      class="select-label"
-    >
+      class="select-label">
       <select
         :id="id"
         :name="select.fieldName"
         :disabled="select.disabled"
         :value="selectedValueState"
         :class="customSelectClasses"
-        @change="$emit('selectValueChanged', selectedValueState)"
-      >
+        @change="
+          $emit(
+            'selectValueChanged',
+            selectedValueState
+          )
+        ">
         <option
           v-if="select.showDefault"
           value
           disabled
-          selected
-        >
+          selected>
           {{ select.defaultLabel }}
         </option>
         <option
           v-for="(opt, index) in select.options"
           :key="index"
-          :value="opt.value"
-        >
+          :value="opt.value">
           {{ opt.name }}
-          <span
-            v-if="opt.countForOption"
-          >
+          <span v-if="opt.countForOption">
             ({{ opt.countForOption }})
           </span>
         </option>
@@ -47,8 +45,7 @@
     </label>
     <label
       v-if="undefinedCheck(select.suffix)"
-      class="select-suffix"
-    >
+      class="select-suffix">
       {{ undefinedCheck(select.suffix) }}
     </label>
   </div>
@@ -62,46 +59,54 @@ import {
   ref,
 } from "vue";
 import SelectModel from "../../models/SelectModel";
-import { fieldMixins } from "../form/index";
+import {fieldMixins} from "../form/index";
 
 export default defineComponent({
   name: "FormSelect",
-  mixins: [fieldMixins],
   props: {
     select: {
       type: Object as PropType<SelectModel>,
       required: true,
     },
   },
+  mixins: [fieldMixins],
   emits: ["selectValueChanged"],
   setup(props) {
     const selectedValueState = ref<number>();
-    const id = computed(() => `_${props.select.customClass}-${props.select.fieldName}`);
-    const customSelectClasses = computed(() => ["select-container ", props.select.customClass]);
-    const selectContainerClasses = computed(() => {
-      let iconColor: string;
-      switch (props.select.fieldIcon) {
-        case "email":
-          iconColor = "normal";
-          break;
-        case "password":
-          iconColor = "alert";
-          break;
-        case "warning":
-          iconColor = "warn";
-          break;
-        case "key":
-          iconColor = "normal";
-          break;
-        case "finger":
-          iconColor = "normal";
-          break;
-        default:
-          iconColor = "normal";
-          break;
+    const id = computed(
+      () =>
+        `_${props.select.customClass}-${props.select.fieldName}`
+    );
+    const customSelectClasses = computed(() => [
+      "select-container ",
+      props.select.customClass,
+    ]);
+    const selectContainerClasses = computed(
+      () => {
+        let iconColor: string;
+        switch (props.select.fieldIcon) {
+          case "email":
+            iconColor = "normal";
+            break;
+          case "password":
+            iconColor = "alert";
+            break;
+          case "warning":
+            iconColor = "warn";
+            break;
+          case "key":
+            iconColor = "normal";
+            break;
+          case "finger":
+            iconColor = "normal";
+            break;
+          default:
+            iconColor = "normal";
+            break;
+        }
+        return ["input-container ", iconColor];
       }
-      return ["input-container ", iconColor];
-    });
+    );
     const fieldIconChoice = computed(() => {
       let icon: string[];
       switch (props.select.fieldIcon) {
@@ -176,16 +181,16 @@ export default defineComponent({
   font-weight: bold;
   text-align: center;
   .select-primary {
-      border: none;
-      height: 50px;
-      line-height: 40px;
-      width: 100%;
-      border-radius: 3px;
-      padding-left: 35px;
-      padding-right: 35px;
-      font-size: $font-size-l;
-      color: $color-drakgrey;
-      border: 1px solid $color-drakgrey;
+    border: none;
+    height: 50px;
+    line-height: 40px;
+    width: 100%;
+    border-radius: 3px;
+    padding-left: 35px;
+    padding-right: 35px;
+    font-size: $font-size-l;
+    color: $color-drakgrey;
+    border: 1px solid $color-drakgrey;
   }
 }
 </style>
