@@ -2,7 +2,7 @@
   <div :class="radioContainerClasses">        
     <label v-if="undefinedCheck(field.prefix)">{{ undefinedCheck(field.prefix) }}</label>
     <span
-      v-for="option in field.options"
+      v-for="option in field.options.items"
       :key="fieldID(option)"
     >
       <input
@@ -15,7 +15,7 @@
         :disabled="field.disabled || field.readOnly"
         @change="handleChage"
       >
-      <label :for="fieldID(option)">{{ option.name }}</label>
+      <label :for="fieldID(option)">{{ option.text }}</label>
     </span>
     <label v-if="undefinedCheck(field.suffix)">{{ undefinedCheck(field.suffix) }}</label>
   </div>
@@ -41,7 +41,7 @@ export default defineComponent({
     mixins: [fieldMixins],
     emits: ["onChange"],
     setup(props, context) {
-      let valueRef = ref(0);
+      let valueRef = ref(props.field.value);
       const radioContainerClasses = computed(() => `radio-container ${props.classname}`);
       const radioClasses = computed(() => `radio-primary radio ${props.field.className}`);
       if (typeof props.field?.value === "string") {

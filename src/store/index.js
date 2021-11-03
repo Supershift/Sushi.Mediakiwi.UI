@@ -50,7 +50,7 @@ export default createStore({
         propertyName: "TestProperty",
         propertyType: "string",
         title: "Test Property",
-        vueType: 10,
+        vueType: 14,
         expression: 0,
         value: "User input",
         options: null,
@@ -74,7 +74,7 @@ export default createStore({
         propertyName: "TestDropdown",
         propertyType: "string[]",
         title: "Test Dropdown",
-        vueType: 2,
+        vueType: 11,
         expression: 0,
         value: "1",
         options: {

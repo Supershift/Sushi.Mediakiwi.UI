@@ -147,7 +147,7 @@ export default defineComponent({
         case vueTypes.formDate:
           return FieldType.formDate;
         case vueTypes.formDateTime:
-          return FieldType.formDateTime;
+          return FieldType.formTime;
         case vueTypes.formRichText:
           return FieldType.formRichText;
         case vueTypes.formTextArea:
