@@ -10,33 +10,12 @@
       <FormComponent
         :fields="fetchedFields"
         :notifications="customNotifications" />
-      <!-- <FormRichText
-        :richtext="customRichText"
-        classname="test" />
-      <FormDropDown
-        :field="test"
-        classname="test" />
-      <FormTags :tags="test" classname="test" />
-      <FormTextArea
-        :textarea="test"
-        classname="test" />
-      <FormValueCollection
-        :field="test"
-        classname="test" />
-      <FormDate :field="test" valueType="date" />
-      <FormTime :field="test" valueType="time" />
-      <FormNameValueCollection
-        :field="test"
-        classname="test" />
-      <FormTextLine
-        :textline="test"
-        classname="test" />
-      <FormChoiceRadio
-        :field="test"
-        classname="test" />
-      <FormChoiceCheckBox
-        :field="test"
-        classname="test" /> -->
+
+      <template v-if="fetchedButtons && fetchedButtons.length">
+        <ButtonListComponent
+          :fields="fetchedButtons"
+          classname="test" />
+      </template>
       <template v-if="grids && grids.length">
         <GridComponent
           v-for="(grid, index) in grids"
@@ -54,18 +33,8 @@ import {
   ref,
 } from "vue";
 
-import {store} from "@/store";
-import FormDropDown from "./form/FormDropDown.vue";
-import FormTags from "./form/FormTag.vue";
-import FormTextArea from "./form/FormTextArea.vue";
-import FormValueCollection from "./form/FormValueCollection.vue";
-import FormDate from "./form/FormDate.vue";
-import FormNameValueCollection from "./form/FormNameValueCollection.vue";
-import FormTextLine from "./form/FormTextLine.vue";
-import FormRichText from "./form/FormRichText.vue";
-import FormChoiceRadio from "./form/FormChoiceRadio.vue";
-import FormChoiceCheckBox from "./form/FormChoiceCheckBox.vue";
-import FormTime from "./form/FormTime.vue";
+import {store} from "../store/index";
+
 
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
@@ -76,25 +45,16 @@ import MessageModel from "../models/MessageModel";
 import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
+import ButtonListComponent from "./ButtonListComponent.vue";
 import OptionModel from "../models/OptionModel";
 
 export default defineComponent({
   name: "MainView",
   components: {
-    // FormChoiceRadio,
-    // FormRichText,
     FormComponent,
     GridComponent,
     FolderComponent,
-    // FormDropDown,
-    // FormTags,
-    // FormTextArea,
-    // FormValueCollection,
-    // FormDate,
-    // FormTime,
-    // FormNameValueCollection,
-    // FormTextLine,
-    // FormChoiceCheckBox,
+    ButtonListComponent,
   },
   setup() {
     const fetchedFields = computed(
@@ -107,6 +67,10 @@ export default defineComponent({
 
     const fetchedFolders = computed(
       () => store.getters.folders
+    );
+
+    const fetchedButtons = computed(
+      () => store.getters.buttons
     );
 
     // TODO Delete
@@ -294,6 +258,7 @@ export default defineComponent({
       customRichText,
       test,
       grids,
+      fetchedButtons,
       fetchedFolders,
     };
   },

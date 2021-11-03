@@ -35,7 +35,8 @@ export interface State {
   channel: number,
   resources: unknown[],
   grids: GridModel[] | null,
-  folders: FolderModel[] | null
+  folders: FolderModel[] | null,
+  buttons: FieldModel[] | null,
 }
 
 // define injection key
@@ -58,6 +59,7 @@ export const store = createStore<State>({
     },
     description: "",
     fields: null,
+    buttons: [],
     sideNavigationItems: null,
     topNavigationItems: null,
     content: {
@@ -220,6 +222,7 @@ export const store = createStore<State>({
     contentForgottenPassword: (state) => state.content.forgotten,
     contentResetPassword: (state) => state.content.reset,
     grids: (state) => state.grids,
-    folders: (state) => state.folders
+    folders: (state) => state.folders,
+    buttons: (state) => state.buttons
   },
 });
