@@ -43,6 +43,9 @@
           :key="index"
           :grid="grid" />
       </template>
+
+      <ResourcesComponent
+        v-if="fetchedResources" />
     </div>
   </div>
 </template>
@@ -55,17 +58,6 @@ import {
 } from "vue";
 
 import {store} from "@/store";
-import FormDropDown from "./form/FormDropDown.vue";
-import FormTags from "./form/FormTag.vue";
-import FormTextArea from "./form/FormTextArea.vue";
-import FormValueCollection from "./form/FormValueCollection.vue";
-import FormDate from "./form/FormDate.vue";
-import FormNameValueCollection from "./form/FormNameValueCollection.vue";
-import FormTextLine from "./form/FormTextLine.vue";
-import FormRichText from "./form/FormRichText.vue";
-import FormChoiceRadio from "./form/FormChoiceRadio.vue";
-import FormChoiceCheckBox from "./form/FormChoiceCheckBox.vue";
-import FormTime from "./form/FormTime.vue";
 
 import SelectModel from "../models/SelectModel";
 import RadioModel from "../models/RadioModel";
@@ -76,6 +68,7 @@ import MessageModel from "../models/MessageModel";
 import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
+import ResourcesComponent from "./resources/ResourcesComponent.vue";
 import OptionModel from "../models/OptionModel";
 
 export default defineComponent({
@@ -86,6 +79,7 @@ export default defineComponent({
     FormComponent,
     GridComponent,
     FolderComponent,
+    ResourcesComponent,
     // FormDropDown,
     // FormTags,
     // FormTextArea,
@@ -107,6 +101,10 @@ export default defineComponent({
 
     const fetchedFolders = computed(
       () => store.getters.folders
+    );
+
+    const fetchedResources = computed(
+      () => store.getters.resources
     );
 
     // TODO Delete
@@ -295,6 +293,7 @@ export default defineComponent({
       test,
       grids,
       fetchedFolders,
+      fetchedResources,
     };
   },
 });

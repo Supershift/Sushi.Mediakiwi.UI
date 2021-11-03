@@ -15,6 +15,7 @@ import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel"
 import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
 import GridModel from "@/models/Mediakiwi/GridModel";
 import FolderModel from "@/models/Mediakiwi/FolderModel";
+import ResourceModel from "@/models/Mediakiwi/ResourceModel";
 const loggedinKey = "ananda_vaultn_loggedin";
 
 // define your typings for the store state
@@ -33,9 +34,9 @@ export interface State {
   topNavigationItems: TopNavigationItemModel[] | null,
   content: BaseContentModel,
   channel: number,
-  resources: unknown[],
+  resources: ResourceModel[],
   grids: GridModel[] | null,
-  folders: FolderModel[] | null
+  folders: FolderModel[] | null,
 }
 
 // define injection key
@@ -133,6 +134,9 @@ export const store = createStore<State>({
     },
     setFolders(state, data: FolderModel[]) {
       state.folders = data;
+    },
+    setResources(state, data: ResourceModel[]) {
+      state.resources = data;
     }
   },
   actions: {
@@ -156,6 +160,9 @@ export const store = createStore<State>({
       }
       else if (request.url && request.url.indexOf("?item=") > -1) {
         apiPath = "/fields.json";
+      }
+      else if (request.url && request.url.indexOf("custom") > -1) {
+        apiPath = "/custom-resources.json";
       }
 
       // Start a promise with an axios call
@@ -195,6 +202,9 @@ export const store = createStore<State>({
     },
     setFolders(context, data) {
       context.commit("setFolders", data);
+    },
+    setResources(context, data) {
+      context.commit("setResources", data);
     }
   },
   getters: {
@@ -220,6 +230,7 @@ export const store = createStore<State>({
     contentForgottenPassword: (state) => state.content.forgotten,
     contentResetPassword: (state) => state.content.reset,
     grids: (state) => state.grids,
-    folders: (state) => state.folders
+    folders: (state) => state.folders,
+    resources: (state) => state.resources,
   },
 });

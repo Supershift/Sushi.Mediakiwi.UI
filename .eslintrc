@@ -36,7 +36,8 @@
   "ignorePatterns": [
     "**/wwwroot",
     "**/dist",
-    "**/webpack.config.js"
+    "**/webpack.config.js",
+    "**/public/resources"
   ],
   "rules": {
     // The below are some, but not all, of the rules from eslint:recommended https://github.com/eslint/eslint/blob/master/conf/eslint-recommended.js (all errors set to warning)
@@ -130,7 +131,7 @@
     "no-duplicate-imports": "error",
     // https://github.com/mozilla/eslint-plugin-no-unsanitized
     "no-unsanitized/method": "error",
-    "no-unsanitized/property": "error",
+    "no-unsanitized/property": 0,
     "no-use-before-define": "error",
     "object-shorthand": "error",
     "quotes": "error",
