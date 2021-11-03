@@ -9,7 +9,7 @@
       :class="valueCollectionClasses">
       <FormValue
         :field="getField(nameValue, index)"
-        @onChange="handleChange" />
+        @on-change="handleChange" />
       <!-- eslint-disable-next-line vue/no-unregistered-components -->
       <fa
         icon="times"
@@ -56,7 +56,7 @@ export default defineComponent({
     FormValue,
     FormPlus,
   },
-  emits: ["onChange"],
+  emits: ["on-change"],
   setup(props, context) {
     let valueRef = ref<Array<FieldModel>>([]);
     const valueCollectionClasses = computed(
@@ -87,7 +87,7 @@ export default defineComponent({
       valueRef.value.push(emptyField);
     }
     function handleChange(e: Event) {
-      context.emit("onChange", e, valueRef);
+      context.emit("on-change", e, valueRef);
     }
     function removeNameValuePair(
       nameValuePair: string

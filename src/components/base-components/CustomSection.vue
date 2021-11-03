@@ -38,8 +38,8 @@ export default defineComponent({
     },
   },
   emits: [
-    "sortUp",
-    "sortDown",
+    "sort-up",
+    "sort-down",
     "removeFields",
     "toggle",
   ],
@@ -47,7 +47,7 @@ export default defineComponent({
     function sortUp(e: Event) {
       e.preventDefault();
       context.emit(
-        "sortUp",
+        "sort-up",
         e,
         props.field.formSection
       );
@@ -55,7 +55,7 @@ export default defineComponent({
     function sortDown(e: Event) {
       e.preventDefault();
       context.emit(
-        "sortDown",
+        "sort-down",
         e,
         props.field.formSection
       );

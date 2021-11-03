@@ -71,6 +71,7 @@ export default defineComponent({
   directives: {
     observer,
   },
+  emits: ["on-change"],
   setup(props, context) {
     let rootPath = computed(
       () => route.useRoute().path
@@ -141,7 +142,7 @@ export default defineComponent({
             valueRef = "";
           }
           context.emit(
-            "onChange",
+            "on-change",
             null,
             props.field
           );

@@ -3,7 +3,7 @@
     :field="field"
     :classname="classname"
     value-type="time"
-    @onChange="handleChange" />
+    @on-change="handleChange" />
 </template>
 
 <script lang="ts">
@@ -27,14 +27,14 @@ export default defineComponent({
   components: {
     FormDateTime,
   },
-  emits: ["onChange"],
+  emits: ["on-change"],
   setup(props, context) {
     function handleChange(e: Event, value: Date) {
       if (
         props.field.event !==
         MediakiwiJSEventType.none
       ) {
-        context.emit("onChange", e, value);
+        context.emit("on-change", e, value);
       }
     }
     return {

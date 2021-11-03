@@ -12,7 +12,7 @@
       :key="nameValue">
       <FormNameValue
         :field="getField(nameValue, index)"
-        @onchange="handleChange" />
+        @on-change="handleChange" />
       <!-- eslint-disable-next-line vue/no-unregistered-components -->
       <fa
         icon="times"
@@ -60,6 +60,7 @@ export default defineComponent({
     FormPlus,
     FormNameValue,
   },
+  emits: ["on-change"],
   setup(props, context) {
     let valueNameValueRef = ref<
       Array<FieldModel>
@@ -93,7 +94,7 @@ export default defineComponent({
     }
     function handleChange(e: Event) {
       context.emit(
-        "onChange",
+        "on-change",
         e,
         valueNameValueRef
       );

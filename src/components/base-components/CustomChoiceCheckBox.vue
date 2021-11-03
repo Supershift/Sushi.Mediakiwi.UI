@@ -52,7 +52,7 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["checkboxChanged"],
+  emits: ["checkbox-changed"],
   setup(props, context) {
     const valueRef = reactive({value: ""});
     const customCheckboxClasses = computed(() => [
@@ -62,7 +62,7 @@ export default defineComponent({
     function handleChange(e: Event) {
       if (props.field.fieldValue !== null) {
         context.emit(
-          "checkboxChanged",
+          "checkbox-changed",
           e,
           props.field.fieldValue
         );

@@ -51,7 +51,7 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["radioChanged"],
+  emits: ["radio-changed"],
   setup(props, context) {
     const valueRef = reactive({value: ""});
     const customRadioClasses = computed(() => [
@@ -80,7 +80,7 @@ export default defineComponent({
     function handleChange(e: Event) {
       if (props.radio.fieldValue !== null) {
         context.emit(
-          "radioChanged",
+          "radio-changed",
           e,
           props.radio.fieldValue
         );

@@ -58,7 +58,7 @@ export default defineComponent({
   components: {
     datetimepicker: DateTimePicker,
   },
-  emits: ["onChange"],
+  emits: ["on-change"],
   setup(props, context) {
     const datetimeContainerClasses = computed(
       () =>
@@ -94,7 +94,7 @@ export default defineComponent({
         props.field.event !==
         MediakiwiJSEventType.none
       ) {
-        context.emit("onChange", null, valueRef);
+        context.emit("on-change", null, valueRef);
       }
     }
     function checkLocale() {

@@ -40,7 +40,7 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["onChange"],
+  emits: ["on-change"],
   setup(props, context) {
     const fieldName = computed(
       () => `${props.field.propertyName}_value`
@@ -56,7 +56,7 @@ export default defineComponent({
     );
     const valueRef = ref(props.field.value.text);
     function handleChange(e: Event) {
-      context.emit("onChange", e, valueRef);
+      context.emit("on-change", e, valueRef);
     }
     return {
       handleChange,
