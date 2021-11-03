@@ -1,10 +1,13 @@
 <template>
-  <div v-if="field.options && field.options.items" :class="radioContainerClasses">        
-    <label v-if="undefinedCheck(field.prefix)">{{ undefinedCheck(field.prefix) }}</label>
+  <div
+    v-if="field.options && field.options.items"
+    :class="radioContainerClasses">
+    <label v-if="undefinedCheck(field.prefix)">{{
+      undefinedCheck(field.prefix)
+    }}</label>
     <span
       v-for="option in field.options.items"
-      :key="fieldID(option)"
-    >
+      :key="fieldID(option)">
       <input
         :id="fieldID(option)"
         v-model="valueRef"
@@ -12,63 +15,92 @@
         :class="radioClasses + errorClass(field)"
         :name="field.groupName"
         :value="option.value"
-        :disabled="field.disabled || field.readOnly"
-        @change="handleChage"
-      >
-      <label :for="fieldID(option)">{{ option.text }}</label>
+        :disabled="
+          field.disabled || field.readOnly
+        "
+        @change="handleChage" />
+      <label :for="fieldID(option)">{{
+        option.text
+      }}</label>
     </span>
-    <label v-if="undefinedCheck(field.suffix)">{{ undefinedCheck(field.suffix) }}</label>
+    <label v-if="undefinedCheck(field.suffix)">{{
+      undefinedCheck(field.suffix)
+    }}</label>
   </div>
   <div v-else :class="radioContainerClasses">
-    <label class="error-label" :for="field.propertyName">No options found for radios!</label>
+    <label
+      class="error-label"
+      :for="field.propertyName"
+      >No options found for radios!</label
+    >
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from "vue";
-import FieldModel from "../../models/FieldModel";
+import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
+import {
+  computed,
+  defineComponent,
+  PropType,
+  ref,
+} from "vue";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
 import OptionItemModel from "../../models/OptionItemModel";
-import { fieldMixins } from "./index";
+import {fieldMixins} from "./index";
 
 export default defineComponent({
-    name:"FormChoiceRadio",
-    props: {
-      field: {
-        type: Object as PropType<FieldModel>,
-        required: true,
-      },
-      classname: {
-        type: String,
-        required: true,
-      },
+  name: "FormChoiceRadio",
+  props: {
+    field: {
+      type: Object as PropType<FieldModel>,
+      required: true,
     },
-    mixins: [fieldMixins],
-    emits: ["on-change"],
-    setup(props, context) {
-      let valueRef = ref(props.field.value);
-      const radioContainerClasses = computed(() => `radio-container ${props.classname}`);
-      const radioClasses = computed(() => `radio-primary radio ${props.field.className}`);
-      if (typeof props.field?.value === "string") {
-        if (props.field.value.toLowerCase() === "false") {
-          valueRef.value = 0;
-        }
-        else if (props.field.value.toLowerCase() === "true") {
-          valueRef.value = 1;
-        }
-      }
-      function fieldID(option: OptionItemModel) { return `${props.field.propertyName}_${option.value}`; }
-      function handleChange(e: Event) {
-        if (props.field.event !== "none") {
-          context.emit("on-change", e, valueRef);
-        }
-      }
-      return {
-        fieldID,
-        valueRef,
-        handleChange,
-        radioClasses,
-        radioContainerClasses,
-      };
+    classname: {
+      type: String,
+      required: true,
     },
+  },
+  mixins: [fieldMixins],
+  emits: ["on-change"],
+  setup(props, context) {
+    let valueRef = ref(props.field.value);
+    const radioContainerClasses = computed(
+      () => `radio-container ${props.classname}`
+    );
+    const radioClasses = computed(
+      () =>
+        `radio-primary radio ${props.field.className}`
+    );
+    if (typeof props.field?.value === "string") {
+      if (
+        props.field.value.toLowerCase() ===
+        "false"
+      ) {
+        valueRef.value = 0;
+      } else if (
+        props.field.value.toLowerCase() === "true"
+      ) {
+        valueRef.value = 1;
+      }
+    }
+    function fieldID(option: OptionItemModel) {
+      return `${props.field.propertyName}_${option.value}`;
+    }
+    function handleChange(e: Event) {
+      if (
+        props.field.event !==
+        MediakiwiJSEventType.none
+      ) {
+        context.emit("on-change", e, valueRef);
+      }
+    }
+    return {
+      fieldID,
+      valueRef,
+      handleChange,
+      radioClasses,
+      radioContainerClasses,
+    };
+  },
 });
 </script>
 
@@ -92,7 +124,6 @@ export default defineComponent({
   .error-label {
     margin: 0;
     opacity: 0.5;
-
   }
 }
 </style>

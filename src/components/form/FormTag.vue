@@ -24,7 +24,7 @@ import {
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/FieldModel";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
 import TagsInput from "./FormTagsInput.vue";
 
 export default defineComponent({
@@ -39,11 +39,11 @@ export default defineComponent({
       required: false,
     },
   },
-  mixins: [fieldMixins],  
+  mixins: [fieldMixins],
   components: {
     TagsInput,
   },
-  emits:["tagsUpdated"],
+  emits: ["tagsUpdated"],
   setup(props, context) {
     let valueRef = ref([]);
     let tagRef = ref("");

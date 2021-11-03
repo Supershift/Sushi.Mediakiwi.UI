@@ -1,34 +1,40 @@
 <template>
-    <div :class="customRichtextContainerClasses">
-        <editor
-            api-key="4w7n1fpw2lpcb86gkmkqfpsrefktlebicr8wc1lzwuy0evy4"
-            :id="field.propertyName"
-            :init="tinymceInit"
-            :selector="field.propertyName"
-            v-model="valueRef"
-            :class="customRichtextClasses"
-            @blur="handleChange"
-        />
-    </div>
+  <div :class="customRichtextContainerClasses">
+    <editor
+      api-key="4w7n1fpw2lpcb86gkmkqfpsrefktlebicr8wc1lzwuy0evy4"
+      :id="field.propertyName"
+      :init="tinymceInit"
+      :selector="field.propertyName"
+      v-model="valueRef"
+      :class="customRichtextClasses"
+      @blur="handleChange" />
+  </div>
 </template>
 <script lang="ts">
 // import Editor from '@tinymce/tinymce-vue';
-import { defineComponent, PropType, ref, computed, reactive } from "vue";
-import FieldModel from "../../models/FieldModel";
+import {
+  defineComponent,
+  PropType,
+  ref,
+  computed,
+  reactive,
+} from "vue";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
 import Editor from "@tinymce/tinymce-vue";
+import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
 
 export default defineComponent({
   name: "RichText",
   props: {
     field: {
-        type: Object as PropType<FieldModel>,
-        required: true,
+      type: Object as PropType<FieldModel>,
+      required: true,
     },
     classname: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
-  },  
+  },
   components: {
     editor: Editor,
   },
@@ -36,17 +42,21 @@ export default defineComponent({
   setup(props, context) {
     let valueRef = ref("");
 
-    const customRichtextContainerClasses = computed(() => [
-      "richtext-container ",
-      props.field?.className,
-    ]);
+    const customRichtextContainerClasses =
+      computed(() => [
+        "richtext-container ",
+        props.field?.className,
+      ]);
     const customRichtextClasses = computed(() => [
       "richtext-primary ",
       props.classname,
     ]);
 
     function handleChange(values: string) {
-      if (props.field?.event !== "none") {
+      if (
+        props.field?.event !==
+        MediakiwiJSEventType.none
+      ) {
         context.emit("valueChanged", values);
       }
     }

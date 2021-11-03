@@ -1,17 +1,19 @@
 <template>
-  <FormDateTime :field="field" :classname="classname" :valueType="'date'" @onChange="handleChange" />
+  <FormDateTime
+    :field="field"
+    :classname="classname"
+    value-type="date"
+    @onChange="handleChange" />
 </template>
 
 <script lang="ts">
 import FormDateTime from "./FormDateTime.vue";
-import { defineComponent, PropType } from "vue";
-import FieldModel from "../../models/FieldModel";
+import {defineComponent, PropType} from "vue";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
 
 export default defineComponent({
   name: "FormDate",
-  components: {
-    FormDateTime,
-  },
   props: {
     field: {
       type: Object as PropType<FieldModel>,
@@ -21,16 +23,17 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    valueType: {
-      type: String,
-      required: false,
-      default: "",
-    }
+  },
+  components: {
+    FormDateTime,
   },
   emits: ["onChange"],
   setup(props, context) {
-    function handleChange(e: Event, value: Date ) {
-      if (props.field.event !== "none") {
+    function handleChange(e: Event, value: Date) {
+      if (
+        props.field.event !==
+        MediakiwiJSEventType.none
+      ) {
         context.emit("onChange", e, value);
       }
     }

@@ -1,6 +1,8 @@
 <template>
   <div :class="datetimeContainerClasses">
-    <label v-if="undefinedCheck(field.prefix)">{{ undefinedCheck(field.prefix) }}</label>
+    <label v-if="undefinedCheck(field.prefix)">{{
+      undefinedCheck(field.prefix)
+    }}</label>
     <datetimepicker
       v-model="valueRef"
       :format="componentFormat"
@@ -8,25 +10,36 @@
       :time-picker="valueType === 'time'"
       :enableTimePicker="valueType === 'time'"
       :placeholder="componentFormat"
-      :readonly="field?.disabled || field.readOnly"
-    >
+      :readonly="
+        field?.disabled || field.readOnly
+      ">
       <template #input-icon></template>
     </datetimepicker>
-    <label v-if="undefinedCheck(field.suffix)">{{ undefinedCheck(field.suffix) }}</label>
+    <label v-if="undefinedCheck(field.suffix)">{{
+      undefinedCheck(field.suffix)
+    }}</label>
   </div>
 </template>
 
 <script lang="ts">
-import { fieldMixins } from "./index";
+import {fieldMixins} from "./index";
 import DateTimePicker from "vue3-date-time-picker";
 import "vue3-date-time-picker/src/Vue3DatePicker/style/main.scss";
 
-import { computed, defineComponent, onBeforeMount, PropType, reactive, ref } from "vue";
-import FieldModel from "../../models/FieldModel";
+import {
+  computed,
+  defineComponent,
+  onBeforeMount,
+  PropType,
+  reactive,
+  ref,
+} from "vue";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
 
 export default defineComponent({
   name: "FormDateTime",
-   props: {
+  props: {
     field: {
       type: Object as PropType<FieldModel>,
       required: true,
@@ -39,47 +52,63 @@ export default defineComponent({
       type: String,
       required: false,
       default: "",
-    }
+    },
   },
   mixins: [fieldMixins],
   components: {
-    "datetimepicker": DateTimePicker 
+    datetimepicker: DateTimePicker,
   },
   emits: ["onChange"],
   setup(props, context) {
-    const datetimeContainerClasses = computed(() => `datetime-container ${props.classname}`);
+    const datetimeContainerClasses = computed(
+      () =>
+        `datetime-container ${props.classname}`
+    );
     const daysOfTheWeek = 7;
     const settings = reactive({
       phrases: {
         ok: "Ok",
         cancel: "Cancel",
-        next: "Next"
+        next: "Next",
       },
-      weekStart: props.field.weekStart ? props.field.weekStart : daysOfTheWeek,
-      defaultlocale: props.field.locale ? props.field.locale : "en-US",
+      weekStart: props.field.weekStart
+        ? props.field.weekStart
+        : daysOfTheWeek,
+      defaultlocale: props.field.locale
+        ? props.field.locale
+        : "en-US",
     });
     let valueRef = ref(new Date());
     const componentFormat = computed(() => {
       switch (props.valueType) {
         case "date":
-            return "dd-MM-yyyy";
+          return "dd-MM-yyyy";
         case "time":
-            return "HH:mm";
+          return "HH:mm";
         default:
           return "dd-MM-yyyy HH:mm";
       }
     });
     function handleChange() {
-      if (props.field.event !== "none") {
+      if (
+        props.field.event !==
+        MediakiwiJSEventType.none
+      ) {
         context.emit("onChange", null, valueRef);
       }
     }
-    function checkLocale () {
+    function checkLocale() {
       if (props.field.locale) {
-        switch (props.field.locale.toLowerCase()) {
+        switch (
+          props.field.locale.toLowerCase()
+        ) {
           case "nl":
           case "nl-nl":
-            settings.phrases = { ok: "Ok", cancel: "Annuleren", next: "Volgende" };
+            settings.phrases = {
+              ok: "Ok",
+              cancel: "Annuleren",
+              next: "Volgende",
+            };
             break;
         }
       }
@@ -119,12 +148,12 @@ export default defineComponent({
   --dp-border-color-hover: #aaaeb7;
   --dp-disabled-color: #f6f6f6;
   --dp-scroll-bar-background: #f3f3f3;
-  --dp-scroll-bar-color: #3A52AC;
-  --dp-success-color: #3A52AC;
-  --dp-icon-color: #3A52AC;
+  --dp-scroll-bar-color: #3a52ac;
+  --dp-success-color: #3a52ac;
+  --dp-icon-color: #3a52ac;
   --dp-danger-color: #f00;
 }
-input:not([type=radio]):not([class=vs__search])[readonly] {
+input:not([type="radio"]):not([class="vs__search"])[readonly] {
   border-radius: $b-radius-6;
 }
 </style>
