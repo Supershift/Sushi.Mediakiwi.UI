@@ -1,0 +1,259 @@
+{
+  "listTitle": "List details A",
+  "isEditMode": false,
+  "fields": [
+    {
+      "contentTypeID": 10,
+      "propertyName": "TestProperty",
+      "propertyType": "string",
+      "title": "Test Property",
+      "vueType": 5,
+      "expression": 1,
+      "value": "User input",
+      "options": null,
+      "className": null,
+      "event": 0,
+      "inputPost": null,
+      "section": 0,
+      "hidden": null,
+      "groupName": null,
+      "suffix": null,
+      "prefix": null,
+      "formSection": null,
+      "canToggleSection": false,
+      "canDeleteSection": false,
+      "toggleDefaultClosed": false,
+      "readOnly": false,
+      "helpText": "This field can do stuff"
+    },
+    {
+      "contentTypeID": 18,
+      "propertyName": "TestDropdown",
+      "propertyType": "string[]",
+      "title": "Test Dropdown",
+      "vueType": 8,
+      "expression": 0,
+      "value": "1",
+      "options": {
+        "items": [
+          {
+            "text": "Optie 1",
+            "value": "1",
+            "enabled": true,
+            "selected": true
+          },
+          {
+            "text": "Optie 2",
+            "value": "2",
+            "enabled": true,
+            "selected": false
+          }
+        ],
+        "count": 2
+      },
+      "className": null,
+      "event": 1,
+      "inputPost": null,
+      "section": 0,
+      "hidden": null,
+      "groupName": null,
+      "suffix": null,
+      "prefix": null,
+      "formSection": null,
+      "canToggleSection": false,
+      "canDeleteSection": false,
+      "toggleDefaultClosed": false,
+      "readOnly": false,
+      "helpText": "This field can do stuff"
+    }
+  ],
+  "buttons": [
+    {
+      "contentTypeID": 27,
+      "propertyName": "TestButton",
+      "propertyType": "bool",
+      "title": "Test Button",
+      "vueType": 1,
+      "expression": 1,
+      "value": null,
+      "options": null,
+      "className": null,
+      "event": 1,
+      "inputPost": null,
+      "section": 0,
+      "hidden": null,
+      "groupName": null,
+      "suffix": null,
+      "prefix": null,
+      "formSection": null,
+      "canToggleSection": false,
+      "canDeleteSection": false,
+      "toggleDefaultClosed": false,
+      "readOnly": false,
+      "helpText": "This button triggers something"
+    }
+  ],
+  "notifications": [
+    {
+      "message": "The data has been saved",
+      "isError": false,
+      "propertyName": null
+    },
+    {
+      "message": "This is an error!",
+      "isError": true,
+      "propertyName": "TestProperty"
+    }
+  ],
+  "folderNavigation": {
+    "logoUrl": "https://cdn-tst.vaultn.nl/images/logo.svg",
+    "homeUrl": "/webcontent",
+    "items": [
+      {
+        "id": 1,
+        "text": "Website",
+        "href": "?folder=1",
+        "items": null
+      },
+      {
+        "id": 2,
+        "text": "Data Lists",
+        "href": "?folder=31",
+        "items": null
+      },
+      {
+        "id": 4,
+        "text": "Admin",
+        "href": "?folder=4",
+        "items": [
+          {
+            "text": "Settings",
+            "href": "?list=10"
+          }
+        ]
+      }
+    ]
+  },
+  "topNavigation": {
+    "logoUrl": "https://cdn-tst.vaultn.nl/images/logo.svg",
+    "homeUrl": "/webcontent",
+    "items": [
+      {
+        "id": 1,
+        "text": "Website",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
+        "items": null
+      },
+      {
+        "id": 2,
+        "text": "Data Lists",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
+        "items": null
+      },
+      {
+        "id": 3,
+        "text": "Galleries",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
+        "items": null
+      },
+      {
+        "id": 4,
+        "text": "Admin",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
+        "items": [
+          {
+            "text": "Settings",
+            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10"
+          }
+        ]
+      }
+    ]
+  },
+  "sideNavigation": {
+    "items": [
+      {
+        "id": 1,
+        "text": "Back to list",
+        "href": "?folder=1",
+        "items": null,
+        "isBack": true,
+        "isActive": false,
+        "iconClass": "fas angle-left"
+      },
+      {
+        "id": 2,
+        "text": "Page Property",
+        "href": "?folder=31",
+        "isBack": false,
+        "isActive": true,
+        "iconClass": "fal fingerprint",
+        "items": [
+          {
+            "id": 3,
+            "text": "Content",
+            "href": "?folder=3",
+            "items": null,
+            "isBack": false,
+            "isActive": false,
+            "iconClass": "fal donate"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "text": "Admin",
+        "href": "?folder=4",
+        "iconClass": "fal fingerprint",
+        "isActive": false,
+        "items": [
+          {
+            "id": 5,
+            "text": "Settings",
+            "href": "?list=10",
+            "iconClass": "fas cogs",
+            "isActive": false
+          }
+        ]
+      }
+    ]
+  },
+  "profile": {
+    "displayName": "Marc Molenwijk",
+    "email": "marc.molenwijk@supershift.nl",
+    "roleID": 1,
+    "roleName": "Super Admin"
+  },
+  "redirectUrl": null,
+  "listDescription": null,
+  "listSettingsUrl": "?settings=1",
+  "breadcrumbs": [
+    {
+      "text": "Back",
+      "href": "?list=2",
+      "isBack": true
+    },
+    {
+      "text": "Home",
+      "href": "?list=1",
+      "isBack": false
+    },
+    {
+      "text": "Layer 1",
+      "href": "?list=4",
+      "isBack": false
+    }
+  ],
+  "currentSiteID": 1,
+  "sites": [
+    {
+      "name": "Site A",
+      "id": 1
+    },
+    {
+      "name": "Site B",
+      "id": 2
+    }
+  ],
+  "isSharedField": false,
+  "sharedFieldValue": null
+}

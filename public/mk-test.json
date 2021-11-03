@@ -107,6 +107,11 @@
 	],
 	"grids": [
 		{
+			"title": "grid title",
+			"layerConfiguration": {
+				"width": "700px",
+				"height": "400px"
+			},
 			"columns": [
 				{
 					"title": null,
@@ -121,38 +126,42 @@
 			],
 			"rows": [
 				{
+					"href": "/detailUrl/0",
+					"ID": "0",
 					"gridItems": [
 						{
 							"column": 0,
 							"value": "Test",
-							"href": "",
-							"vueType": 1
+							"vueType": 1,
+							"canWrap": false
 						},
 						{
+							"id": "124",
 							"column": 1,
 							"value": "Something",
-							"href": "",
-							"vueType": 1
+							"vueType": 1,
+							"canWrap": false
 						}
-					],
-					"rowID": 0
+					]
 				},
 				{
+					"ID": "1",
+					"href": "/detailUrl/1",
 					"gridItems": [
 						{
+							"id": "125",
 							"column": 0,
 							"value": "Test 1",
-							"href": "",
-							"vueType": 1
+							"vueType": 1,
+							"canWrap": false
 						},
 						{
 							"column": 1,
 							"value": "Something else",
-							"href": "",
-							"vueType": 1
+							"vueType": 1,
+							"canWrap": false
 						}
-					],
-					"rowID": 1
+					]
 				}
 			]
 		}
@@ -226,7 +235,7 @@
 	},
 	"folders": [
 		{
-			"folderId": 1,
+			"id": 1,
 			"folderName": "",
 			"description": "This folder contains items",
 			"href": "https://portal-dev.vaultn.nl/webcontent/website?folder=1",

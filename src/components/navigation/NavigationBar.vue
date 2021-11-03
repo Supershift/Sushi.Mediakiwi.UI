@@ -1,28 +1,35 @@
+<!-- eslint-disable vue/no-unregistered-components -->
 <template>
-  <div class="navigation-bar ">
+  <div class="navigation-bar">
     <div class="navigation-content">
       <div class="navigation-logo">
-        <fa 
+        <fa
           icon="fingerprint"
-          class="navigation-icon"
-        />
+          class="navigation-icon" />
       </div>
-      <h2>{{ siteTitle }}</h2>
-      <NavigationMenu :items="navigationItems" />
+      <h2>{{ pageTitle }}</h2>
+      <a
+        v-if="pageSettings"
+        :href="pageSettings"
+        class="navigation-settings">
+        <fa icon="cogs" />
+      </a>
+      <NavigationMenu
+        :items="topNavigationItems" />
     </div>
     <Profile />
     <Notification />
-    <Dialog />
+    <DialogComponent />
   </div>
 </template>
 
 <script>
-import { computed, defineComponent } from "vue";
-import store from "../../store/index";
+import {computed, defineComponent} from "vue";
+import {store} from "@/store";
 import NavigationMenu from "./NavigationMenu.vue";
 import Profile from "./Profile.vue";
 import Notification from "../notification/Notification.vue";
-import Dialog from "../dialog/Dialog.vue";
+import DialogComponent from "../dialog/Dialog.vue";
 
 export default defineComponent({
   name: "NavigationBar",
@@ -30,14 +37,26 @@ export default defineComponent({
     NavigationMenu,
     Profile,
     Notification,
-    Dialog,
+    DialogComponent,
   },
   setup() {
-    const navigationItems = computed(() => store.getters.navigationItems);
-    const siteTitle = computed(() => store.getters.siteTitle);
+    const topNavigationItems = computed(
+      () => store.getters.topNavigationItems
+    );
+    const pageTitle = computed(() =>
+      store.getters.page
+        ? store.getters.page.title
+        : ""
+    );
+    const pageSettings = computed(() =>
+      store.getters.page
+        ? store.getters.page.settingsUrl
+        : ""
+    );
     return {
-      navigationItems,
-      siteTitle,
+      topNavigationItems,
+      pageTitle,
+      pageSettings,
     };
   },
 });
@@ -50,7 +69,7 @@ export default defineComponent({
   width: 100%;
   height: 90px;
   .navigation-content {
-    font-family: "Rajdhani", "Arial", Sans-serif;
+    font-family: $font-primary;
     display: flex;
     flex-direction: row;
     position: relative;
@@ -59,19 +78,19 @@ export default defineComponent({
     padding-left: 80px;
   }
   .navigation {
-      &-logo {
-        width: 60px;
-        height: 60px;
-        border-radius: 6px;
-        color: #2aa1e8;
-        border: 2px solid $color-blue;
-        flex: 0 0 60px;
-      }
-      &-icon{
-        height: 32px;
-        width: 32px;
-        margin: 15px;
-      }
+    &-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 6px;
+      color: #2aa1e8;
+      border: 2px solid $color-blue;
+      flex: 0 0 60px;
+    }
+    &-icon {
+      height: 32px;
+      width: 32px;
+      margin: 15px;
+    }
   }
   h2 {
     margin: 0;
@@ -79,5 +98,13 @@ export default defineComponent({
     vertical-align: top;
     padding-left: 15px;
   }
+}
+
+.navigation-settings {
+  color: #2aa1e8;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 10px;
+  margin-top: 5px;
 }
 </style>

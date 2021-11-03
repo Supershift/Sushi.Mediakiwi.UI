@@ -12,10 +12,15 @@
               @onclick="handleButtonClicked"
             />
           </td>
-          <template v-for="field in row.fields" v-else>
+          <template
+            v-for="field in row.fields"
+            v-else>
             <component
               :is="checkVueType(field)"
-              v-if="checkVueType(field) === 'FormSection'"
+              v-if="
+                checkVueType(field) ===
+                'FormSection'
+              "
               :key="field.propertyName"
               v-model="field.value"
               :field="field"
@@ -24,33 +29,42 @@
               <th
                 v-show="showField(field)"
                 :key="field.propertyName"
-                :class="expressCell(field.expression)"
-                colspan="1"
-              >
+                :class="
+                  expressCell(field.expression)
+                "
+                colspan="1">
                 <label
-                  v-if="!hideLabelForType(field.vueType)"
+                  v-if="
+                    !hideLabelForType(
+                      field.vueType
+                    )
+                  "
                   :for="field.propertyName"
                   :title="field.title"
-                  :class="{ mandatory: field.mandatory }"
-                >
+                  :class="{
+                    mandatory: field.mandatory,
+                  }">
                   {{ field.title }}
                 </label>
               </th>
               <td
                 :key="field.propertyName"
-                :class="expressCell(field.expression)"
-                :colspan="getColspan(row)"
-              >
+                :class="
+                  expressCell(field.expression)
+                "
+                :colspan="getColspan(row)">
                 <component
                   :is="checkVueType(field)"
                   v-if="field.vueType === 'FormButton'"
                   :field="field"
                   :key="field.propertyName"
-                  @onclick="handleButtonClicked"
-                />
+                  @onclick="
+                    handleButtonClicked
+                  " />
                 <component
                   :is="
-                    checkVueType(field) === 'undefined'
+                    checkVueType(field) ===
+                    'undefined'
                       ? 'FormInput'
                       : checkVueType(field)
                   "
@@ -70,12 +84,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import {
+  defineComponent,
+  PropType,
+  ref,
+} from "vue";
 import FieldModel from "../../models/FieldModel";
 import FormRowModel from "../../models/FormRowModel";
 import MessageModel from "../../models/MessageModel";
 import SectionModel from "../../models/SectionModel";
-import { ExpressionType, fieldMixins, FieldType, vueTypes } from "./index";
+import {
+  ExpressionType,
+  fieldMixins,
+  FieldType,
+  vueTypes,
+} from "./index";
 import FormButton from "./FormButton.vue";
 import FormInput from "./FormInput.vue";
 import FormSection from "./FormSection.vue";
@@ -102,7 +125,9 @@ export default defineComponent({
       required: true,
     },
     notifications: {
-      type: Object as PropType<Array<MessageModel>>,
+      type: Object as PropType<
+        Array<MessageModel>
+      >,
       required: true,
     },
   },
@@ -134,7 +159,9 @@ export default defineComponent({
     "button-clicked",
   ],
   setup(props, context) {
-    function checkVueType(field: FieldModel): string {
+    function checkVueType(
+      field: FieldModel
+    ): string {
       switch (field.vueType) {
         case vueTypes.formButton:
           return FieldType.formButton;
@@ -166,13 +193,22 @@ export default defineComponent({
     }
     function clean(label: string): string {
       return label
-        .replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
-          return index === 0 ? word.toLowerCase() : word.toUpperCase();
-        })
+        .replace(
+          /(?:^\w|[A-Z]|\b\w)/g,
+          function (word, index) {
+            return index === 0
+              ? word.toLowerCase()
+              : word.toUpperCase();
+          }
+        )
         .replace(/\s+/g, "");
     }
-    function expressCell(expression: ExpressionType) {
-      return expression !== ExpressionType.Full ? "vhalf" : "full";
+    function expressCell(
+      expression: ExpressionType
+    ) {
+      return expression !== ExpressionType.Full
+        ? "vhalf"
+        : "full";
     }
     function getColspan(row: FormRowModel) {
       const threeCols = 3;
@@ -183,7 +219,9 @@ export default defineComponent({
 
       // With 2 fields on single row the TD has a colspan of 1
       // With 1 field on single row; the TD has a colspan of 3 (4 minus the td title)
-      return row.fields.length === 1 ? threeCols : oneCol;
+      return row.fields.length === 1
+        ? threeCols
+        : oneCol;
     }
     function showField(field: FieldModel) {
       if (field.hidden) {
@@ -218,8 +256,12 @@ export default defineComponent({
     function hideLabelForType(vueType: string) {
       return vueType === vueTypes.formButton.toString() ? true : false;
     }
-    function isHalfField(expression: ExpressionType) {
-      return expression !== ExpressionType.Full ? " half" : " long";
+    function isHalfField(
+      expression: ExpressionType
+    ) {
+      return expression !== ExpressionType.Full
+        ? " half"
+        : " long";
     }
 
     // Create the collection of rows
@@ -233,70 +275,101 @@ export default defineComponent({
       fields: [],
     });
 
-    props.fields.forEach((field) => {
-      // increment the count
+    if (props.fields && props.fields.length) {
+      props.fields.forEach((field) => {
 
-      if (!field.formSection) {
-        if (field.vueType === vueTypes.formSection) {
-          currentFormSection = `${clean(field.title)}_${props.fields.indexOf(
-            field
-          )}`;
-        }
-        field.formSection = currentFormSection;
-      }
-
-      // Check if there is a notification for this field
-      if (props.notifications && props.notifications.length) {
-        let notification = props.notifications.find((message: MessageModel) => {
-          return message.propertyName === field.propertyName;
-        });
-        field.error = notification;
-      }
-
-      // is this a full width field?
-      if (field.expression === ExpressionType.Full) {
-        // add the current row object to the list
-        if (currentRow.value.fields.length) {
-          rowArray.value.push(currentRow.value);
-        }
-        // create a new row
-        currentRow.value = { fields: [] };
-        // add push it to the list
-        currentRow.value.fields.push(field);
-      } else {
-        if (
-          currentRow.value.fields.length >= cellLimit &&
-          currentRow.value.fields
-            .map((mappedField) => mappedField.vueType)
-            .every((val) => val === vueTypes.formButton)
-        ) {
-          if (field.vueType !== vueTypes.formButton) {
-            // currentRow.isButtonRow = true;
-            rowArray.value.push(currentRow.value);
-            // create a new row
-            currentRow.value = { fields: [] };
+        if (!field.formSection) {
+          if (
+            field.vueType === vueTypes.formSection
+          ) {
+            currentFormSection = `${clean(
+              field.title
+            )}_${props.fields.indexOf(field)}`;
           }
+          field.formSection = currentFormSection;
         }
-        currentRow.value.fields.push(field);
-      }
 
-      // Check if we need to add the current row the rowcollection
-      // When the current field is fullwidth
-      // or the fields collection for the currentrow exceed the limit?
-      let addRows = false;
-      if (
-        field.expression === ExpressionType.Full ||
-        currentRow.value.fields.length >= cellLimit
-      ) {
-        addRows = true;
-      }
+        // Check if there is a notification for this field
+        if (
+          props.notifications &&
+          props.notifications.length
+        ) {
+          let notification =
+            props.notifications.find(
+              (message: MessageModel) => {
+                return (
+                  message.propertyName ===
+                  field.propertyName
+                );
+              }
+            );
+          field.error = notification;
+        }
 
-      if (addRows && currentRow.value.fields.length) {
-        // currentRow.isButtonRow = currentRow.fields.map((r) => r.vueType).every((val) => val === vueTypes.formButton);
-        rowArray.value.push(currentRow.value);
-        currentRow.value = { fields: [] };
-      }
-    });
+        // is this a full width field?
+        if (
+          field.expression === ExpressionType.Full
+        ) {
+          // add the current row object to the list
+          if (currentRow.value.fields.length) {
+            rowArray.value.push(currentRow.value);
+          }
+          // create a new row
+          currentRow.value = {fields: []};
+          // add push it to the list
+          currentRow.value.fields.push(field);
+        } else {
+          if (
+            currentRow.value.fields.length >=
+              cellLimit &&
+            currentRow.value.fields
+              .map(
+                (mappedField) =>
+                  mappedField.vueType
+              )
+              .every(
+                (val) =>
+                  val === vueTypes.formButton
+              )
+          ) {
+            if (
+              field.vueType !==
+              vueTypes.formButton
+            ) {
+              // currentRow.isButtonRow = true;
+              rowArray.value.push(
+                currentRow.value
+              );
+              // create a new row
+              currentRow.value = {fields: []};
+            }
+          }
+          currentRow.value.fields.push(field);
+        }
+
+        // Check if we need to add the current row the rowcollection
+        // When the current field is fullwidth
+        // or the fields collection for the currentrow exceed the limit?
+        let addRows = false;
+        if (
+          field.expression ===
+            ExpressionType.Full ||
+          currentRow.value.fields.length >=
+            cellLimit
+        ) {
+          addRows = true;
+        }
+
+        if (
+          addRows &&
+          currentRow.value.fields.length
+        ) {
+          // currentRow.isButtonRow = currentRow.fields.map((r) => r.vueType).every((val) => val === vueTypes.formButton);
+          rowArray.value.push(currentRow.value);
+          currentRow.value = {fields: []};
+        }
+      });
+    }
 
     return {
       rowArray,
