@@ -1,6 +1,11 @@
 <template>
   <div class="content-container row">
     <div class="col main-container">
+      <template v-if="fetchedButtons && fetchedButtons.length">
+        <ButtonListComponent
+          :fields="fetchedButtons"
+          classname="test" />
+      </template>
       <template
         v-if="
           fetchedFolders && fetchedFolders.length
@@ -44,6 +49,7 @@ import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
 import ResourcesComponent from "./resources/ResourcesComponent.vue";
+import ButtonListComponent from "./ButtonListComponent.vue";
 import OptionModel from "../models/OptionModel";
 import ItemModel from "../models/OptionItemModel";
 
@@ -54,6 +60,7 @@ export default defineComponent({
     GridComponent,
     FolderComponent,
     ResourcesComponent,    
+    ButtonListComponent,
   },
   setup() {
     const fetchedFields = computed(
@@ -72,8 +79,12 @@ export default defineComponent({
       () => store.getters.resources
     );
 
+    const fetchedButtons = computed(
+      () => store.getters.buttons
+    );
+
     // TODO Delete
-     const customItemsTest = [
+    const customItemsTest = [
       {
         value: "Hello",
         text: "hello",
@@ -140,6 +151,7 @@ export default defineComponent({
       fetchedFields,
       test,
       grids,
+      fetchedButtons,
       fetchedFolders,
       fetchedResources,
     };
