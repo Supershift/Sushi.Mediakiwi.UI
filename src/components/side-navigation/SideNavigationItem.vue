@@ -15,10 +15,8 @@
     </transition>
     <ul v-if="item.items && item.items.length">
       <SideNavigationItem
-        v-for="(
-          subItem, subItemIndex
-        ) in item.items"
-        :key="subItemIndex"
+        v-for="subItem in item.items"
+        :key="subItem.id"
         :item="subItem" />
     </ul>
   </li>

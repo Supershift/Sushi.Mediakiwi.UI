@@ -1,7 +1,7 @@
 import FolderItemModel from "./FolderItemModel";
 
 export default interface FolderModel {
-  folderId: number;
+  id: number;
   folderName: string;
   description: string;
   href: string;

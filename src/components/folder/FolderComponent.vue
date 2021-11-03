@@ -2,8 +2,8 @@
   <section class="component folder-collection">
     <article class="column-3">
       <Folder
-        v-for="(folder, index) in folders"
-        :key="index"
+        v-for="folder in folders"
+        :key="folder.id"
         :folder="folder" />
     </article>
   </section>

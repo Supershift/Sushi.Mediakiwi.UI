@@ -77,6 +77,7 @@
   "sideNavigation": {
     "items": [
       {
+        "id": 1,
         "text": "Some list",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
         "items": null,
@@ -85,6 +86,7 @@
         "iconClass": "fal fingerprint"
       },
       {
+        "id": 2,
         "text": "Page Property",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
         "isBack": false,
@@ -92,6 +94,7 @@
         "iconClass": "fal receipt",
         "items": [
           {
+            "id": 3,
             "text": "Content",
             "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
             "items": null,
@@ -102,11 +105,13 @@
         ]
       },
       {
+        "id": 4,
         "text": "Admin",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
         "iconClass": "fal donate",
         "items": [
           {
+            "id": 5,
             "text": "Settings",
             "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10",
             "iconClass": "fal th"
@@ -117,7 +122,7 @@
   },
   "folders": [
     {
-      "folderId": 1,
+      "id": 1,
       "folderName": "Folder A",
       "description": "This folder contains items",
       "href": "?folder=1",
@@ -139,7 +144,7 @@
       ]
     },
     {
-      "folderId": 2,
+      "id": 2,
       "folderName": "Folder B",
       "description": "This folder contains items",
       "href": "?folder=2",
@@ -154,7 +159,7 @@
       ]
     },
     {
-      "folderId": 3,
+      "id": 3,
       "folderName": "Folder C",
       "description": "This folder contains items",
       "href": "?folder=3",

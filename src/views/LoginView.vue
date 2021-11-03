@@ -68,7 +68,7 @@ export default defineComponent({
     text-align: left;
     width: 380px;
     max-width: calc(100vw - 30px);
-    font-family: "Rajdhani", "Arial", Sans-serif;
+    font-family: $font-primary;
   }
 }
 

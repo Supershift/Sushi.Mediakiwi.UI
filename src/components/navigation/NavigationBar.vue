@@ -69,7 +69,7 @@ export default defineComponent({
   width: 100%;
   height: 90px;
   .navigation-content {
-    font-family: "Rajdhani", "Arial", Sans-serif;
+    font-family: $font-primary;
     display: flex;
     flex-direction: row;
     position: relative;

@@ -5,8 +5,8 @@
     <div class="sub" v-if="item.items">
       <ul>
         <li
-          v-for="(subItem, index) in item.items"
-          :key="index">
+          v-for="subItem in item.items"
+          :key="subItem.id">
           <a :href="subItem.href">{{
             subItem.text
           }}</a>
