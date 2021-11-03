@@ -4,9 +4,6 @@
     class="custom-app-container"
     v-html="innerHTML" />
 </template>
-
-<!-- Enable logging -->
-<!-- eslint-disable no-console -->
 <script lang="ts">
 import {
   computed,
@@ -23,8 +20,6 @@ export default defineComponent({
   setup() {
     // Data
     const innerHTML = ref<string>();
-    const log = ref<boolean>();
-    log.value = true;
 
     // Computed
     const resources = computed<ResourceModel[]>(
@@ -59,11 +54,6 @@ export default defineComponent({
         // Only if the src is set
         if (script.src) {
           script.onload = () => {
-            if (log.value) {
-              console.log(
-                `finished loading ${resource.path}`
-              );
-            }
             resolve(resource);
           };
         }
@@ -80,11 +70,6 @@ export default defineComponent({
 
         // We can resolve the promise if we don't need to wait it
         if (script.innerHTML) {
-          if (log.value) {
-            console.log(
-              "finished loading inline resource"
-            );
-          }
           resolve(resource);
         }
       });
@@ -130,27 +115,12 @@ export default defineComponent({
     /** Adds html to the page */
     function addHtml(resource: ResourceModel) {
       return new Promise((resolve) => {
-        if (log.value) {
-          console.log("add html");
-          console.log(resource.sourceCode);
-        }
-
         // set the innerHTML value to the sourceCode of the resource
         innerHTML.value = resource.sourceCode;
 
         // Wait the the painting is done! before we continue
         nextTick(() => {
-          if (log.value) {
-            const innerHTML =
-              document.querySelector(
-                ".custom-app-container"
-              )?.innerHTML;
-
-            console.log("html added");
-
-            console.log(innerHTML);
-            resolve(resource);
-          }
+          resolve(resource);
         });
       });
     }
@@ -159,12 +129,6 @@ export default defineComponent({
     function addResource(
       resource: ResourceModel
     ): Promise<unknown> {
-      // set this!!
-      if (log.value) {
-        console.log("add resource");
-
-        console.log(resource);
-      }
       switch (resource.type) {
         case ResourceType.script:
           return addScript(resource);
@@ -189,17 +153,9 @@ export default defineComponent({
         }
       )) {
         // add the resources sync
-        console.log("add sync item");
-        const result = await addResource(
-          resource
-        );
-        console.log("sync item added", result);
+        await addResource(resource);
       }
       return new Promise((resolve) => {
-        if (log.value) {
-          console.log("Load Other Resources");
-        }
-
         // After that add the scripts can be lazy loaded
         let promises: Promise<unknown>[] = [];
 
@@ -209,18 +165,7 @@ export default defineComponent({
             promises.push(addResource(resource));
           });
 
-        if (log.value) {
-          console.log("Promises:");
-
-          console.log(promises);
-        }
-
         Promise.all(promises).then(() => {
-          if (log.value) {
-            console.log(
-              "All Promises are completed"
-            );
-          }
           resolve(true);
         });
       });
@@ -228,10 +173,6 @@ export default defineComponent({
 
     /**Removes all resources and custom html */
     function clearApp() {
-      if (log.value) {
-        console.log("clear resources");
-      }
-
       // first remove existing 'custom' resources
       document
         .querySelectorAll("[mediakiwi-resource]")
@@ -254,18 +195,11 @@ export default defineComponent({
     function initApp() {
       clearApp();
 
-      if (log.value) {
-        console.log("render app");
-      }
-
       if (
         resources.value &&
         resources.value.length
       ) {
         addResources(resources.value).then(() => {
-          if (log.value) {
-            console.log("Added all resources");
-          }
           window.document.dispatchEvent(
             new Event("DOMContentLoaded", {
               bubbles: true,
@@ -278,7 +212,6 @@ export default defineComponent({
 
     return {
       innerHTML,
-      log,
       addScript,
       addStyle,
       addHtml,
