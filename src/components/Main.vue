@@ -1,6 +1,11 @@
 <template>
   <div class="content-container row">
     <div class="col main-container">
+      <template v-if="fetchedButtons && fetchedButtons.length">
+        <ButtonListComponent
+          :fields="fetchedButtons"
+          classname="test" />
+      </template>
       <template
         v-if="
           fetchedFolders && fetchedFolders.length
@@ -15,7 +20,6 @@
         :fields="fetchedFields"
         :notifications="customNotifications" />
       </templpate>
-
       <template v-if="grids && grids.length">
         <GridComponent
           v-for="(grid, index) in grids"
@@ -33,7 +37,7 @@ import {
   ref,
 } from "vue";
 
-import { store } from "../store/index";
+import {store} from "../store/index";
 
 import FieldModel from "../models/FieldModel";
 import MessageModel from "../models/MessageModel";
@@ -41,6 +45,7 @@ import MessageModel from "../models/MessageModel";
 import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
+import ButtonListComponent from "./ButtonListComponent.vue";
 import OptionModel from "../models/OptionModel";
 import ItemModel from "../models/OptionItemModel";
 
@@ -49,7 +54,8 @@ export default defineComponent({
   components: {
     FormComponent,
     GridComponent,
-    FolderComponent
+    FolderComponent,
+    ButtonListComponent,
   },
   setup() {
     const fetchedFields = computed(
@@ -63,6 +69,12 @@ export default defineComponent({
     const fetchedFolders = computed(
       () => store.getters.folders
     );
+
+    const fetchedButtons = computed(
+      () => store.getters.buttons
+    );
+
+    // TODO Delete
     const customItemsTest = [
       {
         value: "Hello",
@@ -130,6 +142,7 @@ export default defineComponent({
       fetchedFields,
       test,
       grids,
+      fetchedButtons,
       fetchedFolders,
     };
   },

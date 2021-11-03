@@ -33,7 +33,7 @@
   </div>
 </template>
 <script lang="ts">
-import { fieldMixins } from "./index";
+import { fieldMixins } from "../form/index";
 import CheckboxModel from "../../models/CheckboxModel";
 import OptionItemModel from "../../models/OptionItemModel";
 import { computed, defineComponent, PropType, reactive } from "vue";
