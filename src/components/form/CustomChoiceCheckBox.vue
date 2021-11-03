@@ -1,67 +1,67 @@
 <template>
   <div :class="checkboxContainerClasses">
-    <label v-if="undefinedCheck(checkbox.prefix)">
-      {{ undefinedCheck(checkbox.prefix) }}
+    <label v-if="undefinedCheck(field.prefix)">
+      {{ undefinedCheck(field.prefix) }}
     </label>
     <span
-      v-for="option in checkbox.options"
+      v-for="option in field.options"
       :key="fieldID(option)"
       class="checkbox-choice-container"
     >
       <input
         :id="fieldID(option)"
         type="checkbox"
-        :name="checkbox.fieldGroupName"
+        :name="field.fieldGroupName"
         :class="customCheckboxClasses"
         :value="valueRef.value"
-        :disabled="checkbox.disabled || checkbox.readOnly"
+        :disabled="field.disabled || field.readOnly"
         @change="handleChange"
       >
       <span class="checkmark" />
       <fa
-        v-if="checkbox.fieldIcon"
+        v-if="field.fieldIcon"
         :icon="fieldIconChoice"
         class="checkbox-icon"
       />
-      <label :for="checkbox.fieldGroupName">
+      <label :for="field.fieldGroupName">
         {{ option.name }}
       </label>
     </span>
-    <label v-if="undefinedCheck(checkbox.suffix)">
-      {{ undefinedCheck(checkbox.suffix) }}
+    <label v-if="undefinedCheck(field.suffix)">
+      {{ undefinedCheck(field.suffix) }}
     </label>
   </div>
 </template>
 <script lang="ts">
 import { fieldMixins } from "./index";
 import CheckboxModel from "../../models/CheckboxModel";
-import OptionModel from "../../models/OptionModel";
+import OptionItemModel from "../../models/OptionItemModel";
 import { computed, defineComponent, PropType, reactive } from "vue";
 
 export default defineComponent({
   name: "CheckboxChoice",
-  mixins: [fieldMixins],
   props: {
-    checkbox: {
+    field: {
       type: Object as PropType<CheckboxModel>,
       required: true,
     },
   },
+  mixins: [fieldMixins],
   emits:["checkboxChanged"],
   setup(props, context) {
     const valueRef = reactive({value: ""});
-    const customCheckboxClasses = computed(() => ["checkbox-primary ", props.checkbox.customClass]);
+    const customCheckboxClasses = computed(() => ["checkbox-primary ", props.field.customClass]);
     function handleChange(e: Event) {
-      if (props.checkbox.fieldValue !== null) {
-        context.emit("checkboxChanged", e, props.checkbox.fieldValue);
+      if (props.field.fieldValue !== null) {
+        context.emit("checkboxChanged", e, props.field.fieldValue);
       }
     }
-    function fieldID(option: OptionModel) {
-      return `${props.checkbox.fieldValue}_${props.checkbox.fieldName}_${option.value}`;
+    function fieldID(option: OptionItemModel) {
+      return `${props.field.fieldValue}_${props.field.fieldName}_${option.value}`;
     }
     const checkboxContainerClasses = computed(() => {
     let iconColor: string;
-      switch (props.checkbox.fieldIcon) {
+      switch (props.field.fieldIcon) {
           case "email":
           iconColor = "normal";
           break;
@@ -85,7 +85,7 @@ export default defineComponent({
     });
     const fieldIconChoice = computed(() => {
       let icon: string[];
-      switch (props.checkbox.fieldIcon) {
+      switch (props.field.fieldIcon) {
           case "email":
           icon = ["fal", "at"];
           break;

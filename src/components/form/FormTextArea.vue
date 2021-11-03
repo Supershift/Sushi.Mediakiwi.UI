@@ -1,15 +1,12 @@
 <template>
   <div :class="customTextAreaContainerClasses">
     <textarea
-      :id="id"
-      ref="root"
+      :id="fieldID"
       v-model="valueRef"
       cols="32"
       rows="3"
       type="text"
       :class="customTextAreaClasses"
-      :name="textarea.propertyName"
-      :disabled="textarea.disabled || textarea.readOnly"
       @change="handleChange"
     />
   </div>
@@ -20,9 +17,9 @@ import { fieldMixins } from "./index";
 import FieldModel from "../../models/FieldModel";
 
 export default defineComponent({
-  name: "TextArea",
+  name: "FormTextArea",
   props: {
-    textarea: {
+    field: {
       type: Object as PropType<FieldModel>,
       required: true,
     },
@@ -34,13 +31,13 @@ export default defineComponent({
   mixins: [fieldMixins],
   setup(props, context) {
     let offset = ref<number>(0);
-    let valueRef = ref("");
+    let valueRef = ref(props.field?.value);
     // const root = ref(null);
-    const id = computed(() => `_${props.textarea?.className}-${props.textarea.propertyName}`);
-    const customTextAreaClasses = computed(() => ["textarea-primary ", props.textarea?.className]);
-    const customTextAreaContainerClasses = computed(() => ["textarea-container ", props.classname]);
+    const fieldID = computed(() => `_${props.field?.className}-${props.field?.propertyName}`);
+    const customTextAreaClasses = computed(() => ["textarea-primary ", props.field?.className]);
+    const customTextAreaContainerClasses = computed(() => ["textarea-container ", props?.classname]);
     function handleChange(e: Event) {
-      context.emit("onChange", e, props.textarea);
+      context.emit("onChange", e, valueRef);
     }
     function autoResize(element: HTMLElement) {
       element.style.height = "auto";
@@ -50,7 +47,7 @@ export default defineComponent({
       // root.addEventListener("input", (e) => autoResize(e.target));
     });
     return {
-      id,
+      fieldID,
       valueRef,
       // root,
       offset,

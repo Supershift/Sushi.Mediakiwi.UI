@@ -4,6 +4,7 @@
       :id="fieldID"
       :class="plusClasses"
       @click="handleClick" 
+      :readonly="field?.disabled || field.readOnly"
     >
       <fa icon="plus" class="plus-svg" />
     </a>
@@ -15,8 +16,7 @@ import FieldModel from "../../models/FieldModel";
 import { fieldMixins, ExpressionType } from "./../form";
 
 export default defineComponent({
-  name: "Plus",  
-  mixins: [fieldMixins],
+  name: "FormPlus",  
   props: {
     field: {
       type: Object as PropType<FieldModel>,
@@ -27,6 +27,7 @@ export default defineComponent({
       required: true,
     },
   },
+  mixins: [fieldMixins],
   setup(props, context) {
     const plusClasses = computed(() => { return ["plus-primary " + props.field.className]; });
     const plusContainerClasses = computed(() => { return ["plus-container " + props.classname]; });
@@ -53,6 +54,14 @@ export default defineComponent({
   height: 50px;
   margin: 0 auto;
   margin-bottom: 15px;
+  text-align: center;
+
+  .plus-primary {
+    &:read-only .plus-svg {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
   .plus-svg {
     background: $color-success;
     color: #fff;
@@ -60,14 +69,16 @@ export default defineComponent({
     border-radius: 50%;
     height: 50px;
     width: 50px;
+    box-shadow: 0 0 5px #000;
+   
   }
-   &.small {
-      .plus-svg{
-        width: 30px;
-        height: 30px;
-        font-size: $font-size-s;
-      }
+  &.small {
+    .plus-svg{
+      width: 30px;
+      height: 30px;
+      font-size: $font-size-s;
     }
+  }
 
 }
 </style>
