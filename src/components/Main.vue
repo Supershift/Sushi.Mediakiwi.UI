@@ -9,6 +9,9 @@
         <ButtonListComponent
           :buttons="fetchedTopButtons" />
       </template>
+
+      <!-- TODO ADD NOTIFICATIONS HERE -->
+
       <template
         v-if="
           fetchedFolders && fetchedFolders.length
