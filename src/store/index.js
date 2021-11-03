@@ -7,6 +7,7 @@ import DummyAvatar from "@/assets/dummy-images/avatar-dummy.jpg";
 import DummyBrand from "@/assets/images/ananda.png";
 import router from "@/router";
 import axios from "axios";
+import { vueTypes } from "@/components/form";
 
 export default createStore({
   modules: {
@@ -50,7 +51,7 @@ export default createStore({
         propertyName: "TestProperty",
         propertyType: "string",
         title: "Test Property",
-        vueType: 14,
+        vueType: vueTypes.formRichText,
         expression: 0,
         value: "User input",
         options: null,
@@ -58,7 +59,7 @@ export default createStore({
         event: 0,
         inputPost: "Test",
         section: 0,
-        hidden: null,
+        hidden: false,
         groupName: null,
         suffix: null,
         prefix: null,
@@ -66,7 +67,7 @@ export default createStore({
         canToggleSection: false,
         canDeleteSection: false,
         toggleDefaultClosed: false,
-        readOnly: false,
+        readOnly: true,
         helpText: "This field can do stuff"
       },
       {

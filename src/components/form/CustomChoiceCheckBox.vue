@@ -35,7 +35,7 @@
 <script lang="ts">
 import { fieldMixins } from "./index";
 import CheckboxModel from "../../models/CheckboxModel";
-import ItemModel from "../../models/OptionItemModel";
+import OptionItemModel from "../../models/OptionItemModel";
 import { computed, defineComponent, PropType, reactive } from "vue";
 
 export default defineComponent({
@@ -56,7 +56,7 @@ export default defineComponent({
         context.emit("checkboxChanged", e, props.field.fieldValue);
       }
     }
-    function fieldID(option: ItemModel) {
+    function fieldID(option: OptionItemModel) {
       return `${props.field.fieldValue}_${props.field.fieldName}_${option.value}`;
     }
     const checkboxContainerClasses = computed(() => {

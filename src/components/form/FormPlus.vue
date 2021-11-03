@@ -4,6 +4,7 @@
       :id="fieldID"
       :class="plusClasses"
       @click="handleClick" 
+      :readonly="field?.disabled || field.readOnly"
     >
       <fa icon="plus" class="plus-svg" />
     </a>
@@ -55,6 +56,12 @@ export default defineComponent({
   margin-bottom: 15px;
   text-align: center;
 
+  .plus-primary {
+    &:read-only .plus-svg {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
   .plus-svg {
     background: $color-success;
     color: #fff;
@@ -63,14 +70,15 @@ export default defineComponent({
     height: 50px;
     width: 50px;
     box-shadow: 0 0 5px #000;
+   
   }
-   &.small {
-      .plus-svg{
-        width: 30px;
-        height: 30px;
-        font-size: $font-size-s;
-      }
+  &.small {
+    .plus-svg{
+      width: 30px;
+      height: 30px;
+      font-size: $font-size-s;
     }
+  }
 
 }
 </style>

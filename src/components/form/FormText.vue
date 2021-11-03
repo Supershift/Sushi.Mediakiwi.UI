@@ -1,7 +1,7 @@
 
 <template>
   <div :class="textContainerClasses">
-    <label v-if="prefix(field)" v-html="prefix(field)"></label>
+    <label v-if="undefinedCheck(field.prefix)">{{ undefinedCheck(field.prefix) }}</label>
     <input
       type="text"
       v-model="valueRef"
@@ -31,6 +31,7 @@ export default defineComponent({
   },
   },
   mixins: [fieldMixins],
+  emits: ["on-change"],
   setup(props, context) {
     let valueRef = ref(props.field.value);
     const fieldID = computed(
@@ -51,7 +52,7 @@ export default defineComponent({
       return `text-primary ${props.field.className}`;
     });
     function handleChange(e: Event) {
-      context.emit('onChange', e, valueRef);
+      context.emit("on-change", e, valueRef);
     }
     return {
       fieldID,
@@ -62,3 +63,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped lang="scss">
+.text-primary {
+  width: 100%;
+}
+</style>

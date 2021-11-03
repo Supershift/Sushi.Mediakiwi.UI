@@ -6,7 +6,7 @@
     <dropdown
       :value="localField"
       tabindex="1"
-      :id="field.propertyName"
+      :id="fieldID"
       :name="field.propertyName"
       :options="select2data"
       placeholder=""
@@ -34,7 +34,6 @@ import {
 import FieldModel from "../../models/FieldModel";
 import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
-import OptionModel from "../../models/OptionModel";
 
 export default defineComponent({
   name: "FormChoiceDropdown",
@@ -52,13 +51,14 @@ export default defineComponent({
   components: {
     dropdown: Dropdown,
   },
-  emits: ["onChange"],
+  emits: ["on-change"],
   setup(props, context) {
     let localField = ref<FieldModel>(props.field);
     const customDropdownClasses = computed(() => [
       "dropdown-primary ",
       props.field.className,
     ]);
+    const fieldID = computed(() => [props.field.propertyName+"_dropdown"]);
     const customDropdownContainerClasses = computed(() => [
       "dropdown-container ",
       props.classname,
@@ -78,13 +78,14 @@ export default defineComponent({
     });
     function handleChange(e: Event) {
       if (localField.value?.event !== "none") {
-        context.emit("onChange", e, localField);
+        context.emit("on-change", e, localField);
       }
     }
     onBeforeMount(() => {
       localField.value = props.field;
     });
     return {
+      fieldID,
       select2data,
       handleChange,
       customDropdownClasses,

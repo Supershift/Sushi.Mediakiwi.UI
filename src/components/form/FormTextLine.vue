@@ -25,7 +25,7 @@ import {
   ref,
 } from "vue";
 import FieldModel from "../../models/FieldModel";
-import {fieldMixins, vueTypes} from "./index";
+import { fieldMixins, vueTypes } from "./index";
 
 export default defineComponent({
   name: "FormTextLine",

@@ -2,8 +2,9 @@
   <button
     :class="customButtonClasses"
     @click.prevent="handleClicked"
+    :disabled="field?.disabled || field.readOnly"
   >
-    {{ field?.value }}
+    {{ field.value }}
   </button>
 </template>
 
@@ -21,8 +22,6 @@ export default defineComponent({
   },
   emits: ["buttonClicked"],
   setup(props, context) {
-    /* eslint no-console: 0*/
-    console.log(props.field);
     const customButtonClasses = computed(() => ["btn ", props.field?.className]);
     function handleClicked() {
       context.emit("buttonClicked");
@@ -35,4 +34,14 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.btn {
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    &:hover{
+      background: $color-main;
+    }
+  }
+}
+</style>

@@ -8,7 +8,7 @@
               :is="checkVueType(field)"
               v-for="field in row.fields"
               :key="field.propertyName"
-              v-bind:field="field"
+              :field="field"
               @onclick="handleButtonClicked"
             />
           </td>
@@ -18,7 +18,7 @@
               v-if="checkVueType(field) === 'FormSection'"
               :key="field.propertyName"
               v-model="field.value"
-              v-bind:field="field"
+              :field="field"
             />
             <template v-else>
               <th
@@ -44,7 +44,7 @@
                 <component
                   :is="checkVueType(field)"
                   v-if="field.vueType === 'FormButton'"
-                  v-bind:field="field"
+                  :field="field"
                   :key="field.propertyName"
                   @onclick="handleButtonClicked"
                 />
@@ -56,7 +56,7 @@
                   "
                   v-else
                   :key="field.componentKey"
-                  v-bind:field="field"
+                  :field="field"
                   v-model="field.value"
                   @onchange="handleFieldsChanged"
                 />
@@ -87,7 +87,7 @@ import FormDate from "./FormDate.vue";
 import FormPlus from "./FormPlus.vue";
 import FormNameValueCollection from "./FormNameValueCollection.vue";
 import FormText from "./FormText.vue";
-import FormTextLine from "./FormTextLine.vue";
+import FormTextline from "./FormTextLine.vue";
 import FormRichText from "./FormRichText.vue";
 import FormChoiceRadio from "./FormChoiceRadio.vue";
 import FormChoiceCheckbox from "./FormChoiceCheckBox.vue";
@@ -122,16 +122,16 @@ export default defineComponent({
     FormTime,
     FormDateTime,
     FormText,
-    FormTextLine,
+    FormTextline,
     FormRichText,
     FormChoiceRadio,
   },
   emits: [
     "toggle",
-    "addFields",
-    "removeFields",
-    "fieldChanged",
-    "buttonClicked",
+    "add-fields",
+    "remove-fields",
+    "field-changed",
+    "button-clicked",
   ],
   setup(props, context) {
     function checkVueType(field: FieldModel): string {
@@ -186,17 +186,17 @@ export default defineComponent({
       return row.fields.length === 1 ? threeCols : oneCol;
     }
     function showField(field: FieldModel) {
-      // if (field.hidden) {
-      //   return false;
-      // }
+      if (field.hidden) {
+        return false;
+      }
 
-      // if (field.vueType === "wimSection") {
-      //   return true;
-      // }
+      if (field.vueType !== vueTypes.formSection) {
+        return true;
+      }
 
-      // if (!field.hidden) {
-      //   return false;
-      // }
+      if (!field.hidden) {
+        return false;
+      }
 
       return true;
     }
@@ -204,19 +204,19 @@ export default defineComponent({
       context.emit("toggle", section);
     }
     function handleAddFields(fields: FieldModel[]) {
-      context.emit("addFields", fields);
+      context.emit("add-fields", fields);
     }
     function handleRemoveFields(fields: FieldModel[]) {
-      context.emit("removeFields", fields);
+      context.emit("remove-fields", fields);
     }
     function handleFieldsChanged(e: Event, fields: FieldModel) {
-      context.emit("fieldChanged", e, fields);
+      context.emit("field-changed", e, fields);
     }
     function handleButtonClicked(e: Event, field: FieldModel) {
-      context.emit("buttonClicked", e, field);
+      context.emit("button-clicked", e, field);
     }
     function hideLabelForType(vueType: string) {
-      return vueType === "wimButton" ? true : false;
+      return vueType === vueTypes.formButton.toString() ? true : false;
     }
     function isHalfField(expression: ExpressionType) {
       return expression !== ExpressionType.Full ? " half" : " long";
@@ -226,7 +226,6 @@ export default defineComponent({
     // with fields sorted according to their cofiguration
     let rowArray = ref<Array<FormRowModel>>([]);
     let currentFormSection = "baseSection";
-    let count = 0;
     const cellLimit = 2;
 
     // create a new row
@@ -236,7 +235,6 @@ export default defineComponent({
 
     props.fields.forEach((field) => {
       // increment the count
-      count++;
 
       if (!field.formSection) {
         if (field.vueType === vueTypes.formSection) {

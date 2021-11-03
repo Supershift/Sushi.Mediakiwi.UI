@@ -1,7 +1,7 @@
-import ItemModel from "./OptionItemModel";
+import OptionItemModel from "./OptionItemModel";
 
 interface OptionModel {
-    items: ItemModel[];
+    items: OptionItemModel[];
     count: number;
 }
 

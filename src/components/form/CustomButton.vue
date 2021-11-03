@@ -19,11 +19,11 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ["buttonClicked"],
+  emits: ["button-clicked"],
   setup(props, context) {
     const customButtonClasses = computed(() => ["btn ", props.button.customClass]);
     function handleClicked() {
-      context.emit("buttonClicked");
+      context.emit("button-clicked");
     }
     return {
       customButtonClasses,
@@ -32,5 +32,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped lang="scss"></style>
