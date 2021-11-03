@@ -15,6 +15,7 @@ import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel"
 import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
 import GridModel from "@/models/Mediakiwi/GridModel";
 import FolderModel from "@/models/Mediakiwi/FolderModel";
+import ResourceModel from "@/models/Mediakiwi/ResourceModel";
 import { vueTypes } from "@/components/form";
 import ButtonModel from "@/models/ButtonModel";
 const loggedinKey = "ananda_vaultn_loggedin";
@@ -35,7 +36,7 @@ export interface State {
   topNavigationItems: TopNavigationItemModel[] | null,
   content: BaseContentModel,
   channel: number,
-  resources: unknown[],
+  resources: ResourceModel[],
   grids: GridModel[] | null,
   folders: FolderModel[] | null,
   buttons: ButtonModel[] | null,
@@ -225,6 +226,9 @@ export const store = createStore<State>({
     },
     setFolders(state, data: FolderModel[]) {
       state.folders = data;
+    },
+    setResources(state, data: ResourceModel[]) {
+      state.resources = data;
     }
   },
   actions: {
@@ -248,6 +252,9 @@ export const store = createStore<State>({
       }
       else if (request.url && request.url.indexOf("?item=") > -1) {
         apiPath = "/fields.json";
+      }
+      else if (request.url && request.url.indexOf("custom") > -1) {
+        apiPath = "/custom-resources.json";
       }
 
       // Start a promise with an axios call
@@ -287,6 +294,9 @@ export const store = createStore<State>({
     },
     setFolders(context, data) {
       context.commit("setFolders", data);
+    },
+    setResources(context, data) {
+      context.commit("setResources", data);
     }
   },
   getters: {
@@ -313,6 +323,7 @@ export const store = createStore<State>({
     contentResetPassword: (state) => state.content.reset,
     grids: (state) => state.grids,
     folders: (state) => state.folders,
+    resources: (state) => state.resources,
     buttons: (state) => state.buttons
   },
 });

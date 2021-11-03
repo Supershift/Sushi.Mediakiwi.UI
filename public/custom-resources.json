@@ -1,0 +1,161 @@
+{
+  "listTitle": "List details A",
+  "isEditMode": false,
+  "fields": [],
+  "buttons": [],
+  "notifications": [],
+  "topNavigation": {
+    "logoUrl": "https://cdn-tst.vaultn.nl/images/logo.svg",
+    "homeUrl": "/webcontent",
+    "items": [
+      {
+        "id": 1,
+        "text": "Website",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
+        "items": null
+      },
+      {
+        "id": 2,
+        "text": "Data Lists",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
+        "items": null
+      },
+      {
+        "id": 3,
+        "text": "Galleries",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
+        "items": null
+      },
+      {
+        "id": 4,
+        "text": "Admin",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
+        "items": [
+          {
+            "text": "Settings",
+            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10"
+          }
+        ]
+      }
+    ]
+  },
+  "sideNavigation": {
+    "items": [
+      {
+        "id": 1,
+        "text": "Back to list",
+        "href": "?folder=1",
+        "items": null,
+        "isBack": true,
+        "isActive": false,
+        "iconClass": "fas angle-left"
+      },
+      {
+        "id": 2,
+        "text": "Page Property",
+        "href": "?folder=31",
+        "isBack": false,
+        "isActive": true,
+        "iconClass": "fal fingerprint",
+        "items": [
+          {
+            "id": 3,
+            "text": "Content",
+            "href": "?folder=3",
+            "items": null,
+            "isBack": false,
+            "isActive": false,
+            "iconClass": "fal donate"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "text": "Admin",
+        "href": "?folder=4",
+        "iconClass": "fal fingerprint",
+        "isActive": false,
+        "items": [
+          {
+            "id": 5,
+            "text": "Settings",
+            "href": "?list=10",
+            "iconClass": "fas cogs",
+            "isActive": false
+          }
+        ]
+      }
+    ]
+  },
+  "profile": {
+    "displayName": "Marc Molenwijk",
+    "email": "marc.molenwijk@supershift.nl",
+    "roleID": 1,
+    "roleName": "Super Admin"
+  },
+  "redirectUrl": null,
+  "listDescription": null,
+  "listSettingsUrl": "?settings=1",
+  "breadcrumbs": [
+    {
+      "text": "Back",
+      "href": "?list=2",
+      "isBack": true
+    },
+    {
+      "text": "Home",
+      "href": "?list=1",
+      "isBack": false
+    },
+    {
+      "text": "Layer 1",
+      "href": "?list=4",
+      "isBack": false
+    }
+  ],
+  "currentSiteID": 1,
+  "sites": [
+    {
+      "name": "Site A",
+      "id": 1
+    },
+    {
+      "name": "Site B",
+      "id": 2
+    }
+  ],
+  "isSharedField": false,
+  "sharedFieldValue": null,
+  "resources": [
+    {
+      "type": 2,
+      "position": 1,
+      "isSync": false,
+      "path": "/resources/activity-log.min.css"
+    },
+    {
+      "type": 1,
+      "position": 1,
+      "isSync": false,
+      "path": "/resources/activity-log-app.js"
+    },
+    {
+      "type": 2,
+      "position": 1,
+      "isSync": false,
+      "path": "/resources/activity-log.min.css"
+    },
+    {
+      "type": 3,
+      "isSync": true,
+      "sourceCode": "<article id='api'></article>"
+    },
+    {
+      "type": 1,
+      "position": 1,
+      "isSync": true,
+      "isInline": true,
+      "sourceCode": "var rootPath = 'https://tst.vaultn.com/'; var services = ['https://ananda-portal-tst.azurewebsites.net/api/webhooktest/check','https://testvaultn.allyouplay.com/api/Webhook/VaultN','https://tst-api.vaultn.com/api/v1/ping','https://tst-api.vaultn.com/api/v1/product','https://tst-api.vaultn.com/api/v1/producttype','https://localhost/Ananda.VaultAPI/api/v1/ping','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=c09e53d4-71b1-46e0-8372-16c1fced38b5&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00054','https://tst-api.vaultn.com/api/v1/','https://localhost/Ananda.VaultAPI/api/v1/transaction/import/?productGUID=aae53018-0aea-4a5f-88c8-6f63f2f42134&agreementGUID=78ad2e39-6d86-40f2-9616-52ef675ec752&clientReference=Unit%20Test&keyProviderID=1','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=605c6ffd-9f00-4a79-a136-a923ae946366&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-01142','https://localhost/Ananda.VaultAPI/api/v1/transaction/import/?productGUID=aae53018-0aea-4a5f-88c8-6f63f2f42134&agreementGUID=78ad2e39-6d86-40f2-9616-52ef675ec752&clientReference=Unit%20Test','https://tst-api.vaultn.com/api/v1/agreement?pageIndex=0&pageSize=50&onlyActive=False','https://tst-api.vaultn.com/api/v1/agreement?pageIndex=0&pageSize=500&onlyActive=False','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=083d2020-334a-4ce1-95ea-d58692a15281&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00925','https://testvaultnserhat.allyouplay.com/api/Greet/VaultNWebHook','https://tst-api.vaultn.com/api/v1/agreement?pageIndex=0&pageSize=10&onlyActive=False','https://localhost/Ananda.VaultAPI.Key/api/v1/ping','https://localhost/Ananda.VaultAPI/api/v1/transaction/blacklist?productGUID=1eb6f769-c7d5-4582-b361-c18dc9ba4d84&keycode=209174a9-0c3d-4b16-8c2d-c58c587dcc77','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=05cca58b-8800-497b-bc01-693ff4799bf1&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00052','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=46fb0e91-9ce9-48ff-9138-2017153159c0&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=PO-3982','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=46fb0e91-9ce9-48ff-9138-2017153159c0&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00355','https://localhost/Ananda.VaultAPI/api/v1/transaction/import/?productGUID=af448a20-46e0-4934-8ec6-275f1106573c&agreementGUID=78ad2e39-6d86-40f2-9616-52ef675ec752&clientReference=Unit%20Test','https://localhost:44329/api/values','https://tst-api.vaultn.com/api/v1/agreement','https://tst-api.vaultn.com/api/v1/agreement?pageIndex=0&pageSize=15&onlyActive=False','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=46fb0e91-9ce9-48ff-9138-2017153159c0&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00752','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=560ab1f4-ca4c-4797-b85a-50b7e049293c&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00083','https://localhost/Ananda.VaultAPI/api/v1/agreement/78ad2e39-6d86-40f2-9616-52ef675ec752','https://localhost/Ananda.VaultAPI/api/v1/transaction/import/?productGUID=af448a20-46e0-4934-8ec6-275f1106573c&agreementGUID=78ad2e39-6d86-40f2-9616-52ef675ec752&clientReference=Unit%20Test&keyProviderID=1','https://tst-api.vaultn.com/api/v1/agreement?onlyActive=true','https://tst-api.vaultn.com/api/v1/agreement?pageIndex=0&pageSize=10','https://tst-api.vaultn.com/api/v1/agreement?pageIndex=0&pageSize=100','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=46fb0e91-9ce9-48ff-9138-2017153159c0&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00587','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=717ffbff-460d-493d-ba24-d06b6ccad68d&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00053','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=ed3625d1-e694-4efd-aa16-d8bee37ffe16&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00851','https://localhost/Ananda.VaultAPI/api','https://localhost/Ananda.VaultAPI/api/v1/agreement/?pageIndex=0&pageSize=10','https://localhost/Ananda.VaultAPI/api/v1/transaction/blacklist?productGUID=1eb6f769-c7d5-4582-b361-c18dc9ba4d84&keycode=d4980fd0-9873-4c05-b8cb-07993f3cca66','https://localhost/Ananda.VaultAPI/api/v1/transaction/blacklist?productGUID=1eb6f769-c7d5-4582-b361-c18dc9ba4d84&keycode=f32e768a-5c96-4662-9658-4610c2cd924e','https://localhost/Sushi.Elastic.WebserviceLogger.AspNetCore.SampleService/api/ping','https://tst-api.vaultn.com/api','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=05cca58b-8800-497b-bc01-693ff4799bf1&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00051','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=46fb0e91-9ce9-48ff-9138-2017153159c0&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00317','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=46fb0e91-9ce9-48ff-9138-2017153159c0&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00718','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=46fb0e91-9ce9-48ff-9138-2017153159c0&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00916','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=76639241-a796-4a75-8eac-590a8793a4e8&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=PO-4442','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=ed3625d1-e694-4efd-aa16-d8bee37ffe16&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=2561','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=ed3625d1-e694-4efd-aa16-d8bee37ffe16&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-00905','https://tst-api.vaultn.com/api/v1/transaction/import?productGUID=fa6003ac-a417-477c-8ff5-807153d23b7d&agreementGUID=a1663922-57e3-4596-bb2b-da2874c8f310&clientReference=SO-01066']; var ownerGuid = '92febbf4-f83a-4106-9275-c7453a956380';"
+    }
+  ]
+}

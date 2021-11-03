@@ -5,6 +5,7 @@ import FolderModel from "./FolderModel";
 import GridModel from "./GridModel";
 import NotificationModel from "./NotificationModel";
 import ProfileModel from "./ProfileModel";
+import ResourceModel from "./ResourceModel";
 import SideNavigationModel from "./SideNavigationModel";
 import SiteModel from "./SiteModel";
 import TopNavigationModel from "./TopNavigationModel";
@@ -28,4 +29,5 @@ export default interface MediakiwiModel {
   sites: SiteModel[];
   isSharedField: boolean;
   sharedFieldValue?: string;
+  resources: ResourceModel[]
 }

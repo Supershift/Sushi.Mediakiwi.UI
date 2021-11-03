@@ -12,20 +12,24 @@
         ">
         <FolderComponent />
       </template>
-      <templpate
+      <template
         v-if="
           fetchedFields && fetchedFields.length
       ">
       <FormComponent
         :fields="fetchedFields"
         :notifications="customNotifications" />
-      </templpate>
+      </template>
+
       <template v-if="grids && grids.length">
         <GridComponent
           v-for="(grid, index) in grids"
           :key="index"
           :grid="grid" />
       </template>
+
+      <ResourcesComponent
+        v-if="fetchedResources" />
     </div>
   </div>
 </template>
@@ -37,14 +41,14 @@ import {
   ref,
 } from "vue";
 
-import {store} from "../store/index";
-
+import {store} from "@/store";
 import FieldModel from "../models/FieldModel";
 import MessageModel from "../models/MessageModel";
 
 import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
+import ResourcesComponent from "./resources/ResourcesComponent.vue";
 import ButtonListComponent from "./ButtonListComponent.vue";
 import OptionModel from "../models/OptionModel";
 import ItemModel from "../models/OptionItemModel";
@@ -55,6 +59,7 @@ export default defineComponent({
     FormComponent,
     GridComponent,
     FolderComponent,
+    ResourcesComponent,    
     ButtonListComponent,
   },
   setup() {
@@ -68,6 +73,10 @@ export default defineComponent({
 
     const fetchedFolders = computed(
       () => store.getters.folders
+    );
+
+    const fetchedResources = computed(
+      () => store.getters.resources
     );
 
     const fetchedButtons = computed(
@@ -144,6 +153,7 @@ export default defineComponent({
       grids,
       fetchedButtons,
       fetchedFolders,
+      fetchedResources,
     };
   },
 });
