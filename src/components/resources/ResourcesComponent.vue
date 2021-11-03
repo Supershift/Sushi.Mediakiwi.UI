@@ -184,8 +184,8 @@ export default defineComponent({
     function addResources(
       resources: ResourceModel[]
     ) {
-      // eslint-disable-next-line no-async-promise-executor
       return new Promise(
+        // eslint-disable-next-line no-async-promise-executor
         async (resolve, reject) => {
           if (!resources || !resources.length) {
             reject("No resources found");
