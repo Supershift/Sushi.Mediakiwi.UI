@@ -2,8 +2,9 @@
   <button
     :class="customButtonClasses"
     @click.prevent="handleClicked"
+    :disabled="field?.disabled || field.readOnly"
   >
-    {{ button?.value }}
+    {{ field.value }}
   </button>
 </template>
 
@@ -14,16 +15,14 @@ import FieldModel from "../../models/FieldModel";
 export default defineComponent({
   name: "FormButton",
   props: {
-    button: {
+    field: {
       type: Object as PropType<FieldModel>,
       required: true,
     },
   },
   emits: ["buttonClicked"],
   setup(props, context) {
-    /* eslint no-console: 0*/
-    console.log(props.button);
-    const customButtonClasses = computed(() => ["btn ", props.button?.className]);
+    const customButtonClasses = computed(() => ["btn ", props.field?.className]);
     function handleClicked() {
       context.emit("buttonClicked");
     }
@@ -35,4 +34,14 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.btn {
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    &:hover{
+      background: $color-main;
+    }
+  }
+}
+</style>

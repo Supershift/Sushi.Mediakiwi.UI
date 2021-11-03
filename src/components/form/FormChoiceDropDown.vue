@@ -4,9 +4,9 @@
       {{ undefinedCheck(field.prefix) }}
     </label>
     <dropdown
-      v-model="localField"
-      tabindex="-1"
-      :id="field.propertyName"
+      :value="localField"
+      tabindex="1"
+      :id="fieldID"
       :name="field.propertyName"
       :options="select2data"
       placeholder=""
@@ -36,7 +36,7 @@ import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
 
 export default defineComponent({
-  name: "DropDown",
+  name: "FormChoiceDropdown",
   props: {
     field: {
       type: Object as PropType<FieldModel>,
@@ -51,13 +51,14 @@ export default defineComponent({
   components: {
     dropdown: Dropdown,
   },
-  emits: ["onChange"],
+  emits: ["on-change"],
   setup(props, context) {
-    let localField = ref<FieldModel>(props.field.value);
+    let localField = ref<FieldModel>(props.field);
     const customDropdownClasses = computed(() => [
       "dropdown-primary ",
       props.field.className,
     ]);
+    const fieldID = computed(() => [props.field.propertyName+"_dropdown"]);
     const customDropdownContainerClasses = computed(() => [
       "dropdown-container ",
       props.classname,
@@ -67,23 +68,24 @@ export default defineComponent({
         return [];
       }
 
-      return localField.value?.options.map((r) => {
+      return localField.value.options.items.map((r) => {
         return {
           id: r.value,
-          label: r.name,
+          label: r.text,
           disabled: false,
         };
       });
     });
     function handleChange(e: Event) {
       if (localField.value?.event !== "none") {
-        context.emit("onChange", e, localField);
+        context.emit("on-change", e, localField);
       }
     }
     onBeforeMount(() => {
       localField.value = props.field;
     });
     return {
+      fieldID,
       select2data,
       handleChange,
       customDropdownClasses,

@@ -36,7 +36,7 @@
 import { computed, defineComponent, onMounted, PropType, reactive } from "vue";
 import { fieldMixins } from "../form/index";
 import RadioModel from "../../models/RadioModel";
-import OptionModel from "../../models/OptionModel";
+import OptionItemModel from "../../models/OptionItemModel";
 
 export default defineComponent({
     name: "RadioChoice",
@@ -68,7 +68,7 @@ export default defineComponent({
                 context.emit("radioChanged", e, props.radio.fieldValue);
             }
         }
-        function fieldID(option: OptionModel) {
+        function fieldID(option: OptionItemModel) {
             return `${props.radio.fieldValue}_${props.radio.fieldName}_${option.value}`;
         }
         const radioContainerClasses = computed(() => {

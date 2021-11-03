@@ -8,8 +8,9 @@
               :is="checkVueType(field)"
               v-for="field in row.fields"
               :key="field.propertyName"
-              v-bind="field"
-              @onclick="handleButtonClicked" />
+              :field="field"
+              @onclick="handleButtonClicked"
+            />
           </td>
           <template
             v-for="field in row.fields"
@@ -22,7 +23,8 @@
               "
               :key="field.propertyName"
               v-model="field.value"
-              v-bind="field" />
+              :field="field"
+            />
             <template v-else>
               <th
                 v-show="showField(field)"
@@ -53,10 +55,8 @@
                 :colspan="getColspan(row)">
                 <component
                   :is="checkVueType(field)"
-                  v-if="
-                    field.vueType === 'FormButton'
-                  "
-                  v-bind="field"
+                  v-if="field.vueType === 'FormButton'"
+                  :field="field"
                   :key="field.propertyName"
                   @onclick="
                     handleButtonClicked
@@ -70,11 +70,10 @@
                   "
                   v-else
                   :key="field.componentKey"
+                  :field="field"
                   v-model="field.value"
-                  v-bind="field"
-                  @onchange="
-                    handleFieldsChanged
-                  " />
+                  @onchange="handleFieldsChanged"
+                />
               </td>
             </template>
           </template>
@@ -103,6 +102,20 @@ import {
 import FormButton from "./FormButton.vue";
 import FormInput from "./FormInput.vue";
 import FormSection from "./FormSection.vue";
+import FormChoiceDropdown from "./FormChoiceDropDown.vue";
+import FormTag from "./FormTag.vue";
+import FormTextArea from "./FormTextArea.vue";
+import FormValueCollection from "./FormValueCollection.vue";
+import FormDate from "./FormDate.vue";
+import FormPlus from "./FormPlus.vue";
+import FormNameValueCollection from "./FormNameValueCollection.vue";
+import FormText from "./FormText.vue";
+import FormTextline from "./FormTextLine.vue";
+import FormRichText from "./FormRichText.vue";
+import FormChoiceRadio from "./FormChoiceRadio.vue";
+import FormChoiceCheckbox from "./FormChoiceCheckBox.vue";
+import FormTime from "./FormTime.vue";
+import FormDateTime from "./FormDateTime.vue";
 
 export default defineComponent({
   name: "FormComponent",
@@ -120,16 +133,30 @@ export default defineComponent({
   },
   mixins: [ExpressionType, fieldMixins],
   components: {
+    FormPlus,
     FormButton,
     FormInput,
     FormSection,
+    FormChoiceCheckbox,
+    FormChoiceDropdown,
+    FormTag,
+    FormTextArea,
+    FormValueCollection,
+    FormNameValueCollection,
+    FormDate,
+    FormTime,
+    FormDateTime,
+    FormText,
+    FormTextline,
+    FormRichText,
+    FormChoiceRadio,
   },
   emits: [
     "toggle",
-    "addFields",
-    "removeFields",
-    "fieldChanged",
-    "buttonClicked",
+    "add-fields",
+    "remove-fields",
+    "field-changed",
+    "button-clicked",
   ],
   setup(props, context) {
     function checkVueType(
@@ -147,13 +174,19 @@ export default defineComponent({
         case vueTypes.formDate:
           return FieldType.formDate;
         case vueTypes.formDateTime:
-          return FieldType.formDateTime;
+          return FieldType.formTime;
         case vueTypes.formRichText:
           return FieldType.formRichText;
+        case vueTypes.formTextArea:
+          return FieldType.formTextArea;
+        case vueTypes.formText:
+          return FieldType.formText;
+        case vueTypes.formTextline:
+          return FieldType.formTextline;
         case vueTypes.formPlus:
           return FieldType.formPlus;
         case vueTypes.formTag:
-          return FieldType.formTagVue;
+          return FieldType.formTag;
         default:
           return FieldType.formSection;
       }
@@ -191,49 +224,37 @@ export default defineComponent({
         : oneCol;
     }
     function showField(field: FieldModel) {
-      // if (field.hidden) {
-      //   return false;
-      // }
+      if (field.hidden) {
+        return false;
+      }
 
-      // if (field.vueType === "wimSection") {
-      //   return true;
-      // }
+      if (field.vueType !== vueTypes.formSection) {
+        return true;
+      }
 
-      // if (!field.hidden) {
-      //   return false;
-      // }
+      if (!field.hidden) {
+        return false;
+      }
 
       return true;
     }
     function handleToggle(section: SectionModel) {
       context.emit("toggle", section);
     }
-    function handleAddFields(
-      fields: FieldModel[]
-    ) {
-      context.emit("addFields", fields);
+    function handleAddFields(fields: FieldModel[]) {
+      context.emit("add-fields", fields);
     }
-    function handleRemoveFields(
-      fields: FieldModel[]
-    ) {
-      context.emit("removeFields", fields);
+    function handleRemoveFields(fields: FieldModel[]) {
+      context.emit("remove-fields", fields);
     }
-    function handleFieldsChanged(
-      e: Event,
-      fields: FieldModel
-    ) {
-      context.emit("fieldChanged", e, fields);
+    function handleFieldsChanged(e: Event, fields: FieldModel) {
+      context.emit("field-changed", e, fields);
     }
-    function handleButtonClicked(
-      e: Event,
-      field: FieldModel
-    ) {
-      context.emit("buttonClicked", e, field);
+    function handleButtonClicked(e: Event, field: FieldModel) {
+      context.emit("button-clicked", e, field);
     }
     function hideLabelForType(vueType: string) {
-      return vueType === "wimButton"
-        ? true
-        : false;
+      return vueType === vueTypes.formButton.toString() ? true : false;
     }
     function isHalfField(
       expression: ExpressionType
@@ -247,7 +268,6 @@ export default defineComponent({
     // with fields sorted according to their cofiguration
     let rowArray = ref<Array<FormRowModel>>([]);
     let currentFormSection = "baseSection";
-    let count = 0;
     const cellLimit = 2;
 
     // create a new row
@@ -257,8 +277,6 @@ export default defineComponent({
 
     if (props.fields && props.fields.length) {
       props.fields.forEach((field) => {
-        // increment the count
-        count++;
 
         if (!field.formSection) {
           if (

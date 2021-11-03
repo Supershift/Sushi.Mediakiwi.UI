@@ -7,8 +7,8 @@
       <p>
         <fa icon="exclamation-triangle" />
         <span
-          v-for="(message, index) in messageList"
-          :key="index"
+          v-for="message in messageList"
+          :key="message"
         >
           {{ message.message }}
         </span>
@@ -21,8 +21,8 @@
       <p>
         <fa icon="exclamation-triangle" />
         <span
-          v-for="(error,index) in errorList"
-          :key="index"
+          v-for="error in errorList"
+          :key="error"
         >
           {{ error.message }}
         </span>

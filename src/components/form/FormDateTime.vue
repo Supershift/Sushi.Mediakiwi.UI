@@ -7,6 +7,8 @@
       @change="handleChange"
       :time-picker="valueType === 'time'"
       :enableTimePicker="valueType === 'time'"
+      :placeholder="componentFormat"
+      :readonly="field?.disabled || field.readOnly"
     >
       <template #input-icon></template>
     </datetimepicker>
@@ -99,6 +101,11 @@ export default defineComponent({
 <style lang="scss">
 .datetime-container {
   margin-bottom: 15px;
+  input {
+    &:read-only {
+      cursor: not-allowed;
+    }
+  }
 }
 /* Overwrites the datepicker defaults: https://vue3datepicker.com/customization/theming/  */
 .dp__theme_light {
