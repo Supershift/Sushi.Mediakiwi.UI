@@ -1,15 +1,37 @@
 <template>
-  <section class="search-table" v-if="grid && grid.rows.length">
+  <section
+    class="search-table"
+    v-if="grid && grid.rows.length">
     <article class="data-block">
       <table class="selections">
         <thead>
           <tr class="first">
-            <th v-for="(col, index) in grid.columns" :key="index" :width="col.width" :align="col.align">{{ col.title }}</th>
+            <th
+              v-for="(col, index) in grid.columns"
+              :key="index"
+              :width="col.width"
+              :align="col.align">
+              {{ col.title }}
+            </th>
           </tr>
         </thead>
-        <tbody :data-layer="gridLayerData" :data-title="gridTitle">
-          <tr v-for="(row, rowIndex) in grid.rows" :key="rowIndex" class="parent hand" :id="row.id" :data-link="getGridRowHref(row)" @click="onRowClick(row)">
-            <td v-for="(gridItem, gridItemIndex) in row.gridItems" :key="gridItemIndex" :style="getGridItemStyle(gridItem)" v-html="gridItem.value"></td>
+        <tbody
+          :data-layer="gridLayerData"
+          :data-title="gridTitle">
+          <tr
+            v-for="(row, rowIndex) in grid.rows"
+            :key="rowIndex"
+            class="parent hand"
+            :id="row.id"
+            :data-link="getGridRowHref(row)"
+            @click="onRowClick(row)">
+            <td
+              v-for="(
+                gridItem, gridItemIndex
+              ) in row.gridItems"
+              :key="gridItemIndex"
+              :style="getGridItemStyle(gridItem)"
+              v-html="gridItem.value"></td>
           </tr>
         </tbody>
       </table>
@@ -21,10 +43,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import GridModel from "../../models/GridModel";
-import GridRowModel from "../../models/GridRowModel";
-import GridItemModel from "../../models/GridItemModel";
+import GridItemModel from "@/models/Mediakiwi/GridItemModel";
+import GridModel from "@/models/Mediakiwi/GridModel";
+import GridRowModel from "@/models/Mediakiwi/GridRowModel";
+import {
+  computed,
+  defineComponent,
+  PropType,
+} from "vue";
 
 export default defineComponent({
   name: "Grid",
@@ -34,25 +60,31 @@ export default defineComponent({
       required: true,
     },
   },
-  computed: {
-    gridLayerData() {
-      if (this.grid && this.grid.layerConfiguration) {
-        return `width: ${this.grid.layerConfiguration.width}; height: ${this.grid.layerConfiguration.height}`;
+  setup(props) {
+    const gridLayerData = computed(() => {
+      if (
+        props.grid &&
+        props.grid.layerConfiguration
+      ) {
+        return `width: ${props.grid.layerConfiguration.width}; height: ${props.grid.layerConfiguration.height}`;
       }
       return null;
-    },
-    gridTitle() {
-      if (this.grid && this.grid.title) {
-        return this.grid.title;
+    });
+
+    const gridTitle = computed(() => {
+      if (props.grid && props.grid.title) {
+        return props.grid.title;
       }
       return null;
-    },
-    gridLength() {
-      return `${this.grid.rows.length} results`;
-    },
-  },
-  methods: {
-    getGridItemStyle(gridItem: GridItemModel) {
+    });
+
+    const gridLength = computed(() => {
+      return `${props.grid.rows.length} results`;
+    });
+
+    function getGridItemStyle(
+      gridItem: GridItemModel
+    ) {
       let style = "";
       if (gridItem) {
         if (!gridItem.canWrap) {
@@ -60,20 +92,33 @@ export default defineComponent({
         }
       }
       return style;
-    },
-    getGridRowHref(gridRow: GridRowModel) {
+    }
+
+    function getGridRowHref(
+      gridRow: GridRowModel
+    ) {
       if (!gridRow) {
         return null;
       }
       return `${gridRow.href}`;
-    },
-    onRowClick(gridRow: GridRowModel) {
+    }
+
+    function onRowClick(gridRow: GridRowModel) {
       if (gridRow.href) {
         window.location.href = gridRow.href;
         return true;
       }
       return false;
-    },
+    }
+
+    return {
+      gridLayerData,
+      gridTitle,
+      gridLength,
+      getGridItemStyle,
+      getGridRowHref,
+      onRowClick,
+    };
   },
 });
 </script>

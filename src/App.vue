@@ -1,21 +1,25 @@
 <template>
-    <router-view />
+  <router-view />
 </template>
 
 <script>
-import { computed, defineComponent } from "vue";
-import store from "./store/index";
+import {computed, defineComponent} from "vue";
+import {store} from "@/store";
 
 export default defineComponent({
-    name: "App",
-    setup() {
-        const openDrawer = computed(() => store.getters.openDrawer);
-        const isLoggedIn = computed(() => store.getters.isLoggedIn);
-        return {
-            openDrawer,
-            isLoggedIn,
-        };
-    },
+  name: "App",
+  setup() {
+    const openDrawer = computed(
+      () => store.getters.openDrawer
+    );
+    const isLoggedIn = computed(
+      () => store.getters.isLoggedIn
+    );
+    return {
+      openDrawer,
+      isLoggedIn,
+    };
+  },
 });
 </script>
 

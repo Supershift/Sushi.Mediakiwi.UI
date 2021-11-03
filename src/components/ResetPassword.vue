@@ -30,7 +30,7 @@ import ButtonModel from "../models/ButtonModel";
 import CustomButton from "./form/CustomButton.vue";
 import CustomInput from "./form/CustomInput.vue";
 import FormErrors from "./form/FormErrors.vue";
-import store from "../store/index";
+import {store} from "@/store";
 
 export default defineComponent({
   name: "ForgottenPassword",

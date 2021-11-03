@@ -1,23 +1,19 @@
 <template>
   <div
-    v-if="notification.show"
-    class="notification-container"
-  >
+    v-if="notification && notification.show"
+    class="notification-container">
     <div
       class="notification-bubble"
-      :class="alertCss"
-    >
-      <fa 
+      :class="alertCss">
+      <fa
         icon="sort-up"
-        class="notification-top-icon"
-      />
+        class="notification-top-icon" />
       <div class="notification-bubble-content">
         <fa :icon="iconChoice" />
         {{ notification.alertText }}
-        <button 
+        <button
           v-if="notification.hasAction"
-          class="btn btn-notification"
-        >
+          class="btn btn-notification">
           {{ notification.actionText }}
         </button>
       </div>
@@ -26,13 +22,14 @@
 </template>
 
 <script>
-import { computed, defineComponent } from "vue";
-import store from "../../store/index";
-
+import {computed, defineComponent} from "vue";
+import {store} from "@/store";
 export default defineComponent({
   name: "Notification",
   setup() {
-    const notification = computed(() => store.getters.notification);
+    const notification = computed(
+      () => store.getters.notification
+    );
     const iconChoice = computed(() => {
       let icon = "";
       switch (notification.value.actionType) {
@@ -96,74 +93,74 @@ export default defineComponent({
   right: 30px;
   top: 100px;
   .notification-bubble {
-      position: relative;
+    position: relative;
+    .notification-top-icon {
+      position: absolute;
+      right: 38px;
+      top: -5px;
+      color: $color-success;
+      transform: scale(1.75);
+    }
+    .notification-bubble-content {
+      background: $color-success;
+      color: white;
+      border-radius: 10px;
+      padding: 15px;
+      font-family: $font-primary;
+      letter-spacing: 1.5px;
+    }
+  }
+  .notification- {
+    &success {
       .notification-top-icon {
-          position: absolute;
-          right: 38px;
-          top: -5px;
-          color: $color-success;
-          transform: scale(1.75);
+        color: $color-success;
       }
       .notification-bubble-content {
-          background: $color-success;
-          color: white;
-          border-radius: 10px;
-          padding: 15px;
-          font-family: $font-primary;
-          letter-spacing: 1.5px;
+        background: $color-grad-success;
       }
     }
-    .notification-{
-      &success {
-          .notification-top-icon{
-              color: $color-success;
-          }
-          .notification-bubble-content{
-              background: $color-grad-success;
-          }
+    &info {
+      .notification-top-icon {
+        color: $color-info;
       }
-      &info {
-          .notification-top-icon{
-              color: $color-info;
-          }
-          .notification-bubble-content{
-              background: $color-grad-info;
-          }
-      }
-      &warning {
-          .notification-top-icon {
-              color: $color-warning;
-          }
-          .notification-bubble-content{
-              background: $color-grad-warning;
-          }
-      }
-      &alert {
-          .notification-top-icon{
-              color: $color-alert;
-          }
-          .notification-bubble-content{
-              background: $color-grad-alert;
-          }
+      .notification-bubble-content {
+        background: $color-grad-info;
       }
     }
-    .btn-notification {
-      border: 2px solid white;
-      box-shadow: none;
-      color: white;
-      font-family: $font-primary;
-      font-size: $font-size-l;
-      border-radius: $b-radius-6;
+    &warning {
+      .notification-top-icon {
+        color: $color-warning;
+      }
+      .notification-bubble-content {
+        background: $color-grad-warning;
+      }
+    }
+    &alert {
+      .notification-top-icon {
+        color: $color-alert;
+      }
+      .notification-bubble-content {
+        background: $color-grad-alert;
+      }
+    }
+  }
+  .btn-notification {
+    border: 2px solid white;
+    box-shadow: none;
+    color: white;
+    font-family: $font-primary;
+    font-size: $font-size-l;
+    border-radius: $b-radius-6;
+    background: transparent;
+    padding: 5px 15px;
+    &:hover {
+      background: white;
+      color: $color-drakgrey;
+    }
+    &:focus {
       background: transparent;
-      padding: 5px 15px;
-      &:hover {
-        background: white;
-        color: $color-drakgrey;
-      }
-      &:focus {
-        background: transparent;
-        color: white;
-      }
+      color: white;
     }
+  }
 }
 </style>

@@ -2,19 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/HomeView.vue";
 import Login from "../views/LoginView.vue";
 
-const listID = 0;
-const itemID = 0;
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-    meta: {
-      requiresAuth: true,
-      title: "ValutN",
-      layout: "default",
-    },
-  },
   {
     path: "/login",
     name: "Login",
@@ -40,9 +28,9 @@ const routes = [
     component: Login,
     public: true,
     children: [{
-        path: "",
-        component: () => import(/* webpackChuckName: "forgot" */ "../components/ForgottenPassword.vue"),
-      },
+      path: "",
+      component: () => import(/* webpackChuckName: "forgot" */ "../components/ForgottenPassword.vue"),
+    },
     ]
   },
   {
@@ -51,16 +39,21 @@ const routes = [
     component: Login,
     public: true,
     children: [{
-        path: "",
-        component: () => import(/* webpackChuckName: "forgot" */ "../components/ResetPassword.vue"),
-      },
+      path: "",
+      component: () => import(/* webpackChuckName: "forgot" */ "../components/ResetPassword.vue"),
+    },
     ]
   },
   {
-    name: "Form",
-    path: "/form/:listID/:itemID",
-    params: { listID, itemID },
-},
+    path: "/:catchAll(.*)",
+    name: "Home",
+    component: Home,
+    meta: {
+      requiresAuth: true,
+      title: "ValutN",
+      layout: "default",
+    },
+  },
 ];
 
 const router = createRouter({

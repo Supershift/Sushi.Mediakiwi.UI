@@ -34,7 +34,7 @@ import {
   defineComponent,
   ref,
 } from "vue";
-import store from "../store/index";
+import {store} from "@/store";
 import FormErrors from "./form/FormErrors.vue";
 import CustomInput from "./form/CustomInput.vue";
 import CustomButton from "./form/CustomButton.vue";
