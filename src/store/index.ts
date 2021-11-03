@@ -17,6 +17,7 @@ import GridModel from "@/models/Mediakiwi/GridModel";
 import FolderModel from "@/models/Mediakiwi/FolderModel";
 import ResourceModel from "@/models/Mediakiwi/ResourceModel";
 import { ButtonModel } from "@/models/Mediakiwi/ButtonModel";
+import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
 const loggedinKey = "ananda_vaultn_loggedin";
 
 // define your typings for the store state
@@ -247,6 +248,12 @@ export const store = createStore<State>({
     grids: (state) => state.grids,
     folders: (state) => state.folders,
     resources: (state) => state.resources,
-    buttons: (state) => state.buttons
+    buttons: (state) => state.buttons,
+    topButtons: (state) => {
+      return state.buttons?.filter((button) => (button.iconTarget === ButtonTargetType.topLeft || button.iconTarget === ButtonTargetType.topRight));
+    },
+    bottomButtons: (state) => {
+      return state.buttons?.filter((button) => (button.iconTarget === ButtonTargetType.bottomLeft || button.iconTarget === ButtonTargetType.bottomRight));
+    },
   },
 });

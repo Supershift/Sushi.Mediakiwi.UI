@@ -3,11 +3,11 @@
     <div class="col main-container">
       <template
         v-if="
-          fetchedButtons && fetchedButtons.length
+          fetchedTopButtons &&
+          fetchedTopButtons.length
         ">
         <ButtonListComponent
-          :fields="fetchedButtons"
-          classname="test" />
+          :buttons="fetchedTopButtons" />
       </template>
       <template
         v-if="
@@ -22,6 +22,15 @@
         <FormComponent
           :fields="fetchedFields"
           :notifications="customNotifications" />
+      </template>
+
+      <template
+        v-if="
+          fetchedBottomButtons &&
+          fetchedBottomButtons.length
+        ">
+        <ButtonListComponent
+          :buttons="fetchedBottomButtons" />
       </template>
 
       <template
@@ -81,20 +90,26 @@ export default defineComponent({
     const fetchedResources = computed(
       () => store.getters.resources
     );
-
-    const fetchedButtons = computed(
-      () => store.getters.buttons
+    const fetchedTopButtons = computed(
+      () => store.getters.topButtons
     );
 
-    const customNotifications = ref<MessageModel[]>([]);
+    const fetchedBottomButtons = computed(
+      () => store.getters.bottomButtons
+    );
+
+    const customNotifications = ref<
+      MessageModel[]
+    >([]);
 
     return {
       customNotifications,
       fetchedFields,
       fetchedGrids,
-      fetchedButtons,
       fetchedFolders,
       fetchedResources,
+      fetchedTopButtons,
+      fetchedBottomButtons,
     };
   },
 });
