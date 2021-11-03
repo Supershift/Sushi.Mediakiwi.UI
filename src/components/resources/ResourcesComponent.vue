@@ -1,8 +1,12 @@
+
 <template>
   <section
     class="custom-app-container"
     v-html="innerHTML" />
 </template>
+
+<!-- Enable logging -->
+<!-- eslint-disable no-console -->
 <script lang="ts">
 import {
   computed,
@@ -56,7 +60,6 @@ export default defineComponent({
         if (script.src) {
           script.onload = () => {
             if (log.value) {
-              // eslint-disable-next-line no-console
               console.log(
                 `finished loading ${resource.path}`
               );
@@ -78,7 +81,6 @@ export default defineComponent({
         // We can resolve the promise if we don't need to wait it
         if (script.innerHTML) {
           if (log.value) {
-            // eslint-disable-next-line no-console
             console.log(
               "finished loading inline resource"
             );
@@ -129,9 +131,7 @@ export default defineComponent({
     function addHtml(resource: ResourceModel) {
       return new Promise((resolve) => {
         if (log.value) {
-          // eslint-disable-next-line
           console.log("add html");
-          // eslint-disable-next-line
           console.log(resource.sourceCode);
         }
 
@@ -145,9 +145,9 @@ export default defineComponent({
               document.querySelector(
                 ".custom-app-container"
               )?.innerHTML;
-            // eslint-disable-next-line
+
             console.log("html added");
-            // eslint-disable-next-line
+
             console.log(innerHTML);
             resolve(resource);
           }
@@ -161,9 +161,8 @@ export default defineComponent({
     ): Promise<unknown> {
       // set this!!
       if (log.value) {
-        // eslint-disable-next-line no-console
         console.log("add resource");
-        // eslint-disable-next-line no-console
+
         console.log(resource);
       }
       switch (resource.type) {
@@ -181,73 +180,55 @@ export default defineComponent({
     }
 
     /** Add the resources to the page */
-    function addResources(
+    async function addResources(
       resources: ResourceModel[]
     ) {
-      return new Promise(
-        // eslint-disable-next-line no-async-promise-executor
-        async (resolve, reject) => {
-          if (!resources || !resources.length) {
-            reject("No resources found");
-          }
-          for (let resource of resources.filter(
-            (r) => {
-              return r.isSync;
-            }
-          )) {
-            // add the resources sync
-            // eslint-disable-next-line no-console
-            console.log("add sync item");
-            const result = await addResource(
-              resource
-            );
-            // eslint-disable-next-line no-console
-            console.log(
-              "sync item added",
-              result
-            );
-          }
-
-          if (log.value) {
-            // eslint-disable-next-line no-console
-            console.log("Load Other Resources");
-          }
-
-          // After that add the scripts can be lazy loaded
-          let promises: Promise<unknown>[] = [];
-
-          resources
-            .filter((r) => !r.isSync)
-            .forEach((resource) => {
-              promises.push(
-                addResource(resource)
-              );
-            });
-
-          if (log.value) {
-            // eslint-disable-next-line no-console
-            console.log("Promises:");
-            // eslint-disable-next-line no-console
-            console.log(promises);
-          }
-
-          Promise.all(promises).then(() => {
-            if (log.value) {
-              // eslint-disable-next-line no-console
-              console.log(
-                "All Promises are completed"
-              );
-            }
-            resolve(true);
-          });
+      for (let resource of resources.filter(
+        (r) => {
+          return r.isSync;
         }
-      );
+      )) {
+        // add the resources sync
+        console.log("add sync item");
+        const result = await addResource(
+          resource
+        );
+        console.log("sync item added", result);
+      }
+      return new Promise((resolve) => {
+        if (log.value) {
+          console.log("Load Other Resources");
+        }
+
+        // After that add the scripts can be lazy loaded
+        let promises: Promise<unknown>[] = [];
+
+        resources
+          .filter((r) => !r.isSync)
+          .forEach((resource) => {
+            promises.push(addResource(resource));
+          });
+
+        if (log.value) {
+          console.log("Promises:");
+
+          console.log(promises);
+        }
+
+        Promise.all(promises).then(() => {
+          if (log.value) {
+            console.log(
+              "All Promises are completed"
+            );
+          }
+          resolve(true);
+        });
+      });
     }
 
     /**Removes all resources and custom html */
     function clearApp() {
       if (log.value) {
-        // eslint-disable-next-line no-console
         console.log("clear resources");
       }
 
@@ -274,22 +255,25 @@ export default defineComponent({
       clearApp();
 
       if (log.value) {
-        // eslint-disable-next-line no-console
         console.log("render app");
       }
 
-      addResources(resources.value).then(() => {
-        if (log.value) {
-          // eslint-disable-next-line no-console
-          console.log("Added all resources");
-        }
-        window.document.dispatchEvent(
-          new Event("DOMContentLoaded", {
-            bubbles: true,
-            cancelable: true,
-          })
-        );
-      });
+      if (
+        resources.value &&
+        resources.value.length
+      ) {
+        addResources(resources.value).then(() => {
+          if (log.value) {
+            console.log("Added all resources");
+          }
+          window.document.dispatchEvent(
+            new Event("DOMContentLoaded", {
+              bubbles: true,
+              cancelable: true,
+            })
+          );
+        });
+      }
     }
 
     return {
@@ -297,7 +281,6 @@ export default defineComponent({
       log,
       addScript,
       addStyle,
-      // addPageResources,
       addHtml,
       addResource,
       addResources,
