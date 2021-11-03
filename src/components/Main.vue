@@ -7,9 +7,15 @@
         ">
         <FolderComponent />
       </template>
+      <templpate
+        v-if="
+          fetchedFields && fetchedFields.length
+      ">
       <FormComponent
         :fields="fetchedFields"
         :notifications="customNotifications" />
+      </templpate>
+
       <template v-if="grids && grids.length">
         <GridComponent
           v-for="(grid, index) in grids"
