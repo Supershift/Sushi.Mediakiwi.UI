@@ -37,7 +37,7 @@ import { computed, defineComponent, onMounted, PropType, reactive } from "vue";
 import { fieldMixins } from "../form/index";
 import RadioModel from "../../models/RadioModel";
 import OptionModel from "../../models/OptionModel";
-import ItemModel from "../../models/ItemModel";
+import ItemModel from "../../models/OptionItemModel";
 
 export default defineComponent({
     name: "RadioChoice",

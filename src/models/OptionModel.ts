@@ -1,4 +1,4 @@
-import ItemModel from "./ItemModel";
+import ItemModel from "./OptionItemModel";
 
 interface OptionModel {
     items: ItemModel[];

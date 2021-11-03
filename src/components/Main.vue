@@ -78,7 +78,7 @@ import MessageModel from "../models/MessageModel";
 import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
 import OptionModel from "../models/OptionModel";
-import ItemModel from "../models/ItemModel";
+import ItemModel from "../models/OptionItemModel";
 
 
 export default defineComponent({

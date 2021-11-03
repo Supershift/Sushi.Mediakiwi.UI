@@ -23,7 +23,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
 import FieldModel from "../../models/FieldModel";
-import ItemModel from "../../models/ItemModel";
+import ItemModel from "../../models/OptionItemModel";
 import { fieldMixins } from "./index";
 
 export default defineComponent({

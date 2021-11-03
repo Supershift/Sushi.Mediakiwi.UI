@@ -35,7 +35,7 @@
 <script lang="ts">
 import { fieldMixins } from "./index";
 import CheckboxModel from "../../models/CheckboxModel";
-import ItemModel from "../../models/ItemModel";
+import ItemModel from "../../models/OptionItemModel";
 import { computed, defineComponent, PropType, reactive } from "vue";
 
 export default defineComponent({
