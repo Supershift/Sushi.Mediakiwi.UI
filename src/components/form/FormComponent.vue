@@ -9,8 +9,7 @@
               v-for="field in row.fields"
               :key="field.propertyName"
               :field="field"
-              @onclick="handleButtonClicked"
-            />
+              @onclick="handleButtonClicked" />
           </td>
           <template
             v-for="field in row.fields"
@@ -23,8 +22,7 @@
               "
               :key="field.propertyName"
               v-model="field.value"
-              :field="field"
-            />
+              :field="field" />
             <template v-else>
               <th
                 v-show="showField(field)"
@@ -55,7 +53,9 @@
                 :colspan="getColspan(row)">
                 <component
                   :is="checkVueType(field)"
-                  v-if="field.vueType === 'FormButton'"
+                  v-if="
+                    field.vueType === 'FormButton'
+                  "
                   :field="field"
                   :key="field.propertyName"
                   @onclick="
@@ -72,8 +72,9 @@
                   :key="field.componentKey"
                   :field="field"
                   v-model="field.value"
-                  @onchange="handleFieldsChanged"
-                />
+                  @onchange="
+                    handleFieldsChanged
+                  " />
               </td>
             </template>
           </template>
@@ -89,16 +90,11 @@ import {
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/FieldModel";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
 import FormRowModel from "../../models/FormRowModel";
 import MessageModel from "../../models/MessageModel";
 import SectionModel from "../../models/SectionModel";
-import {
-  ExpressionType,
-  fieldMixins,
-  FieldType,
-  vueTypes,
-} from "./index";
+import {fieldMixins} from "./index";
 import FormButton from "./FormButton.vue";
 import FormInput from "./FormInput.vue";
 import FormSection from "./FormSection.vue";
@@ -116,6 +112,8 @@ import FormChoiceRadio from "./FormChoiceRadio.vue";
 import FormChoiceCheckbox from "./FormChoiceCheckBox.vue";
 import FormTime from "./FormTime.vue";
 import FormDateTime from "./FormDateTime.vue";
+import {OutputExpressionType} from "@/models/Mediakiwi/OutputExpressionType";
+import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
 
 export default defineComponent({
   name: "FormComponent",
@@ -131,7 +129,7 @@ export default defineComponent({
       required: true,
     },
   },
-  mixins: [ExpressionType, fieldMixins],
+  mixins: [OutputExpressionType, fieldMixins],
   components: {
     FormPlus,
     FormButton,
@@ -162,34 +160,7 @@ export default defineComponent({
     function checkVueType(
       field: FieldModel
     ): string {
-      switch (field.vueType) {
-        case vueTypes.formButton:
-          return FieldType.formButton;
-        case vueTypes.formChoiceCheckbox:
-          return FieldType.formChoiceCheckbox;
-        case vueTypes.formChoiceDropdown:
-          return FieldType.formChoiceDropdown;
-        case vueTypes.formChoiceRadio:
-          return FieldType.formChoiceRadio;
-        case vueTypes.formDate:
-          return FieldType.formDate;
-        case vueTypes.formDateTime:
-          return FieldType.formTime;
-        case vueTypes.formRichText:
-          return FieldType.formRichText;
-        case vueTypes.formTextArea:
-          return FieldType.formTextArea;
-        case vueTypes.formText:
-          return FieldType.formText;
-        case vueTypes.formTextline:
-          return FieldType.formTextline;
-        case vueTypes.formPlus:
-          return FieldType.formPlus;
-        case vueTypes.formTag:
-          return FieldType.formTag;
-        default:
-          return FieldType.formSection;
-      }
+      return MediakiwiFormVueType[field.vueType];
     }
     function clean(label: string): string {
       return label
@@ -204,9 +175,10 @@ export default defineComponent({
         .replace(/\s+/g, "");
     }
     function expressCell(
-      expression: ExpressionType
+      expression: OutputExpressionType
     ) {
-      return expression !== ExpressionType.Full
+      return expression !==
+        OutputExpressionType.full
         ? "vhalf"
         : "full";
     }
@@ -228,7 +200,10 @@ export default defineComponent({
         return false;
       }
 
-      if (field.vueType !== vueTypes.formSection) {
+      if (
+        field.vueType !==
+        MediakiwiFormVueType.formSection
+      ) {
         return true;
       }
 
@@ -241,25 +216,39 @@ export default defineComponent({
     function handleToggle(section: SectionModel) {
       context.emit("toggle", section);
     }
-    function handleAddFields(fields: FieldModel[]) {
+    function handleAddFields(
+      fields: FieldModel[]
+    ) {
       context.emit("add-fields", fields);
     }
-    function handleRemoveFields(fields: FieldModel[]) {
+    function handleRemoveFields(
+      fields: FieldModel[]
+    ) {
       context.emit("remove-fields", fields);
     }
-    function handleFieldsChanged(e: Event, fields: FieldModel) {
+    function handleFieldsChanged(
+      e: Event,
+      fields: FieldModel
+    ) {
       context.emit("field-changed", e, fields);
     }
-    function handleButtonClicked(e: Event, field: FieldModel) {
+    function handleButtonClicked(
+      e: Event,
+      field: FieldModel
+    ) {
       context.emit("button-clicked", e, field);
     }
     function hideLabelForType(vueType: string) {
-      return vueType === vueTypes.formButton.toString() ? true : false;
+      return vueType ===
+        MediakiwiFormVueType.formButton.toString()
+        ? true
+        : false;
     }
     function isHalfField(
-      expression: ExpressionType
+      expression: OutputExpressionType
     ) {
-      return expression !== ExpressionType.Full
+      return expression !==
+        OutputExpressionType.full
         ? " half"
         : " long";
     }
@@ -277,10 +266,10 @@ export default defineComponent({
 
     if (props.fields && props.fields.length) {
       props.fields.forEach((field) => {
-
         if (!field.formSection) {
           if (
-            field.vueType === vueTypes.formSection
+            field.vueType ===
+            MediakiwiFormVueType.formSection
           ) {
             currentFormSection = `${clean(
               field.title
@@ -308,7 +297,8 @@ export default defineComponent({
 
         // is this a full width field?
         if (
-          field.expression === ExpressionType.Full
+          field.expression ===
+          OutputExpressionType.full
         ) {
           // add the current row object to the list
           if (currentRow.value.fields.length) {
@@ -329,12 +319,13 @@ export default defineComponent({
               )
               .every(
                 (val) =>
-                  val === vueTypes.formButton
+                  val ===
+                  MediakiwiFormVueType.formButton
               )
           ) {
             if (
               field.vueType !==
-              vueTypes.formButton
+              MediakiwiFormVueType.formButton
             ) {
               // currentRow.isButtonRow = true;
               rowArray.value.push(
@@ -353,7 +344,7 @@ export default defineComponent({
         let addRows = false;
         if (
           field.expression ===
-            ExpressionType.Full ||
+            OutputExpressionType.full ||
           currentRow.value.fields.length >=
             cellLimit
         ) {
@@ -364,7 +355,7 @@ export default defineComponent({
           addRows &&
           currentRow.value.fields.length
         ) {
-          // currentRow.isButtonRow = currentRow.fields.map((r) => r.vueType).every((val) => val === vueTypes.formButton);
+          // currentRow.isButtonRow = currentRow.fields.map((r) => r.vueType).every((val) => val === MediakiwiFormVueType.formButton);
           rowArray.value.push(currentRow.value);
           currentRow.value = {fields: []};
         }

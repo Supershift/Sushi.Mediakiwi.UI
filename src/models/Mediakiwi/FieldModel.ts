@@ -1,3 +1,4 @@
+import MessageModel from "../MessageModel";
 import { ButtonSectionType } from "./ButtonSectionType";
 import { ContentType } from "./ContentType";
 import { MediakiwiFormVueType } from "./MediakiwiFormVueType";
@@ -13,19 +14,26 @@ export default interface FieldModel {
   title: string
   vueType: MediakiwiFormVueType;
   expression: OutputExpressionType;
-  value: unknown;
-  options: OptionModel;
-  className: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: string | number | any;
+  options?: OptionModel | null;
+  className?: string | null;
   event: MediakiwiJSEventType;
-  inputPost: string;
+  inputPost?: string | null;
   section: ButtonSectionType;
-  hidden?: boolean;
-  groupName: string;
-  suffix: string;
-  prefix: string;
-  formSection: string;
+  hidden?: boolean | null;
+  groupName?: string | null;
+  suffix?: string | null;
+  prefix?: string | null;
+  formSection?: string | null;
   canToggleSection: boolean;
   canDeleteSection: boolean;
   toggleDefaultClosed: boolean;
   readOnly: boolean;
+  error?: MessageModel | null;
+  fieldIcon?: string | null;
+  mandatory?: boolean | null;
+  componentKey?: number;
+  locale?: string | null;
+  weekStart?: number | null;
 }

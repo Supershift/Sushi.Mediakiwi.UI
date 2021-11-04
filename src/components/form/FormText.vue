@@ -1,7 +1,9 @@
 
 <template>
   <div :class="textContainerClasses">
-    <label v-if="undefinedCheck(field.prefix)">{{ undefinedCheck(field.prefix) }}</label>
+    <label v-if="undefinedCheck(field.prefix)">{{
+      undefinedCheck(field.prefix)
+    }}</label>
     <input
       type="text"
       v-model="valueRef"
@@ -9,26 +11,34 @@
       :name="field.propertyName"
       :id="fieldID"
       :disabled="field.disabled || field.readOnly"
-      @change="handleChange">
-    <label v-if="undefinedCheck(field.suffix)">{{ undefinedCheck(field.suffix) }}</label>
+      @change="handleChange" />
+    <label v-if="undefinedCheck(field.suffix)">{{
+      undefinedCheck(field.suffix)
+    }}</label>
   </div>
 </template>
 <script lang="ts">
-import { fieldMixins, vueTypes } from "./index";
-import { computed, defineComponent, PropType, ref } from "vue";
-import FieldModel from "../../models/FieldModel";
+import {fieldMixins} from "./index";
+import {
+  computed,
+  defineComponent,
+  PropType,
+  ref,
+} from "vue";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
 
 export default defineComponent({
   name: "FormText",
   props: {
-  field: {
-    type: Object as PropType<FieldModel>,
-    required: true,
-  },
+    field: {
+      type: Object as PropType<FieldModel>,
+      required: true,
+    },
     classname: {
-    type: String,
-    required: true,
-  },
+      type: String,
+      required: true,
+    },
   },
   mixins: [fieldMixins],
   emits: ["on-change"],
@@ -45,7 +55,7 @@ export default defineComponent({
       if (
         props.field.expression &&
         props.field.vueType ===
-          vueTypes.formChoiceCheckbox
+          MediakiwiFormVueType.formChoiceCheckbox
       ) {
         return `text-primary half short ${props.field.className}`;
       }
@@ -61,7 +71,7 @@ export default defineComponent({
       handleChange,
     };
   },
-})
+});
 </script>
 
 <style scoped lang="scss">

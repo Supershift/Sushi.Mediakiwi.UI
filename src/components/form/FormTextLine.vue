@@ -1,11 +1,8 @@
 <template>
   <div :class="textlineContainerClasses">
-    <label
-      v-if="undefinedCheck(field?.prefix)"
-      >{{
-        undefinedCheck(field.prefix)
-      }}</label
-    >
+    <label v-if="undefinedCheck(field?.prefix)">{{
+      undefinedCheck(field.prefix)
+    }}</label>
     <label
       :id="fieldID"
       :class="textlineClasses"
@@ -18,14 +15,15 @@
   </div>
 </template>
 <script lang="ts">
+import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
 import {
   computed,
   defineComponent,
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/FieldModel";
-import { fieldMixins, vueTypes } from "./index";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {fieldMixins} from "./index";
 
 export default defineComponent({
   name: "FormTextLine",
@@ -52,7 +50,7 @@ export default defineComponent({
     if (
       props.field?.expression &&
       props.field.vueType ===
-        vueTypes.formChoiceRadio
+        MediakiwiFormVueType.formChoiceRadio
     ) {
       props.field.value
         ? (valueRef.value = "Yes")
@@ -62,7 +60,7 @@ export default defineComponent({
       if (
         props.field?.expression &&
         props.field.vueType ===
-          vueTypes.formChoiceCheckbox
+          MediakiwiFormVueType.formChoiceCheckbox
       ) {
         return `textline-primary half short ${props.field?.className}`;
       }

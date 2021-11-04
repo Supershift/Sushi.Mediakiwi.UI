@@ -28,6 +28,8 @@ export const api = {
           store.dispatch("setGrids", response.grids);
           store.dispatch("setFolders", response.folders);
           store.dispatch("setResources", response.resources);
+          store.dispatch("setFields", response.fields);
+          store.dispatch("setButtons", response.buttons);
 
           // finally resolve the response
           store.dispatch("toggleMediakiwiLoading");

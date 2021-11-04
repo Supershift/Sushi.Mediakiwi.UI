@@ -1,72 +1,76 @@
 <template>
   <div
     class="tag-input"
-    :class="{ 'with-count': showCount }"
-  >
+    :class="{'with-count': showCount}">
     <input
       v-model="newTag"
       type="text"
       :list="id"
       autocomplete="off"
       :name="name"
-      :style="{ 'padding-left': `${paddingLeft}px` }"
+      :style="{
+        'padding-left': `${paddingLeft}px`,
+      }"
       @keydown.enter="addTag(newTag)"
       @keydown.prevent.tab="addTag(newTag)"
-      @keydown.delete="newTag.length || removeTag(tags.length - 1)"
-    >
+      @keydown.delete="
+        newTag.length ||
+          removeTag(tags.length - 1)
+      " />
 
-    <datalist
-      v-if="options"
-      :id="id"
-    >
+    <datalist v-if="options" :id="id">
       <option
         v-for="option in availableOptions"
         :key="option"
-        :value="option.name"
-      >
+        :value="option.name">
         {{ option.name }}
       </option>
     </datalist>
 
-    <ul
-      ref="tagsUl"
-      class="tags"
-    >
+    <ul ref="tagsUl" class="tags">
       <li
         v-for="(tag, index) in tags"
         :key="tag"
         class="tag"
-        :class="{ duplicate: tag === duplicate }"
-      >
+        :class="{duplicate: tag === duplicate}">
         {{ tag }}
         <button
           class="delete"
           @click="removeTag(index)">
+          <!-- eslint-disable-next-line vue/no-unregistered-components -->
           <fa icon="times"></fa>
         </button>
       </li>
     </ul>
-    <div
-      v-if="showCount"
-      class="count"
-    >
+    <div v-if="showCount" class="count">
       <span>{{ tagsLength }}</span>
     </div>
   </div>
 </template>
 <script>
-import { ref, watch, nextTick, onMounted, computed } from "vue";
+import {
+  ref,
+  watch,
+  nextTick,
+  onMounted,
+  computed,
+} from "vue";
 export default {
   name: "TagsInput",
   props: {
-    name: { type: String, required: true},
-    modelValue: { type: Array, default: () => { return []; } },
-    options: { type: Array, required:true },
-    allowCustom: { type: Boolean, default: true },
-    showCount: { type: Boolean, default: false },
+    name: {type: String, required: true},
+    modelValue: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+    options: {type: Array, required: true},
+    allowCustom: {type: Boolean, default: true},
+    showCount: {type: Boolean, default: false},
   },
   emits: ["changeMade"],
-  setup(props, { emit }) {
+  setup(props, {emit}) {
     /* 
       Made using example : https://codesandbox.io/s/crazy-sunset-w25zb?file=/src/components/TagInput.vue 
     */
@@ -75,22 +79,36 @@ export default {
     // Tags
     const tags = ref(props.modelValue);
     const newTag = ref("");
-    const id = Math.random().toString(radixNumber).substring(startubstring);
-    const tagsLength = computed(() => `${tags.value.length} tags`);
+    const id = Math.random()
+      .toString(radixNumber)
+      .substring(startubstring);
+    const tagsLength = computed(
+      () => `${tags.value.length} tags`
+    );
 
     // handling duplicates
     const duplicate = ref(null);
     const oneSecond = 1000;
     const handleDuplicate = (tag) => {
       duplicate.value = tag;
-      setTimeout(() => (duplicate.value = null), oneSecond);
+      setTimeout(
+        () => (duplicate.value = null),
+        oneSecond
+      );
       newTag.value = "";
     };
 
     const addTag = (tag) => {
-      if (!tag) { return; } // prevent empty tag
+      if (!tag) {
+        return;
+      } // prevent empty tag
       // only allow predefined tags when allowCustom is false
-      if (!props.allowCustom && !props.options.items.includes(tag)) { return; }
+      if (
+        !props.allowCustom &&
+        !props.options.items.includes(tag)
+      ) {
+        return;
+      }
       // return early if duplicate
       if (tags.value.includes(tag)) {
         handleDuplicate(tag);
@@ -110,19 +128,29 @@ export default {
     const onTagsChange = () => {
       // position cursor
       const extraCushion = 15;
-      paddingLeft.value = tagsUl.value.clientWidth + extraCushion;
+      paddingLeft.value =
+        tagsUl.value.clientWidth + extraCushion;
       // scroll to end of tags
-      tagsUl.value.scrollTo(tagsUl.value.scrollWidth, 0);
+      tagsUl.value.scrollTo(
+        tagsUl.value.scrollWidth,
+        0
+      );
       // emit value on tags change
       emit("changeMade", tags.value);
     };
-    watch(tags, () => nextTick(onTagsChange), { deep: true });
+    watch(tags, () => nextTick(onTagsChange), {
+      deep: true,
+    });
     onMounted(onTagsChange);
 
     // options
     const availableOptions = computed(() => {
-      if (!props.options) { return false; }
-      return props.options.items.filter((option) => !tags.value.includes(option));
+      if (!props.options) {
+        return false;
+      }
+      return props.options.items.filter(
+        (option) => !tags.value.includes(option)
+      );
     });
 
     return {

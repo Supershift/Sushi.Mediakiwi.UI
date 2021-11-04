@@ -32,7 +32,7 @@ import FormErrors from "./form/FormErrors.vue";
 import MessageModel from "../models/MessageModel";
 import InputModel from "../models/InputModel";
 import ButtonModel from "../models/ButtonModel";
-import { store } from "../store";
+import {store} from "../store";
 
 export default defineComponent({
   name: "ForgottenPassword",
