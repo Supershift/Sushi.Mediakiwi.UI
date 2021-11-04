@@ -72,7 +72,7 @@
                   :key="field.componentKey"
                   :field="field"
                   v-model="field.value"
-                  @onchange="
+                  @on-change="
                     handleFieldsChanged
                   " />
               </td>
@@ -228,9 +228,16 @@ export default defineComponent({
     }
     function handleFieldsChanged(
       e: Event,
-      fields: FieldModel
+      field: FieldModel,
+      value: unknown
     ) {
-      context.emit("field-changed", e, fields);
+      // eslint-disable-next-line no-console
+      console.log("field", field);
+      // eslint-disable-next-line no-console
+      console.log("value", value);
+
+      // Update the field's value
+      field.value = value;
     }
     function handleButtonClicked(
       e: Event,

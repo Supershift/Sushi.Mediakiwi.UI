@@ -27,6 +27,19 @@
           :notifications="customNotifications" />
       </template>
 
+      <!-- eslint-disable vue/no-static-inline-styles -->
+      <span
+        style="
+          position: absolute;
+          right: 0;
+          top: 160px;
+          z-index: 10000;
+          font-size: 19px;
+        ">
+        fetchedFieldValues:
+        <pre>{{ fetchedFieldValues }}</pre>
+      </span>
+
       <template
         v-if="
           fetchedBottomButtons &&
@@ -67,6 +80,7 @@ import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
 import ResourcesComponent from "./resources/ResourcesComponent.vue";
 import ButtonListComponent from "./ButtonListComponent.vue";
+import FieldModel from "@/models/Mediakiwi/FieldModel";
 
 export default defineComponent({
   name: "MainView",
@@ -101,6 +115,10 @@ export default defineComponent({
       () => store.getters.bottomButtons
     );
 
+    const fetchedFieldValues = computed(
+      () => store.getters.fieldValues
+    );
+
     const customNotifications = ref<
       MessageModel[]
     >([]);
@@ -113,6 +131,7 @@ export default defineComponent({
       fetchedResources,
       fetchedTopButtons,
       fetchedBottomButtons,
+      fetchedFieldValues,
     };
   },
 });

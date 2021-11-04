@@ -285,5 +285,13 @@ export const store = createStore<State>({
     bottomButtons: (state) => {
       return state.buttons?.filter((button) => (button.iconTarget === ButtonTargetType.bottomLeft || button.iconTarget === ButtonTargetType.bottomRight));
     },
+    fieldValues: (state) => {
+      return state.fields?.map((field) => {
+        return {
+          title: field.title,
+          value: field.value
+        }
+      });
+    }
   },
 });
