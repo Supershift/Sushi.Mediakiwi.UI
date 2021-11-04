@@ -160,10 +160,10 @@ export const store = createStore<State>({
       context.commit("toggleLogIn");
     },
     getMediakiwiAPI(context, request) {
-      // Activate the loader
-      context.commit("toggleMediakiwiLoading");
+      // TODO Replace logic with an axios.post to the request.url
+      // the request should be passed as the requestBody
 
-      // TEMP; Determine what JSON to serve
+      // Determine what JSON to serve
       let apiPath = "/grids.json";
       if (request.url && request.url.indexOf("folder") > -1) {
         apiPath = "/folders.json";
@@ -179,6 +179,36 @@ export const store = createStore<State>({
       // to fetch the mediakiwi json      
       return new Promise((resolve, reject) => {
         axios.get(apiPath)
+          .then((response) => resolve(response.data))
+          .catch((err) => {
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          });
+      });
+    },
+    postMediakiwiAPI(context, request) {
+      return new Promise((resolve, reject) => {
+        axios.post(request.url, request)
+          .then((response) => resolve(response.data))
+          .catch((err) => {
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          });
+      });
+    },
+    deleteMediakiwiAPI(context, request) {
+      return new Promise((resolve, reject) => {
+        axios.delete(request.url, request)
+          .then((response) => resolve(response.data))
+          .catch((err) => {
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          });
+      });
+    },
+    putMediakiwiAPI(context, request) {
+      return new Promise((resolve, reject) => {
+        axios.put(request.url, request)
           .then((response) => resolve(response.data))
           .catch((err) => {
             alert("Something went wrong while fetching the page");

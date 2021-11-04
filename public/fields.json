@@ -111,7 +111,8 @@
       "customUrl": null,
       "layerConfiguration": null,
       "isPrimary": false,
-      "iconTarget": 0
+      "iconTarget": 0,
+      "requestMethod": 2
     },
     {
       "contentTypeID": 28,
@@ -147,7 +148,7 @@
       "triggerState": false,
       "triggerSaveEvent": false,
       "openInPopupLayer": false,
-      "customUrl": null,
+      "customUrl": "?item=0",
       "layerConfiguration": null,
       "isPrimary": false,
       "iconTarget": 1
@@ -189,7 +190,8 @@
       "customUrl": null,
       "layerConfiguration": null,
       "isPrimary": true,
-      "iconTarget": 2
+      "iconTarget": 2,
+      "requestMethod": 1
     },
     {
       "contentTypeID": 30,
@@ -228,7 +230,8 @@
       "customUrl": null,
       "layerConfiguration": null,
       "isPrimary": true,
-      "iconTarget": 3
+      "iconTarget": 3,
+      "requestMethod": 0
     }
   ],
   "notifications": [

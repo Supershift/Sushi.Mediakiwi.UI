@@ -15,7 +15,10 @@
 
 <script lang="ts">
 import {ButtonModel} from "@/models/Mediakiwi/ButtonModel";
+import {ButtonRequestMethodType} from "@/models/Mediakiwi/ButtonRequestMethodType";
 import {ButtonTargetType} from "@/models/Mediakiwi/ButtonTargetType";
+import {api} from "@/utils/api";
+import {mediakiwiLogic} from "@/utils/mediakiwiLogic";
 import {
   computed,
   defineComponent,
@@ -38,13 +41,27 @@ export default defineComponent({
   components: {
     FormButton,
   },
-  emits: ["button-clicked"],
-  setup(props, context) {
+  setup(props) {
     const tbbcContainerClasses = computed(() => [
       "tbbc-container " + props.classname,
     ]);
-    function handleClicked(value: string) {
-      context.emit("button-clicked", value);
+    function handleClicked(value: ButtonModel) {
+      if (value) {
+        const request =
+          mediakiwiLogic.getMediakiwiModelFromStore();
+
+        switch (value.requestMethod) {
+          case ButtonRequestMethodType.put:
+            api.putMediakiwiAPI(request);
+            break;
+          case ButtonRequestMethodType.delete:
+            api.deleteMediakiwiAPI(request);
+            break;
+          default:
+            api.postMediakiwiAPI(request);
+            break;
+        }
+      }
     }
     function buttonPosition(button: ButtonModel) {
       if (!button) {

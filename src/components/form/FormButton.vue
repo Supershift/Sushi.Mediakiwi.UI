@@ -1,5 +1,15 @@
 <template>
+  <a
+    v-if="button.customUrl"
+    :class="customButtonClasses"
+    :href="button.customUrl"
+    :disabled="
+      button?.disabled || button.readOnly
+    ">
+    {{ button.value }}
+  </a>
   <button
+    v-else
     :class="customButtonClasses"
     @click.prevent="handleClicked"
     :disabled="
@@ -34,7 +44,7 @@ export default defineComponent({
     function handleClicked() {
       context.emit(
         "button-clicked",
-        props.button.value
+        props.button
       );
     }
     return {
@@ -47,6 +57,8 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .btn {
+  text-decoration: none;
+  display: inline-block;
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
