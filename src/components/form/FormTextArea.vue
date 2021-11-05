@@ -34,6 +34,7 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
+  emits: ["on-change"],
   setup(props, context) {
     let offset = ref<number>(0);
     let valueRef = ref(props.field?.value);
@@ -52,7 +53,7 @@ export default defineComponent({
         props?.classname,
       ]);
     function handleChange(e: Event) {
-      context.emit("onChange", e, valueRef);
+      context.emit("on-change", e, valueRef);
     }
     function autoResize(element: HTMLElement) {
       element.style.height = "auto";

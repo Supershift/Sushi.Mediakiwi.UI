@@ -52,7 +52,7 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["valueChanged"],
+  emits: ["value-changed"],
   setup(props, context) {
     const inputText = reactive({value: ""});
     const id = computed(
@@ -112,7 +112,7 @@ export default defineComponent({
       return icon;
     });
     function handleChange() {
-      context.emit("valueChanged");
+      context.emit("value-changed");
     }
     return {
       id,

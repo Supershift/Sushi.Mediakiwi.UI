@@ -47,12 +47,22 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .navigation-menu {
-  position: absolute;
-  bottom: 4px;
-  left: 160px;
+  position: relative;
   display: flex;
-  flex-direction: row;
-  height: 50px;
-  margin-left: -15px;
+  flex-direction: column;
+  align-items: center;
+}
+@media (min-width: 480px) {
+  .navigation-menu {
+    position: absolute;
+    flex-direction: row;
+    align-items: unset;
+    width: unset;
+    height: 50px;
+    bottom: 4px;
+    left: 160px;
+    margin-left: -15px;
+  }
+  
 }
 </style>

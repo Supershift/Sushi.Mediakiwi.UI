@@ -45,7 +45,7 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["onChange"],
+  emits: ["on-change"],
   setup(props, context) {
     const valueRef = ref(props.field.value);
     const checkboxClasses = computed(
@@ -60,7 +60,7 @@ export default defineComponent({
       () => `${props.field.propertyName}_id`
     );
     function handleChange(e: Event) {
-      context.emit("onChange", e, valueRef);
+      context.emit("on-change", e, valueRef);
     }
     return {
       valueRef,

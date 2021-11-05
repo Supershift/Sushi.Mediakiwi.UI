@@ -37,7 +37,7 @@ export default defineComponent({
   components: {
     editor: Editor,
   },
-  emits: ["valueChanged"],
+  emits: ["value-changed"],
   setup(props, context) {
     let valueRef = ref("");
 
@@ -56,7 +56,7 @@ export default defineComponent({
         props.field?.event !==
         MediakiwiJSEventType.none
       ) {
-        context.emit("valueChanged", values);
+        context.emit("value-changed", values);
       }
     }
     const tinymceInit = {

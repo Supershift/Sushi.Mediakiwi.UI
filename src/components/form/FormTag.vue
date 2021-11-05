@@ -43,7 +43,7 @@ export default defineComponent({
   components: {
     TagsInput,
   },
-  emits: ["tagsUpdated"],
+  emits: ["tags-updated"],
   setup(props, context) {
     let valueRef = ref([]);
     let tagRef = ref("");
@@ -53,7 +53,7 @@ export default defineComponent({
         props.classname,
       ]);
     function handleChange() {
-      context.emit("tagsUpdated", valueRef);
+      context.emit("tags-updated", valueRef);
     }
     return {
       valueRef,

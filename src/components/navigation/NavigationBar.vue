@@ -67,18 +67,17 @@ export default defineComponent({
 .navigation-bar {
   border-bottom: 1px solid #2aa1e8;
   width: 100%;
-  height: 90px;
   .navigation-content {
     font-family: $font-primary;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     position: relative;
     text-align: left;
-    padding: 15px;
-    padding-left: 80px;
+    padding-top: 15px;
   }
   .navigation {
     &-logo {
+      display: none;
       width: 60px;
       height: 60px;
       border-radius: 6px;
@@ -96,7 +95,7 @@ export default defineComponent({
     margin: 0;
     display: inline-block;
     vertical-align: top;
-    padding-left: 15px;
+    padding-left: 45px;
   }
 }
 
@@ -106,5 +105,21 @@ export default defineComponent({
   vertical-align: top;
   margin-left: 10px;
   margin-top: 5px;
+}
+@media (min-width: 480px) {
+  .navigation-bar {
+    height: 90px;
+    .navigation-content {
+      flex-direction: row;
+      padding: 15px;
+      padding-left: 80px;
+    }
+    .navigation-logo {
+      display: block;
+    }
+    h2 {
+      padding-left: 15px;
+    }
+  }
 }
 </style>

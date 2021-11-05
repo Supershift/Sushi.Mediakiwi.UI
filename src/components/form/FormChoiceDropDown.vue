@@ -4,7 +4,7 @@
       {{ undefinedCheck(field.prefix) }}
     </label>
     <dropdown
-      :value="localField"
+      :value="valueRef"
       tabindex="1"
       :id="fieldID"
       :name="field.propertyName"
@@ -34,6 +34,7 @@ import FieldModel from "../../models/Mediakiwi/FieldModel";
 import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
 import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
+import ItemModel from "../../models/OptionItemModel";
 
 export default defineComponent({
   name: "FormChoiceDropdown",
@@ -53,7 +54,7 @@ export default defineComponent({
   },
   emits: ["on-change"],
   setup(props, context) {
-    let localField = ref<FieldModel>(props.field);
+    let valueRef = ref<FieldModel>(props.field.value);
     const customDropdownClasses = computed(() => [
       "dropdown-primary ",
       props.field.className,
@@ -67,12 +68,12 @@ export default defineComponent({
         props.classname,
       ]);
     const select2data = computed(() => {
-      if (!localField.value?.options) {
+      if (!valueRef.value?.options) {
         return [];
       }
 
-      return localField.value.options.items.map(
-        (r) => {
+      return valueRef.value.options.items.map(
+        (r: ItemModel) => {
           return {
             id: r.value,
             label: r.text,
@@ -83,14 +84,14 @@ export default defineComponent({
     });
     function handleChange(e: Event) {
       if (
-        localField.value?.event !==
+        valueRef.value?.event !==
         MediakiwiJSEventType.none
       ) {
-        context.emit("on-change", e, localField);
+        context.emit("on-change", e, valueRef);
       }
     }
     onBeforeMount(() => {
-      localField.value = props.field;
+      valueRef.value = props.field;
     });
     return {
       fieldID,

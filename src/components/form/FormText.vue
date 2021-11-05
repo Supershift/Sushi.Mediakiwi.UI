@@ -43,7 +43,7 @@ export default defineComponent({
   mixins: [fieldMixins],
   emits: ["on-change"],
   setup(props, context) {
-    let valueRef = ref(props.field.value);
+    let valueRef = ref(props.field?.value);
     const fieldID = computed(
       () => `${props.field.propertyName}_id`
     );
@@ -67,6 +67,7 @@ export default defineComponent({
     return {
       fieldID,
       textClasses,
+      valueRef,
       textContainerClasses,
       handleChange,
     };
