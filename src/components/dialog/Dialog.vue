@@ -47,7 +47,8 @@ import {defineComponent, computed} from "vue";
 import {store} from "@/store";
 export default defineComponent({
   name: "Dailog",
-  setup() {
+  emits: ["sign-out-clicked"],
+  setup(props, context) {
     const profileData = computed(
       () => store.getters.profileData
     );
@@ -55,7 +56,8 @@ export default defineComponent({
       () => store.getters.dialog
     );
     function handleSignOut() {
-      //   console.log("TODO: Logout!");
+      store.dispatch("toggleDialog");
+      context.emit("sign-out-clicked");
     }
     return {
       profileData,

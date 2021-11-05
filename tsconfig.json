@@ -37,7 +37,7 @@
     "src/utils/auth.js",
     "src/utils/getConfig.js",
     "src/store/index.js",
-    "src/router/index.js",
+    "src/router/index.ts",
     "src/models/OptionModel.js"  ],
   "exclude": [
     "node_modules"

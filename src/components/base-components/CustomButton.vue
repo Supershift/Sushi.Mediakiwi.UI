@@ -2,6 +2,7 @@
   <button
     :class="customButtonClasses"
     @click.prevent="handleClicked"
+    :disabled="button.disabled"
   >
     {{ button.value }}
   </button>
@@ -21,7 +22,7 @@ export default defineComponent({
   },
   emits: ["button-clicked"],
   setup(props, context) {
-    const customButtonClasses = computed(() => ["btn ", props.button.customClass]);
+    const customButtonClasses = computed(() => ["btn "+ props.button.customClass]);
     function handleClicked() {
       context.emit("button-clicked");
     }
@@ -32,3 +33,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="scss">
+.btn {
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+</style>

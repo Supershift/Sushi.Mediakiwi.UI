@@ -52,6 +52,7 @@ import ResourcesComponent from "./resources/ResourcesComponent.vue";
 import ButtonListComponent from "./ButtonListComponent.vue";
 import OptionModel from "../models/OptionModel";
 import ItemModel from "../models/OptionItemModel";
+import { FieldValidationType, FieldValidationTypeMessage } from "./form";
 
 export default defineComponent({
   name: "MainView",
@@ -135,9 +136,10 @@ export default defineComponent({
       helpText: "This field can do stuff",
       componentKey: 0,
       error: {
-        message: "",
+        message: FieldValidationTypeMessage.none,
         isError: false,
         propertyName: "",
+        code: FieldValidationType.none,
       },
       locale: "",
       weekStart: 7,

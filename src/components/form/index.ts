@@ -1,4 +1,5 @@
 import FieldModel from "@/models/FieldModel";
+import MessageModel from "@/models/MessageModel";
 
 export enum ExpressionType {
   Full = 0,
@@ -47,15 +48,84 @@ export enum FieldType {
   formLink = "formLink",
 }
 
+export enum FieldValidationType { 
+  none = "none",
+  required = "required",
+  email = "email",
+  url = "url",
+  number = "number",
+  min = "min",
+  max = "max",
+  minLength = "minLength",
+  maxLength = "maxLength",
+  pattern = "pattern",
+  minDateTime = "minDateTime",
+  maxDateTime = "maxDateTime",
+  empty = "empty",
+}
+
+export enum FieldValidationTypeMessage { 
+  none = "",
+  required = "This field is required",
+  email = "This field must be a valid email address",
+  url = "This field must be a valid URL",
+  number = "This field must be a valid number",
+  min = "This field must be greater than or equal to {0}",
+  max = "This field must be less than or equal to {0}",
+  minLength = "This field must be at least {0} characters long",
+  maxLength = "This field must be at most {0} characters long",
+  pattern = "This field must match the pattern {0}",
+  minDateTime = "This field must be on or after {0}",
+  maxDateTime = "This field must be on or before {0}",
+  empty = "Some fields may not be empty",
+}
+
 export const fieldMixins = {
   methods: {
     undefinedCheck(param: string): string {
       return (typeof (param) !== "undefined" && param) ? param : "";
     },
-    errorClass(field: FieldModel) {
+    errorClass(field: FieldModel): string {
       if (field.error) { return " error "; }
       return "";
     },
+    validateEmail(email: string): boolean {
+      // const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const re2 =/\S+@\S+\.\S+/;
+      return re2.test(email);
+    },
+    emailValidator(value: string, fieldName:string, errorMessages: MessageModel[]): Array<MessageModel> {
+      if (value.length > 0) {
+        // validate email
+        if (fieldName.toLowerCase().includes("email")) {
+          if (!this.validateEmail(value)) {
+            if (errorMessages.findIndex((x: MessageModel) => x.code === FieldValidationType.email) === -1) {
+              errorMessages.push({
+                message: FieldValidationTypeMessage.email,
+                isError: true,
+                code: FieldValidationType.email,
+                propertyName: fieldName,
+              });
+            }
+          } else {
+            errorMessages.splice(errorMessages.findIndex((x: MessageModel) => x.code === FieldValidationType.email), 1);
+          }
+        }
+      }
+      return errorMessages;
+    },
+    emptyValidator(value: string, fieldName:string, errorMessages: MessageModel[]): Array<MessageModel> {
+      if (value.length > 0) {
+        errorMessages.splice(errorMessages.findIndex((x: MessageModel) => x.code === FieldValidationType.empty), 1);
+        return errorMessages; 
+      } else {
+        if (errorMessages.findIndex((x: MessageModel) => x.code === FieldValidationType.empty) === -1) {
+          errorMessages.push({ message: FieldValidationTypeMessage.empty, isError: true, code: FieldValidationType.empty, propertyName: fieldName });
+          return errorMessages;
+        }
+      }
+      return errorMessages;
+    }
   },
 };
 
