@@ -1,11 +1,17 @@
 <template>
   <div class="content-container row">
     <div class="col main-container">
-      <template v-if="fetchedButtons && fetchedButtons.length">
+      <template
+        v-if="
+          fetchedTopButtons &&
+          fetchedTopButtons.length
+        ">
         <ButtonListComponent
-          :fields="fetchedButtons"
-          classname="test" />
+          :buttons="fetchedTopButtons" />
       </template>
+
+      <!-- TODO ADD NOTIFICATIONS HERE -->
+
       <template
         v-if="
           fetchedFolders && fetchedFolders.length
@@ -15,15 +21,27 @@
       <template
         v-if="
           fetchedFields && fetchedFields.length
-      ">
-      <FormComponent
-        :fields="fetchedFields"
-        :notifications="customNotifications" />
+        ">
+        <FormComponent
+          :fields="fetchedFields"
+          :notifications="customNotifications" />
       </template>
 
-      <template v-if="grids && grids.length">
+      <template
+        v-if="
+          fetchedBottomButtons &&
+          fetchedBottomButtons.length
+        ">
+        <ButtonListComponent
+          :buttons="fetchedBottomButtons" />
+      </template>
+
+      <template
+        v-if="
+          fetchedGrids && fetchedGrids.length
+        ">
         <GridComponent
-          v-for="(grid, index) in grids"
+          v-for="(grid, index) in fetchedGrids"
           :key="index"
           :grid="grid" />
       </template>
@@ -41,8 +59,7 @@ import {
   ref,
 } from "vue";
 
-import {store} from "@/store";
-import FieldModel from "../models/FieldModel";
+import {store} from "../store";
 import MessageModel from "../models/MessageModel";
 
 import GridComponent from "./grid/GridComponent.vue";
@@ -53,6 +70,7 @@ import ButtonListComponent from "./ButtonListComponent.vue";
 import OptionModel from "../models/OptionModel";
 import ItemModel from "../models/OptionItemModel";
 import { FieldValidationType, FieldValidationTypeMessage } from "./form";
+import FieldModel from "../models/FieldModel";
 
 export default defineComponent({
   name: "MainView",
@@ -60,7 +78,7 @@ export default defineComponent({
     FormComponent,
     GridComponent,
     FolderComponent,
-    ResourcesComponent,    
+    ResourcesComponent,
     ButtonListComponent,
   },
   setup() {
@@ -68,7 +86,7 @@ export default defineComponent({
       () => store.getters.fields
     );
 
-    const grids = computed(
+    const fetchedGrids = computed(
       () => store.getters.grids
     );
 
@@ -79,9 +97,12 @@ export default defineComponent({
     const fetchedResources = computed(
       () => store.getters.resources
     );
+    const fetchedTopButtons = computed(
+      () => store.getters.topButtons
+    );
 
-    const fetchedButtons = computed(
-      () => store.getters.buttons
+    const fetchedBottomButtons = computed(
+      () => store.getters.bottomButtons
     );
 
     // TODO Delete
@@ -151,11 +172,11 @@ export default defineComponent({
     return {
       customNotifications,
       fetchedFields,
-      test,
-      grids,
-      fetchedButtons,
+      fetchedGrids,
       fetchedFolders,
       fetchedResources,
+      fetchedTopButtons,
+      fetchedBottomButtons,
     };
   },
 });

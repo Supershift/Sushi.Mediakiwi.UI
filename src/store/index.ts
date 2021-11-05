@@ -1,6 +1,6 @@
 import router from "@/router";
 import axios from "axios";
-import FieldModel from "@/models/FieldModel";
+import FieldModel from "@/models/Mediakiwi/FieldModel";
 import NotificationModel from "@/models/Mediakiwi/NotificationModel";
 import SideNavigationModel from "@/models/Mediakiwi/SideNavigationModel";
 import TopNavigationModel from "@/models/Mediakiwi/TopNavigationModel";
@@ -17,8 +17,8 @@ import GridModel from "@/models/Mediakiwi/GridModel";
 import FolderModel from "@/models/Mediakiwi/FolderModel";
 import ResourceModel from "@/models/Mediakiwi/ResourceModel";
 import { FieldValidationType, FieldValidationTypeMessage, vueTypes } from "@/components/form";
-import ButtonModel from "@/models/ButtonModel";
-import MessageModel from "@/models/MessageModel";
+import { ButtonModel } from "@/models/Mediakiwi/ButtonModel";
+import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
 const loggedinKey = "ananda_vaultn_loggedin";
 
 // define your typings for the store state
@@ -62,96 +62,8 @@ export const store = createStore<State>({
       settings: false,
     },
     description: "",
-    buttons: [
-      {
-        customClass: "btn-delete",
-        buttonIcon: "",
-        disabled: false,
-        buttondName: "delete",
-        value: "delete",
-        readOnly: false,
-      },
-      {
-        customClass: "btn-sumbit",
-        buttonIcon: "",
-        disabled: false,
-        buttondName: "save",
-        value: "save",
-        readOnly: false,
-      }
-    ],
-    fields: [
-      {
-        contentTypeID: 10,
-        propertyName: "TestProperty",
-        propertyType: "string",
-        title: "Choose a team",
-        vueType: vueTypes.formSection,
-        expression: 0,
-        value: "User input",
-        options: null,
-        className: "small",
-        event: "none",
-        inputPost: "Test",
-        section: 0,
-        hidden: false,
-        groupName: null,
-        suffix: null,
-        prefix: null,
-        formSection: null,
-        canToggleSection: false,
-        canDeleteSection: false,
-        toggleDefaultClosed: false,
-        readOnly: true,
-        helpText: "This field can do stuff",
-        weekStart: 7,
-        fieldIcon: "",
-        locale: "en-US",
-      },
-      {
-        contentTypeID: 18,
-        propertyName: "TestDropdown",
-        propertyType: "string[]",
-        title: "Team selection",
-        vueType: vueTypes.formChoiceRadio,
-        expression: 0,
-        value: "1",
-        options: {
-          items: [
-            {
-              text: "Ajax",
-              value: "1",
-              enabled: true,
-              selected: true
-            },
-            {
-              text: "Feyenoord",
-              value: "2",
-              enabled: true,
-              selected: false
-            }
-          ],
-          count: 2
-        },
-        className: null,
-        event: "none",
-        inputPost: null,
-        section: 0,
-        hidden: null,
-        groupName: null,
-        suffix: null,
-        prefix: null,
-        formSection: null,
-        canToggleSection: false,
-        canDeleteSection: false,
-        toggleDefaultClosed: false,
-        readOnly: false,
-        helpText: "This field can do stuff",
-        weekStart: 7,
-        fieldIcon: "",
-        locale: "en-US",
-      },
-    ],
+    buttons: [],
+    fields: [],
     sideNavigationItems: null,
     topNavigationItems: null,
     content: {
@@ -292,13 +204,12 @@ export const store = createStore<State>({
     setResources(state, data: ResourceModel[]) {
       state.resources = data;
     },
-    getErrorContent(state, code: string) {
-      const error = state.content.errors.find((e: MessageModel) => e.code === code);
-      if (error) {
-        return error.message;
-      }
-      return "";
+    setFields(state, data: FieldModel[]) {
+      state.fields = data;
     },
+    setButtons(state, data: ButtonModel[]) {
+      state.buttons = data;
+    }
   },
   actions: {
     toggleDrawer(context) {
@@ -370,8 +281,11 @@ export const store = createStore<State>({
     setResources(context, data) {
       context.commit("setResources", data);
     },
-    getErrorContent(context, code) { 
-      context.commit("getErrorContent", code);
+    setFields(context, data) {
+      context.commit("setFields", data);
+    },
+    setButtons(context, data) {
+      context.commit("setButtons", data);
     }
   },
   getters: {
@@ -399,6 +313,12 @@ export const store = createStore<State>({
     grids: (state) => state.grids,
     folders: (state) => state.folders,
     resources: (state) => state.resources,
-    buttons: (state) => state.buttons
+    buttons: (state) => state.buttons,
+    topButtons: (state) => {
+      return state.buttons?.filter((button) => (button.iconTarget === ButtonTargetType.topLeft || button.iconTarget === ButtonTargetType.topRight));
+    },
+    bottomButtons: (state) => {
+      return state.buttons?.filter((button) => (button.iconTarget === ButtonTargetType.bottomLeft || button.iconTarget === ButtonTargetType.bottomRight));
+    },
   },
 });

@@ -2,19 +2,17 @@
   <div :class="inputContainerClasses">
     <label
       v-if="undefinedCheck(field.prefix)"
-      class="input-prefix"
-    >
+      class="input-prefix">
       {{ undefinedCheck(field?.prefix) }}
     </label>
+    <!-- eslint-disable-next-line vue/no-unregistered-components -->
     <fa
       v-if="field.fieldIcon"
       :icon="fieldIconChoice"
-      class="input-icon"
-    />
+      class="input-icon" />
     <label
       :for="field.propertyName"
-      class="input-label"
-    >
+      class="input-label">
       <input
         :id="id"
         type="text"
@@ -23,14 +21,14 @@
         :value="inputText.value"
         :required="field.fieldRequired"
         :placeholder="field.title"
-        :disabled="field.disabled || field.readOnly"
-        @change="handleChange"
-      >
+        :disabled="
+          field.disabled || field.readOnly
+        "
+        @change="handleChange" />
     </label>
     <label
       v-if="undefinedCheck(field.suffix)"
-      class="input-suffix"
-    >
+      class="input-suffix">
       {{ undefinedCheck(field?.suffix) }}
     </label>
   </div>
@@ -42,8 +40,8 @@ import {
   PropType,
   reactive,
 } from "vue";
-import FieldModel from "../../models/FieldModel";
-import { fieldMixins } from "../form/index";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {fieldMixins} from "../form/index";
 
 export default defineComponent({
   name: "FormInput",
@@ -57,7 +55,10 @@ export default defineComponent({
   emits: ["valueChanged"],
   setup(props, context) {
     const inputText = reactive({value: ""});
-    const id = computed(() => `_${props.field?.className}-${props.field.propertyName}`);
+    const id = computed(
+      () =>
+        `_${props.field?.className}-${props.field.propertyName}`
+    );
     const inputContainerClasses = computed(() => {
       let iconColor: string;
       switch (props.field.fieldIcon) {
@@ -82,7 +83,10 @@ export default defineComponent({
       }
       return ["input-container ", iconColor];
     });
-    const customInputClasses = computed(() => ["input-primary ", props.field?.className]);
+    const customInputClasses = computed(() => [
+      "input-primary ",
+      props.field?.className,
+    ]);
     const fieldIconChoice = computed(() => {
       let icon: string[];
       switch (props.field.fieldIcon) {
@@ -163,15 +167,15 @@ export default defineComponent({
   font-weight: bold;
   text-align: center;
   .input-primary {
-      border: none;
-      height: 50px;
-      line-height: 40px;
-      width: 100%;
-      border-radius: 3px;
-      padding-left: 35px;
-      padding-right: 35px;
-      font-size: $font-size-l;
-      color: $color-drakgrey;
+    border: none;
+    height: 50px;
+    line-height: 40px;
+    width: 100%;
+    border-radius: 3px;
+    padding-left: 35px;
+    padding-right: 35px;
+    font-size: $font-size-l;
+    color: $color-drakgrey;
   }
 }
 </style>

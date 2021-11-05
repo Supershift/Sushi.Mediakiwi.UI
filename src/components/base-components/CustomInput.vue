@@ -1,10 +1,18 @@
 <template>
   <div :class="inputContainerClasses">
-    <label v-if="undefinedCheck(input.prefix)" class="input-prefix">
+    <label
+      v-if="undefinedCheck(input.prefix)"
+      class="input-prefix">
       {{ undefinedCheck(input?.prefix) }}
     </label>
-    <fa v-if="input.fieldIcon" :icon="fieldIconChoice" class="input-icon" />
-    <label :for="input.fieldName" class="input-label">
+    <!-- eslint-disable-next-line vue/no-unregistered-components -->
+    <fa
+      v-if="input.fieldIcon"
+      :icon="fieldIconChoice"
+      class="input-icon" />
+    <label
+      :for="input.fieldName"
+      class="input-label">
       <input
         :id="id"
         :type="input.fieldType"
@@ -17,7 +25,9 @@
         @input="handleChange"
       />
     </label>
-    <label v-if="undefinedCheck(input.suffix)" class="input-suffix">
+    <label
+      v-if="undefinedCheck(input.suffix)"
+      class="input-suffix">
       {{ undefinedCheck(input?.suffix) }}
     </label>
   </div>
@@ -25,7 +35,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
 import InputModel from "../../models/InputModel";
-import { fieldMixins } from "../form/index";
+import {fieldMixins} from "../form/index";
 
 export default defineComponent({
   name: "FormInput",
@@ -64,7 +74,10 @@ export default defineComponent({
       }
       return ["input-container ", iconColor];
     });
-    const customInputClasses = computed(() => ["input-primary ", props.input.customClass]);
+    const customInputClasses = computed(() => [
+      "input-primary ",
+      props.input.customClass,
+    ]);
     const fieldIconChoice = computed(() => {
       let icon: string[];
       switch (props.input.fieldIcon) {

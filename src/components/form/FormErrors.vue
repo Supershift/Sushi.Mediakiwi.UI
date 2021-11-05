@@ -2,8 +2,7 @@
   <div class="form-error-container">
     <span
       v-show="messageList.length"
-      class="message"
-    >
+      class="message">
       <p>
         <span
           v-for="message in messageList"
@@ -12,10 +11,7 @@
         </span>
       </p>
     </span>
-    <span
-      v-show="errorList.length"
-      class="error"
-    >
+    <span v-show="errorList.length" class="error">
       <p>
         <span
           v-for="error in errorList"
@@ -27,8 +23,12 @@
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
-import MessageModel from "../../models/MessageModel";
+import {
+  computed,
+  defineComponent,
+  PropType,
+} from "vue";
+import MessageModel from "../../models//MessageModel";
 
 export default defineComponent({
   name: "FormErrors",
@@ -40,8 +40,14 @@ export default defineComponent({
   },
   setup(props) {
     const messageList = computed(() => {
-      if (props.messages && props.messages.length) {
-        const msgs = props.messages.filter((message: MessageModel) => !message.isError);
+      if (
+        props.messages &&
+        props.messages.length
+      ) {
+        const msgs = props.messages.filter(
+          (message: MessageModel) =>
+            !message.isError
+        );
         if (msgs) {
           return msgs.map((m) => m.message);
         }

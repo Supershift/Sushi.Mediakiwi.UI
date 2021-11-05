@@ -1,5 +1,7 @@
-import FieldModel from "@/models/FieldModel";
 import MessageModel from "@/models/MessageModel";
+import FieldModel from "@/models/Mediakiwi/FieldModel";
+import { MediakiwiFormVueType } from "@/models/Mediakiwi/MediakiwiFormVueType";
+import { MediakiwiJSEventType } from "@/models/Mediakiwi/MediakiwiJSEventType";
 
 export enum ExpressionType {
   Full = 0,
@@ -135,12 +137,12 @@ export const emptyField = {
   propertyType: "string",
   fieldIcon: "plus",
   title: "Test Property",
-  vueType: "5",
+  vueType: MediakiwiFormVueType.formText,
   expression: 1,
   value: "User input",
   options: null,
   className: null,
-  event: null,
+  event: MediakiwiJSEventType.none,
   inputPost: null,
   section: 0,
   hidden: null,
@@ -154,6 +156,8 @@ export const emptyField = {
   readOnly: false,
   helpText: "This field can do stuff",
   componentKey: 0,
-  error: { message: "", isError: false, propertyName: "" },
+  error: { message: FieldValidationTypeMessage.none, isError: false, propertyName: "", code: FieldValidationType.none },
   locale: "en",
+  weekStart: null,
+  mandatory: false
 } as FieldModel;

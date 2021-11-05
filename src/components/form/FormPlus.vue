@@ -3,20 +3,27 @@
     <a
       :id="fieldID"
       :class="plusClasses"
-      @click="handleClick" 
-      :readonly="field?.disabled || field.readOnly"
-    >
+      @click="handleClick"
+      :readonly="
+        field?.disabled || field.readOnly
+      "
+      ><!-- eslint-disable-next-line vue/no-unregistered-components -->
       <fa icon="plus" class="plus-svg" />
     </a>
-</div>
+  </div>
 </template>
 <script lang="ts">
-import { PropType, computed, defineComponent  } from "vue";
-import FieldModel from "../../models/FieldModel";
-import { fieldMixins, ExpressionType } from "./../form";
+import {OutputExpressionType} from "@/models/Mediakiwi/OutputExpressionType";
+import {
+  PropType,
+  computed,
+  defineComponent,
+} from "vue";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {fieldMixins} from "./../form";
 
 export default defineComponent({
-  name: "FormPlus",  
+  name: "FormPlus",
   props: {
     field: {
       type: Object as PropType<FieldModel>,
@@ -29,11 +36,24 @@ export default defineComponent({
   },
   mixins: [fieldMixins],
   setup(props, context) {
-    const plusClasses = computed(() => { return ["plus-primary " + props.field.className]; });
-    const plusContainerClasses = computed(() => { return ["plus-container " + props.classname]; });
-    const fieldID = computed(() => { return`${props.field.propertyName}_plus`; });
+    const plusClasses = computed(() => {
+      return [
+        "plus-primary " + props.field.className,
+      ];
+    });
+    const plusContainerClasses = computed(() => {
+      return [
+        "plus-container " + props.classname,
+      ];
+    });
+    const fieldID = computed(() => {
+      return `${props.field.propertyName}_plus`;
+    });
     const isHalf = computed(() => {
-        return props.field.expression !== ExpressionType.Full;
+      return (
+        props.field.expression !==
+        OutputExpressionType.full
+      );
     });
     function handleClick(e: Event) {
       context.emit("clicked", e);
@@ -70,15 +90,13 @@ export default defineComponent({
     height: 50px;
     width: 50px;
     box-shadow: 0 0 5px #000;
-   
   }
   &.small {
-    .plus-svg{
+    .plus-svg {
       width: 30px;
       height: 30px;
       font-size: $font-size-s;
     }
   }
-
 }
 </style>

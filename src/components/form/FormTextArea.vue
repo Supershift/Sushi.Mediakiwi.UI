@@ -7,14 +7,19 @@
       rows="3"
       type="text"
       :class="customTextAreaClasses"
-      @change="handleChange"
-    />
+      @change="handleChange" />
   </div>
 </template>
 <script lang="ts">
-import { computed, defineComponent, onBeforeMount, PropType, ref } from "vue";
-import { fieldMixins } from "./index";
-import FieldModel from "../../models/FieldModel";
+import {
+  computed,
+  defineComponent,
+  onBeforeMount,
+  PropType,
+  ref,
+} from "vue";
+import {fieldMixins} from "./index";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
 
 export default defineComponent({
   name: "FormTextArea",
@@ -33,15 +38,28 @@ export default defineComponent({
     let offset = ref<number>(0);
     let valueRef = ref(props.field?.value);
     // const root = ref(null);
-    const fieldID = computed(() => `_${props.field?.className}-${props.field?.propertyName}`);
-    const customTextAreaClasses = computed(() => ["textarea-primary ", props.field?.className]);
-    const customTextAreaContainerClasses = computed(() => ["textarea-container ", props?.classname]);
+    const fieldID = computed(
+      () =>
+        `_${props.field?.className}-${props.field?.propertyName}`
+    );
+    const customTextAreaClasses = computed(() => [
+      "textarea-primary ",
+      props.field?.className,
+    ]);
+    const customTextAreaContainerClasses =
+      computed(() => [
+        "textarea-container ",
+        props?.classname,
+      ]);
     function handleChange(e: Event) {
       context.emit("onChange", e, valueRef);
     }
     function autoResize(element: HTMLElement) {
       element.style.height = "auto";
-      element.style.height = element.scrollHeight + offset.value + "px";
+      element.style.height =
+        element.scrollHeight +
+        offset.value +
+        "px";
     }
     onBeforeMount(() => {
       // root.addEventListener("input", (e) => autoResize(e.target));
@@ -54,7 +72,7 @@ export default defineComponent({
       customTextAreaClasses,
       customTextAreaContainerClasses,
       handleChange,
-      autoResize
+      autoResize,
     };
   },
 });

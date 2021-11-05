@@ -34,7 +34,7 @@ import MessageModel from "../models/MessageModel";
 import InputModel from "../models/InputModel";
 import ButtonModel from "../models/ButtonModel";
 import { store } from "../store";
-import { fieldMixins, FieldValidationType, FieldValidationTypeMessage } from "./form";
+import { fieldMixins } from "./form";
 
 export default defineComponent({
   name: "ForgottenPassword",
@@ -44,7 +44,7 @@ export default defineComponent({
     CustomInput,
     CustomButton,
   },
-  setup(props, context) {
+  setup() {
     let errorMessages = reactive<MessageModel[]>([]);
     const validEmail = ref(false);
     const contentForgottenPassword = computed(

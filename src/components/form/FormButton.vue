@@ -2,29 +2,40 @@
   <button
     :class="customButtonClasses"
     @click.prevent="handleClicked"
-    :disabled="field?.disabled || field.readOnly"
-  >
-    {{ field.value }}
+    :disabled="
+      button?.disabled || button.readOnly
+    ">
+    {{ button.value }}
   </button>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
-import FieldModel from "../../models/FieldModel";
+import {ButtonModel} from "@/models/Mediakiwi/ButtonModel";
+import {
+  computed,
+  defineComponent,
+  PropType,
+} from "vue";
 
 export default defineComponent({
   name: "FormButton",
   props: {
-    field: {
-      type: Object as PropType<FieldModel>,
+    button: {
+      type: Object as PropType<ButtonModel>,
       required: true,
     },
   },
   emits: ["button-clicked"],
   setup(props, context) {
-    const customButtonClasses = computed(() => ["btn ", props.field?.className]);
+    const customButtonClasses = computed(() => [
+      "btn ",
+      props.button?.className,
+    ]);
     function handleClicked() {
-      context.emit("button-clicked", props.field.value);
+      context.emit(
+        "button-clicked",
+        props.button.value
+      );
     }
     return {
       customButtonClasses,
@@ -39,7 +50,7 @@ export default defineComponent({
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    &:hover{
+    &:hover {
       background: $color-main;
     }
   }

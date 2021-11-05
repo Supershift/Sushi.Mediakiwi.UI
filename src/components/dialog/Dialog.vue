@@ -3,6 +3,7 @@
     v-if="dialog.show"
     class="dialog-container">
     <div class="dialog-bubble">
+      <!-- eslint-disable-next-line vue/no-unregistered-components -->
       <fa
         icon="sort-up"
         class="dialog-top-icon" />

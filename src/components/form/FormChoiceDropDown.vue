@@ -15,15 +15,14 @@
       :class="customDropdownClasses"
       :disabled="field.disabled || field.readOnly"
       ref="dropdown"
-      @input="handleChange"
-    />
+      @input="handleChange" />
     <label v-if="undefinedCheck(field.suffix)">
       {{ undefinedCheck(field.suffix) }}
     </label>
   </div>
 </template>
 <script lang="ts">
-import { fieldMixins } from "./index";
+import {fieldMixins} from "./index";
 import {
   computed,
   defineComponent,
@@ -31,9 +30,10 @@ import {
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/FieldModel";
+import FieldModel from "../../models/Mediakiwi/FieldModel";
 import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
+import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
 
 export default defineComponent({
   name: "FormChoiceDropdown",
@@ -58,26 +58,34 @@ export default defineComponent({
       "dropdown-primary ",
       props.field.className,
     ]);
-    const fieldID = computed(() => [props.field.propertyName+"_dropdown"]);
-    const customDropdownContainerClasses = computed(() => [
-      "dropdown-container ",
-      props.classname,
+    const fieldID = computed(() => [
+      props.field.propertyName + "_dropdown",
     ]);
+    const customDropdownContainerClasses =
+      computed(() => [
+        "dropdown-container ",
+        props.classname,
+      ]);
     const select2data = computed(() => {
       if (!localField.value?.options) {
         return [];
       }
 
-      return localField.value.options.items.map((r) => {
-        return {
-          id: r.value,
-          label: r.text,
-          disabled: false,
-        };
-      });
+      return localField.value.options.items.map(
+        (r) => {
+          return {
+            id: r.value,
+            label: r.text,
+            disabled: false,
+          };
+        }
+      );
     });
     function handleChange(e: Event) {
-      if (localField.value?.event !== "none") {
+      if (
+        localField.value?.event !==
+        MediakiwiJSEventType.none
+      ) {
         context.emit("on-change", e, localField);
       }
     }
@@ -102,7 +110,7 @@ export default defineComponent({
   margin-bottom: 15px;
   width: 100%;
 }
-.vs__dropdown-toggle{
+.vs__dropdown-toggle {
   height: 50px;
   border: 1px solid #aaa;
   border-radius: $b-radius-6;
