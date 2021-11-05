@@ -45,7 +45,7 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
     valueType: {
       type: String,

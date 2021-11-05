@@ -9,9 +9,7 @@
       :options="field?.options"
       :allow-custom="true"
       :show-count="false"
-      v-on="
-        customEventHandler(field, handleChange)
-      " />
+      @change-made="handleChange" />
     <label v-if="undefinedCheck(field?.suffix)">{{
       undefinedCheck(field.suffix)
     }}</label>
@@ -19,10 +17,7 @@
 </template>
 
 <script lang="ts">
-import {
-  customEventHandler,
-  fieldMixins,
-} from "./index";
+import {fieldMixins} from "./index";
 import {
   computed,
   defineComponent,
@@ -73,7 +68,6 @@ export default defineComponent({
       tagRef,
       customRichtextContainerClasses,
       handleChange,
-      customEventHandler,
     };
   },
 });

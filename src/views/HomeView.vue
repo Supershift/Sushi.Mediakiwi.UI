@@ -1,6 +1,6 @@
 <template>
   <MainComponent v-if="isLayerMode" />
-  <Drawer v-else :toggler="openDrawer">
+  <Drawer v-else>
     <template #drawer>
       <!-- You cam place something here to display below the list, inside the drawer -->
     </template>

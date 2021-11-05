@@ -16,7 +16,6 @@
 import {
   computed,
   defineComponent,
-  onBeforeMount,
   PropType,
   ref,
 } from "vue";
@@ -35,7 +34,7 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   mixins: [fieldMixins],

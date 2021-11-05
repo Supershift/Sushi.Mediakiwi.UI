@@ -5,13 +5,13 @@
     </label>
     <dropdown
       v-model="selectedValueRef"
-      tabindex="1"
+      :tabindex="1"
       :id="fieldID"
       :name="field.propertyName"
       :options="optionData"
       placeholder=""
-      clearable="true"
-      taggable="false"
+      :clearable="true"
+      :taggable="false"
       :class="customDropdownClasses"
       :disabled="field.disabled || field.readOnly"
       ref="dropdown"
@@ -44,7 +44,7 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   mixins: [fieldMixins],

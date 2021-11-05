@@ -233,17 +233,11 @@ export default defineComponent({
       field: FieldModel,
       value: unknown
     ) {
-      // eslint-disable-next-line no-console
-      console.log("field", field);
-      // eslint-disable-next-line no-console
-      console.log("value", value);
-
       // Update the field's value
       field.value = value;
 
       if (field.autoPostBack) {
-        // eslint-disable-next-line no-console
-        console.log("trigger mediakiwi api");
+        // TODO trigger API
       }
     }
     function handleButtonClicked(

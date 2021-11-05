@@ -31,10 +31,11 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   mixins: [fieldMixins],
+  emits: ["clicked"],
   setup(props, context) {
     const plusClasses = computed(() => {
       return [

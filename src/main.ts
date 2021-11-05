@@ -31,8 +31,6 @@ router.beforeEach((to, from, next) => {
       // console.log("Please login first", from.fullPath);
     } else {
       // to.meta.title = to.params.project_name_slug;
-      // eslint-disable-next-line no-console
-      console.log(to)
       if (to.query.openinframe) {
         store.state.isLayerMode = true;
       }

@@ -65,7 +65,7 @@ export default {
         return [];
       },
     },
-    options: {type: Array, required: true},
+    options: {type: Array, required: false},
     allowCustom: {type: Boolean, default: true},
     showCount: {type: Boolean, default: false},
   },
