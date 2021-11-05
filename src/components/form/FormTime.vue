@@ -10,7 +10,6 @@
 import FormDateTime from "./FormDateTime.vue";
 import {defineComponent, PropType} from "vue";
 import FieldModel from "../../models/Mediakiwi/FieldModel";
-import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
 
 export default defineComponent({
   name: "FormTime",
@@ -29,13 +28,12 @@ export default defineComponent({
   },
   emits: ["on-change"],
   setup(props, context) {
-    function handleChange(e: Event, value: Date) {
-      if (
-        props.field.event !==
-        MediakiwiJSEventType.none
-      ) {
-        context.emit("on-change", e, value);
-      }
+    function handleChange(
+      e: Event,
+      field: FieldModel,
+      value: unknown
+    ) {
+      context.emit("on-change", e, field, value);
     }
     return {
       handleChange,

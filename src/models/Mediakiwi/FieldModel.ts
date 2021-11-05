@@ -36,4 +36,5 @@ export default interface FieldModel {
   componentKey?: number;
   locale?: string | null;
   weekStart?: number | null;
+  autoPostBack?: boolean | null
 }

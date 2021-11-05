@@ -238,6 +238,11 @@ export default defineComponent({
 
       // Update the field's value
       field.value = value;
+
+      if (field.autoPostBack) {
+        // eslint-disable-next-line no-console
+        console.log("trigger mediakiwi api");
+      }
     }
     function handleButtonClicked(
       e: Event,
