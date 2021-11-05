@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { store } from "@/store"; import App from "./App.vue";
 import router from "./router";
 import { api } from "./utils/api";
+import { mediakiwiLogic } from "./utils/mediakiwiLogic";
 
 library.add(
   fas,
@@ -30,6 +31,12 @@ router.beforeEach((to, from, next) => {
       // console.log("Please login first", from.fullPath);
     } else {
       // to.meta.title = to.params.project_name_slug;
+      // eslint-disable-next-line no-console
+      console.log(to)
+      if (to.query.openinframe) {
+        store.state.isLayerMode = true;
+      }
+
       // Fetch the Mediakiwi data
       api.fetchMediakiwiAPI(to.fullPath).then(() => {
         next();
@@ -60,3 +67,5 @@ createApp(App).use(router)
   .component("fa", FontAwesomeIcon)
   .use(store)
   .mount("#app");
+
+mediakiwiLogic.bind();

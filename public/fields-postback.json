@@ -367,11 +367,11 @@
       "vueType": 21,
       "expression": 0,
       "value": {
-        "id": 13,
-        "name": "original item name",
+        "id": 123,
+        "name": "item name",
         "width": 240,
         "height": 240,
-        "href": "path-to-image.png"
+        "href": "?folder=1"
       },
       "options": null,
       "className": null,

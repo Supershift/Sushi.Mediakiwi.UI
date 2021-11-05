@@ -28,7 +28,7 @@
       </template>
 
       <!-- eslint-disable vue/no-static-inline-styles -->
-      <span
+      <!-- <span
         style="
           position: absolute;
           right: 0px;
@@ -40,7 +40,7 @@
         ">
         fetchedFieldValues:
         <pre>{{ fetchedFieldValues }}</pre>
-      </span>
+      </span> -->
 
       <template
         v-if="
@@ -82,7 +82,6 @@ import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
 import ResourcesComponent from "./resources/ResourcesComponent.vue";
 import ButtonListComponent from "./ButtonListComponent.vue";
-import FieldModel from "@/models/Mediakiwi/FieldModel";
 
 export default defineComponent({
   name: "MainView",
@@ -146,6 +145,11 @@ export default defineComponent({
   .main-container {
     margin: 0;
     padding-top: 15px;
+    padding-left: 30px;
+  }
+}
+.drawer-container {
+  .main-container {
     padding-left: 50px;
   }
 }

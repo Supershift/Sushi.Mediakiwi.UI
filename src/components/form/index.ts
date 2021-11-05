@@ -63,3 +63,15 @@ export function customEventHandler(field: FieldModel, callback: any) {
   }, {});
   return e;
 }
+
+export function getSublistSelectValueLabel(value: any) {
+  if (value && value.name) {
+    if (value.href) {
+      return `${value.name} <span>(${value.href})</span>`;
+    }
+    else if (value.width) {
+      return `${value.name} <span>(${value.width}px / ${value.height}px)</span>`;
+    }
+  }
+  return "";
+}

@@ -1,5 +1,4 @@
 import { ButtonRequestMethodType } from "@/models/Mediakiwi/ButtonRequestMethodType";
-import MediakiwiModel from "@/models/Mediakiwi/MediakiwiModel";
 import GetMediakiwiRequestModel from "@/models/Mediakiwi/Request/getMediakiwiRequestModel";
 import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
 import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
@@ -60,8 +59,15 @@ export const api = {
       store.dispatch("toggleMediakiwiLoading");
 
       // call the POST method
+      const referId = <string>router.currentRoute.value.query.referid;
       store.dispatch(method, request).then((response: MediakiwiResponseModel) => {
         if (response) {
+          if (response.closeLayer && referId) {
+            // trigger the mediakiwi logic on the parent window
+            window.parent.mediakiwiLogic.fillSublistSelect(referId, response.fields);
+            window.parent.mediakiwiLogic.closeLayer();
+          }
+
           // Handle response
           mediakiwiLogic.putResponseToStore(response)
 

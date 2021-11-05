@@ -18,6 +18,7 @@ import FolderModel from "@/models/Mediakiwi/FolderModel";
 import ResourceModel from "@/models/Mediakiwi/ResourceModel";
 import { ButtonModel } from "@/models/Mediakiwi/ButtonModel";
 import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
+import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
 const loggedinKey = "ananda_vaultn_loggedin";
 
 // define your typings for the store state
@@ -40,6 +41,7 @@ export interface State {
   grids: GridModel[] | null,
   folders: FolderModel[] | null,
   buttons: ButtonModel[] | null,
+  isLayerMode: boolean,
 }
 
 // define injection key
@@ -89,6 +91,7 @@ export const store = createStore<State>({
     resources: [],
     grids: [],
     folders: [],
+    isLayerMode: false
   },
   mutations: {
     toggleDrawer(state: State) {
@@ -206,14 +209,27 @@ export const store = createStore<State>({
           });
       });
     },
-    putMediakiwiAPI(context, request) {
+    putMediakiwiAPI() {
       return new Promise((resolve, reject) => {
-        axios.put(request.url, request)
-          .then((response) => resolve(response.data))
+        // TODO enable REAL the web api
+        axios.get("/fields-postback.json")
+          .then((response) => {
+            const responseData: MediakiwiResponseModel = response.data;
+            // TODO Remove
+            responseData.closeLayer = true;
+            resolve(responseData);
+          })
           .catch((err) => {
             alert("Something went wrong while fetching the page");
             reject(err);
           });
+
+        // axios.put(request.url, request)
+        //   .then((response) => resolve(response.data))
+        //   .catch((err) => {
+        //     alert("Something went wrong while fetching the page");
+        //     reject(err);
+        //   });
       });
     },
     toggleMediakiwiLoading(context) {
@@ -292,6 +308,7 @@ export const store = createStore<State>({
           value: field.value
         }
       });
-    }
+    },
+    isLayerMode: (state) => state.isLayerMode
   },
 });

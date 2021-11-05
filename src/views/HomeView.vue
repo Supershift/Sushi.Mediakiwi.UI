@@ -1,5 +1,6 @@
 <template>
-  <Drawer :toggler="openDrawer">
+  <MainComponent v-if="isLayerMode" />
+  <Drawer v-else :toggler="openDrawer">
     <template #drawer>
       <!-- You cam place something here to display below the list, inside the drawer -->
     </template>
@@ -11,9 +12,11 @@
 </template>
 
 <script>
+import {store} from "@/store";
 import {
   defineComponent,
   defineAsyncComponent,
+  computed,
 } from "vue";
 import MainComponent from "../components/Main.vue";
 
@@ -32,6 +35,14 @@ export default defineComponent({
     MainComponent,
     Drawer,
     NavigationBar,
+  },
+  setup() {
+    const isLayerMode = computed(
+      () => store.getters.isLayerMode
+    );
+    return {
+      isLayerMode,
+    };
   },
 });
 </script>

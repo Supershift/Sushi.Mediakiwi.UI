@@ -30,4 +30,5 @@ export default interface MediakiwiModel {
   isSharedField: boolean;
   sharedFieldValue?: string;
   resources: ResourceModel[]
+  referId?: string
 }

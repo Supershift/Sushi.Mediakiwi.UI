@@ -23,7 +23,7 @@ import {
   computed,
   defineComponent,
   PropType,
-} from "@vue/runtime-core";
+} from "vue";
 import FormButton from "./form/FormButton.vue";
 
 export default defineComponent({
@@ -48,7 +48,9 @@ export default defineComponent({
     function handleClicked(value: ButtonModel) {
       if (value) {
         const request =
-          mediakiwiLogic.getMediakiwiModelFromStore();
+          mediakiwiLogic.getMediakiwiModelFromStore(
+            value.propertyName
+          );
 
         switch (value.requestMethod) {
           case ButtonRequestMethodType.put:

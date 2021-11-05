@@ -112,6 +112,7 @@ import FormChoiceRadio from "./FormChoiceRadio.vue";
 import FormChoiceCheckbox from "./FormChoiceCheckBox.vue";
 import FormTime from "./FormTime.vue";
 import FormDateTime from "./FormDateTime.vue";
+import FormSublistSelect from "./FormSublistSelect.vue";
 import {OutputExpressionType} from "@/models/Mediakiwi/OutputExpressionType";
 import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
 
@@ -148,6 +149,7 @@ export default defineComponent({
     FormTextline,
     FormRichText,
     FormChoiceRadio,
+    FormSublistSelect,
   },
   emits: [
     "toggle",
