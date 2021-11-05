@@ -70,7 +70,9 @@ import ButtonListComponent from "./ButtonListComponent.vue";
 import OptionModel from "../models/OptionModel";
 import ItemModel from "../models/OptionItemModel";
 import { FieldValidationType, FieldValidationTypeMessage } from "./form";
-import FieldModel from "../models/FieldModel";
+import FieldModel from "../models/Mediakiwi/FieldModel";
+import { MediakiwiFormVueType } from "../models/Mediakiwi/MediakiwiFormVueType";
+import { MediakiwiJSEventType } from "../models/Mediakiwi/MediakiwiJSEventType";
 
 export default defineComponent({
   name: "MainView",
@@ -137,12 +139,12 @@ export default defineComponent({
       propertyType: "string",
       fieldIcon: "plus",
       title: "Test Property",
-      vueType: "5",
+      vueType: MediakiwiFormVueType.formText,
       expression: 1,
       value: "User input",
       options: customOptionTest,
       className: null,
-      event: null,
+      event: MediakiwiJSEventType.none,
       inputPost: "test123",
       section: 0,
       hidden: null,
@@ -154,7 +156,6 @@ export default defineComponent({
       canDeleteSection: false,
       toggleDefaultClosed: false,
       readOnly: false,
-      helpText: "This field can do stuff",
       componentKey: 0,
       error: {
         message: FieldValidationTypeMessage.none,
