@@ -67,12 +67,6 @@ import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
 import ResourcesComponent from "./resources/ResourcesComponent.vue";
 import ButtonListComponent from "./ButtonListComponent.vue";
-import OptionModel from "../models/OptionModel";
-import ItemModel from "../models/OptionItemModel";
-import { FieldValidationType, FieldValidationTypeMessage } from "./form";
-import FieldModel from "../models/Mediakiwi/FieldModel";
-import { MediakiwiFormVueType } from "../models/Mediakiwi/MediakiwiFormVueType";
-import { MediakiwiJSEventType } from "../models/Mediakiwi/MediakiwiJSEventType";
 
 export default defineComponent({
   name: "MainView",
@@ -107,65 +101,6 @@ export default defineComponent({
       () => store.getters.bottomButtons
     );
 
-    // TODO Delete
-    const customItemsTest = [
-      {
-        value: "Hello",
-        text: "hello",
-        enabled: true,
-        selected: true,
-      },
-      {
-        value: "world",
-        text: "world",
-        enabled: true,
-        selected: false,
-      },
-      {
-        value: "test",
-        text: "test",
-        enabled: true,
-        selected: false,
-      },
-    ] as ItemModel[];
-    const customOptionTest = {
-      items: customItemsTest,
-      count: 1,
-    } as OptionModel;
-
-    const test = ref<FieldModel>({
-      contentTypeID: 10,
-      propertyName: "TestProperty",
-      propertyType: "string",
-      fieldIcon: "plus",
-      title: "Test Property",
-      vueType: MediakiwiFormVueType.formText,
-      expression: 1,
-      value: "User input",
-      options: customOptionTest,
-      className: null,
-      event: MediakiwiJSEventType.none,
-      inputPost: "test123",
-      section: 0,
-      hidden: null,
-      groupName: null,
-      suffix: null,
-      prefix: null,
-      formSection: null,
-      canToggleSection: false,
-      canDeleteSection: false,
-      toggleDefaultClosed: false,
-      readOnly: false,
-      componentKey: 0,
-      error: {
-        message: FieldValidationTypeMessage.none,
-        isError: false,
-        propertyName: "",
-        code: FieldValidationType.none,
-      },
-      locale: "",
-      weekStart: 7,
-    });
     const customNotifications = ref<
       MessageModel[]
     >([]);
