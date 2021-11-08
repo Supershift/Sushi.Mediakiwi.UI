@@ -106,7 +106,7 @@ export default defineComponent({
     }
   }
 }
-@media (min-width: 480px) {
+@media (min-width: 786px) {
   .navigation-link {
     padding: 15px;
     width: unset;

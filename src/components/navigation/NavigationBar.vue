@@ -82,7 +82,6 @@ export default defineComponent({
       height: 60px;
       border-radius: 6px;
       color: #2aa1e8;
-      border: 2px solid $color-blue;
       flex: 0 0 60px;
     }
     &-icon {
@@ -106,7 +105,8 @@ export default defineComponent({
   margin-left: 10px;
   margin-top: 5px;
 }
-@media (min-width: 480px) {
+
+@media (min-width: 786px) {
   .navigation-bar {
     height: 90px;
     .navigation-content {
@@ -119,6 +119,7 @@ export default defineComponent({
     }
     h2 {
       padding-left: 15px;
+      z-index: 999;
     }
   }
 }

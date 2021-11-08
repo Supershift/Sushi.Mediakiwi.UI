@@ -56,7 +56,7 @@ export default defineComponent({
       () => store.getters.dialog
     );
     function handleSignOut() {
-      //   console.log("TODO: Logout!");
+      store.dispatch("signOut");
     }
     return {
       profileData,

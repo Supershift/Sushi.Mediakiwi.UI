@@ -52,7 +52,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
 }
-@media (min-width: 480px) {
+@media (min-width: 786px) {
   .navigation-menu {
     position: absolute;
     flex-direction: row;

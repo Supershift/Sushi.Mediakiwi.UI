@@ -35,6 +35,7 @@ import {store} from "@/store";
 export default defineComponent({
   name: "Profile",
   setup() {
+    const breakpointTablet = 986;
     const profileData = computed(
       () => store.getters.profileData
     );
@@ -42,7 +43,10 @@ export default defineComponent({
       () => store.getters.brandData
     );
     function handleDialogToggle() {
-      store.dispatch("toggleDialog");
+      // Only toggle if the window is small (mobile)
+      if (window.innerWidth > breakpointTablet) {
+        store.commit("toggleDialog");
+      }
     }
     return {
       profileData,
@@ -117,6 +121,7 @@ export default defineComponent({
     }
   }
 }
+
 @media (min-width: 480px) {
   .profile-container {
     background-image: url("../../assets/images/user-bg.png");
@@ -130,12 +135,13 @@ export default defineComponent({
         top: unset;
       }
     }
-
   }
+
+}
+@media (min-width: 960px) {
   .profile-brand,
   .profile-company-circle  {
     display: block;
-  }
-
+  } 
 }
 </style>

@@ -63,7 +63,7 @@ export default defineComponent({
   },
   setup(props) {
     const open = ref(props.toggler);
-    const customListClass = ref("list-menu");
+    const customListClass = ref("side-list-menu");
     const positionCss = computed(() =>
       props.right
         ? ["sidebar-container right-0 flex-row "]
@@ -184,13 +184,7 @@ export default defineComponent({
     margin-left: 0;
   }
 }
-.list-menu {
-  position: relative;
-  padding: 0;
-  list-style-type: none;
-  margin: 0;
-  z-index: 21;
-}
+
 .topleft-nav-gradient {
   transition: width 0.25s ease-in-out;
   transition-property: left;
