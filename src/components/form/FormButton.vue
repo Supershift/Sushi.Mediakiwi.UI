@@ -6,7 +6,7 @@
     :disabled="
       button?.disabled || button.readOnly
     ">
-    {{ button.value }}
+    <fa :icon="buttonIconChoice" class="btn-icon" />{{ button.value }}
   </a>
   <button
     v-else
@@ -15,12 +15,12 @@
     :disabled="
       button?.disabled || button.readOnly
     ">
-    {{ button.value }}
+    <fa :icon="buttonIconChoice" class="btn-icon" />{{ button.value }}
   </button>
 </template>
 
 <script lang="ts">
-import {ButtonModel} from "@/models/Mediakiwi/ButtonModel";
+import {ButtonModel} from "../../models/Mediakiwi/ButtonModel";
 import {
   computed,
   defineComponent,
@@ -38,9 +38,10 @@ export default defineComponent({
   emits: ["button-clicked"],
   setup(props, context) {
     const customButtonClasses = computed(() => [
-      "btn ",
+      "btn btn-secundary",
       props.button?.className,
     ]);
+    const buttonIconChoice = computed(() => ["fal", props.button.icon]);
     function handleClicked() {
       context.emit(
         "button-clicked",
@@ -49,6 +50,7 @@ export default defineComponent({
     }
     return {
       customButtonClasses,
+      buttonIconChoice,
       handleClicked,
     };
   },
@@ -59,6 +61,8 @@ export default defineComponent({
 .btn {
   text-decoration: none;
   display: inline-block;
+  font-family: $font-primary;
+  font-size: $font-size-base;
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -66,5 +70,8 @@ export default defineComponent({
       background: $color-main;
     }
   }
+}
+.btn-icon {
+  padding-right: 15px;
 }
 </style>

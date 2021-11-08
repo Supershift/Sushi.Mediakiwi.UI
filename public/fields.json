@@ -437,6 +437,7 @@
       "customUrl": null,
       "layerConfiguration": null,
       "isPrimary": false,
+      "icon": "times",
       "iconTarget": 0,
       "requestMethod": 2
     },
@@ -477,7 +478,8 @@
       "customUrl": "?item=0",
       "layerConfiguration": null,
       "isPrimary": false,
-      "iconTarget": 1
+      "iconTarget": 1,
+      "icon": "plus"
     },
     {
       "contentTypeID": 29,
@@ -517,6 +519,7 @@
       "layerConfiguration": null,
       "isPrimary": true,
       "iconTarget": 2,
+      "icon": "save",
       "requestMethod": 1
     },
     {
@@ -557,7 +560,8 @@
       "layerConfiguration": null,
       "isPrimary": true,
       "iconTarget": 3,
-      "requestMethod": 0
+      "requestMethod": 0,
+      "icon":"expand-arrows-alt"
     }
   ],
   "notifications": [

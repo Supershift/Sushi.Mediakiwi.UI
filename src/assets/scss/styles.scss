@@ -64,6 +64,11 @@ ul {
         border: 2px solid $color-main outset;
     }
 }
+.btn-secundary {
+    background: $color-hover-blue;
+    color: #fff;
+    box-shadow: none;
+}
 
 input:not([type=radio]):not([class=vs__search]),
 select,
