@@ -121,15 +121,18 @@ export default defineComponent({
     z-index: 20;
   }
   .slot-content-container {
-    width: -webkit-fill-available;
+    width: 100%;
     display: flex;
     flex-direction: column;
+  }
+  .open-drawer ~ .slot-content-container {
+    width: 0%;
   }
   .open-drawer {
     transition: max-height 0.25s ease-in-out;
     transition-duration: 0.25s;
     transition-property: width;
-    width: 225px;
+    width: 100%;
     .topleft-nav-gradient {
       transition: width 0.25s ease-in-out;
       transition-property: left;
@@ -206,5 +209,16 @@ export default defineComponent({
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+@media (min-width: 480px) {
+  .drawer-container{
+    .open-drawer{
+      width: 225px;
+    }
+    .slot-content-container {
+      width: -webkit-fill-available !important;
+    }
+  }
 }
 </style>

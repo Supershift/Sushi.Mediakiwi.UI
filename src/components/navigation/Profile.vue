@@ -97,6 +97,7 @@ export default defineComponent({
       height: 48px;
       width: 48px;
       right: 20px;
+      top: 15px;
       background: white;
       border-radius: 50%;
       position: absolute;
@@ -126,6 +127,7 @@ export default defineComponent({
       margin-top: 15px;
       .avatar {
         right: 54px;
+        top: unset;
       }
     }
 

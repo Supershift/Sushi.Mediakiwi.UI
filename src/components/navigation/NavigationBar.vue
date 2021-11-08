@@ -95,7 +95,7 @@ export default defineComponent({
     margin: 0;
     display: inline-block;
     vertical-align: top;
-    padding-left: 45px;
+    text-align: center;
   }
 }
 
