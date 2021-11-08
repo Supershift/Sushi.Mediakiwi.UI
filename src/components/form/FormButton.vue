@@ -38,7 +38,7 @@ export default defineComponent({
   emits: ["button-clicked"],
   setup(props, context) {
     const customButtonClasses = computed(() => [
-      "btn btn-secundary",
+      "btn ",
       props.button?.className,
     ]);
     const buttonIconChoice = computed(() => ["fal", props.button.icon]);
