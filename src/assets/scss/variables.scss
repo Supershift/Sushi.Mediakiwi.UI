@@ -155,7 +155,8 @@ $color-grad-alert: linear-gradient(to right, #9d1515, #f00);
 /* Hover & other colors */
 $color-hover-blue: linear-gradient(to right, #1481fe, #29c7fd);
 $color-hover-blue-invis: linear-gradient(to right, #25a6ed, #25a7ed00);
-$box-shadow: 0 0 10px #000;
+$box-shadow-0: 0 0 5px #000;
+$box-shadow-1: 0 0 5px $color-main;
 $border-purple: 2px solid #203195 outset;
 $opacity-inactive: 0.5;
 
