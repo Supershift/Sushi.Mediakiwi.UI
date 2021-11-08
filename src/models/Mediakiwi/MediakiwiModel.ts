@@ -1,5 +1,5 @@
 import ButtonModel from "../ButtonModel";
-import FieldModel from "../FieldModel";
+import FieldModel from "./FieldModel";
 import BreadcrumbModel from "./BreadcrumbModel";
 import FolderModel from "./FolderModel";
 import GridModel from "./GridModel";
@@ -30,4 +30,5 @@ export default interface MediakiwiModel {
   isSharedField: boolean;
   sharedFieldValue?: string;
   resources: ResourceModel[]
+  referId?: string
 }

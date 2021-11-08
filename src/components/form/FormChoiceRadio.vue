@@ -18,7 +18,7 @@
         :disabled="
           field.disabled || field.readOnly
         "
-        @change="handleChage" />
+        @change="handleChange" />
       <label :for="fieldID(option)">{{
         option.text
       }}</label>
@@ -56,7 +56,7 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   mixins: [fieldMixins],
@@ -90,7 +90,12 @@ export default defineComponent({
         props.field.event !==
         MediakiwiJSEventType.none
       ) {
-        context.emit("on-change", e, valueRef);
+        context.emit(
+          "on-change",
+          e,
+          props.field,
+          valueRef
+        );
       }
     }
     return {

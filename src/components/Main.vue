@@ -101,6 +101,10 @@ export default defineComponent({
       () => store.getters.bottomButtons
     );
 
+    const fetchedFieldValues = computed(
+      () => store.getters.fieldValues
+    );
+
     const customNotifications = ref<
       MessageModel[]
     >([]);
@@ -113,6 +117,7 @@ export default defineComponent({
       fetchedResources,
       fetchedTopButtons,
       fetchedBottomButtons,
+      fetchedFieldValues,
     };
   },
 });
@@ -125,6 +130,11 @@ export default defineComponent({
   .main-container {
     margin: 0;
     padding-top: 15px;
+    padding-left: 30px;
+  }
+}
+.drawer-container {
+  .main-container {
     padding-left: 50px;
   }
 }

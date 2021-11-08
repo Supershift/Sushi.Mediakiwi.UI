@@ -19,6 +19,7 @@ import ResourceModel from "@/models/Mediakiwi/ResourceModel";
 import { FieldValidationType, FieldValidationTypeMessage, vueTypes } from "@/components/form";
 import { ButtonModel } from "@/models/Mediakiwi/ButtonModel";
 import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
+import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
 const loggedinKey = "ananda_vaultn_loggedin";
 
 // define your typings for the store state
@@ -41,6 +42,7 @@ export interface State {
   grids: GridModel[] | null,
   folders: FolderModel[] | null,
   buttons: ButtonModel[] | null,
+  isLayerMode: boolean,
 }
 
 // define injection key
@@ -146,6 +148,7 @@ export const store = createStore<State>({
     resources: [],
     grids: [],
     folders: [],
+    isLayerMode: false
   },
   mutations: {
     toggleDrawer(state: State) {
@@ -225,10 +228,10 @@ export const store = createStore<State>({
       context.commit("signOut");
     },
     getMediakiwiAPI(context, request) {
-      // Activate the loader
-      context.commit("toggleMediakiwiLoading");
+      // TODO Replace logic with an axios.post to the request.url
+      // the request should be passed as the requestBody
 
-      // TEMP; Determine what JSON to serve
+      // Determine what JSON to serve
       let apiPath = "/grids.json";
       if (request.url && request.url.indexOf("folder") > -1) {
         apiPath = "/folders.json";
@@ -249,6 +252,49 @@ export const store = createStore<State>({
             alert("Something went wrong while fetching the page");
             reject(err);
           });
+      });
+    },
+    postMediakiwiAPI(context, request) {
+      return new Promise((resolve, reject) => {
+        axios.post(request.url, request)
+          .then((response) => resolve(response.data))
+          .catch((err) => {
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          });
+      });
+    },
+    deleteMediakiwiAPI(context, request) {
+      return new Promise((resolve, reject) => {
+        axios.delete(request.url, request)
+          .then((response) => resolve(response.data))
+          .catch((err) => {
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          });
+      });
+    },
+    putMediakiwiAPI() {
+      return new Promise((resolve, reject) => {
+        // TODO enable REAL the web api
+        axios.get("/fields-postback.json")
+          .then((response) => {
+            const responseData: MediakiwiResponseModel = response.data;
+            // TODO Remove
+            responseData.closeLayer = true;
+            resolve(responseData);
+          })
+          .catch((err) => {
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          });
+
+        // axios.put(request.url, request)
+        //   .then((response) => resolve(response.data))
+        //   .catch((err) => {
+        //     alert("Something went wrong while fetching the page");
+        //     reject(err);
+        //   });
       });
     },
     toggleMediakiwiLoading(context) {
@@ -320,5 +366,14 @@ export const store = createStore<State>({
     bottomButtons: (state) => {
       return state.buttons?.filter((button) => (button.iconTarget === ButtonTargetType.bottomLeft || button.iconTarget === ButtonTargetType.bottomRight));
     },
+    fieldValues: (state) => {
+      return state.fields?.map((field) => {
+        return {
+          title: field.title,
+          value: field.value
+        }
+      });
+    },
+    isLayerMode: (state) => state.isLayerMode
   },
 });

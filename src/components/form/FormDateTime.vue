@@ -6,12 +6,12 @@
     <datetimepicker
       v-model="valueRef"
       :format="componentFormat"
-      @change="handleChange"
-      :time-picker="valueType === 'time'"
-      :enable-time-picker="valueType === 'time'"
+      @update:model-value="handleChange"
+      :time-picker="isTimePicker"
+      :enable-time-picker="hasTimePicker"
       :placeholder="componentFormat"
       :readonly="
-        field?.disabled || field.readOnly
+        field.disabled || field.readOnly
       ">
       <template #input-icon></template>
     </datetimepicker>
@@ -35,7 +35,6 @@ import {
   ref,
 } from "vue";
 import FieldModel from "../../models/Mediakiwi/FieldModel";
-import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
 
 export default defineComponent({
   name: "FormDateTime",
@@ -46,12 +45,12 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
     valueType: {
       type: String,
       required: false,
-      default: "",
+      default: "datetime",
     },
   },
   mixins: [fieldMixins],
@@ -64,6 +63,18 @@ export default defineComponent({
       () =>
         `datetime-container ${props.classname}`
     );
+
+    const hasTimePicker = computed(() =>
+      props.valueType === "time" ||
+      props.valueType === "datetime"
+        ? true
+        : false
+    );
+
+    const isTimePicker = computed(
+      () => props.valueType === "time"
+    );
+
     const daysOfTheWeek = 7;
     const settings = reactive({
       phrases: {
@@ -78,7 +89,19 @@ export default defineComponent({
         ? props.field.locale
         : "en-US",
     });
-    let valueRef = ref(new Date());
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let valueRef = ref<any>();
+    let currentValue = new Date(
+      props.field.value
+    );
+    if (isTimePicker.value) {
+      valueRef.value = {
+        hours: currentValue.getHours(),
+        minutes: currentValue.getMinutes(),
+      };
+    } else {
+      valueRef.value = currentValue;
+    }
     const componentFormat = computed(() => {
       switch (props.valueType) {
         case "date":
@@ -90,13 +113,41 @@ export default defineComponent({
       }
     });
     function handleChange() {
-      if (
-        props.field.event !==
-        MediakiwiJSEventType.none
-      ) {
-        context.emit("on-change", null, valueRef);
+      let dateValue;
+      if (valueRef.value) {
+        if (!(valueRef.value instanceof Date)) {
+          const now = new Date();
+          dateValue = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+            valueRef.value.hours,
+            valueRef.value.minutes,
+            0
+          );
+        } else {
+          dateValue = valueRef.value;
+        }
       }
+
+      let outputValue;
+      const timezonOffset = 60000;
+      if (dateValue) {
+        outputValue = new Date(
+          dateValue.getTime() -
+            dateValue.getTimezoneOffset() *
+              timezonOffset
+        ).toJSON();
+      }
+
+      context.emit(
+        "on-change",
+        null,
+        props.field,
+        outputValue
+      );
     }
+
     function checkLocale() {
       if (props.field.locale) {
         switch (
@@ -122,6 +173,8 @@ export default defineComponent({
       componentFormat,
       datetimeContainerClasses,
       handleChange,
+      isTimePicker,
+      hasTimePicker,
     };
   },
 });
