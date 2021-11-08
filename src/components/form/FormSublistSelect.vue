@@ -73,13 +73,11 @@ export default defineComponent({
     }
 
     function openLayer() {
-      const href = `http://localhost:8080/webcontent/path/pagex?item=1&openinframe=1&referid=${props.field.propertyName}`;
-      mediakiwiLogic.openLayer({
-        title: "Test",
-        width: "790px",
-        height: "450px",
-        href,
-      });
+      if (props.field.layerConfiguration) {
+        mediakiwiLogic.openLayer(
+          props.field.layerConfiguration
+        );
+      }
     }
 
     onMounted(() => {
@@ -151,7 +149,6 @@ export default defineComponent({
         color: #000 !important;
         font-weight: 400 !important;
         font-size: 13px;
-        height: 1.8 em;
         user-select: none;
         -webkit-user-select: none;
         &:last-child {
@@ -184,9 +181,7 @@ export default defineComponent({
     margin: 0 0 0 10px;
 
     a {
-      width: 30 px;
       display: inline-block;
-      height: 30 px;
       text-align: center;
       border-radius: 2px !important;
       background: #0fabd4 !important;

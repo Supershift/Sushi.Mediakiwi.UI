@@ -390,34 +390,13 @@
       "helpText": "This field can do stuff",
       "weekStart": 7,
       "fieldIcon": "",
-      "locale": "en-US"
-    },
-    {
-      "contentTypeID": 18,
-      "propertyName": "TestLink",
-      "propertyType": "string",
-      "title": "A link to the past!",
-      "vueType": 20,
-      "expression": 0,
-      "value": true,
-      "options": null,
-      "className": null,
-      "event": 1,
-      "inputPost": null,
-      "section": 0,
-      "hidden": null,
-      "groupName": null,
-      "suffix": null,
-      "prefix": null,
-      "formSection": null,
-      "canToggleSection": false,
-      "canDeleteSection": false,
-      "toggleDefaultClosed": false,
-      "readOnly": false,
-      "helpText": "This field can do stuff",
-      "weekStart": 7,
-      "fieldIcon": "",
-      "locale": "en-US"
+      "locale": "en-US",
+      "layerConfiguration": {
+        "title": "Test",
+        "width": "790px",
+        "height": "450px",
+        "href": "http://localhost:8080/webcontent/path/pagex?item=1&openinframe=1&referid=SublistSelect"
+      }
     }
   ],
   "buttons": [

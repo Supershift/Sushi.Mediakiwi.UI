@@ -31,7 +31,7 @@ export default defineComponent({
     function handleChange(
       e: Event,
       field: FieldModel,
-      value: unknown
+      value: Date
     ) {
       context.emit("on-change", e, field, value);
     }

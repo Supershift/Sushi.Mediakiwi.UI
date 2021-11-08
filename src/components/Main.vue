@@ -27,21 +27,6 @@
           :notifications="customNotifications" />
       </template>
 
-      <!-- eslint-disable vue/no-static-inline-styles -->
-      <!-- <span
-        style="
-          position: absolute;
-          right: 0px;
-          top: 160px;
-          z-index: 10000;
-          font-size: 18px;
-          overflow-y: auto;
-          height: calc(100vh - 160px);
-        ">
-        fetchedFieldValues:
-        <pre>{{ fetchedFieldValues }}</pre>
-      </span> -->
-
       <template
         v-if="
           fetchedBottomButtons &&

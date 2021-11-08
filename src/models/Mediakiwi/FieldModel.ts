@@ -1,6 +1,7 @@
 import MessageModel from "../MessageModel";
 import { ButtonSectionType } from "./ButtonSectionType";
 import { ContentType } from "./ContentType";
+import LayerConfigurationModel from "./LayerConfigurationModel";
 import { MediakiwiFormVueType } from "./MediakiwiFormVueType";
 import { MediakiwiJSEventType } from "./MediakiwiJSEventType";
 import OptionModel from "./OptionModel";
@@ -36,5 +37,6 @@ export default interface FieldModel {
   componentKey?: number;
   locale?: string | null;
   weekStart?: number | null;
-  autoPostBack?: boolean | null
+  autoPostBack?: boolean | null;
+  layerConfiguration?: LayerConfigurationModel
 }
