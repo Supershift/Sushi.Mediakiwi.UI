@@ -11,14 +11,19 @@
       :name="field.propertyName"
       :id="fieldID"
       :disabled="field.disabled || field.readOnly"
-      @change="handleChange" />
+      v-on="
+        customEventHandler(field, handleChange)
+      " />
     <label v-if="undefinedCheck(field.suffix)">{{
       undefinedCheck(field.suffix)
     }}</label>
   </div>
 </template>
 <script lang="ts">
-import {fieldMixins} from "./index";
+import {
+  customEventHandler,
+  fieldMixins,
+} from "./index";
 import {
   computed,
   defineComponent,
@@ -37,20 +42,23 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   mixins: [fieldMixins],
   emits: ["on-change"],
   setup(props, context) {
-    let valueRef = ref(props.field.value);
+    const valueRef = ref(props.field.value);
+
     const fieldID = computed(
       () => `${props.field.propertyName}_id`
     );
+
     const textContainerClasses = computed(
       () =>
         `textline-container ${props.classname}`
     );
+
     const textClasses = computed(() => {
       if (
         props.field.expression &&
@@ -61,14 +69,23 @@ export default defineComponent({
       }
       return `text-primary ${props.field.className}`;
     });
-    function handleChange(e: Event) {
-      context.emit("on-change", e, valueRef);
+
+    function handleChange(e?: Event) {
+      context.emit(
+        "on-change",
+        e,
+        props.field,
+        valueRef
+      );
     }
+
     return {
       fieldID,
       textClasses,
       textContainerClasses,
       handleChange,
+      valueRef,
+      customEventHandler,
     };
   },
 });

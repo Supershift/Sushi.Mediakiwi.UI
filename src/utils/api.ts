@@ -1,35 +1,26 @@
-import MediakiwiModel from "@/models/Mediakiwi/MediakiwiModel";
+import { ButtonRequestMethodType } from "@/models/Mediakiwi/ButtonRequestMethodType";
+import GetMediakiwiRequestModel from "@/models/Mediakiwi/Request/getMediakiwiRequestModel";
+import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
+import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
+import router from "@/router";
 import { store } from "@/store";
-import PageModel from "@/store/modules/PageModel";
+import { mediakiwiLogic } from "./mediakiwiLogic";
 
 export const api = {
   fetchMediakiwiAPI(url: string) {
-    const request = {
+    const requestBody: GetMediakiwiRequestModel = {
       channel: store.getters.channel,
       url
     };
 
     return new Promise((resolve, reject) => {
-      store.dispatch("getMediakiwiAPI", request).then((response: MediakiwiModel) => {
+      // Start the loader
+      store.dispatch("toggleMediakiwiLoading");
+
+      store.dispatch("getMediakiwiAPI", requestBody).then((response: MediakiwiResponseModel) => {
         if (response) {
           // Handle response
-          store.dispatch("setChannel", response.currentSiteID);
-
-          // Create the page model
-          const pageData: PageModel = {
-            title: response.listTitle ? response.listTitle : "",
-            description: response.listDescription ? response.listDescription : "",
-            settingsUrl: response.listSettingsUrl
-          }
-          store.dispatch("setPage", pageData);
-          store.dispatch("setProfileInfomation", response.profile);
-          store.dispatch("setTopNavigation", response.topNavigation);
-          store.dispatch("setSideNavigation", response.sideNavigation);
-          store.dispatch("setGrids", response.grids);
-          store.dispatch("setFolders", response.folders);
-          store.dispatch("setResources", response.resources);
-          store.dispatch("setFields", response.fields);
-          store.dispatch("setButtons", response.buttons);
+          mediakiwiLogic.putResponseToStore(response)
 
           // finally resolve the response
           store.dispatch("toggleMediakiwiLoading");
@@ -46,4 +37,59 @@ export const api = {
       });
     });
   },
+  postMediakiwiAPI(request: PostMediakiwiRequestModel, requestMethod: ButtonRequestMethodType = ButtonRequestMethodType.post) {
+    request.url = router.currentRoute.value.fullPath
+
+    // determine the request method
+    let method = "";
+    switch (requestMethod) {
+      case ButtonRequestMethodType.delete:
+        method = "deleteMediakiwiAPI";
+        break;
+      case ButtonRequestMethodType.put:
+        method = "putMediakiwiAPI";
+        break;
+      default:
+        method = "postMediakiwiAPI";
+        break;
+    }
+
+    return new Promise((resolve, reject) => {
+      // Start the loader
+      store.dispatch("toggleMediakiwiLoading");
+
+      // call the POST method
+      const referId = <string>router.currentRoute.value.query.referid;
+      store.dispatch(method, request).then((response: MediakiwiResponseModel) => {
+        if (response) {
+          if (response.closeLayer && referId) {
+            // trigger the mediakiwi logic on the parent window
+            window.parent.mediakiwiLogic.fillSublistSelect(referId, response.fields);
+            window.parent.mediakiwiLogic.closeLayer();
+          }
+
+          // Handle response
+          mediakiwiLogic.putResponseToStore(response)
+
+          // finally resolve the response
+          store.dispatch("toggleMediakiwiLoading");
+          resolve(response)
+        }
+        else {
+          store.dispatch("toggleMediakiwiLoading");
+          reject(response);
+        }
+      }).catch((error: unknown) => {
+        // reject the response
+        store.dispatch("toggleMediakiwiLoading");
+        reject(error);
+      });
+    });
+  },
+  deleteMediakiwiAPI(request: PostMediakiwiRequestModel) {
+    return this.postMediakiwiAPI(request, ButtonRequestMethodType.delete);
+  },
+  putMediakiwiAPI(request: PostMediakiwiRequestModel) {
+    return this.postMediakiwiAPI(request, ButtonRequestMethodType.put);
+  }
 };

@@ -65,11 +65,11 @@ export default {
         return [];
       },
     },
-    options: {type: Array, required: true},
+    options: {type: Array, required: false},
     allowCustom: {type: Boolean, default: true},
     showCount: {type: Boolean, default: false},
   },
-  emits: ["changeMade"],
+  emits: ["change-made"],
   setup(props, {emit}) {
     /* 
       Made using example : https://codesandbox.io/s/crazy-sunset-w25zb?file=/src/components/TagInput.vue 
@@ -136,7 +136,7 @@ export default {
         0
       );
       // emit value on tags change
-      emit("changeMade", tags.value);
+      emit("change-made", tags.value);
     };
     watch(tags, () => nextTick(onTagsChange), {
       deep: true,

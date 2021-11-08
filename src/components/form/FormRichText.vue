@@ -7,7 +7,9 @@
       :selector="field.propertyName"
       v-model="valueRef"
       :class="customRichtextClasses"
-      @blur="handleChange" />
+      v-on="
+        customEventHandler(field, handleChange)
+      " />
   </div>
 </template>
 <script lang="ts">
@@ -20,8 +22,7 @@ import {
 } from "vue";
 import FieldModel from "../../models/Mediakiwi/FieldModel";
 import Editor from "@tinymce/tinymce-vue";
-import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
-
+import {customEventHandler} from "./index";
 export default defineComponent({
   name: "RichText",
   props: {
@@ -31,15 +32,15 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   components: {
     editor: Editor,
   },
-  emits: ["valueChanged"],
+  emits: ["on-change"],
   setup(props, context) {
-    let valueRef = ref("");
+    let valueRef = ref(props.field.value);
 
     const customRichtextContainerClasses =
       computed(() => [
@@ -51,13 +52,13 @@ export default defineComponent({
       props.classname,
     ]);
 
-    function handleChange(values: string) {
-      if (
-        props.field?.event !==
-        MediakiwiJSEventType.none
-      ) {
-        context.emit("valueChanged", values);
-      }
+    function handleChange(e: Event) {
+      context.emit(
+        "on-change",
+        e,
+        props.field,
+        valueRef
+      );
     }
     const tinymceInit = {
       menubar: false,
@@ -77,6 +78,7 @@ export default defineComponent({
       customRichtextContainerClasses,
       valueRef,
       tinymceInit,
+      customEventHandler,
     };
   },
 });

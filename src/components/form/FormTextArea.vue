@@ -7,18 +7,22 @@
       rows="3"
       type="text"
       :class="customTextAreaClasses"
-      @change="handleChange" />
+      v-on="
+        customEventHandler(field, handleChange)
+      " />
   </div>
 </template>
 <script lang="ts">
 import {
   computed,
   defineComponent,
-  onBeforeMount,
   PropType,
   ref,
 } from "vue";
-import {fieldMixins} from "./index";
+import {
+  customEventHandler,
+  fieldMixins,
+} from "./index";
 import FieldModel from "../../models/Mediakiwi/FieldModel";
 
 export default defineComponent({
@@ -30,13 +34,14 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   mixins: [fieldMixins],
+  emits: ["on-change"],
   setup(props, context) {
     let offset = ref<number>(0);
-    let valueRef = ref(props.field?.value);
+    let valueRef = ref(props.field.value);
     // const root = ref(null);
     const fieldID = computed(
       () =>
@@ -52,7 +57,12 @@ export default defineComponent({
         props?.classname,
       ]);
     function handleChange(e: Event) {
-      context.emit("onChange", e, valueRef);
+      context.emit(
+        "on-change",
+        e,
+        props.field,
+        valueRef
+      );
     }
     function autoResize(element: HTMLElement) {
       element.style.height = "auto";
@@ -61,9 +71,7 @@ export default defineComponent({
         offset.value +
         "px";
     }
-    onBeforeMount(() => {
-      // root.addEventListener("input", (e) => autoResize(e.target));
-    });
+
     return {
       fieldID,
       valueRef,
@@ -73,6 +81,7 @@ export default defineComponent({
       customTextAreaContainerClasses,
       handleChange,
       autoResize,
+      customEventHandler,
     };
   },
 });
