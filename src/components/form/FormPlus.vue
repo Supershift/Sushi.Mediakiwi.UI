@@ -31,10 +31,11 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   mixins: [fieldMixins],
+  emits: ["plus-click"],
   setup(props, context) {
     const plusClasses = computed(() => {
       return [
@@ -56,7 +57,7 @@ export default defineComponent({
       );
     });
     function handleClick(e: Event) {
-      context.emit("clicked", e);
+      context.emit("plus-click", e);
     }
     return {
       plusClasses,

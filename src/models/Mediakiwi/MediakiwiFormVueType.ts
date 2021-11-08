@@ -20,4 +20,5 @@ export enum MediakiwiFormVueType {
   formValueCollection = 18,
   formValue = 19,
   formLink = 20,
+  formSublistSelect = 21,
 }

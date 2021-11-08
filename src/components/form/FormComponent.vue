@@ -72,7 +72,7 @@
                   :key="field.componentKey"
                   :field="field"
                   v-model="field.value"
-                  @onchange="
+                  @on-change="
                     handleFieldsChanged
                   " />
               </td>
@@ -112,6 +112,7 @@ import FormChoiceRadio from "./FormChoiceRadio.vue";
 import FormChoiceCheckbox from "./FormChoiceCheckBox.vue";
 import FormTime from "./FormTime.vue";
 import FormDateTime from "./FormDateTime.vue";
+import FormSublistSelect from "./FormSublistSelect.vue";
 import {OutputExpressionType} from "@/models/Mediakiwi/OutputExpressionType";
 import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
 
@@ -148,6 +149,7 @@ export default defineComponent({
     FormTextline,
     FormRichText,
     FormChoiceRadio,
+    FormSublistSelect,
   },
   emits: [
     "toggle",
@@ -228,9 +230,15 @@ export default defineComponent({
     }
     function handleFieldsChanged(
       e: Event,
-      fields: FieldModel
+      field: FieldModel,
+      value: unknown
     ) {
-      context.emit("field-changed", e, fields);
+      // Update the field's value
+      field.value = value;
+
+      if (field.autoPostBack) {
+        // TODO trigger API
+      }
     }
     function handleButtonClicked(
       e: Event,

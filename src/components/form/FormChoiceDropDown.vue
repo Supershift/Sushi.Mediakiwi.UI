@@ -4,14 +4,14 @@
       {{ undefinedCheck(field.prefix) }}
     </label>
     <dropdown
-      :value="valueRef"
-      tabindex="1"
+      v-model="selectedValueRef"
+      :tabindex="1"
       :id="fieldID"
       :name="field.propertyName"
-      :options="select2data"
+      :options="optionData"
       placeholder=""
-      clearable="true"
-      taggable="false"
+      :clearable="true"
+      :taggable="false"
       :class="customDropdownClasses"
       :disabled="field.disabled || field.readOnly"
       ref="dropdown"
@@ -26,9 +26,9 @@ import {fieldMixins} from "./index";
 import {
   computed,
   defineComponent,
-  onBeforeMount,
   PropType,
   ref,
+  watch,
 } from "vue";
 import FieldModel from "../../models/Mediakiwi/FieldModel";
 import Dropdown from "vue-select";
@@ -45,7 +45,7 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   mixins: [fieldMixins],
@@ -59,15 +59,17 @@ export default defineComponent({
       "dropdown-primary ",
       props.field.className,
     ]);
+
     const fieldID = computed(() => [
       props.field.propertyName + "_dropdown",
     ]);
+
     const customDropdownContainerClasses =
       computed(() => [
         "dropdown-container ",
         props.classname,
       ]);
-    const select2data = computed(() => {
+    const optionData = computed(() => {
       if (!valueRef.value?.options) {
         return [];
       }
@@ -77,28 +79,46 @@ export default defineComponent({
           return {
             id: r.value,
             label: r.text,
-            disabled: false,
+            disabled: !r.enabled,
           };
         }
       );
     });
-    function handleChange(e: Event) {
+
+    const selectedValueRef = ref();
+    selectedValueRef.value =
+      optionData?.value.find(
+        (r) => r.id === valueRef.value
+      );
+
+    function handleChange(e?: Event) {
       if (
-        valueRef.value?.event !==
+        props.field.value?.event !==
         MediakiwiJSEventType.none
       ) {
-        context.emit("on-change", e, valueRef);
+        context.emit(
+          "on-change",
+          e,
+          props.field,
+          selectedValueRef.value.id
+        );
       }
     }
-    onBeforeMount(() => {
-      valueRef.value = props.field;
-    });
+
+    watch(
+      () => selectedValueRef.value,
+      () => {
+        handleChange();
+      }
+    );
     return {
       fieldID,
-      select2data,
+      optionData,
       handleChange,
       customDropdownClasses,
       customDropdownContainerClasses,
+      valueRef,
+      selectedValueRef,
     };
   },
 });

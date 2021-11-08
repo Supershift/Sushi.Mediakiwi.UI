@@ -1,7 +1,7 @@
 <template>
   <div class="drawer-container">
     <!-- Sidebar -->
-    <transition name="expand" mode="ease-in">
+    <transition name="expand">
       <div :class="positionCss + collapsableCss">
         <div
           class="brand-container"
@@ -51,7 +51,7 @@ export default defineComponent({
   props: {
     toggler: {
       type: Boolean,
-      required: true,
+      required: false,
     },
     right: {
       type: Boolean,

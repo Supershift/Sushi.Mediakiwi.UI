@@ -11,19 +11,24 @@
       :class="checkboxClasses"
       :name="field.propertyName"
       :disabled="field.disabled || field.readOnly"
-      @change="handleChange" />
+      v-on="
+        customEventHandler(field, handleChange)
+      " />
     <label :for="field.propertyName">
       {{ field.inputPost }}</label
     >
     <label
       v-if="undefinedCheck(field.suffix)"
-      :for="field.propertyName">
+      :for="fieldID">
       {{ undefinedCheck(field.suffix) }}
     </label>
   </div>
 </template>
 <script lang="ts">
-import {fieldMixins} from "./index";
+import {
+  customEventHandler,
+  fieldMixins,
+} from "./index";
 import {
   computed,
   defineComponent,
@@ -41,7 +46,7 @@ export default defineComponent({
     },
     classname: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   mixins: [fieldMixins],
@@ -60,14 +65,21 @@ export default defineComponent({
       () => `${props.field.propertyName}_id`
     );
     function handleChange(e: Event) {
-      context.emit("on-change", e, valueRef);
+      context.emit(
+        "on-change",
+        e,
+        props.field,
+        valueRef
+      );
     }
+
     return {
       valueRef,
       fieldID,
       checkboxClasses,
       checkboxContainerClasses,
       handleChange,
+      customEventHandler,
     };
   },
 });

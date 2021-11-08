@@ -9,7 +9,7 @@
       :options="field?.options"
       :allow-custom="true"
       :show-count="false"
-      @changeMade="handleChange" />
+      @change-made="handleChange" />
     <label v-if="undefinedCheck(field?.suffix)">{{
       undefinedCheck(field.suffix)
     }}</label>
@@ -43,9 +43,11 @@ export default defineComponent({
   components: {
     TagsInput,
   },
-  emits: ["tags-updated"],
+  emits: ["on-change"],
   setup(props, context) {
-    let valueRef = ref([]);
+    let valueRef = ref(
+      props.field.value ? props.field.value : []
+    );
     let tagRef = ref("");
     const customRichtextContainerClasses =
       computed(() => [
@@ -53,8 +55,14 @@ export default defineComponent({
         props.classname,
       ]);
     function handleChange() {
-      context.emit("tags-updated", valueRef);
+      context.emit(
+        "on-change",
+        null,
+        props.field,
+        valueRef
+      );
     }
+
     return {
       valueRef,
       tagRef,

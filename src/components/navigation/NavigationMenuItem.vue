@@ -21,7 +21,7 @@ import {
   computed,
   defineComponent,
   PropType,
-} from "@vue/runtime-core";
+} from "vue";
 import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
 
 export default defineComponent({
