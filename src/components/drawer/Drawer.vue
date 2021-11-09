@@ -2,7 +2,7 @@
   <div class="drawer-container">
     <!-- Sidebar -->
     <transition name="expand">
-      <div :class="positionCss + collapsableCss">
+      <div :class="positionCss + collapsableCss" data-container="sidebar">
         <div
           class="brand-container"
           @click="handleToggle">
@@ -28,7 +28,7 @@
           name="drawer" /><!-- Drawer opener -->
       </div>
     </transition>
-    <div class="slot-content-container">
+    <div class="slot-content-container" data-container="content" >
       <slot
         name="content" /><!-- Drawer content -->
     </div>
@@ -210,8 +210,8 @@ export default defineComponent({
     .open-drawer{
       width: 225px;
     }
-    .slot-content-container {
-      width: -webkit-fill-available !important;
+    .slot-content-container[data-container="content"] {
+      width: -webkit-fill-available;
     }
   }
 }
