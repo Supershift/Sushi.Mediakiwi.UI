@@ -2,7 +2,7 @@
   <div class="drawer-container">
     <!-- Sidebar -->
     <transition name="expand">
-      <div :class="positionCss + collapsableCss">
+      <div :class="positionCss + collapsableCss" data-container="sidebar">
         <div
           class="brand-container"
           @click="handleToggle">
@@ -28,7 +28,7 @@
           name="drawer" /><!-- Drawer opener -->
       </div>
     </transition>
-    <div class="slot-content-container">
+    <div class="slot-content-container" data-container="content" >
       <slot
         name="content" /><!-- Drawer content -->
     </div>
@@ -63,7 +63,7 @@ export default defineComponent({
   },
   setup(props) {
     const open = ref(props.toggler);
-    const customListClass = ref("list-menu");
+    const customListClass = ref("side-list-menu");
     const positionCss = computed(() =>
       props.right
         ? ["sidebar-container right-0 flex-row "]
@@ -121,15 +121,18 @@ export default defineComponent({
     z-index: 20;
   }
   .slot-content-container {
-    width: -webkit-fill-available;
+    width: 100%;
     display: flex;
     flex-direction: column;
+  }
+  .open-drawer ~ .slot-content-container {
+    width: 0%;
   }
   .open-drawer {
     transition: max-height 0.25s ease-in-out;
     transition-duration: 0.25s;
     transition-property: width;
-    width: 225px;
+    width: 100%;
     .topleft-nav-gradient {
       transition: width 0.25s ease-in-out;
       transition-property: left;
@@ -181,13 +184,7 @@ export default defineComponent({
     margin-left: 0;
   }
 }
-.list-menu {
-  position: relative;
-  padding: 0;
-  list-style-type: none;
-  margin: 0;
-  z-index: 21;
-}
+
 .topleft-nav-gradient {
   transition: width 0.25s ease-in-out;
   transition-property: left;
@@ -206,5 +203,16 @@ export default defineComponent({
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+@media (min-width: 480px) {
+  .drawer-container{
+    .open-drawer{
+      width: 225px;
+    }
+    .slot-content-container[data-container="content"] {
+      width: -webkit-fill-available;
+    }
+  }
 }
 </style>
