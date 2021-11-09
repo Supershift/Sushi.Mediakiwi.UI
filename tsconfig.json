@@ -13,6 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "outDir": "./dist",
     "types": [
       "webpack-env"
     ],
@@ -34,12 +35,9 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "src/utils/auth.js",
-    "src/utils/getConfig.js",
-    "src/store/index.js",
-    "src/router/index.js",
-    "src/models/OptionModel.js"  ],
+   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "./dist/**/*"
   ]
 }

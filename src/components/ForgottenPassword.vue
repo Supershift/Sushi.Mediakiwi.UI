@@ -1,8 +1,8 @@
 <template>
-  <form action="" class="forgotten-password">
+  <form action="" class="login">
     <img
       src="../assets/images/vaultN-logo.svg"
-      class="forgotten-logo" />
+      class="login-logo" />
     <h1>
       {{
         contentForgottenPassword.forgottenHeadlineText
@@ -10,13 +10,13 @@
     </h1>
     <CustomInput
       :input="customEmailInput"
-      @valueChanged="handleTextChanged" />
+      @value-changed="handleTextChanged" />
     <FormErrors
-      v-if="errroMessages"
-      :messages="errroMessages" />
+      v-if="errorMessages"
+      :messages="errorMessages" />
     <CustomButton
-      :button="customLoginButton"
-      @buttonClicked="handleSubmit" />
+      :button="customSubmitButton"
+      @button-clicked="handleSubmit" />
   </form>
 </template>
 
@@ -25,6 +25,7 @@ import {
   defineComponent,
   ref,
   computed,
+  reactive,
 } from "vue";
 import CustomButton from "./base-components/CustomButton.vue";
 import CustomInput from "./base-components/CustomInput.vue";
@@ -32,59 +33,69 @@ import FormErrors from "./form/FormErrors.vue";
 import MessageModel from "../models/MessageModel";
 import InputModel from "../models/InputModel";
 import ButtonModel from "../models/ButtonModel";
-import {store} from "../store";
+import { store } from "../store";
+import { fieldMixins } from "./form";
 
 export default defineComponent({
   name: "ForgottenPassword",
+  mixins: [fieldMixins],
   components: {
     FormErrors,
     CustomInput,
     CustomButton,
   },
   setup() {
-    const errroMessages = ref<MessageModel[]>([]);
+    let errorMessages = reactive<MessageModel[]>([]);
+    const validEmail = ref(false);
     const contentForgottenPassword = computed(
-      () => store.getters.contentForgottenPassword
+      () => store.getters.contentForgotten,
     );
     const customEmailInput = ref<InputModel>({
       customClass: "input-email",
       fieldIcon: "email",
-      fieldPlaceholder: "Email",
+      fieldPlaceholder: contentForgottenPassword.value.forgottenEmailPlaceholder,
       disabled: false,
       suffix: "",
       prefix: "",
       fieldName: "email",
       fieldValue: "",
+      fieldType: "email",
       readOnly: false,
     });
-
     const customSubmitButton = ref<ButtonModel>({
-      customClass: "btn-submit",
+      customClass: "btn-login ",
       buttonIcon: "",
-      disabled: false,
+      disabled: true,
       buttondName: "submit",
-      value:
-        contentForgottenPassword.value
-          .submitButtonText,
+      value: contentForgottenPassword.value.fogottenButtonText,
       readOnly: false,
     });
-
+    function handleSubmit() {
+      if (customEmailInput.value.fieldValue && validEmail) {
+        store.dispatch("forgottenPassword", customEmailInput.value.fieldValue);
+      }
+    }
+    function handleTextChanged(value: string, fieldName: string) {
+      errorMessages = fieldMixins.methods.emailValidator(value, fieldName, errorMessages);
+      if (errorMessages.length === 0) {
+        validEmail.value = true;
+      } else {
+        validEmail.value = false; 
+      }
+      customSubmitButton.value.disabled = !validEmail.value;
+    }
     return {
       customEmailInput,
-      errroMessages,
+      errorMessages,
       customSubmitButton,
       contentForgottenPassword,
+      handleSubmit,
+      handleTextChanged,
     };
   },
 });
 </script>
 
 <style scoped lang="scss">
-.forgotten-password {
-  .btn-submit {
-    margin-bottom: 25px;
-    width: 70%;
-    font-size: $font-size-l;
-  }
-}
+  // Inherits from Login.vue(scss)
 </style>
