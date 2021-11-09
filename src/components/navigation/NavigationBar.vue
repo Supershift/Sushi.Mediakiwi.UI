@@ -19,7 +19,7 @@
     </div>
     <Profile />
     <Notification />
-    <DialogComponent />
+    <DialogComponent @sign-out-clicked="handleSignOut"/>
   </div>
 </template>
 
@@ -53,10 +53,14 @@ export default defineComponent({
         ? store.getters.page.settingsUrl
         : ""
     );
+    function handleSignOut() {
+      store.dispatch("signOut");
+    }
     return {
       topNavigationItems,
       pageTitle,
       pageSettings,
+      handleSignOut
     };
   },
 });

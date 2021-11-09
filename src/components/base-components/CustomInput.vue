@@ -15,16 +15,15 @@
       class="input-label">
       <input
         :id="id"
-        type="text"
+        :type="input.fieldType"
         :class="customInputClasses"
         :name="input.fieldName"
-        :value="inputText.value"
+        v-model="valueRef"
         :required="input.fieldRequired"
         :placeholder="input.fieldPlaceholder"
-        :disabled="
-          input.disabled || input.readOnly
-        "
-        @change="handleChange" />
+        :disabled="input.disabled || input.readOnly"
+        @input="handleChange"
+      />
     </label>
     <label
       v-if="undefinedCheck(input.suffix)"
@@ -34,12 +33,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  reactive,
-} from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import InputModel from "../../models/InputModel";
 import {fieldMixins} from "../form/index";
 
@@ -52,13 +46,10 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["valueChanged"],
+  emits: ["value-changed"],
   setup(props, context) {
-    const inputText = reactive({value: ""});
-    const id = computed(
-      () =>
-        `_${props.input.customClass}-${props.input.fieldName}`
-    );
+    let valueRef = ref(props.input.fieldValue);
+    const id = computed(() => `_${props.input.customClass}-${props.input.fieldName}`);
     const inputContainerClasses = computed(() => {
       let iconColor: string;
       switch (props.input.fieldIcon) {
@@ -112,11 +103,11 @@ export default defineComponent({
       return icon;
     });
     function handleChange() {
-      context.emit("valueChanged");
+      context.emit("value-changed", valueRef.value, props.input.fieldName);
     }
     return {
       id,
-      inputText,
+      valueRef,
       inputContainerClasses,
       customInputClasses,
       fieldIconChoice,

@@ -7,6 +7,7 @@ interface InputModel {
     prefix: string;
     fieldName: string;
     fieldValue: string;
+    fieldType: string;
     readOnly: boolean;
 }
 

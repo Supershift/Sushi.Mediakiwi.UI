@@ -8,23 +8,24 @@
     <h1>{{ contentLogin.loginHeadlineText }}</h1>
     <CustomInput
       :input="customEmailInput"
-      @valueChanged="handleTextChanged" />
+      @value-changed="handleTextChanged" />
     <CustomInput
       :input="customPasswordInput"
-      @valueChanged="handleTextChanged"
+      @value-changed="handleTextChanged"
       class="password-input" />
     <FormErrors
-      v-if="errroMessages"
-      :messages="errroMessages" />
-    <a href="#/forgot" class="link">
-      {{ contentLogin.loginForgotPasswordText }}
-    </a>
+      v-if="errorMessages"
+      :messages="errorMessages" />
+    <router-link
+      class="link"
+      to="/forgot">
+      {{
+        contentLogin.loginForgotPasswordText
+      }}
+    </router-link>
     <CustomButton
       :button="customLoginButton"
-      @buttonClicked="handleLogin" />
-    <a href="/reset" class="link">
-      {{ contentLogin.loginCreateAccountText }}
-    </a>
+      @button-clicked="handleLogin" />
   </form>
 </template>
 
@@ -32,7 +33,9 @@
 import {
   computed,
   defineComponent,
+  reactive,
   ref,
+  watch,
 } from "vue";
 import { store } from "../store";
 import FormErrors from "./form/FormErrors.vue";
@@ -41,65 +44,74 @@ import CustomButton from "./base-components/CustomButton.vue";
 import InputModel from "../models/InputModel";
 import ButtonModel from "../models/ButtonModel";
 import MessageModel from "../models/MessageModel";
+import { fieldMixins, FieldValidationType, FieldValidationTypeMessage } from "./form";
 
 export default defineComponent({
   name: "Login",
+  mixins: [ fieldMixins],
   components: {
     FormErrors,
     CustomInput,
     CustomButton,
   },
   setup() {
-    const email = ref("");
-    const password = ref("");
-    const errroMessages = ref<MessageModel[]>([]);
+    const validForm = ref(false);
+    let errorMessages = reactive<Array<MessageModel>>([]);
     const contentLogin = computed(
       () => store.getters.contentLogin
     );
     const customEmailInput = ref<InputModel>({
       customClass: "input-email",
       fieldIcon: "email",
-      fieldPlaceholder: "Email",
+      fieldPlaceholder: contentLogin.value.loginEmailPlaceholder,
       disabled: false,
       suffix: "",
       prefix: "",
       fieldName: "email",
       fieldValue: "",
+      fieldType: "email",
       readOnly: false,
     });
     const customPasswordInput = ref<InputModel>({
       customClass: "input-password",
       fieldIcon: "password",
-      fieldPlaceholder: "Password",
+      fieldPlaceholder: contentLogin.value.loginPasswordPlaceholder,
       disabled: false,
       suffix: "",
       prefix: "",
       fieldName: "password",
       fieldValue: "",
+      fieldType: "password",
       readOnly: false,
     });
     const customLoginButton = ref<ButtonModel>({
       customClass: "btn-login",
       buttonIcon: "",
-      disabled: false,
+      disabled: true,
       buttondName: "login",
       value: contentLogin.value.loginButtonText,
       readOnly: false,
     });
     function handleLogin() {
-      store.dispatch("toggleLogIn");
+      store.dispatch("signIn");
     }
-    function handleTextChanged() {
-      // console.log('TODO: Fix Text changed');
+    function handleTextChanged(value: string, fieldName: string) {
+      //errorMessages = fieldMixins.methods.emptyValidator(value, fieldName, errorMessages);
+      errorMessages = fieldMixins.methods.emailValidator(value, fieldName, errorMessages);
+      if (errorMessages.length === 0) {
+        validForm.value = true;
+      } else {
+        validForm.value = false; 
+      }
+      customLoginButton.value.disabled = !validForm.value;
     }
     return {
-      email,
-      password,
       contentLogin,
-      errroMessages,
+      errorMessages,
       customEmailInput,
       customPasswordInput,
       customLoginButton,
+      validForm,
       handleLogin,
       handleTextChanged,
     };
@@ -107,7 +119,12 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+/* 
+  Child comonents: 
+  ForgottenPassword.vue and ResetPassword.vue 
+  inherits from this components scss 
+*/
 .login {
   padding: 50px 13px 0;
   box-sizing: border-box;
