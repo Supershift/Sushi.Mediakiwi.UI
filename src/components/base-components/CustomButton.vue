@@ -1,13 +1,15 @@
 <template>
   <button
     :class="customButtonClasses"
-    @click.prevent="handleClicked">
+    @click.prevent="handleClicked"
+    :disabled="button.disabled"
+  >
     {{ button.value }}
   </button>
 </template>
 
 <script lang="ts">
-import {ButtonModel} from "@/models/Mediakiwi/ButtonModel";
+import ButtonModel from "../../models/ButtonModel";
 import {
   computed,
   defineComponent,
@@ -26,7 +28,7 @@ export default defineComponent({
   setup(props, context) {
     const customButtonClasses = computed(() => [
       "btn ",
-      props.button.className,
+      props.button.customClass,
     ]);
     function handleClicked() {
       context.emit("button-clicked");
@@ -38,3 +40,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="scss">
+.btn {
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+</style>
