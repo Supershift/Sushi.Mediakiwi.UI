@@ -17,6 +17,7 @@ export interface ButtonModel extends FieldModel {
   openInPopupLayer: boolean
   customUrl?: string;
   isPrimary: boolean;
+  icon: string;
   iconTarget?: ButtonTargetType;
   layerConfiguration?: LayerConfigurationModel;
   requestMethod?: ButtonRequestMethodType,

@@ -2,9 +2,10 @@
   <div class="profile-main-container">
     <div class="profile-brand">
       <img
-        src="../../assets/images/ananda.png"
+        :src="brandImage"
         class="brand-image"
-        alt="Ananda" />
+        alt="Brand image"
+      />
     </div>
     <img
       src="../../assets/images/company-circle.png"
@@ -32,6 +33,7 @@
 <script>
 import {computed, defineComponent} from "vue";
 import {store} from "@/store";
+
 export default defineComponent({
   name: "Profile",
   setup() {
@@ -41,12 +43,16 @@ export default defineComponent({
     const brandData = computed(
       () => store.getters.brandData
     );
+    const brandImage = computed(
+      () => store.getters.profileData.company
+    );
     function handleDialogToggle() {
       store.dispatch("toggleDialog");
     }
     return {
       profileData,
       brandData,
+      brandImage,
       handleDialogToggle,
     };
   },
