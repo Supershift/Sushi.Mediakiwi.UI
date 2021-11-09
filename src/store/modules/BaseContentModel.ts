@@ -1,3 +1,5 @@
+import MessageModel from "@/models/MessageModel";
+
 export default interface ResetPasswordContentModel {
   resetEmailPlaceholder: string;
   resetButtonText: string;
@@ -19,8 +21,8 @@ export interface ForgotPasswordContentModel {
   forgottenHeadlineText: string;
 }
 
-
 export interface BaseContentModel {
+  errors: MessageModel[];
   login: LoginContentModel,
   forgotten: ForgotPasswordContentModel,
   reset: ResetPasswordContentModel,

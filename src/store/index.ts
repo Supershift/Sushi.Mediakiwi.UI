@@ -16,6 +16,7 @@ import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
 import GridModel from "@/models/Mediakiwi/GridModel";
 import FolderModel from "@/models/Mediakiwi/FolderModel";
 import ResourceModel from "@/models/Mediakiwi/ResourceModel";
+import { FieldValidationType, FieldValidationTypeMessage, vueTypes } from "@/components/form";
 import { ButtonModel } from "@/models/Mediakiwi/ButtonModel";
 import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
 import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
@@ -68,23 +69,79 @@ export const store = createStore<State>({
     sideNavigationItems: null,
     topNavigationItems: null,
     content: {
+      errors: [
+        {
+          code: FieldValidationType.required,
+          isError: true,
+          message: FieldValidationTypeMessage.required,
+          propertyName: null,
+        },
+        {
+          code: FieldValidationType.email,
+          isError: true,
+          message: FieldValidationTypeMessage.email,
+          propertyName: null,
+        },
+        {
+          code: FieldValidationType.minLength,
+          isError: true,
+          message: FieldValidationTypeMessage.minLength,
+          propertyName: null,
+        },
+        {
+          code: FieldValidationType.maxLength,
+          isError: true,
+          message: FieldValidationTypeMessage.maxLength,
+          propertyName: null,
+        },
+        {
+          code: FieldValidationType.pattern,
+          isError: true,
+          message: FieldValidationTypeMessage.pattern,
+          propertyName: null,
+        },
+        {
+          code: FieldValidationType.empty,
+          isError: true,
+          message: FieldValidationTypeMessage.empty,
+          propertyName: null,
+        },
+        {
+          code: FieldValidationType.url,
+          isError: true,
+          message: FieldValidationTypeMessage.url,
+          propertyName: null,
+        },
+        {
+          code: FieldValidationType.empty,
+          isError: true,
+          message: FieldValidationTypeMessage.empty,
+          propertyName: null,
+        },
+        {
+          code: FieldValidationType.min,
+          isError: true,
+          message: FieldValidationTypeMessage.max,
+          propertyName: null,
+        },
+      ],
       login: {
         loginCreateAccountText: "Create an account",
         loginForgotPasswordText: "Forgot Password?",
-        loginPasswordPlaceholder: "Email",
-        loginEmailPlaceholder: "Password",
+        loginPasswordPlaceholder: "Password",
+        loginEmailPlaceholder: "Email",
         loginButtonText: "Login",
         loginHeadlineText: "Sign in with your email",
       },
       forgotten: {
         forgottenEmailPlaceholder: "Email",
         fogottenButtonText: "Submit",
-        forgottenHeadlineText: "Resset password with your email",
+        forgottenHeadlineText: "Reset password via email",
       },
       reset: {
         resetEmailPlaceholder: "Email",
         resetButtonText: "Submit",
-        resetHeadlineText: "Resset password with your email",
+        resetHeadlineText: "Reset password via email",
       },
     },
     channel: 0,
@@ -100,11 +157,16 @@ export const store = createStore<State>({
     toggleDialog(state) {
       state.dialog.show = !state.dialog.show;
     },
-    toggleLogIn(state) {
+    signIn(state) {
       state.isLoggedIn = !state.isLoggedIn;
       // Temp solution
       sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
       router.push("/");
+    },
+    signOut(state) {
+      state.isLoggedIn = false;
+      sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
+      router.push("/login");
     },
     toggleMediakiwiLoading(state) {
       state.mediakiwiLoading = !state.mediakiwiLoading;
@@ -159,8 +221,11 @@ export const store = createStore<State>({
     toggleDialog(context) {
       context.commit("toggleDialog");
     },
-    toggleLogIn(context) {
-      context.commit("toggleLogIn");
+    signIn(context) {
+      context.commit("signIn");
+    },
+    signOut(context) {
+      context.commit("signOut");
     },
     getMediakiwiAPI(context, request) {
       // TODO Replace logic with an axios.post to the request.url
@@ -280,6 +345,7 @@ export const store = createStore<State>({
     notification: (state) => state.notification,
     dialog: (state) => state.dialog,
     contentLogin: (state) => state.content ? state.content.login : "",
+    contentForgotten: (state) => state.content ? state.content.forgotten : "",
     isLoggedIn: () => {
       // Temp
       let isLoggedIn = sessionStorage.getItem(loggedinKey);
@@ -289,7 +355,6 @@ export const store = createStore<State>({
       return isLoggedIn === "true"; // !!state.isLoggedIn && !!Cookies.get('access-token'),
     },
     fields: (state) => state.fields,
-    contentForgottenPassword: (state) => state.content.forgotten,
     contentResetPassword: (state) => state.content.reset,
     grids: (state) => state.grids,
     folders: (state) => state.folders,

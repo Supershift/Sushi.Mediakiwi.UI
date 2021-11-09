@@ -18,7 +18,7 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import(/* webpackChuckName: "forgot" */ "../components/Login.vue"),
+        component: () => import(/* webpackChuckName: "login" */ "../components/Login.vue"),
       },
     ]
   },
@@ -27,6 +27,11 @@ const routes = [
     path: "/forgot",
     component: Login,
     public: true,
+    meta: {
+      requiresVisitor: true,
+      title: "Reset password via email.",
+      layout: "child",
+    },
     children: [{
       path: "",
       component: () => import(/* webpackChuckName: "forgot" */ "../components/ForgottenPassword.vue"),
@@ -38,9 +43,14 @@ const routes = [
     path: "/reset",
     component: Login,
     public: true,
+    meta: {
+      requiresVisitor: true,
+      title: "Reset password via email.",
+      layout: "child",
+    },
     children: [{
       path: "",
-      component: () => import(/* webpackChuckName: "forgot" */ "../components/ResetPassword.vue"),
+      component: () => import(/* webpackChuckName: "reset" */ "../components/ResetPassword.vue"),
     },
     ]
   },

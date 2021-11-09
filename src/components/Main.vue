@@ -59,7 +59,7 @@ import {
   ref,
 } from "vue";
 
-import {store} from "@/store";
+import {store} from "../store";
 import MessageModel from "../models/MessageModel";
 
 import GridComponent from "./grid/GridComponent.vue";
