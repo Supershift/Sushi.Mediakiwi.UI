@@ -91,7 +91,8 @@ export default defineComponent({
   }
 
   &:focus-within {
-    border-style: outset;
+    border-style: inset;
+    padding: 13px;
     border: 2px solid $color-main;
   }
 
