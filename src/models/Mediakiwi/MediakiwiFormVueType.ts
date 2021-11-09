@@ -19,6 +19,6 @@ export enum MediakiwiFormVueType {
   formTime = 17,
   formValueCollection = 18,
   formValue = 19,
-  formLink = 20,
   formSublistSelect = 21,
+  formUpload = 22
 }

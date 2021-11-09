@@ -1,0 +1,147 @@
+{
+  "listTitle": "List details A",
+  "isEditMode": false,
+  "fields": null,
+  "buttons": null,
+  "notifications": null,
+  "folderNavigation": null,
+  "topNavigation": {
+    "logoUrl": "https://cdn-tst.vaultn.nl/images/logo.svg",
+    "homeUrl": "/webcontent",
+    "items": [
+      {
+        "id": 1,
+        "text": "Website",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=1",
+        "items": null
+      },
+      {
+        "id": 2,
+        "text": "Data Lists",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?folder=31",
+        "items": null
+      },
+      {
+        "id": 3,
+        "text": "Galleries",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=3",
+        "items": null
+      },
+      {
+        "id": 4,
+        "text": "Admin",
+        "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
+        "items": [
+          {
+            "text": "Settings",
+            "href": "https://portal-dev.vaultn.nl/webcontent/website?list=10"
+          }
+        ]
+      }
+    ]
+  },
+  "sideNavigation": {
+    "items": [
+      {
+        "id": 1,
+        "text": "Back to list",
+        "href": "?folder=1",
+        "items": null,
+        "isBack": true,
+        "isActive": false,
+        "iconClass": "fas angle-left"
+      },
+      {
+        "id": 2,
+        "text": "Page Property",
+        "href": "?folder=31",
+        "isBack": false,
+        "isActive": true,
+        "iconClass": "fal fingerprint",
+        "items": [
+          {
+            "id": 3,
+            "text": "Content",
+            "href": "?folder=3",
+            "items": null,
+            "isBack": false,
+            "isActive": false,
+            "iconClass": "fal donate"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "text": "Admin",
+        "href": "?folder=4",
+        "iconClass": "fal fingerprint",
+        "isActive": false,
+        "items": [
+          {
+            "id": 5,
+            "text": "Settings",
+            "href": "?list=10",
+            "iconClass": "fas cogs",
+            "isActive": false
+          }
+        ]
+      }
+    ]
+  },
+  "profile": {
+    "displayName": "Marc Molenwijk",
+    "email": "marc.molenwijk@supershift.nl",
+    "roleID": 1,
+    "roleName": "Super Admin"
+  },
+  "redirectUrl": null,
+  "listDescription": null,
+  "listSettingsUrl": "?settings=1",
+  "breadcrumbs": [
+    {
+      "text": "Back",
+      "href": "?list=2",
+      "isBack": true
+    },
+    {
+      "text": "Home",
+      "href": "?list=1",
+      "isBack": false
+    },
+    {
+      "text": "Layer 1",
+      "href": "?list=4",
+      "isBack": false
+    }
+  ],
+  "currentSiteID": 1,
+  "sites": [
+    {
+      "name": "Site A",
+      "id": 1
+    },
+    {
+      "name": "Site B",
+      "id": 2
+    }
+  ],
+  "isSharedField": false,
+  "sharedFieldValue": null,
+  "views": [
+    {
+      "id": 1,
+      "type": 1,
+      "customPath": null,
+      "additionalProperties": [
+        {
+          "name": "uploadUrl",
+          "value": "/api/upload"
+        },
+        {
+          "name": "acceptedFiles",
+          "value": "*"
+        }
+      ]
+    }
+  ]
+}

@@ -19,6 +19,7 @@ import ResourceModel from "@/models/Mediakiwi/ResourceModel";
 import { ButtonModel } from "@/models/Mediakiwi/ButtonModel";
 import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
 import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
+import ViewModel from "@/models/Mediakiwi/ViewModel";
 const loggedinKey = "ananda_vaultn_loggedin";
 
 // define your typings for the store state
@@ -42,6 +43,7 @@ export interface State {
   folders: FolderModel[] | null,
   buttons: ButtonModel[] | null,
   isLayerMode: boolean,
+  views?: ViewModel[] | null,
 }
 
 // define injection key
@@ -91,7 +93,8 @@ export const store = createStore<State>({
     resources: [],
     grids: [],
     folders: [],
-    isLayerMode: false
+    isLayerMode: false,
+    views: null,
   },
   mutations: {
     toggleDrawer(state: State) {
@@ -150,6 +153,9 @@ export const store = createStore<State>({
     },
     setButtons(state, data: ButtonModel[]) {
       state.buttons = data;
+    },
+    setViews(state, data: ViewModel[]) {
+      state.views = data;
     }
   },
   actions: {
@@ -176,6 +182,9 @@ export const store = createStore<State>({
       }
       else if (request.url && request.url.indexOf("custom") > -1) {
         apiPath = "/custom-resources.json";
+      }
+      else if (request.url && request.url.indexOf("upload") > -1) {
+        apiPath = "/file-upload.json";
       }
 
       // Start a promise with an axios call
@@ -267,6 +276,9 @@ export const store = createStore<State>({
     },
     setButtons(context, data) {
       context.commit("setButtons", data);
+    },
+    setViews(context, data) {
+      context.commit("setViews", data);
     }
   },
   getters: {
@@ -309,6 +321,7 @@ export const store = createStore<State>({
         }
       });
     },
-    isLayerMode: (state) => state.isLayerMode
+    isLayerMode: (state) => state.isLayerMode,
+    views: (state) => state.views,
   },
 });
