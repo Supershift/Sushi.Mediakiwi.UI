@@ -124,6 +124,9 @@ export const store = createStore<State>({
         if (!state.profileData.avatarPath) {
           state.profileData.avatarPath = "/images/noName.jpg";
         }
+        if (!state.profileData.company) {
+          state.profileData.company = "/images/noImage.png";
+        }
       }
     },
     setTopNavigation(state, data: TopNavigationModel) {

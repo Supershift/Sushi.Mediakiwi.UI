@@ -692,7 +692,11 @@
     "displayName": "Marc Molenwijk",
     "email": "marc.molenwijk@supershift.nl",
     "roleID": 1,
-    "roleName": "Super Admin"
+    "roleName": "Super Admin",
+    "company":{
+      "name": "Supershift",
+      "logoUrl": ""
+    }
   },
   "redirectUrl": null,
   "listDescription": null,
