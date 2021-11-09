@@ -45,11 +45,13 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .navigation-link {
-  padding: 15px;
+  padding: 15px 0;
   background: white;
   cursor: pointer;
   float: left;
   position: relative;
+  text-align: center;
+  width: 100%;
 
   .sub {
     display: none;
@@ -103,6 +105,12 @@ export default defineComponent({
     &:hover {
       color: $color-blue;
     }
+  }
+}
+@media (min-width: 786px) {
+  .navigation-link {
+    padding: 15px;
+    width: unset;
   }
 }
 </style>
