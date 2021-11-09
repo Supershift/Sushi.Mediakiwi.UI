@@ -194,6 +194,12 @@ export default defineComponent({
       background: $color-main;
       box-shadow: $box-shadow-1;
       padding: 15px;
+      &:hover {
+        background: $color-hover-blue;
+      }
+      &:active svg {
+        color: $color-main;
+      }
 
       svg {
         color: white;
