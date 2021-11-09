@@ -74,6 +74,7 @@ input:not([type=radio]):not([class=vs__search]),
 select,
 textarea {
     font-family: $font-primary;
+    box-sizing: border-box;
     border-radius: 0;
     background: #fff;
     color: #000;
