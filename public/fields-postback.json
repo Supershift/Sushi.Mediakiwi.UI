@@ -303,7 +303,8 @@
       "helpText": "This field can do stuff",
       "weekStart": 7,
       "fieldIcon": "",
-      "locale": "en-US"
+      "locale": "en-US",
+      "readonly": true
     },
     {
       "contentTypeID": 18,

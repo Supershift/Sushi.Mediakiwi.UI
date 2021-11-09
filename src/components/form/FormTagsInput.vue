@@ -198,7 +198,7 @@ ul {
   font-size: $font-size-l;
   input {
     height: 50px;
-    width: 98%;
+    width: 100%;
     max-width: calc(100vw - 80px);
     font-size: $font-size-l;
     color: $color-drakgrey;

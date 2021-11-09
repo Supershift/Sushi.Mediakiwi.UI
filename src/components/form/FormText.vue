@@ -93,5 +93,6 @@ export default defineComponent({
 <style scoped lang="scss">
 .text-primary {
   width: 100%;
+  padding: 15px;
 }
 </style>

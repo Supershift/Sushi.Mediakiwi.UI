@@ -90,14 +90,12 @@ export default defineComponent({
       return field;
     }
     function addNameValuePair() {
-      valueNameValueRef.value.push(emptyField);
+      if (!props.field.readOnly ) {
+        valueNameValueRef.value.push(emptyField);
+      }
     }
     function handleChange(e: Event) {
-      context.emit(
-        "on-change",
-        e,
-        valueNameValueRef
-      );
+      context.emit("on-change",e,valueNameValueRef);
     }
     function removeNameValuePair(
       nameValuePair: string

@@ -30,7 +30,7 @@ export default interface FieldModel {
   canToggleSection: boolean;
   canDeleteSection: boolean;
   toggleDefaultClosed: boolean;
-  readOnly: boolean;
+  readOnly: Boolean;
   error?: MessageModel | null;
   fieldIcon?: string | null;
   mandatory?: boolean | null;
@@ -38,5 +38,5 @@ export default interface FieldModel {
   locale?: string | null;
   weekStart?: number | null;
   autoPostBack?: boolean | null;
-  layerConfiguration?: LayerConfigurationModel
+  layerConfiguration?: LayerConfigurationModel;
 }

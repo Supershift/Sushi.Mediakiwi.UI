@@ -57,7 +57,11 @@ export default defineComponent({
       );
     });
     function handleClick(e: Event) {
-      context.emit("plus-click", e);
+      if (props.field.readOnly) {
+        return;
+      } else {
+        context.emit("plus-click", e);
+      }
     }
     return {
       plusClasses,

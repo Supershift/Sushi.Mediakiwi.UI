@@ -10,9 +10,10 @@
       :time-picker="isTimePicker"
       :enable-time-picker="hasTimePicker"
       :placeholder="componentFormat"
-      :readonly="
-        field.disabled || field.readOnly
-      ">
+      :disabled="field.readOnly"
+      :readonly="field.readOnly"
+      :textInput="!field.readOnly"
+      >
       <template #input-icon></template>
     </datetimepicker>
     <label v-if="undefinedCheck(field.suffix)">{{
@@ -185,6 +186,7 @@ export default defineComponent({
   margin-bottom: 15px;
   font-family: $font-primary;
   input {
+    padding-left: 15px;
     &:read-only {
       cursor: not-allowed;
     }

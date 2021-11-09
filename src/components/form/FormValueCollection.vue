@@ -84,7 +84,9 @@ export default defineComponent({
       return field;
     }
     function addNameValuePair() {
-      valueRef.value.push(emptyField);
+      if (!props.field.readOnly) {
+        valueRef.value.push(emptyField);
+      }
     }
     function handleChange(e: Event) {
       context.emit("on-change", e, valueRef);

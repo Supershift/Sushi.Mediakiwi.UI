@@ -131,6 +131,12 @@ export default defineComponent({
   margin-bottom: 15px;
   width: 100%;
 }
+.v-select {
+  .vs__search {
+    padding-left: 15px;
+  }
+}
+
 .vs__dropdown-toggle {
   height: 50px;
   border: 1px solid #aaa;
