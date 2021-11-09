@@ -91,7 +91,7 @@ export default defineComponent({
 .textarea-container {
   margin-bottom: 15px;
   textarea {
-    width: calc(100% - 22px);
+    width: 100%;
     padding: 7px;
     padding-left: 15px;
   }

@@ -13,7 +13,6 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "outDir": "./dist",
     "types": [
       "webpack-env"
     ],
@@ -37,7 +36,6 @@
     "tests/**/*.tsx"
    ],
   "exclude": [
-    "node_modules",
-    "./dist/**/*"
+    "node_modules"
   ]
 }
