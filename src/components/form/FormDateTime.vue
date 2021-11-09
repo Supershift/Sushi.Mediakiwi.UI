@@ -183,11 +183,20 @@ export default defineComponent({
 <style lang="scss">
 .datetime-container {
   margin-bottom: 15px;
+  font-family: $font-primary;
   input {
     &:read-only {
       cursor: not-allowed;
     }
   }
+}
+.dp__menu,
+.dp__overlay,
+.dp__cell_inner,
+.dp__calendar,
+.dp__time_display,
+.dp__callendar_header_item {
+  font-family: $font-primary;
 }
 /* Overwrites the datepicker defaults: https://vue3datepicker.com/customization/theming/  */
 .dp__theme_light {

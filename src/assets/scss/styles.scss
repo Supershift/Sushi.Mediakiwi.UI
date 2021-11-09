@@ -49,7 +49,7 @@ ul {
     padding: 15px 25px;
     padding-top: 14px;
     border-radius: $b-radius-6;
-    box-shadow: 0 0 10px #000;
+    box-shadow: $box-shadow-1;
     font-family: $font-primary;
 
     &:hover {
@@ -64,11 +64,17 @@ ul {
         border: 2px solid $color-main outset;
     }
 }
+.btn-secundary {
+    background: $color-hover-blue;
+    color: #fff;
+    box-shadow: none;
+}
 
 input:not([type=radio]):not([class=vs__search]),
 select,
 textarea {
     font-family: $font-primary;
+    box-sizing: border-box;
     border-radius: 0;
     background: #fff;
     color: #000;
