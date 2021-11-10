@@ -37,10 +37,8 @@ export default defineComponent({
   },
   emits: ["button-clicked"],
   setup(props, context) {
-    const customButtonClasses = computed(() => [
-      "btn ",
-      props.button?.className,
-    ]);
+    const customButtonClasses = computed(() => {
+      return ["btn ", props.button?.className, props.button.isPrimary ? "btn-primary" : ""]});
     const buttonIconChoice = computed(() => ["fal", props.button.icon]);
     function handleClicked() {
       context.emit(
@@ -74,4 +72,5 @@ export default defineComponent({
 .btn-icon {
   padding-right: 15px;
 }
+
 </style>

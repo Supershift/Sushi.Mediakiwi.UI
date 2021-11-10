@@ -39,13 +39,13 @@ ul {
     flex-direction: row;
 }
 .btn {
-    background: $color-main;
+    background: #fff;
     background-repeat: no-repeat;
     border: 0;
     cursor: pointer;
     overflow: hidden;
     outline: none;
-    color: #fff;
+    color: #000;
     padding: 15px 25px;
     padding-top: 14px;
     border-radius: $b-radius-6;
@@ -64,6 +64,13 @@ ul {
         border: 2px solid $color-main outset;
     }
 }
+.btn-primary {
+    background: $color-main;
+    color: #fff;
+    &:hover {
+      background: $color-hover-blue;
+    }
+  }
 .btn-secundary {
     background: $color-hover-blue;
     color: #fff;

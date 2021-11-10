@@ -685,7 +685,7 @@
       "openInPopupLayer": false,
       "customUrl": null,
       "layerConfiguration": null,
-      "isPrimary": false,
+      "isPrimary": true,
       "icon": "times",
       "iconTarget": 0,
       "requestMethod": 2
