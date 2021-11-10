@@ -2,7 +2,7 @@
   <div class="profile-main-container">
     <div class="profile-brand">
       <img
-        :src="brandImage"
+        :src="brand?.logoUrl"
         class="brand-image"
         alt="Brand image"
       />
@@ -44,7 +44,7 @@ export default defineComponent({
     const brandData = computed(
       () => store.getters.brandData
     );
-    const brandImage = computed(
+    const brand = computed(
       () => store.getters.profileData.company
     );
     function handleDialogToggle() {
@@ -56,7 +56,7 @@ export default defineComponent({
     return {
       profileData,
       brandData,
-      brandImage,
+      brand,
       handleDialogToggle,
     };
   },

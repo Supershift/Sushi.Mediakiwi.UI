@@ -301,6 +301,7 @@
         "id": 4,
         "text": "Admin",
         "href": "https://portal-dev.vaultn.nl/webcontent/website?top=4",
+        "iconClass": "fal user-cog",
         "items": [
           {
             "id": 5,
@@ -316,7 +317,11 @@
     "displayName": "Luigi Arends",
     "email": "luigi.arends@supershift.nl",
     "roleID": 1,
-    "roleName": "Super Admin"
+    "roleName": "Super Admin",
+    "company":{
+      "name": "Supershift",
+      "logoUrl": "/images/noImage.png"
+    }
   },
   "redirectUrl": null,
   "listDescription": null,

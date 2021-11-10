@@ -35,6 +35,7 @@ import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
 import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
 import ItemModel from "../../models/OptionItemModel";
+import OptionItemModel from "../../models/Mediakiwi/OptionItemModel";
 
 export default defineComponent({
   name: "FormChoiceDropdown",
@@ -54,7 +55,7 @@ export default defineComponent({
   },
   emits: ["on-change"],
   setup(props, context) {
-    let valueRef = ref<FieldModel>(props.field.value);
+    let valueRef = ref<FieldModel>(props.field);
     const customDropdownClasses = computed(() => [
       "dropdown-primary ",
       props.field.className,
@@ -70,11 +71,11 @@ export default defineComponent({
         props.classname,
       ]);
     const optionData = computed(() => {
-      if (!valueRef.value?.options) {
+      if (!valueRef.value?.options?.items) {
         return [];
       }
-
-      return valueRef.value.options.items.map(
+      
+      return valueRef.value?.options?.items.map(
         (r: ItemModel) => {
           return {
             id: r.value,
@@ -87,8 +88,8 @@ export default defineComponent({
 
     const selectedValueRef = ref();
     selectedValueRef.value =
-      optionData?.value.find(
-        (r) => r.id === valueRef.value
+      optionData.value?.find(
+        (r) => r.id === valueRef.value.value
       );
 
     function handleChange(e?: Event) {

@@ -308,11 +308,11 @@
     {
       "contentTypeID": 10,
       "propertyName": "teamDate",
-      "propertyType": "datetime",
+      "propertyType": "date",
       "title": "When are they playing?",
       "vueType": 13,
       "expression": 0,
-      "value": "2021-11-05T00:00:00Z",
+      "value": "2021-11-05",
       "options": null,
       "className": "small",
       "event": "none",
@@ -335,11 +335,38 @@
     {
       "contentTypeID": 10,
       "propertyName": "teamTime",
-      "propertyType": "datetime",
+      "propertyType": "time",
       "title": "",
       "vueType": 17,
       "expression": 0,
       "value": "2021-11-05T07:49:29.3930065Z",
+      "options": null,
+      "className": "small",
+      "event": "none",
+      "inputPost": "Test",
+      "section": 0,
+      "hidden": false,
+      "groupName": null,
+      "suffix": null,
+      "prefix": null,
+      "formSection": null,
+      "canToggleSection": false,
+      "canDeleteSection": false,
+      "toggleDefaultClosed": false,
+      "readOnly": false,
+      "helpText": "This field can do stuff",
+      "weekStart": 7,
+      "fieldIcon": "",
+      "locale": "en-US"
+    },
+    {
+      "contentTypeID": 10,
+      "propertyName": "teamDateTime",
+      "propertyType": "datetime",
+      "title": "When are you arriving?",
+      "vueType": 12,
+      "expression": 0,
+      "value": "2021-11-05T09:30:00Z",
       "options": null,
       "className": "small",
       "event": "none",
@@ -431,7 +458,7 @@
     },
     {
       "contentTypeID": 18,
-      "propertyName": "teamNames",
+      "propertyName": "teamGuests",
       "propertyType": "string[]",
       "title": "Invite guests",
       "vueType": 15,
@@ -440,13 +467,13 @@
       "options": {
         "items": [
           {
-            "text": "Amsterdam",
+            "text": "Sjon",
             "value": "1",
             "enabled": true,
             "selected": true
           },
           {
-            "text": "Rotterdam",
+            "text": "Anita",
             "value": "2",
             "enabled": true,
             "selected": false
@@ -466,7 +493,7 @@
       "canToggleSection": false,
       "canDeleteSection": false,
       "toggleDefaultClosed": false,
-      "readOnly": false,
+      "readOnly": true,
       "helpText": "This field can do stuff",
       "weekStart": 7,
       "fieldIcon": "",
@@ -477,7 +504,7 @@
       "propertyName": "teamComments",
       "propertyType": "string[]",
       "title": "Comments",
-      "vueType": 4,
+      "vueType": 10,
       "expression": 0,
       "value": "1",
       "options": null,
@@ -917,7 +944,7 @@
     "roleName": "Super Admin",
     "company":{
       "name": "Supershift",
-      "logoUrl": ""
+      "logoUrl": "/images/noImage.png"
     }
   },
   "redirectUrl": null,

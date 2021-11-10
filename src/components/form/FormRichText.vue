@@ -4,7 +4,6 @@
       api-key="4w7n1fpw2lpcb86gkmkqfpsrefktlebicr8wc1lzwuy0evy4"
       :id="field.propertyName"
       :init="tinymceInit"
-      :selector="field.propertyName"
       v-model="valueRef"
       :class="customRichtextClasses"
       v-on="
@@ -68,6 +67,7 @@ export default defineComponent({
         "searchreplace visualblocks code fullscreen",
         "insertdatetime media table paste code help wordcount",
       ],
+      selector:props.field.propertyName,
       toolbar:
         "bold italic underline bullist numlist indent outdent link unlink removeformat subscript superscript code",
     };
