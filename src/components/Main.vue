@@ -4,10 +4,12 @@
       <template
         v-if="
           fetchedTopButtons &&
-          fetchedTopButtons.length
+          fetchedTopButtons.length &&
+          checkWindowWidth
         ">
         <ButtonListComponent
-          :buttons="fetchedTopButtons" />
+          :buttons="fetchedTopButtons" 
+        />
       </template>
 
       <!-- TODO ADD NOTIFICATIONS HERE -->
@@ -78,6 +80,7 @@ export default defineComponent({
     ButtonListComponent,
   },
   setup() {
+    const breakpointTablet = 986;
     const fetchedFields = computed(
       () => store.getters.fields
     );
@@ -109,6 +112,9 @@ export default defineComponent({
       MessageModel[]
     >([]);
 
+    const checkWindowWidth = computed(
+      () => window.innerWidth > breakpointTablet
+    );
     return {
       customNotifications,
       fetchedFields,
@@ -118,6 +124,7 @@ export default defineComponent({
       fetchedTopButtons,
       fetchedBottomButtons,
       fetchedFieldValues,
+      checkWindowWidth,
     };
   },
 });
@@ -129,13 +136,10 @@ export default defineComponent({
   overflow: auto;
   .main-container {
     margin: 0;
-    padding-top: 15px;
+    padding: 15px;
     padding-left: 30px;
+    padding-right: 30px;
   }
 }
-.drawer-container {
-  .main-container {
-    padding-left: 50px;
-  }
-}
+
 </style>

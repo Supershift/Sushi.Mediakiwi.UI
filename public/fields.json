@@ -493,7 +493,7 @@
       "canToggleSection": false,
       "canDeleteSection": false,
       "toggleDefaultClosed": false,
-      "readOnly": true,
+      "readOnly": false,
       "helpText": "This field can do stuff",
       "weekStart": 7,
       "fieldIcon": "",

@@ -78,6 +78,7 @@ export default defineComponent({
     position: relative;
     text-align: left;
     padding-top: 15px;
+    width: 75%;
   }
   .navigation {
     &-logo {
@@ -104,7 +105,7 @@ export default defineComponent({
 
 .navigation-settings {
   color: #2aa1e8;
-  display: inline-block;
+  display: none;
   vertical-align: top;
   margin-left: 10px;
   margin-top: 5px;
@@ -117,6 +118,7 @@ export default defineComponent({
       flex-direction: row;
       padding: 15px;
       padding-left: 80px;
+      width: unset;
     }
     .navigation-logo {
       display: block;
@@ -125,6 +127,9 @@ export default defineComponent({
       padding-left: 15px;
       z-index: 999;
     }
+  }
+  .navigation-settings {
+    display: inline-block;
   }
 }
 </style>

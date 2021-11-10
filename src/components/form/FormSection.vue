@@ -1,6 +1,6 @@
 <template>
-  <th
-    colspan="4"
+  <div
+    class="col"
     :class="sectionContainerClasses">
     <h3
       :class="toggleChoice"
@@ -20,7 +20,7 @@
         class="list-icon"
         @click="toggle($event)" />
     </span>
-  </th>
+  </div>
 </template>
 
 <script lang="ts">

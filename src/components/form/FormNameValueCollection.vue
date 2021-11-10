@@ -62,9 +62,7 @@ export default defineComponent({
   },
   emits: ["on-change"],
   setup(props, context) {
-    let valueNameValueRef = ref<
-      Array<FieldModel>
-    >([]);
+    let valueNameValueRef = ref<Array<FieldModel>>([]);
     const nameValueCollectionClasses = computed(
       () =>
         `name-value-collection ${props.field.className}`
@@ -81,12 +79,7 @@ export default defineComponent({
       nameValue: string,
       index: number
     ) {
-      let field = Object.assign({}, emptyField);
-      field.vueType =
-        MediakiwiFormVueType.formNameValue;
-      field.propertyName = `${props.field.propertyName}_${index}`;
-      field.value = nameValue;
-      field.event = props.field.event;
+      const field = Object.assign(emptyField, {vueType: MediakiwiFormVueType.formNameValue, propertyName: `${props.field.propertyName}_${index}`, value: nameValue, event: props.field.event, readOnly: props.field.readOnly});
       return field;
     }
     function addNameValuePair() {

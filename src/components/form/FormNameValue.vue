@@ -50,10 +50,10 @@ export default defineComponent({
   emits: ["on-change"],
   setup(props, context) {
     const valueNameRef = ref(
-      props.field.value.text
+      props.field.value.name
     );
     const valueNameValueRef = ref(
-      props.field.value.value
+      props.field.value.text
     );
     const fieldName = computed(
       () => `${props.field.propertyName}_name`

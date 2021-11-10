@@ -1,6 +1,6 @@
 <template>
   <section>
-    <table class="formTable">
+    <!-- <table class="formTable">
       <tbody>
         <tr v-for="row in rowArray" :key="row.id">
           <td v-if="row.isButtonRow">
@@ -80,7 +80,84 @@
           </template>
         </tr>
       </tbody>
-    </table>
+    </table> -->
+    <div class="container">
+      <div class="row" v-for="row in rowArray" :key="row.id">
+        <div class="col" v-if="row.isButtonRow">
+          <component
+              :is="checkVueType(field)"
+              v-for="field in row.fields"
+              :key="field.propertyName"
+              :field="field"
+              @onclick="handleButtonClicked" />
+        </div>
+        <template
+            v-for="field in row.fields"
+            v-else>
+            <component
+              :is="checkVueType(field)"
+              v-if="
+                checkVueType(field) ===
+                'FormSection'
+              "
+              :key="field.propertyName"
+              v-model="field.value"
+              :field="field" />
+            <template v-else>
+              <div class="col"
+                v-show="showField(field)"
+                :key="field.propertyName"
+                :class="
+                  expressCell(field.expression)
+                ">
+                <label
+                  v-if="
+                    !hideLabelForType(
+                      field.vueType
+                    )
+                  "
+                  :for="field.propertyName"
+                  :title="field.title"
+                  :class="{
+                    mandatory: field.mandatory,
+                  }">
+                  {{ field.title }}
+                </label>
+              </div>
+              <div class="col-xl"
+                :key="field.propertyName"
+                :class="
+                  expressCell(field.expression)
+                ">
+                <component
+                  :is="checkVueType(field)"
+                  v-if="
+                    field.vueType === 'FormButton'
+                  "
+                  :field="field"
+                  :key="field.propertyName"
+                  @onclick="
+                    handleButtonClicked
+                  " />
+                <component
+                  :is="
+                    checkVueType(field) ===
+                    'undefined'
+                      ? 'FormInput'
+                      : checkVueType(field)
+                  "
+                  v-else
+                  :key="field.componentKey"
+                  :field="field"
+                  v-model="field.value"
+                  @on-change="
+                    handleFieldsChanged
+                  " />
+              </div>
+            </template>
+          </template>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -389,34 +466,43 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.formTable {
+.container {
   font-family: $font-primary;
   font-family: $font-size-l;
-  tr {
-    th {
-      padding: 8px 0 2px;
+  .row {
+    flex-direction: column;
+    padding-bottom: $standard-spacing;
+    .col {
       text-align: left;
       vertical-align: top;
-      width: 10%;
       label {
-        width: 135px;
-        padding: 4px 10px 4px 0;
-        display: block;
+        min-width: 175px;
         font-weight: 600;
         min-height: 24px;
       }
     }
-    td {
-      padding: 4px 80px 4px 0;
-      vertical-align: top;
+    .col {
+      padding: 5px 0;
       color: #000;
-      &.half {
-        width: 40%;
-      }
+    }
+    .col-xl {
+      flex: 2 0 40%
     }
   }
   .input-text {
     margin-right: 0;
+  }
+}
+@media (min-width: 786px) {
+  .container {
+    .row {
+      flex-direction: row;
+      .col {
+        &.half {
+          width: 40%;
+        }
+      }
+    }
   }
 }
 </style>

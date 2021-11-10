@@ -43,7 +43,7 @@ export default defineComponent({
   },
   setup(props) {
     const tbbcContainerClasses = computed(() => [
-      "tbbc-container " + props.classname,
+      "action-list-container " + props.classname,
     ]);
     function handleClicked(value: ButtonModel) {
       if (value) {
@@ -90,10 +90,9 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.tbbc-container {
+.action-list-container {
   height: 60px;
-  margin-right: 15px;
-
+  margin: $standard-spacing 0;
   .action-list {
     list-style: none;
     display: inline;
@@ -104,6 +103,7 @@ export default defineComponent({
 
       &.right {
         float: right;
+        margin-right: 0;
       }
 
       button {
