@@ -5,6 +5,7 @@
       :class="plusClasses"
       @click="handleClick"
       :readonly="field.readOnly"
+
       ><!-- eslint-disable-next-line vue/no-unregistered-components -->
       <fa icon="plus" class="plus-svg" />
     </a>
@@ -79,15 +80,13 @@ export default defineComponent({
   margin-bottom: 15px;
   text-align: center;
 
-  .plus-primary {
-    &:disabled .plus-svg {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-    &:read-only .plus-svg {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
+
+  .plus-primary:read-only,
+  .plus-primary:disabled,
+  .plus-primary:read-only .plus-svg,
+  .plus-primary:disabled .plus-svg {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
   .plus-svg {
     background: $color-success;

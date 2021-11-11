@@ -575,7 +575,7 @@
       "canToggleSection": false,
       "canDeleteSection": false,
       "toggleDefaultClosed": false,
-      "readOnly": false,
+      "readOnly": true,
       "helpText": "This field can do stuff",
       "weekStart": 7,
       "fieldIcon": "",
