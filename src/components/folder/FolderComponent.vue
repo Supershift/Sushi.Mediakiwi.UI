@@ -1,6 +1,6 @@
 <template>
   <section class="component folder-collection">
-    <article class="column-3">
+    <article class="folder-column">
       <Folder
         v-for="folder in folders"
         :key="folder.id"
@@ -50,6 +50,12 @@ export default defineComponent({
       column-gap: 15px;
       column-width: 33%;
     }
+  }
+  .folder-column {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 }
 </style>

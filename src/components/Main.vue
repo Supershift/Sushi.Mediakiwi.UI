@@ -165,9 +165,18 @@ export default defineComponent({
   .main-container {
     margin: 0;
     padding: 15px;
-    padding-left: 30px;
+    padding-left: 10px;
     padding-right: 30px;
+    touch-action: manipulation;
+    max-width: calc(100vw - 110px);
   }
 }
-
+@media (min-width: $grid-m) {
+  .content-container{
+    .main-container {
+      padding-left: 30px;
+      max-width: unset;
+    }
+  }
+}
 </style>
