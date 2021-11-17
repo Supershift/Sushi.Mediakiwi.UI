@@ -22,7 +22,8 @@
     <div class="buttonContainer">
       <a
         class="openlayer"
-        title="File Upload"
+        :aria-label="field.helpText"
+        :title="field.helpText"
         @click="openLayer">
         <!-- eslint-disable-next-line vue/no-unregistered-components -->
         <fa icon="plus"></fa

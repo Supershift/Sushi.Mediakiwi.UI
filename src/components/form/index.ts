@@ -1,8 +1,8 @@
-import MessageModel from "@/models/MessageModel";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import FieldModel from "@/models/Mediakiwi/FieldModel";
 import { MediakiwiFormVueType } from "@/models/Mediakiwi/MediakiwiFormVueType";
 import { getEvents, MediakiwiJSEventType } from "@/models/Mediakiwi/MediakiwiJSEventType";
+import MessageModel from "@/models/MessageModel";
 
 export enum ExpressionType {
   Full = 0,
@@ -154,7 +154,7 @@ export const emptyField = {
   canToggleSection: false,
   canDeleteSection: false,
   toggleDefaultClosed: false,
-  readOnly: false,
+  readOnly: true,
   helpText: "This field is an empty prop",
   componentKey: 0,
   error: { message: FieldValidationTypeMessage.none, isError: false, propertyName: "", code: FieldValidationType.none },

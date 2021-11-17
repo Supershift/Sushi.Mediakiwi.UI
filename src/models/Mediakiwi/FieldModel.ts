@@ -30,7 +30,7 @@ export default interface FieldModel {
   canToggleSection: boolean;
   canDeleteSection: boolean;
   toggleDefaultClosed: boolean;
-  readOnly: Boolean;
+  readOnly: boolean;
   error?: MessageModel | null;
   fieldIcon?: string | null;
   mandatory?: boolean | null;

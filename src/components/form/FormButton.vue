@@ -4,7 +4,7 @@
     :class="customButtonClasses"
     :href="button.customUrl"
     :aria-label="button.helpText"
-    :title="field.helpText"
+    :title="button.helpText"
     :disabled="
       button?.disabled || button.readOnly
     ">

@@ -69,7 +69,7 @@ export default defineComponent({
           `name-value-collection-container ${props.classname}`
       );
     const plusField = computed(() =>
-      Object.assign({propertyName:"plusField", fieldIcon:"plus", readOnly: props.field.readOnly, vueType: MediakiwiFormVueType.formPlus, placeholder: "Empty value"}, emptyField) as FieldModel
+      Object.assign(emptyField, {propertyName:"plusField", fieldIcon:"plus", readOnly: props.field.readOnly, vueType: MediakiwiFormVueType.formPlus, placeholder: "Empty value"}) as FieldModel
     );
     function getField(
       nameValue: string,

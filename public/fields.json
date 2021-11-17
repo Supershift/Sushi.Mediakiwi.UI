@@ -436,7 +436,10 @@
       "title": "Feelings",
       "vueType": 7,
       "expression": 0,
-      "value": "1",
+      "value": [
+        "Happy",
+        "Pumped"
+      ],
       "options": null,
       "className": null,
       "event": "none",
@@ -562,7 +565,23 @@
       "vueType": 18,
       "expression": 0,
       "value": "",
-      "options": null,
+      "options": {
+        "items": [
+          {
+            "text": "Sjon",
+            "value": "1",
+            "enabled": true,
+            "selected": true
+          },
+          {
+            "text": "Anita",
+            "value": "2",
+            "enabled": true,
+            "selected": false
+          }
+        ],
+        "count": 2
+      },
       "className": null,
       "event": "none",
       "inputPost": null,
