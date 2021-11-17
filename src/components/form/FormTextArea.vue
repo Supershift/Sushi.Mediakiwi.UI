@@ -7,6 +7,8 @@
       rows="3"
       type="text"
       :class="customTextAreaClasses"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       v-on="
         customEventHandler(field, handleChange)
       " />

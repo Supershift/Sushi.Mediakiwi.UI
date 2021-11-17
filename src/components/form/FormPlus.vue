@@ -4,8 +4,9 @@
       :id="fieldID"
       :class="plusClasses"
       @click="handleClick"
-      :readonly="field.readOnly"
-
+      :disabled="field.readOnly"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       ><!-- eslint-disable-next-line vue/no-unregistered-components -->
       <fa icon="plus" class="plus-svg" />
     </a>
@@ -81,13 +82,13 @@ export default defineComponent({
   text-align: center;
 
 
-  .plus-primary:read-only,
-  .plus-primary:disabled,
-  .plus-primary:read-only .plus-svg,
-  .plus-primary:disabled .plus-svg {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
+  // .plus-primary{
+  //   &:read-only,
+  //   &:disabled{
+  //     cursor: not-allowed;
+  //     opacity: 0.5;
+  //   }
+  // }
   .plus-svg {
     background: $color-success;
     color: #fff;

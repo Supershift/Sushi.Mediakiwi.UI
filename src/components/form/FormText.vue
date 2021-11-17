@@ -10,6 +10,8 @@
       :class="textClasses"
       :name="field.propertyName"
       :id="fieldID"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       :disabled="field.disabled || field.readOnly"
       v-on="
         customEventHandler(field, handleChange)

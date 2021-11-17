@@ -6,7 +6,8 @@
           <a
             class="openlayer"
             @click="openLayer"
-            title="File Upload"
+            :aria-label="field.helpText"
+            :title="field.helpText"
             v-html="valueLabel"></a>
           <figure class="icon-x del"></figure>
           <input

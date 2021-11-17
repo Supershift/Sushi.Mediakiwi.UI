@@ -35,7 +35,6 @@ import {
   defineComponent,
   reactive,
   ref,
-  watch,
 } from "vue";
 import { store } from "../store";
 import FormErrors from "./form/FormErrors.vue";
@@ -155,6 +154,12 @@ export default defineComponent({
     margin-bottom: 25px;
     width: 70%;
     font-size: $font-size-l;
+    font-family: $font-primary;
+    background: $color-blue;
+    color: #fff;
+    &:hover {
+      background: $color-hover-blue;
+    }
   }
   .password-input {
     margin-top: 0;

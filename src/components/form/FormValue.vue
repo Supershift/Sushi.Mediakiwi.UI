@@ -10,6 +10,8 @@
       v-model="valueRef"
       type="text"
       :name="fieldName"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       :disabled="field.disabled || field.readOnly"
       :class="valueClasses" />
     <label v-if="undefinedCheck(field)">

@@ -10,6 +10,7 @@ export interface ButtonModel extends FieldModel {
   confirmationTitle?: string;
   confirmationRejectLabel?: string;
   confirmationAcceptLabel?: string;
+  helpText?: string;
   target?: string;
   triggerValidation?: boolean
   triggerState?: boolean

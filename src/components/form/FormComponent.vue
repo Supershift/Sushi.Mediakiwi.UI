@@ -1,86 +1,5 @@
 <template>
   <section>
-    <!-- <table class="formTable">
-      <tbody>
-        <tr v-for="row in rowArray" :key="row.id">
-          <td v-if="row.isButtonRow">
-            <component
-              :is="checkVueType(field)"
-              v-for="field in row.fields"
-              :key="field.propertyName"
-              :field="field"
-              @onclick="handleButtonClicked" />
-          </td>
-          <template
-            v-for="field in row.fields"
-            v-else>
-            <component
-              :is="checkVueType(field)"
-              v-if="
-                checkVueType(field) ===
-                'FormSection'
-              "
-              :key="field.propertyName"
-              v-model="field.value"
-              :field="field" />
-            <template v-else>
-              <th
-                v-show="showField(field)"
-                :key="field.propertyName"
-                :class="
-                  expressCell(field.expression)
-                "
-                colspan="1">
-                <label
-                  v-if="
-                    !hideLabelForType(
-                      field.vueType
-                    )
-                  "
-                  :for="field.propertyName"
-                  :title="field.title"
-                  :class="{
-                    mandatory: field.mandatory,
-                  }">
-                  {{ field.title }}
-                </label>
-              </th>
-              <td
-                :key="field.propertyName"
-                :class="
-                  expressCell(field.expression)
-                "
-                :colspan="getColspan(row)">
-                <component
-                  :is="checkVueType(field)"
-                  v-if="
-                    field.vueType === 'FormButton'
-                  "
-                  :field="field"
-                  :key="field.propertyName"
-                  @onclick="
-                    handleButtonClicked
-                  " />
-                <component
-                  :is="
-                    checkVueType(field) ===
-                    'undefined'
-                      ? 'FormInput'
-                      : checkVueType(field)
-                  "
-                  v-else
-                  :key="field.componentKey"
-                  :field="field"
-                  v-model="field.value"
-                  @on-change="
-                    handleFieldsChanged
-                  " />
-              </td>
-            </template>
-          </template>
-        </tr>
-      </tbody>
-    </table> -->
     <div class="container">
       <div class="row" v-for="row in rowArray" :key="row.id">
         <div class="col" v-if="row.isButtonRow">
@@ -129,16 +48,17 @@
                 :class="
                   expressCell(field.expression)
                 ">
-                <component
-                  :is="checkVueType(field)"
-                  v-if="
-                    field.vueType === 'FormButton'
-                  "
-                  :field="field"
-                  :key="field.propertyName"
-                  @onclick="
-                    handleButtonClicked
-                  " />
+
+                  <component
+                    :is="checkVueType(field)"
+                    v-if="
+                      field.vueType === 'FormButton'
+                    "
+                    :field="field"
+                    :key="field.propertyName"
+                    @onclick="
+                      handleButtonClicked
+                    " />
                 <component
                   :is="
                     checkVueType(field) ===
@@ -190,6 +110,7 @@ import FormChoiceCheckbox from "./FormChoiceCheckBox.vue";
 import FormTime from "./FormTime.vue";
 import FormDateTime from "./FormDateTime.vue";
 import FormSublistSelect from "./FormSublistSelect.vue";
+import FormTooltip from "./FormTooltip.vue"
 import {OutputExpressionType} from "@/models/Mediakiwi/OutputExpressionType";
 import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
 
@@ -227,6 +148,7 @@ export default defineComponent({
     FormRichText,
     FormChoiceRadio,
     FormSublistSelect,
+    FormTooltip,
   },
   emits: [
     "toggle",

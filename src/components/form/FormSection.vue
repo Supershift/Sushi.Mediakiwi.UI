@@ -4,6 +4,8 @@
     :class="sectionContainerClasses">
     <h3
       :class="toggleChoice"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       @click="toggle($event)">
       {{ field?.title }}
     </h3>

@@ -6,6 +6,8 @@
       :init="tinymceInit"
       v-model="valueRef"
       :class="customRichtextClasses"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       v-on="
         customEventHandler(field, handleChange)
       " />

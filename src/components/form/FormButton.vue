@@ -3,6 +3,8 @@
     v-if="button.customUrl"
     :class="customButtonClasses"
     :href="button.customUrl"
+    :aria-label="button.helpText"
+    :title="field.helpText"
     :disabled="
       button?.disabled || button.readOnly
     ">
@@ -12,11 +14,14 @@
     v-else
     :class="customButtonClasses"
     @click.prevent="handleClicked"
+    :title="button.helpText"
+    :aria-label="button.helpText"
     :disabled="
       button?.disabled || button.readOnly
     ">
     <fa :icon="buttonIconChoice" class="btn-icon" />{{ button.value }}
   </button>
+
 </template>
 
 <script lang="ts">

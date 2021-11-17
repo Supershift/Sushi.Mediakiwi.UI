@@ -10,6 +10,8 @@
       v-model="valueNameRef"
       :name="fieldName"
       :id="fieldName"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       :disabled="field.disabled || field.readOnly"
       :class="customNameValueClasses" />
     <input
@@ -18,6 +20,8 @@
       :name="fieldNameValue"
       :id="fieldNameValue"
       :disabled="field.disabled || field.readOnly"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       @change="handleChange"
       :class="customNameValueClasses" />
     <label v-if="undefinedCheck(field.suffix)">{{

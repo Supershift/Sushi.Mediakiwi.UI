@@ -7,7 +7,9 @@
       type="text"
       :list="id"
       autocomplete="off"
-      :name="name"
+      :name="field.propertyName"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       :style="{
         'padding-left': `${paddingLeft}px`,
       }"
@@ -47,18 +49,24 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import {
   ref,
   watch,
   nextTick,
   onMounted,
   computed,
+  defineComponent,
+  PropType,
 } from "vue";
-export default {
+import FieldModel from "../../models/Mediakiwi/FieldModel";
+export default defineComponent({
   name: "TagsInput",
   props: {
-    name: {type: String, required: true},
+    field: { 
+      type: Object as PropType<FieldModel>,
+      required: true
+    },
     modelValue: {
       type: Array,
       default: () => {
@@ -166,7 +174,7 @@ export default {
       tagsLength,
     };
   },
-};
+});
 </script>
 <style scoped lang="scss">
 ul {

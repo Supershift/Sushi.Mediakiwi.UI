@@ -12,7 +12,9 @@
       :placeholder="componentFormat"
       :disabled="field.readOnly"
       :readonly="field.readOnly"
-      :textInput="!field.readOnly"
+      :aria-label="field.helpText"
+      :title="field.helpText"
+      :text-input="!field.readOnly"
       >
       <template #input-icon></template>
     </datetimepicker>

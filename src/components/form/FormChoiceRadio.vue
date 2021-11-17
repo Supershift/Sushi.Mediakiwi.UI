@@ -15,6 +15,8 @@
         :class="radioClasses + errorClass(field)"
         :name="field.groupName"
         :value="option.value"
+        :aria-label="field.helpText"
+        :title="field.helpText"
         :disabled="
           field.disabled || field.readOnly
         "

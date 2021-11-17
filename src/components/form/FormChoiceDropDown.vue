@@ -12,6 +12,8 @@
       placeholder=""
       :clearable="true"
       :taggable="false"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       :class="customDropdownClasses"
       :disabled="field.disabled || field.readOnly"
       ref="dropdown"
@@ -35,7 +37,6 @@ import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
 import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
 import ItemModel from "../../models/OptionItemModel";
-import OptionItemModel from "../../models/Mediakiwi/OptionItemModel";
 
 export default defineComponent({
   name: "FormChoiceDropdown",

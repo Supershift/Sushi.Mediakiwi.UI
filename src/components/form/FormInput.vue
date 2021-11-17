@@ -21,6 +21,8 @@
         :value="inputText.value"
         :required="field.fieldRequired"
         :placeholder="field.title"
+        :aria-label="field.helpText"
+        :title="field.helpText"
         :disabled="
           field.disabled || field.readOnly
         "
