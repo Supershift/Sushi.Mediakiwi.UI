@@ -50,6 +50,17 @@
 
       <ResourcesComponent
         v-if="fetchedResources" />
+
+      <template
+        v-if="
+          fetchedViews && fetchedViews.length
+        ">
+        <Component
+          v-for="view in fetchedViews"
+          :key="view.id"
+          :is="getTypeName(view)"
+          :view="view" />
+      </template>
     </div>
   </div>
 </template>
@@ -69,6 +80,9 @@ import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
 import ResourcesComponent from "./resources/ResourcesComponent.vue";
 import ButtonListComponent from "./ButtonListComponent.vue";
+import FileUpload from "./file-upload/FileUpload.vue";
+import {getViewTypeName} from "@/models/Mediakiwi/ViewType";
+import ViewModel from "@/models/Mediakiwi/ViewModel";
 
 export default defineComponent({
   name: "MainView",
@@ -78,6 +92,7 @@ export default defineComponent({
     FolderComponent,
     ResourcesComponent,
     ButtonListComponent,
+    FileUpload,
   },
   setup() {
     const breakpointTablet = 986;
@@ -108,6 +123,10 @@ export default defineComponent({
       () => store.getters.fieldValues
     );
 
+    const fetchedViews = computed(
+      () => store.getters.views
+    );
+
     const customNotifications = ref<
       MessageModel[]
     >([]);
@@ -115,6 +134,13 @@ export default defineComponent({
     const checkWindowWidth = computed(
       () => window.innerWidth > breakpointTablet
     );
+    function getTypeName(view: ViewModel) {
+      if (view && view.type) {
+        return getViewTypeName(view.type);
+      }
+      return null;
+    }
+
     return {
       customNotifications,
       fetchedFields,
@@ -125,6 +151,8 @@ export default defineComponent({
       fetchedBottomButtons,
       fetchedFieldValues,
       checkWindowWidth,
+      fetchedViews,
+      getTypeName,
     };
   },
 });

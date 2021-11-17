@@ -9,6 +9,7 @@ import ResourceModel from "./ResourceModel";
 import SideNavigationModel from "./SideNavigationModel";
 import SiteModel from "./SiteModel";
 import TopNavigationModel from "./TopNavigationModel";
+import ViewModel from "./ViewModel";
 
 export default interface MediakiwiModel {
   listTitle?: string;
@@ -30,5 +31,6 @@ export default interface MediakiwiModel {
   isSharedField: boolean;
   sharedFieldValue?: string;
   resources: ResourceModel[]
-  referId?: string
+  referId?: string,
+  views: ViewModel[] | null
 }
