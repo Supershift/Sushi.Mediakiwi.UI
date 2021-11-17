@@ -39,6 +39,7 @@ export const mediakiwiLogic = {
     store.dispatch("setResources", response.resources);
     store.dispatch("setFields", response.fields);
     store.dispatch("setButtons", response.buttons);
+    store.dispatch("setViews", response.views);
   },
   /** Creates a @type {PostMediakiwiRequestModel} from the altered data in the vuex store */
   getMediakiwiModelFromStore(referId: string) {

@@ -619,6 +619,45 @@
         "height": "450px",
         "href": "http://localhost:8080/webcontent/path/pagex?item=1&openinframe=1&referid=SublistSelect"
       }
+    },
+    {
+      "contentTypeID": 18,
+      "propertyName": "FormImage",
+      "propertyType": "string",
+      "title": "Upload document",
+      "vueType": 22,
+      "expression": 0,
+      "value": {
+        "id": 13,
+        "name": "original item name",
+        "width": 240,
+        "height": 240,
+        "href": "path-to-image.png"
+      },
+      "options": null,
+      "className": null,
+      "event": 1,
+      "inputPost": null,
+      "section": 0,
+      "hidden": null,
+      "groupName": null,
+      "suffix": null,
+      "prefix": null,
+      "formSection": null,
+      "canToggleSection": false,
+      "canDeleteSection": false,
+      "toggleDefaultClosed": false,
+      "readOnly": false,
+      "helpText": "This field can do stuff",
+      "weekStart": 7,
+      "fieldIcon": "",
+      "locale": "en-US",
+      "layerConfiguration": {
+        "title": "Test",
+        "width": "790px",
+        "height": "450px",
+        "href": "http://localhost:8080/webcontent/path/pagex?item=1&openinframe=1&referid=SublistSelect"
+      }
     }
   ],
   "buttons": [
