@@ -32,7 +32,8 @@
       <template
         v-if="
           fetchedBottomButtons &&
-          fetchedBottomButtons.length
+          fetchedBottomButtons.length &&
+          checkWindowWidth
         ">
         <ButtonListComponent
           :buttons="fetchedBottomButtons" />
