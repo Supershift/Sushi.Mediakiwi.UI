@@ -49,7 +49,7 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script>
 import {
   ref,
   watch,
@@ -57,14 +57,12 @@ import {
   onMounted,
   computed,
   defineComponent,
-  PropType,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
 export default defineComponent({
   name: "TagsInput",
   props: {
     field: { 
-      type: Object as PropType<FieldModel>,
+      type: Object,
       required: true
     },
     modelValue: {
