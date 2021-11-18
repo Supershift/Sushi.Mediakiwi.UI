@@ -10,6 +10,8 @@
       :class="textClasses"
       :name="field.propertyName"
       :id="fieldID"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       :disabled="field.disabled || field.readOnly"
       v-on="
         customEventHandler(field, handleChange)
@@ -93,5 +95,6 @@ export default defineComponent({
 <style scoped lang="scss">
 .text-primary {
   width: 100%;
+  padding: 15px;
 }
 </style>

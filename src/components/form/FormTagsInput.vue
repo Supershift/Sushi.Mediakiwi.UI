@@ -7,7 +7,9 @@
       type="text"
       :list="id"
       autocomplete="off"
-      :name="name"
+      :name="field.propertyName"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       :style="{
         'padding-left': `${paddingLeft}px`,
       }"
@@ -54,11 +56,15 @@ import {
   nextTick,
   onMounted,
   computed,
+  defineComponent,
 } from "vue";
-export default {
+export default defineComponent({
   name: "TagsInput",
   props: {
-    name: {type: String, required: true},
+    field: { 
+      type: Object,
+      required: true
+    },
     modelValue: {
       type: Array,
       default: () => {
@@ -166,7 +172,7 @@ export default {
       tagsLength,
     };
   },
-};
+});
 </script>
 <style scoped lang="scss">
 ul {
@@ -198,7 +204,7 @@ ul {
   font-size: $font-size-l;
   input {
     height: 50px;
-    width: 98%;
+    width: 100%;
     max-width: calc(100vw - 80px);
     font-size: $font-size-l;
     color: $color-drakgrey;

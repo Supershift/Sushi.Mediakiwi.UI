@@ -10,6 +10,8 @@
       type="checkbox"
       :class="checkboxClasses"
       :name="field.propertyName"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       :disabled="field.disabled || field.readOnly"
       v-on="
         customEventHandler(field, handleChange)

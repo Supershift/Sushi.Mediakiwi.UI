@@ -49,17 +49,18 @@ export default defineComponent({
   height: auto;
   margin-bottom: 10px;
   background: #f6f6f7;
-  padding: 20px 0 0;
-  display: inline-block;
-  transition-property: left, right, top;
-  transition-duration: 0.6s;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  // transition-property: left, right, top;
+  // transition-duration: 0.6s;
   overflow: hidden;
-  width: 100%;
+  flex: 1 0 30%;
+  margin-right: 15px;
 
   h2 {
-    width: 100%;
-    font-size: 200%;
-    margin-top: 0;
+    font-size: $font-size-xxl;
+    margin: 0 auto;
     font-family: $font-primary;
 
     a {
@@ -75,17 +76,23 @@ export default defineComponent({
     border-color: #fff !important;
     color: #2f353b;
     display: inline-block;
-    margin: 0;
-    padding: 10px 20px;
-    width: 100%;
+    margin: 0 auto;
+    padding: 10px 8px;
     border-top: solid 1px #fff;
-    font-size: 110%;
+    font-size: $font-size-base;
     font-family: $font-primary;
     text-decoration: none;
 
     &:first-of-type {
       border-top: none;
-      margin-top: -20px;
+      margin-top: -10px;
+    }
+  }
+}
+@media (min-width: $grid-m) {
+  .folder{
+    h2 {
+      font-size: $font-size-xxl;
     }
   }
 }

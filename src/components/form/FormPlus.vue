@@ -4,9 +4,10 @@
       :id="fieldID"
       :class="plusClasses"
       @click="handleClick"
-      :readonly="
-        field?.disabled || field.readOnly
-      "
+      :disabled="field?.disabled || field.readOnly"
+      :aria-label="field.helpText"
+      :title="field.helpText"
+      :aria-readonly="field.readOnly"
       ><!-- eslint-disable-next-line vue/no-unregistered-components -->
       <fa icon="plus" class="plus-svg" />
     </a>
@@ -39,7 +40,9 @@ export default defineComponent({
   setup(props, context) {
     const plusClasses = computed(() => {
       return [
-        "plus-primary " + props.field.className,
+        "plus-primary ",
+        props.field.className,
+        { " disabled": props.field.readOnly },
       ];
     });
     const plusContainerClasses = computed(() => {
@@ -57,7 +60,11 @@ export default defineComponent({
       );
     });
     function handleClick(e: Event) {
-      context.emit("plus-click", e);
+      if (props.field.readOnly) {
+        return;
+      } else {
+        context.emit("plus-click", e);
+      }
     }
     return {
       plusClasses,
@@ -77,11 +84,10 @@ export default defineComponent({
   margin-bottom: 15px;
   text-align: center;
 
-  .plus-primary {
-    &:read-only .plus-svg {
+
+  .disabled {
       cursor: not-allowed;
       opacity: 0.5;
-    }
   }
   .plus-svg {
     background: $color-success;

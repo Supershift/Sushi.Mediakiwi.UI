@@ -4,10 +4,12 @@
       <template
         v-if="
           fetchedTopButtons &&
-          fetchedTopButtons.length
+          fetchedTopButtons.length &&
+          checkWindowWidth
         ">
         <ButtonListComponent
-          :buttons="fetchedTopButtons" />
+          :buttons="fetchedTopButtons" 
+        />
       </template>
 
       <!-- TODO ADD NOTIFICATIONS HERE -->
@@ -30,7 +32,8 @@
       <template
         v-if="
           fetchedBottomButtons &&
-          fetchedBottomButtons.length
+          fetchedBottomButtons.length &&
+          checkWindowWidth
         ">
         <ButtonListComponent
           :buttons="fetchedBottomButtons" />
@@ -93,6 +96,7 @@ export default defineComponent({
     FileUpload,
   },
   setup() {
+    const breakpointTablet = 986;
     const fetchedFields = computed(
       () => store.getters.fields
     );
@@ -128,6 +132,9 @@ export default defineComponent({
       MessageModel[]
     >([]);
 
+    const checkWindowWidth = computed(
+      () => window.innerWidth > breakpointTablet
+    );
     function getTypeName(view: ViewModel) {
       if (view && view.type) {
         return getViewTypeName(view.type);
@@ -144,6 +151,7 @@ export default defineComponent({
       fetchedTopButtons,
       fetchedBottomButtons,
       fetchedFieldValues,
+      checkWindowWidth,
       fetchedViews,
       getTypeName,
     };
@@ -157,13 +165,19 @@ export default defineComponent({
   overflow: auto;
   .main-container {
     margin: 0;
-    padding-top: 15px;
-    padding-left: 30px;
+    padding: 15px;
+    padding-left: 10px;
+    padding-right: 30px;
+    touch-action: manipulation;
+    max-width: calc(100vw - 110px);
   }
 }
-.drawer-container {
-  .main-container {
-    padding-left: 50px;
+@media (min-width: $grid-m) {
+  .content-container{
+    .main-container {
+      padding-left: 30px;
+      max-width: unset;
+    }
   }
 }
 </style>

@@ -12,6 +12,8 @@
       placeholder=""
       :clearable="true"
       :taggable="false"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       :class="customDropdownClasses"
       :disabled="field.disabled || field.readOnly"
       ref="dropdown"
@@ -54,7 +56,7 @@ export default defineComponent({
   },
   emits: ["on-change"],
   setup(props, context) {
-    let valueRef = ref<FieldModel>(props.field.value);
+    let valueRef = ref<FieldModel>(props.field);
     const customDropdownClasses = computed(() => [
       "dropdown-primary ",
       props.field.className,
@@ -70,11 +72,11 @@ export default defineComponent({
         props.classname,
       ]);
     const optionData = computed(() => {
-      if (!valueRef.value?.options) {
+      if (!valueRef.value?.options?.items) {
         return [];
       }
-
-      return valueRef.value.options.items.map(
+      
+      return valueRef.value?.options?.items.map(
         (r: ItemModel) => {
           return {
             id: r.value,
@@ -87,8 +89,8 @@ export default defineComponent({
 
     const selectedValueRef = ref();
     selectedValueRef.value =
-      optionData?.value.find(
-        (r) => r.id === valueRef.value
+      optionData.value?.find(
+        (r) => r.id === valueRef.value.value
       );
 
     function handleChange(e?: Event) {
@@ -131,6 +133,12 @@ export default defineComponent({
   margin-bottom: 15px;
   width: 100%;
 }
+.v-select {
+  .vs__search {
+    padding-left: 15px;
+  }
+}
+
 .vs__dropdown-toggle {
   height: 50px;
   border: 1px solid #aaa;

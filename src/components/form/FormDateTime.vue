@@ -1,5 +1,5 @@
 <template>
-  <div :class="datetimeContainerClasses">
+  <div :class="datetimeContainerClasses" :id="field.propertyName">
     <label v-if="undefinedCheck(field.prefix)">{{
       undefinedCheck(field.prefix)
     }}</label>
@@ -10,9 +10,14 @@
       :time-picker="isTimePicker"
       :enable-time-picker="hasTimePicker"
       :placeholder="componentFormat"
-      :readonly="
-        field.disabled || field.readOnly
-      ">
+      :aria-label="field.helpText"
+      :title="field.helpText"
+      :disabled="field.readOnly"
+      :readonly="field.readOnly"
+      :text-input="!field.readOnly"
+      :locale="field.locale"
+      :teleport="'#'+ field.propertyName"
+      >
       <template #input-icon></template>
     </datetimepicker>
     <label v-if="undefinedCheck(field.suffix)">{{
@@ -185,10 +190,14 @@ export default defineComponent({
   margin-bottom: 15px;
   font-family: $font-primary;
   input {
+    padding-left: 15px;
     &:read-only {
       cursor: not-allowed;
     }
   }
+}
+.dp__arrow_top {
+  display: none;
 }
 .dp__menu,
 .dp__overlay,

@@ -38,5 +38,5 @@ export default interface FieldModel {
   locale?: string | null;
   weekStart?: number | null;
   autoPostBack?: boolean | null;
-  layerConfiguration?: LayerConfigurationModel
+  layerConfiguration?: LayerConfigurationModel;
 }

@@ -1,9 +1,11 @@
 <template>
-  <th
-    colspan="4"
+  <div
+    class="col"
     :class="sectionContainerClasses">
     <h3
       :class="toggleChoice"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       @click="toggle($event)">
       {{ field?.title }}
     </h3>
@@ -20,7 +22,7 @@
         class="list-icon"
         @click="toggle($event)" />
     </span>
-  </th>
+  </div>
 </template>
 
 <script lang="ts">

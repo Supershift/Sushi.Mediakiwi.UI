@@ -4,11 +4,11 @@
       {{ undefinedCheck(field.prefix) }}
     </label>
     <TagsInput
-      :name="field?.propertyName"
       :model-value="valueRef"
       :options="field?.options"
       :allow-custom="true"
       :show-count="false"
+      :field="field"
       @change-made="handleChange" />
     <label v-if="undefinedCheck(field?.suffix)">{{
       undefinedCheck(field.suffix)

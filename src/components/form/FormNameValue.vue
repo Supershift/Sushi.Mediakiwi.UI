@@ -10,6 +10,8 @@
       v-model="valueNameRef"
       :name="fieldName"
       :id="fieldName"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       :disabled="field.disabled || field.readOnly"
       :class="customNameValueClasses" />
     <input
@@ -18,6 +20,8 @@
       :name="fieldNameValue"
       :id="fieldNameValue"
       :disabled="field.disabled || field.readOnly"
+      :aria-label="field.helpText"
+      :title="field.helpText"
       @change="handleChange"
       :class="customNameValueClasses" />
     <label v-if="undefinedCheck(field.suffix)">{{
@@ -50,10 +54,10 @@ export default defineComponent({
   emits: ["on-change"],
   setup(props, context) {
     const valueNameRef = ref(
-      props.field.value.text
+      props.field.value.name
     );
     const valueNameValueRef = ref(
-      props.field.value.value
+      props.field.value.text
     );
     const fieldName = computed(
       () => `${props.field.propertyName}_name`

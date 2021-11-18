@@ -1,17 +1,16 @@
 <template>
   <section>
-    <table class="formTable">
-      <tbody>
-        <tr v-for="row in rowArray" :key="row.id">
-          <td v-if="row.isButtonRow">
-            <component
+    <div class="container">
+      <div class="row" v-for="row in rowArray" :key="row.id">
+        <div class="col" v-if="row.isButtonRow">
+          <component
               :is="checkVueType(field)"
               v-for="field in row.fields"
               :key="field.propertyName"
               :field="field"
               @onclick="handleButtonClicked" />
-          </td>
-          <template
+        </div>
+        <template
             v-for="field in row.fields"
             v-else>
             <component
@@ -24,13 +23,12 @@
               v-model="field.value"
               :field="field" />
             <template v-else>
-              <th
+              <div class="col"
                 v-show="showField(field)"
                 :key="field.propertyName"
                 :class="
                   expressCell(field.expression)
-                "
-                colspan="1">
+                ">
                 <label
                   v-if="
                     !hideLabelForType(
@@ -44,23 +42,23 @@
                   }">
                   {{ field.title }}
                 </label>
-              </th>
-              <td
+              </div>
+              <div class="col-xl"
                 :key="field.propertyName"
                 :class="
                   expressCell(field.expression)
-                "
-                :colspan="getColspan(row)">
-                <component
-                  :is="checkVueType(field)"
-                  v-if="
-                    field.vueType === 'FormButton'
-                  "
-                  :field="field"
-                  :key="field.propertyName"
-                  @onclick="
-                    handleButtonClicked
-                  " />
+                ">
+
+                  <component
+                    :is="checkVueType(field)"
+                    v-if="
+                      field.vueType === 'FormButton'
+                    "
+                    :field="field"
+                    :key="field.propertyName"
+                    @onclick="
+                      handleButtonClicked
+                    " />
                 <component
                   :is="
                     checkVueType(field) ===
@@ -75,12 +73,11 @@
                   @on-change="
                     handleFieldsChanged
                   " />
-              </td>
+              </div>
             </template>
           </template>
-        </tr>
-      </tbody>
-    </table>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -113,6 +110,7 @@ import FormChoiceCheckbox from "./FormChoiceCheckBox.vue";
 import FormTime from "./FormTime.vue";
 import FormDateTime from "./FormDateTime.vue";
 import FormSublistSelect from "./FormSublistSelect.vue";
+import FormTooltip from "./FormTooltip.vue"
 import {OutputExpressionType} from "@/models/Mediakiwi/OutputExpressionType";
 import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
 
@@ -150,6 +148,7 @@ export default defineComponent({
     FormRichText,
     FormChoiceRadio,
     FormSublistSelect,
+    FormTooltip,
   },
   emits: [
     "toggle",
@@ -389,34 +388,43 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.formTable {
+.container {
   font-family: $font-primary;
   font-family: $font-size-l;
-  tr {
-    th {
-      padding: 8px 0 2px;
+  .row {
+    flex-direction: column;
+    padding-bottom: $standard-spacing;
+    .col {
       text-align: left;
       vertical-align: top;
-      width: 10%;
       label {
-        width: 135px;
-        padding: 4px 10px 4px 0;
-        display: block;
+        min-width: 175px;
         font-weight: 600;
         min-height: 24px;
       }
     }
-    td {
-      padding: 4px 80px 4px 0;
-      vertical-align: top;
+    .col {
+      padding: 5px 0;
       color: #000;
-      &.half {
-        width: 40%;
-      }
+    }
+    .col-xl {
+      flex: 2 0 40%
     }
   }
   .input-text {
     margin-right: 0;
+  }
+}
+@media (min-width: 786px) {
+  .container {
+    .row {
+      flex-direction: row;
+      .col {
+        &.half {
+          width: 40%;
+        }
+      }
+    }
   }
 }
 </style>

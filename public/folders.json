@@ -310,7 +310,11 @@
     "displayName": "Jean-Paul Kommers",
     "email": "jean-paul.kommers@supershift.nl",
     "roleID": 1,
-    "roleName": "Super Admin"
+    "roleName": "Super Admin",
+    "company":{
+      "name": "Supershift",
+      "logoUrl": "/images/noImage.png"
+    }
   },
   "redirectUrl": null,
   "listDescription": null,

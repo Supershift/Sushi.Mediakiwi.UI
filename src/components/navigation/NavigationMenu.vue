@@ -59,7 +59,7 @@ export default defineComponent({
     align-items: unset;
     width: unset;
     height: 50px;
-    bottom: 4px;
+    bottom: 0;
     left: 160px;
     margin-left: -15px;
   }

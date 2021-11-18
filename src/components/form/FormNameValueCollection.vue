@@ -62,9 +62,7 @@ export default defineComponent({
   },
   emits: ["on-change"],
   setup(props, context) {
-    let valueNameValueRef = ref<
-      Array<FieldModel>
-    >([]);
+    let valueNameValueRef = ref<Array<FieldModel>>([]);
     const nameValueCollectionClasses = computed(
       () =>
         `name-value-collection ${props.field.className}`
@@ -75,29 +73,22 @@ export default defineComponent({
           `name-value-collection-container ${props.classname}`
       );
     const plusField = computed(() =>
-      Object.assign({}, emptyField)
+      Object.assign(emptyField, {propertyName:"plusField", fieldIcon:"plus", readOnly: props.field.readOnly, vueType: MediakiwiFormVueType.formPlus, placeholder: "Empty value"}) as FieldModel
     );
     function getField(
       nameValue: string,
       index: number
     ) {
-      let field = Object.assign({}, emptyField);
-      field.vueType =
-        MediakiwiFormVueType.formNameValue;
-      field.propertyName = `${props.field.propertyName}_${index}`;
-      field.value = nameValue;
-      field.event = props.field.event;
+      const field = Object.assign(emptyField, {vueType: MediakiwiFormVueType.formNameValue, propertyName: `${props.field.propertyName}_${index}`, value: nameValue, event: props.field.event, readOnly: props.field.readOnly});
       return field;
     }
     function addNameValuePair() {
-      valueNameValueRef.value.push(emptyField);
+      if (!props.field.readOnly ) {
+        valueNameValueRef.value.push(emptyField);
+      }
     }
     function handleChange(e: Event) {
-      context.emit(
-        "on-change",
-        e,
-        valueNameValueRef
-      );
+      context.emit("on-change",e,valueNameValueRef);
     }
     function removeNameValuePair(
       nameValuePair: string

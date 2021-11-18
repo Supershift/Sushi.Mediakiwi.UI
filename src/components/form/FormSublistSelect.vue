@@ -6,20 +6,24 @@
           <a
             class="openlayer"
             @click="openLayer"
-            title="File Upload"
+            :aria-label="field.helpText"
+            :title="field.helpText"
             v-html="valueLabel"></a>
           <figure class="icon-x del"></figure>
           <input
             type="hidden"
             :id="itemId"
-            :name="itemId" />
+            :name="itemId"
+            :class="sublistClasses"
+            />
         </li>
       </ul>
     </div>
     <div class="buttonContainer">
       <a
         class="openlayer"
-        title="File Upload"
+        :aria-label="field.helpText"
+        :title="field.helpText"
         @click="openLayer">
         <!-- eslint-disable-next-line vue/no-unregistered-components -->
         <fa icon="plus"></fa
@@ -50,6 +54,9 @@ export default defineComponent({
   emits: ["on-change"],
   setup(props, context) {
     const valueRef = ref(props.field.value);
+    const sublistClasses = computed(() => {
+      return `sublist-primary ${props.field.className}`;
+    });
 
     const componentId = computed<string>(
       () => props.field.propertyName
@@ -116,6 +123,7 @@ export default defineComponent({
       itemId,
       openLayer,
       handleChange,
+      sublistClasses,
     };
   },
 });
@@ -137,14 +145,15 @@ export default defineComponent({
       padding: 0;
       width: 100%;
       float: left;
-      height: auto !important;
+      height: 50px;
       min-height: 31px;
       border: 1px solid #dddee0;
-      background: #f2f2f2 !important;
+      border-radius: 4px;
+
 
       li {
         margin: 0;
-        padding: 4px 0 0 10px !important;
+        padding: 15px 0 0 10px !important;
         cursor: pointer;
         color: #000 !important;
         font-weight: 400 !important;
@@ -184,13 +193,23 @@ export default defineComponent({
       display: inline-block;
       text-align: center;
       border-radius: 2px !important;
-      background: #0fabd4 !important;
-      padding: 6px;
+      background: $color-main;
+      box-shadow: $box-shadow-1;
+      padding: 15px;
+      &:hover {
+        background: $color-hover-blue;
+      }
+      &:active svg {
+        color: $color-main;
+      }
 
       svg {
         color: white;
       }
     }
   }
+}
+.sublist-primary {
+  background: #fff;
 }
 </style>

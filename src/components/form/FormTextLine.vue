@@ -6,7 +6,9 @@
     <label
       :id="fieldID"
       :class="textlineClasses"
-      :name="field.propertyName">
+      :name="field.propertyName"
+      :aria-label="field.helpText"
+      :title="field.helpText">
       {{ valueRef }}
     </label>
     <label v-if="undefinedCheck(field.suffix)">{{
