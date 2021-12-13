@@ -7,12 +7,16 @@ trigger:
 - main
 
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest
 
-variables:
-  FONTAWESOME_NPM_AUTH_TOKEN: $(FONTAWESOME_NPM_AUTH_TOKEN)
+
 
 steps:
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'echo $(FONTAWESOME_NPM_AUTH_TOKEN)'
+    
 - task: NodeTool@0
   displayName: 'Use Node 12.x'
   inputs:
