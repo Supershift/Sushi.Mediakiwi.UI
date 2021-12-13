@@ -43,6 +43,7 @@ import CustomButton from "./base-components/CustomButton.vue";
 import InputModel from "../models/InputModel";
 import ButtonModel from "../models/ButtonModel";
 import MessageModel from "../models/MessageModel";
+import AuthenticateRequestModel from "../models/Mediakiwi/Request/AuthenticateRequestModel";
 import { fieldMixins, FieldValidationType, FieldValidationTypeMessage } from "./form";
 
 export default defineComponent({
@@ -98,7 +99,7 @@ export default defineComponent({
         emailAddress: email.value,
         password: password.value,
         apiKey: "",
-      });
+      } as AuthenticateRequestModel);
     }
     function handleTextChanged(value: string, fieldName: string) {
       //errorMessages = fieldMixins.methods.emptyValidator(value, fieldName, errorMessages);

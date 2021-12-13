@@ -1,5 +1,4 @@
 import { ButtonRequestMethodType } from "@/models/Mediakiwi/ButtonRequestMethodType";
-import AuthenticateRequestModel from "@/models/Mediakiwi/Request/AuthenticateRequestModel";
 import GetMediakiwiRequestModel from "@/models/Mediakiwi/Request/getMediakiwiRequestModel";
 import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
 import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
