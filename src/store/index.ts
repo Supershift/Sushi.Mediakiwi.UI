@@ -1,27 +1,27 @@
-import router from "@/router";
-import axios from "axios";
-import FieldModel from "@/models/Mediakiwi/FieldModel";
-import NotificationModel from "@/models/Mediakiwi/NotificationModel";
-import SideNavigationModel from "@/models/Mediakiwi/SideNavigationModel";
-import TopNavigationModel from "@/models/Mediakiwi/TopNavigationModel";
-import { InjectionKey } from "vue"
-import { createStore, Store } from "vuex"
-import DrawerModel from "./modules/DrawerModel";
-import DialogModel from "./modules/DialogModel";
-import { BaseContentModel } from "./modules/BaseContentModel";
-import PageModel from "./modules/PageModel";
-import ProfileModel from "@/models/Mediakiwi/ProfileModel";
-import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel";
-import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
-import GridModel from "@/models/Mediakiwi/GridModel";
-import FolderModel from "@/models/Mediakiwi/FolderModel";
-import ResourceModel from "@/models/Mediakiwi/ResourceModel";
-import { FieldValidationType, FieldValidationTypeMessage, vueTypes } from "@/components/form";
+import { FieldValidationType, FieldValidationTypeMessage } from "@/components/form";
 import { ButtonModel } from "@/models/Mediakiwi/ButtonModel";
 import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
+import FieldModel from "@/models/Mediakiwi/FieldModel";
+import FolderModel from "@/models/Mediakiwi/FolderModel";
+import GridModel from "@/models/Mediakiwi/GridModel";
+import NotificationModel from "@/models/Mediakiwi/NotificationModel";
+import ProfileModel from "@/models/Mediakiwi/ProfileModel";
+import ResourceModel from "@/models/Mediakiwi/ResourceModel";
 import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
+import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel";
+import SideNavigationModel from "@/models/Mediakiwi/SideNavigationModel";
+import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
+import TopNavigationModel from "@/models/Mediakiwi/TopNavigationModel";
 import ViewModel from "@/models/Mediakiwi/ViewModel";
-const loggedinKey = "ananda_vaultn_loggedin";
+import router from "@/router";
+import axios from "axios";
+import { InjectionKey } from "vue";
+import { createStore, Store } from "vuex";
+import { BaseContentModel } from "./modules/BaseContentModel";
+import DialogModel from "./modules/DialogModel";
+import DrawerModel from "./modules/DrawerModel";
+import PageModel from "./modules/PageModel";
+const loggedinKey = "sushi_mediakiwi_ui_loggedin";
 
 // define your typings for the store state
 export interface State {
@@ -253,7 +253,7 @@ export const store = createStore<State>({
       }
 
       // Start a promise with an axios call
-      // to fetch the mediakiwi json      
+      // to fetch the mediakiwi json
       return new Promise((resolve, reject) => {
         axios.get(apiPath)
           .then((response) => resolve(response.data))

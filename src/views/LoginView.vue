@@ -1,18 +1,11 @@
 <template>
   <div class="form-container">
     <router-view></router-view>
-
-    <div class="login-ellipse">
-      <p>
-        Take back control of your digital assets.
-      </p>
-    </div>
   </div>
 </template>
 
 <script>
 import {defineComponent} from "vue";
-import Login from "../components/Login.vue";
 
 export default defineComponent({
   name: "LoginView",

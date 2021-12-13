@@ -1,4 +1,10 @@
 module.exports = {
+  pages: {
+    index: {
+      entry: "src/main.ts",
+      title: "Mediakiwi"
+    }
+  },
   publicPath: "/",
   css: {
     loaderOptions: {
@@ -9,5 +15,5 @@ module.exports = {
   },
   configureWebpack: {
     devtool: "source-map"
-  }
+  },
 };

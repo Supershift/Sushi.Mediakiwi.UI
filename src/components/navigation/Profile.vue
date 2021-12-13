@@ -1,15 +1,5 @@
 <template>
   <div class="profile-main-container">
-    <div class="profile-brand">
-      <img
-        :src="brand?.logoUrl"
-        class="brand-image"
-        alt="Brand image"
-      />
-    </div>
-    <img
-      src="../../assets/images/company-circle.png"
-      class="profile-company-circle" />
     <div
       class="profile-container"
       @click="handleDialogToggle">
@@ -148,6 +138,6 @@ export default defineComponent({
   .profile-brand,
   .profile-company-circle  {
     display: block;
-  } 
+  }
 }
 </style>

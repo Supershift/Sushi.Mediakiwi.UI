@@ -60,7 +60,7 @@ const routes = [
     component: Home,
     meta: {
       requiresAuth: true,
-      title: "ValutN",
+      title: "Mediakiwi",
       layout: "default",
     },
   },
