@@ -5,8 +5,8 @@
   "scripts": {
     "webpack-watch-dev": "webpack -w --mode development --watch --color --config webpack.config.js",
     "webpack-run-prd": "webpack --mode production --config webpack.config.js",
-    "sass-watch-dev": "node-sass --w -rw pilot-app/scss -o pilot-app/dist",
-    "sass-run-prd": "node sass.config.js --output-style compressed -r pilot-app/src/scss -o pilot-app/dist"
+    "sass-watch-dev": "node-sass --w -rw src/scss -o dist",
+    "sass-run-prd": "node sass.config.js --output-style compressed -r src/scss -o dist"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

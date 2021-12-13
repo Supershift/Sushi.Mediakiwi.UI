@@ -11,6 +11,6 @@
 **/packages
 **/*.js.map
 # VUE APPS
-pilot-app/dist
+/dist
 *.user
 .vscode/launch.json

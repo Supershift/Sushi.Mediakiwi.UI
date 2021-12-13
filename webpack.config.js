@@ -9,7 +9,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 // { source: "", target: "", targetMin: "" },
 
 const vueBundles = [
-    { source: "./pilot-app/src/main.js", target: "./pilot-app/dist/bundle.js", targetMin: "./pilot-app/dist/bundle.min.js" },
+    { source: "./src/main.js", target: "./dist/bundle.js", targetMin: "./dist/bundle.min.js" },
 
 ];
 

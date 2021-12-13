@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         methods: {
             loggedInCheck() {
                 if (!this.isLoggedIn) {
-                    // goto login page                    
+                    // goto login page
                     if (publicPaths.indexOf(this.$route.path) === -1) { this.$router.push("/login"); }
                 }
             }
