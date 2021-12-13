@@ -5,13 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve --mode dev",
     "build": "vue-cli-service build --mode dev",
-    "lint": "vue-cli-service lint",
-    "build:dev": "vue-cli-service build --mode dev",
-    "build:kubernetes": "vue-cli-service build --mode kubernetes",
-    "build:preprod": "vue-cli-service build --mode preprod",
-    "serve:dev": "vue-cli-service serve --mode dev",
-    "serve:kubernetes": "vue-cli-service serve --mode kubernetes",
-    "serve:preprod": "vue-cli-service serve --mode preprod"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^5.15.4",

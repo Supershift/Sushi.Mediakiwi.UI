@@ -406,12 +406,7 @@
         "vue/space-unary-ops": 0,
         "vue/template-curly-spacing": 0,
         "vue/comment-directive": [
-          "error",
-          {
-            "ignorePatterns": [
-              ".html"
-            ]
-          }
+          "error"
         ]
       }
     }

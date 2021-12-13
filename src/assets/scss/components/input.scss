@@ -1,0 +1,47 @@
+input:not([type=radio]):not([class=vs__search]),
+select,
+textarea {
+    font-family: $font-primary;
+    box-sizing: border-box;
+    border-radius: 0;
+    background: #fff;
+    color: #000;
+    font-size: $font-size-s;
+    height: $input-height;
+    border: $input-border;
+    border-radius: 6px;
+
+    &:focus {
+        outline: 0;
+    }
+
+    &[disabled],
+    &[readonly] {
+        background-color: #eee;
+        opacity: .4;
+    }
+}
+
+input[type=radio] {
+    + label {
+        margin-right: 15px;
+    }
+}
+
+input[type=checkbox] {
+    margin: 0;
+    vertical-align: middle;
+
+    + label {
+        vertical-align: middle;
+
+        + label {
+            vertical-align: middle;
+        }
+    }
+}
+
+.link {
+    text-decoration: none;
+    color: $color-blue;
+}
