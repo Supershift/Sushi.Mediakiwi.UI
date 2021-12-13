@@ -10,6 +10,11 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'config set "//npm.fontawesome.com/:_authToken" "86154514-2994-4717-B253-B2C773B3158A"'
+
 - task: NodeTool@0
   displayName: 'Use Node 12.x'
   inputs:
