@@ -1,6 +1,6 @@
 import FieldModel from "@/models/Mediakiwi/FieldModel";
 import LayerConfigurationModel from "@/models/Mediakiwi/LayerConfigurationModel";
-import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
+import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/PostMediakiwiRequestModel";
 import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
 import { store } from "@/store";
 import PageModel from "@/store/modules/PageModel";

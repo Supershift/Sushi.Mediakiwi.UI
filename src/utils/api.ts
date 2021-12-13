@@ -1,6 +1,6 @@
 import { ButtonRequestMethodType } from "@/models/Mediakiwi/ButtonRequestMethodType";
-import GetMediakiwiRequestModel from "@/models/Mediakiwi/Request/getMediakiwiRequestModel";
-import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
+import GetMediakiwiRequestModel from "@/models/Mediakiwi/Request/GetMediakiwiRequestModel";
+import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/PostMediakiwiRequestModel";
 import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
 import router from "@/router";
 import { store } from "@/store";

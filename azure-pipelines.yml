@@ -15,14 +15,21 @@ steps:
   inputs:
     versionSpec: 12.x
     checkLatest: true
+
 - task: CmdLine@2
-  displayName: 'npm config set @fortawesome'
+  displayName: 'npm config set @fortawesome:registry'
   inputs:
     script: |
       npm config set "@fortawesome:registry" https://npm.fontawesome.com/
       npm config set "//npm.fontawesome.com/:_authToken" $(FONTAWESOME_NPM_AUTH_TOKEN)
- 
+
 - script: |
     npm install
     npm run build
   displayName: 'npm install and build'
+
+- task: CmdLine@2
+  displayName: 'npm config delete @fortawesome'
+  inputs:
+    script: |
+      npm config delete "@fortawesome:registry:registry"
