@@ -1,4 +1,4 @@
-# Ananda.Portal
-Ananda VaultN Portal based on [Sushi.Mediakiwi](https://github.com/Supershift/Sushi.Mediakiwi)
+# Sushi.MediaKiwi.UI
+Sushi.MediaKiwi.UI based on [Sushi.Mediakiwi](https://github.com/Supershift/Sushi.Mediakiwi)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a5c4b325b4f5411f81cf84319fc6a1b5)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Supershift/Ananda.Portal&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/4adb7b14e4694ab98f630da053d3c963)](https://www.codacy.com/gh/Supershift/Sushi.Mediakiwi.UI/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Supershift/Sushi.Mediakiwi.UI&amp;utm_campaign=Badge_Grade)
