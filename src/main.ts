@@ -1,14 +1,15 @@
-import { createApp } from "vue";
+import { store } from "@/store";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  fal
+} from "@fortawesome/pro-light-svg-icons";
 // Note we are using the Pro style here
 import {
-  fas,
+  fas
 } from "@fortawesome/pro-solid-svg-icons";
-import {
-  fal,
-} from "@fortawesome/pro-light-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { store } from "@/store"; import App from "./App.vue";
+import { createApp } from "vue";
+import App from "./App.vue";
 import router from "./router";
 import { api } from "./utils/api";
 import { mediakiwiLogic } from "./utils/mediakiwiLogic";
@@ -39,7 +40,7 @@ router.beforeEach((to, from, next) => {
       api.fetchMediakiwiAPI(to.fullPath).then(() => {
         next();
       }).catch(() => {
-        // redirect to 500 page 
+        // redirect to 500 page
       });
     }
     // console.log("I am trying to authorize", store.getters.isLoggedIn);
@@ -58,7 +59,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to) => {
-  document.title = `VaultN | ${to.meta.title || DEFAULT_TITLE}`;
+  document.title = `Mediakiwi | ${to.meta.title || DEFAULT_TITLE}`;
 });
 
 createApp(App).use(router)

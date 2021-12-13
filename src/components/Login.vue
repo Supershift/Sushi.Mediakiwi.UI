@@ -3,7 +3,7 @@
     class="login"
     @submit.prevent="handleLogin">
     <img
-      src="../assets/images/vaultN-logo.svg"
+      src="../assets/images/mk-logo.png"
       class="login-logo" />
     <h1>{{ contentLogin.loginHeadlineText }}</h1>
     <CustomInput
@@ -100,7 +100,7 @@ export default defineComponent({
       if (errorMessages.length === 0) {
         validForm.value = true;
       } else {
-        validForm.value = false; 
+        validForm.value = false;
       }
       customLoginButton.value.disabled = !validForm.value;
     }
@@ -119,10 +119,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-/* 
-  Child comonents: 
-  ForgottenPassword.vue and ResetPassword.vue 
-  inherits from this components scss 
+/*
+  Child comonents:
+  ForgottenPassword.vue and ResetPassword.vue
+  inherits from this components scss
 */
 .login {
   padding: 50px 13px 0;

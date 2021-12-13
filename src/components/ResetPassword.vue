@@ -1,7 +1,7 @@
 <template>
   <form action="" class="login">
     <img
-      src="../assets/images/vaultN-logo.svg"
+      src="../assets/images/mk-logo.png"
       class="login-logo" />
     <h1>
       {{ contentResetPassword.resetHeadlineText }}
@@ -78,7 +78,7 @@ export default defineComponent({
       if (errorMessages.length === 0) {
         validEmail.value = true;
       } else {
-        validEmail.value = false; 
+        validEmail.value = false;
       }
       customSubmitButton.value.disabled = !validEmail.value;
     }

@@ -43,8 +43,8 @@ import {
 } from "vue";
 import {store} from "@/store";
 import SideNavigation from "../side-navigation/SideNavigation.vue";
-import logoS from "../../assets/images/vaultN-icon.svg";
-import logoL from "../../assets/images/vaultN-logo.svg";
+import logoS from "../../assets/images/mk-icon.png";
+import logoL from "../../assets/images/mk-logo.png";
 
 export default defineComponent({
   name: "Drawer",
