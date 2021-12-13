@@ -19,11 +19,6 @@ steps:
     versionSpec: 12.x
     checkLatest: true
 
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    customCommand: 'config set "//npm.fontawesome.com/:_authToken" "86154514-2994-4717-B253-B2C773B3158A"'
-
 - script: |
     npm install
     npm run build
