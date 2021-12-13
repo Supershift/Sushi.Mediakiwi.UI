@@ -8,37 +8,6 @@ import { store } from "@/store";
 import { mediakiwiLogic } from "./mediakiwiLogic";
 
 export const api = {
-  authenticateMediakiwiAPI(emailAddress: string, password: string, apiKey: string) {
-    const requestBody: AuthenticateRequestModel = {
-      emailAddress,
-      password,
-      apiKey
-    };
-
-    return new Promise((resolve, reject) => {
-      // Start the loader
-      store.dispatch("toggleMediakiwiLoading");
-
-      store.dispatch("authenticateMediakiwiAPI", requestBody).then((response: MediakiwiResponseModel) => {
-        if (response) {
-          // Handle response
-          mediakiwiLogic.putResponseToStore(response)
-
-          // finally resolve the response
-          store.dispatch("toggleMediakiwiLoading");
-          resolve(response)
-        }
-        else {
-          store.dispatch("toggleMediakiwiLoading");
-          reject(response);
-        }
-      }).catch((error: unknown) => {
-        // reject the response
-        store.dispatch("toggleMediakiwiLoading");
-        reject(error);
-      });
-    });
-  },
   fetchMediakiwiAPI(url: string) {
     const requestBody: GetMediakiwiRequestModel = {
       channel: store.getters.channel,
