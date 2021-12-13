@@ -18,8 +18,8 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-      @fortawesome:registry=https://npm.fontawesome.com/
-      //npm.fontawesome.com/:_authToken=$(FONTAWESOME_NPM_AUTH_TOKEN)
+      npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+      pm config set "//npm.fontawesome.com/:_authToken" $(FONTAWESOME_NPM_AUTH_TOKEN)
  
 - script: |
     npm install
