@@ -23,4 +23,8 @@
         "./client"
     ],
     "vetur.format.options.tabSize": 2,
+    "stylelint.validate": [
+        "css",
+        "scss"
+    ]
 }
