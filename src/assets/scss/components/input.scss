@@ -3,7 +3,6 @@ select,
 textarea {
     font-family: $font-primary;
     box-sizing: border-box;
-    border-radius: 0;
     background: #fff;
     color: #000;
     font-size: $font-size-s;
@@ -18,7 +17,7 @@ textarea {
     &[disabled],
     &[readonly] {
         background-color: #eee;
-        opacity: .4;
+        opacity: 0.4;
     }
 }
 
