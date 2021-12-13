@@ -55,6 +55,8 @@ export default defineComponent({
   },
   setup() {
     const validForm = ref(false);
+    const email = ref("");
+    const password = ref("");
     let errorMessages = reactive<Array<MessageModel>>([]);
     const contentLogin = computed(
       () => store.getters.contentLogin
@@ -92,12 +94,21 @@ export default defineComponent({
       readOnly: false,
     });
     function handleLogin() {
-      store.dispatch("signIn");
+      store.dispatch("authenticateMediakiwiAPI", {
+        emailAddress: email.value,
+        password: password.value,
+        apiKey: "",
+      });
     }
     function handleTextChanged(value: string, fieldName: string) {
       //errorMessages = fieldMixins.methods.emptyValidator(value, fieldName, errorMessages);
       errorMessages = fieldMixins.methods.emailValidator(value, fieldName, errorMessages);
       if (errorMessages.length === 0) {
+        if (fieldName === "email") {
+          email.value = value;
+        } else if (fieldName === "password") {
+          password.value = value;
+        }
         validForm.value = true;
       } else {
         validForm.value = false;

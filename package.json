@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve --mode dev",
     "build": "vue-cli-service build --mode dev",
     "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve --mode dev -o",
     "build:dev": "vue-cli-service build --mode dev",
     "build:kubernetes": "vue-cli-service build --mode kubernetes",
     "build:preprod": "vue-cli-service build --mode preprod",

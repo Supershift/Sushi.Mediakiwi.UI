@@ -21,6 +21,7 @@ import { BaseContentModel } from "./modules/BaseContentModel";
 import DialogModel from "./modules/DialogModel";
 import DrawerModel from "./modules/DrawerModel";
 import PageModel from "./modules/PageModel";
+import { apiUrlBuilder } from "@/utils/utils";
 const loggedinKey = "sushi_mediakiwi_ui_loggedin";
 
 // define your typings for the store state
@@ -160,11 +161,26 @@ export const store = createStore<State>({
     toggleDialog(state) {
       state.dialog.show = !state.dialog.show;
     },
-    signIn(state) {
-      state.isLoggedIn = !state.isLoggedIn;
-      // Temp solution
-      sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
-      router.push("/");
+    authenticateMediakiwiAPI(state, request) {
+      // TODO: Implement environment variables
+      return new Promise((resolve, reject) => {
+        axios.post(apiUrlBuilder("/mkapi/authentication/Login"), request)
+          .then((response) => {
+            if (response.data.success) {
+              state.isLoggedIn = true;
+              /* eslint no-console:0 */
+              console.log("Logged in", response.data);
+              resolve(response.data);
+              router.push("/");
+            }
+          })
+          .catch((err) => {
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          });
+      });
+      // sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
+      // router.push("/");
     },
     signOut(state) {
       state.isLoggedIn = false;
@@ -227,8 +243,8 @@ export const store = createStore<State>({
     toggleDialog(context) {
       context.commit("toggleDialog");
     },
-    signIn(context) {
-      context.commit("signIn");
+    authenticateMediakiwiAPI(context, request) {
+      context.commit("authenticateMediakiwiAPI", request);
     },
     signOut(context) {
       context.commit("signOut");
