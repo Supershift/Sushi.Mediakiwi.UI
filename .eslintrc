@@ -404,10 +404,7 @@
         "vue/space-in-parens": 0,
         "vue/space-infix-ops": 0,
         "vue/space-unary-ops": 0,
-        "vue/template-curly-spacing": 0,
-        "vue/comment-directive": [
-          "error"
-        ]
+        "vue/template-curly-spacing": 0
       }
     }
   ]

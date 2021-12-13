@@ -9,7 +9,7 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        prependData: "@import \"@/assets/scss/styles.scss\";",
+        prependData: "@import \"@/assets/scss/abstracts/abstracts.scss\";",
       },
     },
   },
