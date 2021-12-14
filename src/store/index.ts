@@ -24,6 +24,7 @@ import PageModel from "./modules/PageModel";
 import AuthenticateRequestModel from "@/models/Mediakiwi/Request/AuthenticateRequestModel";
 import { apiUrlBuilder } from "@/utils/utils";
 import { serverCodes } from "@/utils/api";
+import { GetContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/GetContentMediakiwiRequestModel";
 const loggedinKey = "sushi_mediakiwi_ui_loggedin";
 
 // define your typings for the store state
@@ -165,30 +166,52 @@ export const store = createStore<State>({
     toggleDialog(state) {
       state.dialog.show = !state.dialog.show;
     },
+    getMediakiwiContentAPI(state, request: GetContentMediakiwiRequestModel){
+      store.dispatch("toggleMediakiwiLoading");
+      return new Promise((resolve, reject) => {
+        // TODO: finish this request!
+        axios.get(apiUrlBuilder("content/GetContent"))
+        .then((response) => {
+          if (response.status === serverCodes.OK) {
+            // TODO: Finish responsemodel and place here!
+            sessionStorage.setItem("response", response.data);
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error)
+          state.mediakiwiLoading = false;
+        })
+        .finally(() => {
+          store.dispatch("toggleMediakiwiLoading");
+        });
+      });
+    },
     authenticateMediakiwiAPI(state, request: AuthenticateRequestModel) {
+      store.dispatch("toggleMediakiwiLoading");
       const requestBody: AuthenticateRequestModel = {
         ...request,
         apiKey: store.getters.apiKey,
       };
       return new Promise((resolve, reject) => {
-      axios.post(apiUrlBuilder("authentication/Login"), requestBody)
-        .then((response) => {
-          if (response.status === serverCodes.OK) {
-            state.isLoggedIn = true;
-            //state.profileData?.displayName = response.userName;
-            /* eslint no-console:0 */
-            console.log(response);
-            sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
-
-            router.push("/");
-          }
-          resolve(response);
-        })
-        .catch((err) => {
-          console.error(err);
-          alert("Something went wrong while fetching the page");
-          reject(err);
-        });
+        axios.post(apiUrlBuilder("authentication/Login"), requestBody)
+          .then((response) => {
+            if (response.status === serverCodes.OK) {
+              state.isLoggedIn = true;
+              // TODO:: Fill data based on model interface and store model
+              //state.profileData?.displayName = response.data.data.userName;
+              sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
+              router.push("/");
+            }
+            resolve(response);
+          })
+          .catch((err) => {
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          })
+          .finally(() => {
+            store.dispatch("toggleMediakiwiLoading");
+          });
       });
     },
     signOut(state) {

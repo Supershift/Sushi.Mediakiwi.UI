@@ -17,6 +17,7 @@ export const serverCodes = {
   SERVICE_UNAVAILABLE: 503,
   GATEWAY_TIMEOUT: 504
 }
+
 export const api = {
   fetchMediakiwiAPI(url: string) {
     const requestBody: GetMediakiwiRequestModel = {
