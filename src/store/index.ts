@@ -21,11 +21,14 @@ import { BaseContentModel } from "./modules/BaseContentModel";
 import DialogModel from "./modules/DialogModel";
 import DrawerModel from "./modules/DrawerModel";
 import PageModel from "./modules/PageModel";
+import AuthenticateRequestModel from "@/models/Mediakiwi/Request/AuthenticateRequestModel";
 import { apiUrlBuilder } from "@/utils/utils";
+import { serverCodes } from "@/utils/api";
 const loggedinKey = "sushi_mediakiwi_ui_loggedin";
 
 // define your typings for the store state
 export interface State {
+  apiKey: string;
   rootPath: string,
   isLoggedIn: boolean,
   mediakiwiLoading: boolean,
@@ -53,6 +56,7 @@ export const key: InjectionKey<Store<State>> = Symbol()
 
 export const store = createStore<State>({
   state: {
+    apiKey: `${process.env.VUE_APP_MK_API_KEY}`,
     rootPath: "",
     isLoggedIn: false,
     mediakiwiLoading: false,
@@ -161,26 +165,31 @@ export const store = createStore<State>({
     toggleDialog(state) {
       state.dialog.show = !state.dialog.show;
     },
-    authenticateMediakiwiAPI(state, request) {
-      // TODO: Implement environment variables
+    authenticateMediakiwiAPI(state, request: AuthenticateRequestModel) {
+      const requestBody: AuthenticateRequestModel = {
+        ...request,
+        apiKey: store.getters.apiKey,
+      };
       return new Promise((resolve, reject) => {
-        axios.post(apiUrlBuilder("/mkapi/authentication/Login"), request)
-          .then((response) => {
-            if (response.data.success) {
-              state.isLoggedIn = true;
-              /* eslint no-console:0 */
-              console.log("Logged in", response.data);
-              resolve(response.data);
-              router.push("/");
-            }
-          })
-          .catch((err) => {
-            alert("Something went wrong while fetching the page");
-            reject(err);
-          });
+      axios.post(apiUrlBuilder("authentication/Login"), requestBody)
+        .then((response) => {
+          if (response.status === serverCodes.OK) {
+            state.isLoggedIn = true;
+            //state.profileData?.displayName = response.userName;
+            /* eslint no-console:0 */
+            console.log(response);
+            sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
+
+            router.push("/");
+          }
+          resolve(response);
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Something went wrong while fetching the page");
+          reject(err);
+        });
       });
-      // sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
-      // router.push("/");
     },
     signOut(state) {
       state.isLoggedIn = false;
@@ -243,7 +252,7 @@ export const store = createStore<State>({
     toggleDialog(context) {
       context.commit("toggleDialog");
     },
-    authenticateMediakiwiAPI(context, request) {
+    signIn(context, request) {
       context.commit("authenticateMediakiwiAPI", request);
     },
     signOut(context) {
@@ -404,5 +413,6 @@ export const store = createStore<State>({
     },
     isLayerMode: (state) => state.isLayerMode,
     views: (state) => state.views,
+    apiKey: (state) => state.apiKey,
   },
 });

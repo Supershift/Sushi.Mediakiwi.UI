@@ -95,10 +95,10 @@ export default defineComponent({
       readOnly: false,
     });
     function handleLogin() {
-      store.dispatch("authenticateMediakiwiAPI", {
+      store.dispatch("signIn", {
         emailAddress: email.value,
         password: password.value,
-        apiKey: "",
+        apiKey: store.getters.apiKey,
       } as AuthenticateRequestModel);
     }
     function handleTextChanged(value: string, fieldName: string) {
