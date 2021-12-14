@@ -35,6 +35,12 @@ steps:
     script: |
       npm config delete "@fortawesome:registry:registry"
 
+- task: CopyFiles@2
+  displayName: 'Copy npm build files to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    Contents: 'dist/**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/Sushi.Mediakiwi.UI'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
