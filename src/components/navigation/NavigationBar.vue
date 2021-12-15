@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import {computed, defineComponent} from "vue";
+import {computed, defineComponent, onMounted} from "vue";
 import {store} from "@/store";
 import NavigationMenu from "./NavigationMenu.vue";
 import Profile from "./Profile.vue";
@@ -40,6 +40,11 @@ export default defineComponent({
     DialogComponent,
   },
   setup() {
+    onMounted(() => {
+      store.dispatch("loadTopNavigation", { 
+        CurrentSiteID: 2,
+      });
+    });
     const topNavigationItems = computed(
       () => store.getters.topNavigationItems
     );
@@ -62,7 +67,7 @@ export default defineComponent({
       pageSettings,
       handleSignOut
     };
-  },
+  }
 });
 </script>
 

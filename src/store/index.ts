@@ -26,6 +26,7 @@ import { apiUrlBuilder } from "@/utils/utils";
 import { serverCodes } from "@/utils/api";
 import { GetContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/GetContentMediakiwiRequestModel";
 import { ResetPasswordRequestModel } from "@/models/Mediakiwi/Request/ResetPasswordRequestModel";
+import { GetTopNavigationRequestModel } from "@/models/Mediakiwi/Request/GetTopNavigationRequestModel";
 const loggedinKey = "sushi_mediakiwi_ui_loggedin";
 
 // define your typings for the store state
@@ -188,15 +189,38 @@ export const store = createStore<State>({
         });
       });
     },
+    getTopNavigationAPI(state, request: GetTopNavigationRequestModel){
+      const requestBody: GetTopNavigationRequestModel = {
+        ...request,
+      };
+      store.dispatch("toggleMediakiwiLoading");
+      return new Promise((resolve, reject) => {
+        axios.get(apiUrlBuilder("navigation/GetTopnavigation"), { withCredentials: true, params: requestBody, headers: { "original-url": "/" } })
+        .then((response) => {
+          if (response.status === serverCodes.OK) {
+            // state.topNavigationItems = response.data;
+            /* eslint no-console:0 */
+            console.log(response.data);
+          }
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error)
+          state.mediakiwiLoading = false;
+        })
+        .finally(() => {
+          store.dispatch("toggleMediakiwiLoading");
+        });
+      });
+    },
     authenticateMediakiwiAPI(state, request: AuthenticateRequestModel) {
       store.dispatch("toggleMediakiwiLoading");
       const requestBody: AuthenticateRequestModel = {
         ...request,
         apiKey: store.getters.apiKey,
-        withCredentials: true,
       };
       return new Promise((resolve, reject) => {
-        axios.post(apiUrlBuilder("authentication/Login"), requestBody)
+        axios.post(apiUrlBuilder("authentication/Login"), requestBody, { withCredentials: true })
           .then((response) => {
             if (response.status === serverCodes.OK) {
               state.isLoggedIn = true;
@@ -219,7 +243,7 @@ export const store = createStore<State>({
     resetPasswordMediakiwiAPI(state, request: ResetPasswordRequestModel) {
       store.dispatch("toggleMediakiwiLoading");
       return new Promise((resolve, reject) => {
-        axios.post(apiUrlBuilder("authentication/ResetPassword"), request)
+        axios.post(apiUrlBuilder("authentication/ResetPassword"), request, { withCredentials: true })
           .then((response) => {
             if (response.status === serverCodes.OK) {
               // TODO: inform the user about the successfull reset
@@ -305,6 +329,9 @@ export const store = createStore<State>({
     },
     resetPassword(context, request) {
       context.commit("resetPasswordMediakiwiAPI", request)
+    },
+    loadTopNavigation(context, request) {
+      context.commit("getTopNavigationAPI", request);
     },
     getMediakiwiAPI(context, request) {
       // TODO Replace logic with an axios.post to the request.url
