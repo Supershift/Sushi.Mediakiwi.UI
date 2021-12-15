@@ -98,7 +98,6 @@ export default defineComponent({
       store.dispatch("signIn", {
         emailAddress: email.value,
         password: password.value,
-        apiKey: store.getters.apiKey,
       } as AuthenticateRequestModel);
     }
     function handleTextChanged(value: string, fieldName: string) {

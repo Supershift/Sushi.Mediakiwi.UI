@@ -25,6 +25,7 @@ import AuthenticateRequestModel from "@/models/Mediakiwi/Request/AuthenticateReq
 import { apiUrlBuilder } from "@/utils/utils";
 import { serverCodes } from "@/utils/api";
 import { GetContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/GetContentMediakiwiRequestModel";
+import { ResetPasswordRequestModel } from "@/models/Mediakiwi/Request/ResetPasswordRequestModel";
 const loggedinKey = "sushi_mediakiwi_ui_loggedin";
 
 // define your typings for the store state
@@ -192,6 +193,7 @@ export const store = createStore<State>({
       const requestBody: AuthenticateRequestModel = {
         ...request,
         apiKey: store.getters.apiKey,
+        withCredentials: true,
       };
       return new Promise((resolve, reject) => {
         axios.post(apiUrlBuilder("authentication/Login"), requestBody)
@@ -213,6 +215,26 @@ export const store = createStore<State>({
             store.dispatch("toggleMediakiwiLoading");
           });
       });
+    },
+    resetPasswordMediakiwiAPI(state, request: ResetPasswordRequestModel) {
+      store.dispatch("toggleMediakiwiLoading");
+      return new Promise((resolve, reject) => {
+        axios.post(apiUrlBuilder("authentication/ResetPassword"), request)
+          .then((response) => {
+            if (response.status === serverCodes.OK) {
+              // TODO: inform the user about the successfull reset
+              alert("Password reset successful!");
+            }
+            resolve(response)
+          })
+          .catch((err) => {
+            alert("Something went wrong while fetching the page");
+            reject(err);
+          })
+          .finally(() => {
+            store.dispatch("toggleMediakiwiLoading");
+          })
+      })
     },
     signOut(state) {
       state.isLoggedIn = false;
@@ -280,6 +302,9 @@ export const store = createStore<State>({
     },
     signOut(context) {
       context.commit("signOut");
+    },
+    resetPassword(context, request) {
+      context.commit("resetPasswordMediakiwiAPI", request)
     },
     getMediakiwiAPI(context, request) {
       // TODO Replace logic with an axios.post to the request.url

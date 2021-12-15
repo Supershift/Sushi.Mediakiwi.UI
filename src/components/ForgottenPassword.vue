@@ -16,7 +16,7 @@
       :messages="errorMessages" />
     <CustomButton
       :button="customSubmitButton"
-      @button-clicked="handleSubmit" />
+      @button-clicked="handleReset" />
   </form>
 </template>
 
@@ -33,6 +33,7 @@ import FormErrors from "./form/FormErrors.vue";
 import MessageModel from "../models/MessageModel";
 import InputModel from "../models/InputModel";
 import ButtonModel from "../models/ButtonModel";
+import { ResetPasswordRequestModel } from "../models/Mediakiwi/Request/ResetPasswordRequestModel";
 import { store } from "../store";
 import { fieldMixins } from "./form";
 
@@ -47,6 +48,7 @@ export default defineComponent({
   setup() {
     let errorMessages = reactive<MessageModel[]>([]);
     const validEmail = ref(false);
+    const email = ref("");
     const contentForgottenPassword = computed(
       () => store.getters.contentForgotten,
     );
@@ -70,15 +72,16 @@ export default defineComponent({
       value: contentForgottenPassword.value.fogottenButtonText,
       readOnly: false,
     });
-    function handleSubmit() {
-      if (customEmailInput.value.fieldValue && validEmail) {
-        store.dispatch("forgottenPassword", customEmailInput.value.fieldValue);
+    function handleReset() {
+      if (email.value && validEmail.value) {
+        store.dispatch("resetPassword",  { emailAddress: email.value } as ResetPasswordRequestModel );
       }
     }
     function handleTextChanged(value: string, fieldName: string) {
       errorMessages = fieldMixins.methods.emailValidator(value, fieldName, errorMessages);
       if (errorMessages.length === 0) {
         validEmail.value = true;
+        email.value = value;
       } else {
         validEmail.value = false;
       }
@@ -89,7 +92,7 @@ export default defineComponent({
       errorMessages,
       customSubmitButton,
       contentForgottenPassword,
-      handleSubmit,
+      handleReset,
       handleTextChanged,
     };
   },
