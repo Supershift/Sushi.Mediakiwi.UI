@@ -27,6 +27,7 @@ import { serverCodes } from "@/utils/api";
 import { GetContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/GetContentMediakiwiRequestModel";
 import { ResetPasswordRequestModel } from "@/models/Mediakiwi/Request/ResetPasswordRequestModel";
 import { GetTopNavigationRequestModel } from "@/models/Mediakiwi/Request/GetTopNavigationRequestModel";
+import { GetTopNavigationResponseModel } from "@/models/Mediakiwi/Response/GetTopNavigationResponseModel";
 const loggedinKey = "sushi_mediakiwi_ui_loggedin";
 
 // define your typings for the store state
@@ -43,7 +44,7 @@ export interface State {
   description: string,
   fields: FieldModel[] | null,
   sideNavigationItems: SideNavigationItemModel[] | null,
-  topNavigationItems: TopNavigationItemModel[] | null,
+  topNavigationItems: GetTopNavigationResponseModel | null,
   content: BaseContentModel,
   channel: number,
   resources: ResourceModel[],
@@ -195,12 +196,12 @@ export const store = createStore<State>({
       };
       store.dispatch("toggleMediakiwiLoading");
       return new Promise((resolve, reject) => {
-        axios.get(apiUrlBuilder("navigation/GetTopnavigation"), { withCredentials: true, params: requestBody, headers: { "original-url": "/" } })
+        axios.get<GetTopNavigationResponseModel>(apiUrlBuilder("navigation/GetTopnavigation"), { withCredentials: true, params: requestBody, headers: { "original-url": "/" } })
         .then((response) => {
           if (response.status === serverCodes.OK) {
-            // state.topNavigationItems = response.data;
+            state.topNavigationItems = response.data;
             /* eslint no-console:0 */
-            console.log(response.data);
+            console.log(state.topNavigationItems);
           }
           resolve(response);
         })
@@ -287,7 +288,7 @@ export const store = createStore<State>({
     },
     setTopNavigation(state, data: TopNavigationModel) {
       if (data) {
-        state.topNavigationItems = data.items;
+        //state.topNavigationItems?.items = data.items;
       }
     },
     setSideNavigation(state, data: SideNavigationModel) {
@@ -449,7 +450,7 @@ export const store = createStore<State>({
   getters: {
     sideNavigationItems: (state) => state.sideNavigationItems,
     rootPath: (state) => state.rootPath,
-    topNavigationItems: (state) => state.topNavigationItems,
+    topNavigationItems: (state) => state.topNavigationItems?.items,
     page: (state) => state.page,
     openDrawer: (state) => state.drawer ? state.drawer.open : false,
     profileData: (state) => state.profileData,

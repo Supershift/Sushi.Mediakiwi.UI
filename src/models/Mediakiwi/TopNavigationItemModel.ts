@@ -1,6 +1,8 @@
 export default interface TopNavigationItemModel {
-  id: number;
-  text: string;
-  href: string;
-  items?: TopNavigationItemModel[];
+     href: string;
+    iconClass: string;
+    isBack: boolean;
+    isHighlighted: boolean;
+    items?: TopNavigationItemModel[];
+    text: string;
 }
