@@ -17,34 +17,36 @@ import router from "@/router";
 import axios from "axios";
 import { InjectionKey } from "vue";
 import { createStore, Store } from "vuex";
-import { BaseContentModel } from "./modules/BaseContentModel";
-import DialogModel from "./modules/DialogModel";
-import DrawerModel from "./modules/DrawerModel";
-import PageModel from "./modules/PageModel";
+import { BaseContentModel } from "../models/BaseContentModel";
+import DialogModel from "../models/DialogModel";
+import DrawerModel from "../models/DrawerModel";
+import PageModel from "../models/PageModel";
 import AuthenticateRequestModel from "@/models/Mediakiwi/Request/AuthenticateRequestModel";
 import { apiUrlBuilder } from "@/utils/utils";
-import { serverCodes } from "@/utils/api";
+import { apiService, serverCodes } from "@/utils/api-service";
 import { GetContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/GetContentMediakiwiRequestModel";
 import { ResetPasswordRequestModel } from "@/models/Mediakiwi/Request/ResetPasswordRequestModel";
-import { GetTopNavigationRequestModel } from "@/models/Mediakiwi/Request/GetTopNavigationRequestModel";
-import { GetTopNavigationResponseModel } from "@/models/Mediakiwi/Response/GetTopNavigationResponseModel";
+import { GetNavigationRequestModel } from "@/models/Mediakiwi/Request/GetNavigationRequestModel";
+import { GetNavigationResponseModel } from "@/models/Mediakiwi/Response/GetNavigationResponseModel";
+import { AuthenticateResponseModel } from "@/models/Mediakiwi/Response/AuthenticateResponseModel";
 const loggedinKey = "sushi_mediakiwi_ui_loggedin";
 
 // define your typings for the store state
 export interface State {
   apiKey: string;
+  currentSiteID: number;
   rootPath: string,
   isLoggedIn: boolean,
   mediakiwiLoading: boolean,
   page?: PageModel | null,
   drawer: DrawerModel,
-  profileData?: ProfileModel | null,
+  profileData?: AuthenticateResponseModel | null,
   notification?: NotificationModel | null
   dialog: DialogModel,
   description: string,
   fields: FieldModel[] | null,
-  sideNavigationItems: SideNavigationItemModel[] | null,
-  topNavigationItems: GetTopNavigationResponseModel | null,
+  sideNavigationItems: GetNavigationResponseModel | null,
+  topNavigationItems: GetNavigationResponseModel | null,
   content: BaseContentModel,
   channel: number,
   resources: ResourceModel[],
@@ -62,6 +64,7 @@ export const store = createStore<State>({
   state: {
     apiKey: `${process.env.VUE_APP_MK_API_KEY}`,
     rootPath: "",
+    currentSiteID: 2,
     isLoggedIn: false,
     mediakiwiLoading: false,
     page: null,
@@ -169,6 +172,9 @@ export const store = createStore<State>({
     toggleDialog(state) {
       state.dialog.show = !state.dialog.show;
     },
+    toggleAuthenticated(state: State, isLoggedIn: boolean) {
+      state.isLoggedIn = isLoggedIn;
+    },
     getMediakiwiContentAPI(state, request: GetContentMediakiwiRequestModel){
       store.dispatch("toggleMediakiwiLoading");
       return new Promise((resolve, reject) => {
@@ -190,75 +196,68 @@ export const store = createStore<State>({
         });
       });
     },
-    getTopNavigationAPI(state, request: GetTopNavigationRequestModel){
-      const requestBody: GetTopNavigationRequestModel = {
-        ...request,
+    getTopNavigationMediakiwiAPI(state){
+      const request = {
+        data: { CurrentSiteID: state.currentSiteID } as GetNavigationRequestModel,
+        url: router.currentRoute.value.path
       };
       store.dispatch("toggleMediakiwiLoading");
-      return new Promise((resolve, reject) => {
-        axios.get<GetTopNavigationResponseModel>(apiUrlBuilder("navigation/GetTopnavigation"), { withCredentials: true, params: requestBody, headers: { "original-url": "/" } })
-        .then((response) => {
-          if (response.status === serverCodes.OK) {
-            state.topNavigationItems = response.data;
-            /* eslint no-console:0 */
-            console.log(state.topNavigationItems);
-          }
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error)
-          state.mediakiwiLoading = false;
-        })
-        .finally(() => {
-          store.dispatch("toggleMediakiwiLoading");
-        });
+      return apiService.getTopNavigationMediakiwiAPI(request.data, request.url)
+      .then((response) => {
+        sessionStorage.setItem("topNav", state.isLoggedIn.toString());
+      })
+      .finally(() => {
+        store.dispatch("toggleMediakiwiLoading");
       });
     },
-    authenticateMediakiwiAPI(state, request: AuthenticateRequestModel) {
-      store.dispatch("toggleMediakiwiLoading");
-      const requestBody: AuthenticateRequestModel = {
-        ...request,
-        apiKey: store.getters.apiKey,
+    getSideNavigationMediakiwiAPI(state){
+      const request = {
+        data: { CurrentSiteID: state.currentSiteID } as GetNavigationRequestModel,
+        url: router.currentRoute.value.path
       };
-      return new Promise((resolve, reject) => {
-        axios.post(apiUrlBuilder("authentication/Login"), requestBody, { withCredentials: true })
-          .then((response) => {
-            if (response.status === serverCodes.OK) {
-              state.isLoggedIn = true;
-              // TODO:: Fill data based on model interface and store model
-              //state.profileData?.displayName = response.data.data.userName;
-              sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
-              router.push("/");
-            }
-            resolve(response);
-          })
-          .catch((err) => {
-            alert("Something went wrong while fetching the page");
-            reject(err);
-          })
-          .finally(() => {
-            store.dispatch("toggleMediakiwiLoading");
-          });
+      store.dispatch("toggleMediakiwiLoading");
+      return apiService.getSideNavigationMediakiwiAPI(request.data, request.url)
+      .then((response) => {
+        sessionStorage.setItem("sideNav", state.isLoggedIn.toString());
+      })
+      .finally(() => {
+        store.dispatch("toggleMediakiwiLoading");
+      });
+    },
+    signInMediakiwiAPI(state, request: AuthenticateRequestModel) {
+      store.dispatch("toggleMediakiwiLoading");
+      return apiService.signInMediakiwiAPI(request)
+      .then((response) => {
+        sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
+        router.push("/");
+      })
+      .finally(() => {
+        store.dispatch("toggleMediakiwiLoading");
+      });
+    },
+    signOutMediakiwiAPI(state) {
+      store.dispatch("toggleMediakiwiLoading");
+      return apiService.signOutMediakiwiAPI()
+      .then((response) => {
+        sessionStorage.setItem(loggedinKey, state.isLoggedIn.toString());
+        router.push("/login");
+      })
+      .finally(() => {
+        store.dispatch("toggleMediakiwiLoading");
       });
     },
     resetPasswordMediakiwiAPI(state, request: ResetPasswordRequestModel) {
+      const waitforRedirect = 4000;
       store.dispatch("toggleMediakiwiLoading");
-      return new Promise((resolve, reject) => {
-        axios.post(apiUrlBuilder("authentication/ResetPassword"), request, { withCredentials: true })
-          .then((response) => {
-            if (response.status === serverCodes.OK) {
-              // TODO: inform the user about the successfull reset
-              alert("Password reset successful!");
-            }
-            resolve(response)
-          })
-          .catch((err) => {
-            alert("Something went wrong while fetching the page");
-            reject(err);
-          })
-          .finally(() => {
-            store.dispatch("toggleMediakiwiLoading");
-          })
+      return apiService.resetPasswordMediakiwiAPI(request)
+      .then((response) => {
+        setTimeout(() => {
+          store.dispatch("toggleMediakiwiLoading");
+          router.push("/");
+        }, waitforRedirect);
+      })
+      .finally(() => {
+        store.dispatch("toggleMediakiwiLoading");
       })
     },
     signOut(state) {
@@ -269,6 +268,9 @@ export const store = createStore<State>({
     toggleMediakiwiLoading(state) {
       state.mediakiwiLoading = !state.mediakiwiLoading;
     },
+    toggleNotification(state, notification: NotificationModel) {
+      state.notification = notification;
+    },
     setChannel(state, newChannel) {
       state.channel = newChannel;
     },
@@ -278,22 +280,22 @@ export const store = createStore<State>({
     setPageResources(state, newResources) {
       state.resources = newResources;
     },
-    setProfileInfomation(state, data: ProfileModel) {
+    setProfileInfomation(state, data: AuthenticateResponseModel) {
       if (data) {
         state.profileData = data;
-        if (!state.profileData.avatarPath) {
-          state.profileData.avatarPath = "/images/noName.jpg";
+        if (!state.profileData.userAvatarUrl) {
+          state.profileData.userAvatarUrl = "/images/noName.jpg";
         }
       }
     },
-    setTopNavigation(state, data: TopNavigationModel) {
+    setTopNavigation(state, data: GetNavigationResponseModel) {
       if (data) {
-        //state.topNavigationItems?.items = data.items;
+        state.topNavigationItems = data;
       }
     },
-    setSideNavigation(state, data: SideNavigationModel) {
+    setSideNavigation(state, data: GetNavigationResponseModel) {
       if (data) {
-        state.sideNavigationItems = data.items;
+        state.sideNavigationItems = data;
       }
     },
     setGrids(state, data: GridModel[]) {
@@ -322,17 +324,26 @@ export const store = createStore<State>({
     toggleDialog(context) {
       context.commit("toggleDialog");
     },
+    toggleAuthenticated(context, isLoggedIn: boolean) {
+      context.commit("toggleAuthenticated", isLoggedIn);
+    },
+    toggleNotification(context, data: NotificationModel) {
+      context.commit("toggleNotification", data);
+    },
     signIn(context, request) {
-      context.commit("authenticateMediakiwiAPI", request);
+      context.commit("signInMediakiwiAPI", request);
     },
     signOut(context) {
-      context.commit("signOut");
+      context.commit("signOutMediakiwiAPI");
     },
     resetPassword(context, request) {
       context.commit("resetPasswordMediakiwiAPI", request)
     },
-    loadTopNavigation(context, request) {
-      context.commit("getTopNavigationAPI", request);
+    loadTopNavigation(context) {
+      context.commit("getTopNavigationMediakiwiAPI");
+    },
+    loadSideNavigation(context) {
+      context.commit("getSideNavigationMediakiwiAPI");
     },
     getMediakiwiAPI(context, request) {
       // TODO Replace logic with an axios.post to the request.url
@@ -454,7 +465,7 @@ export const store = createStore<State>({
     page: (state) => state.page,
     openDrawer: (state) => state.drawer ? state.drawer.open : false,
     profileData: (state) => state.profileData,
-    brandData: (state) => state.profileData ? state.profileData.company : "",
+    brandData: (state) => state.profileData ? state.profileData.userName : "",
     notification: (state) => state.notification,
     dialog: (state) => state.dialog,
     contentLogin: (state) => state.content ? state.content.login : "",
@@ -490,5 +501,6 @@ export const store = createStore<State>({
     isLayerMode: (state) => state.isLayerMode,
     views: (state) => state.views,
     apiKey: (state) => state.apiKey,
+    currentSiteID: (state) => state.currentSiteID,
   },
 });

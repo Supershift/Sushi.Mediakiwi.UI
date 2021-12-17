@@ -1,9 +1,10 @@
+import { AuthenticateResponseModel } from "./Response/AuthenticateResponseModel";
 
-export default interface ProfileModel {
-  displayName: string;
-  roleID: number;
-  roleName: string;
-  email: string;
-  avatarPath?: string;
-  company?: string;
+export default interface ProfileModel extends AuthenticateResponseModel {
+  displayName?: string | null;
+  roleID?: number | null;
+  roleName?: string | null;
+  email?: string | null;
+  avatarPath?: string | null;
+  company?: string | null;
 }

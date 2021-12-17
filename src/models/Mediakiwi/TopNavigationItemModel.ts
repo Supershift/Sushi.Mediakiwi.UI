@@ -1,5 +1,5 @@
 export default interface TopNavigationItemModel {
-     href: string;
+    href: string;
     iconClass: string;
     isBack: boolean;
     isHighlighted: boolean;

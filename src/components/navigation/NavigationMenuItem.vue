@@ -34,7 +34,7 @@ export default defineComponent({
   },
   setup(props) {
     const elementID = computed(
-      () => `${props.item.id}_${props.item.text}`
+      () => `ID_${props.item.text}`
     );
     return {
       elementID,
@@ -52,7 +52,9 @@ export default defineComponent({
   position: relative;
   text-align: center;
   width: 100%;
-
+  > a {
+    padding-bottom: 25px;
+  }
   .sub {
     display: none;
     padding: 0;
@@ -79,6 +81,10 @@ export default defineComponent({
         }
       }
     }
+
+    &:hover {
+      display: block;
+    }
   }
 
   &:hover {
@@ -104,6 +110,11 @@ export default defineComponent({
     color: $color-drakgrey;
     &:hover {
       color: $color-blue;
+      cursor: pointer;
+      
+      + .sub {
+        display: block;
+      }
     }
   }
 }

@@ -6,3 +6,11 @@ export function apiUrlBuilder(path: string) {
     const url = `${process.env.VUE_APP_BASE_API}/${path}`;
     return url;
 }
+export const NotificationActionTypes = {
+    ERROR: "error",
+    ALERT: "alert",
+    SUCCESS: "success",
+    WARNING: "warning",
+    INFO: "info",
+    CHANGE: "change",    
+}

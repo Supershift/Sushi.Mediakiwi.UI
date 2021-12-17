@@ -23,13 +23,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {computed, defineComponent, onMounted} from "vue";
 import {store} from "@/store";
 import NavigationMenu from "./NavigationMenu.vue";
 import Profile from "./Profile.vue";
 import Notification from "../notification/Notification.vue";
 import DialogComponent from "../dialog/Dialog.vue";
+import { GetNavigationRequestModel } from "../../models/Mediakiwi/Request/GetNavigationRequestModel";
 
 export default defineComponent({
   name: "NavigationBar",
@@ -41,9 +42,7 @@ export default defineComponent({
   },
   setup() {
     onMounted(() => {
-      store.dispatch("loadTopNavigation", { 
-        CurrentSiteID: 2,
-      });
+      store.dispatch("loadTopNavigation");
     });
     const topNavigationItems = computed(
       () => store.getters.topNavigationItems
@@ -130,7 +129,6 @@ export default defineComponent({
     }
     h2 {
       padding-left: 15px;
-      z-index: 999;
     }
   }
   .navigation-settings {

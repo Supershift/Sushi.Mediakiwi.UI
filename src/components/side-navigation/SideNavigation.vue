@@ -1,8 +1,8 @@
 <template>
   <ul :class="customContainerClass">
     <SideNavigationItem
-      v-for="item in sideNavigationItems"
-      :key="item.id"
+      v-for="item in sideNavigationItems.items"
+      :key="item.text"
       :item="item"
     />
     <div class="side-nav-footer">
@@ -19,6 +19,7 @@
 import {
   computed,
   defineComponent,
+  onMounted,
 } from "vue";
 import SideNavigationItem from "./SideNavigationItem.vue";
 import {store} from "@/store";
@@ -33,6 +34,9 @@ export default defineComponent({
   },
   components: {SideNavigationItem},
   setup(props) {
+    onMounted(() => {
+      store.dispatch("loadSideNavigation");
+    });
     const drawerIsOpen = computed(
       () => store.getters.openDrawer,
     );
@@ -62,7 +66,7 @@ export default defineComponent({
   list-style-type: none;
   margin: 0;
   z-index: 21;
-  height: -webkit-fill-available;
+  height: 100%;
 }
 
 .side-nav-footer {
@@ -70,7 +74,7 @@ export default defineComponent({
   border-radius: 0 0 $b-radius-6 $b-radius-6;
   position: absolute;
   bottom: 150px;
-  width: -webkit-fill-available;
+  width: fit-content;
   .btn {
     padding: 15px;
     width: 100%;

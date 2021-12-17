@@ -17,7 +17,7 @@
 import {ButtonModel} from "@/models/Mediakiwi/ButtonModel";
 import {ButtonRequestMethodType} from "@/models/Mediakiwi/ButtonRequestMethodType";
 import {ButtonTargetType} from "@/models/Mediakiwi/ButtonTargetType";
-import {api} from "@/utils/api";
+import { apiService } from "@/utils/api-service";
 import {mediakiwiLogic} from "@/utils/mediakiwiLogic";
 import {
   computed,
@@ -54,13 +54,13 @@ export default defineComponent({
 
         switch (value.requestMethod) {
           case ButtonRequestMethodType.put:
-            api.putMediakiwiAPI(request);
+            apiService.putMediakiwiAPI(request);
             break;
           case ButtonRequestMethodType.delete:
-            api.deleteMediakiwiAPI(request);
+            apiService.deleteMediakiwiAPI(request);
             break;
           default:
-            api.postMediakiwiAPI(request);
+            apiService.postMediakiwiAPI(request);
             break;
         }
       }

@@ -8,7 +8,7 @@
         v-if="profileData">
         <div class="avatar">
           <img
-            :src="profileData.avatarPath"
+            :src="profileData.userAvatarUrl"
             class="avatar-image"
             :alt="profileData.name" />
           <fa

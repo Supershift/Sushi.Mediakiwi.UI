@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import { api } from "./utils/api";
+import { apiService } from "./utils/api-service";
 import { mediakiwiLogic } from "./utils/mediakiwiLogic";
 
 library.add(
@@ -37,7 +37,7 @@ router.beforeEach((to, from, next) => {
       }
 
       // Fetch the Mediakiwi data
-      api.fetchMediakiwiAPI(to.fullPath).then(() => {
+      apiService.fetchMediakiwiAPI(to.fullPath).then(() => {
         next();
       }).catch(() => {
         // redirect to 500 page

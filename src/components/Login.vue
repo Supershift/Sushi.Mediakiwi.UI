@@ -26,6 +26,7 @@
     <CustomButton
       :button="customLoginButton"
       @button-clicked="handleLogin" />
+    <Notification position="top-center" />
   </form>
 </template>
 
@@ -45,6 +46,7 @@ import ButtonModel from "../models/ButtonModel";
 import MessageModel from "../models/MessageModel";
 import AuthenticateRequestModel from "../models/Mediakiwi/Request/AuthenticateRequestModel";
 import { fieldMixins, FieldValidationType, FieldValidationTypeMessage } from "./form";
+import Notification from "./notification/Notification.vue";
 
 export default defineComponent({
   name: "Login",
@@ -53,6 +55,7 @@ export default defineComponent({
     FormErrors,
     CustomInput,
     CustomButton,
+    Notification,
   },
   setup() {
     const validForm = ref(false);

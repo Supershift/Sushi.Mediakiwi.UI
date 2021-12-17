@@ -16,7 +16,7 @@
     <ul v-if="item.items && item.items.length">
       <SideNavigationItem
         v-for="subItem in item.items"
-        :key="subItem.id"
+        :key="subItem.text"
         :item="subItem" />
     </ul>
   </li>
@@ -43,7 +43,7 @@ export default defineComponent({
     const icons = computed(() =>
       props.item.iconClass
         ? props.item.iconClass.split(" ")
-        : ""
+        : "kiwi-bird"
     );
 
     const openDrawer = computed(

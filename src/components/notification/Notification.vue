@@ -1,55 +1,95 @@
 <template>
+<transition name="fade">
   <div
-    v-if="notification && notification.show"
-    class="notification-container">
+    v-if="notification"
+    class="notification-container"
+    @click="hideNotification">
     <div
       class="notification-bubble"
       :class="alertCss">
       <fa
         icon="sort-up"
-        class="notification-top-icon" />
+        :class="chevronPosition" />
       <div class="notification-bubble-content">
         <fa :icon="iconChoice" />
-        {{ notification.alertText }}
+        {{ notification.message }}
         <button
           v-if="notification.hasAction"
-          class="btn btn-notification">
+          class="btn btn-notification"
+          @click.prevent="handleClick">
           {{ notification.actionText }}
         </button>
       </div>
     </div>
   </div>
+</transition>
 </template>
 
 <script>
-import {computed, defineComponent} from "vue";
+import {computed, defineComponent, onMounted} from "vue";
+import { NotificationActionTypes } from "../../utils/utils";
 import {store} from "@/store";
 export default defineComponent({
   name: "Notification",
-  setup() {
+  props:{
+    position: {
+      type: String,
+      default: "top-right",
+    },
+  },
+  emits: ["notification-action"],
+  setup(props, context) {
+    const waitForFadeOut = 5000;
     const notification = computed(
       () => store.getters.notification
     );
+    const chevronPosition = computed(() => {
+      let positionCss = "notification-top-icon ";
+      switch (props.position) {
+        case "top-right":
+          positionCss += "top-right";
+          break;
+        case "top-center":
+          positionCss += "top-center";
+          break;
+        case "top-left":
+          positionCss += "top-left";
+          break;
+        case "bottom-right":
+          positionCss += "bottom-right";
+          break;
+        case "bottom-center":
+          positionCss += "bottom-center";
+          break;
+        case "bottom-left":
+          positionCss += "bottom-left";
+          break;
+        default:
+          positionCss += "top-right";
+          break;
+      }
+      return positionCss;
+    });
     const iconChoice = computed(() => {
       let icon = "";
       switch (notification.value.actionType) {
-        case "success":
+        case NotificationActionTypes.SUCCESS:
           icon = ["fal", "check-circle"];
           break;
-        case "info":
+        case NotificationActionTypes.INFO:
           icon = ["fal", "exclamation-circle"];
           break;
-        case "warning":
+        case NotificationActionTypes.WARNING:
           icon = ["fal", "exclamation-triangle"];
           break;
-        case "change":
+        case NotificationActionTypes.CHANGE:
           icon = ["fal", "exchange-alt"];
           break;
-        case "alert":
+        case NotificationActionTypes.ALERT:
           icon = ["fal", "hand-paper"];
           break;
         default:
-          icon = ["fal", "check-circle"];
+          icon = ["fal", "exclamation-circle"];
           break;
       }
       return icon;
@@ -57,31 +97,46 @@ export default defineComponent({
     const alertCss = computed(() => {
       let alertColor = "";
       switch (notification.value.actionType) {
-        case "success":
+        case NotificationActionTypes.SUCCESS:
           alertColor = "notification-success ";
           break;
-        case "info":
+        case NotificationActionTypes.INFO:
           alertColor = "notification-info ";
           break;
-        case "warning":
+        case NotificationActionTypes.WARNING:
           alertColor = "notification-warning ";
           break;
-        case "change":
+        case NotificationActionTypes.CHANGE:
           alertColor = "notification-change ";
           break;
-        case "alert":
+        case NotificationActionTypes.ALERT:
           alertColor = "notification-alert ";
           break;
         default:
-          alertColor = "notification-success ";
+          alertColor = "notification-alert ";
           break;
       }
       return alertColor;
+    });
+    function hideNotification() {
+      store.commit("toggleNotification", false);
+    }
+    function handleClick() {
+      store.commit("toggleNotification", false);
+      context.emit("notification-action", notification.value.actionText);
+    }
+    onMounted(() => {
+      setTimeout(() => {
+        store.commit("toggleNotification", false);
+      }, waitForFadeOut);
     });
     return {
       iconChoice,
       notification,
       alertCss,
+      chevronPosition,
+      hideNotification,
+      handleClick,
     };
   },
 });
@@ -90,16 +145,44 @@ export default defineComponent({
 <style scoped lang="scss">
 .notification-container {
   position: absolute;
+  width: max-content;
+  cursor: pointer;
   right: 30px;
   top: 100px;
   .notification-bubble {
     position: relative;
     .notification-top-icon {
       position: absolute;
-      right: 38px;
-      top: -5px;
       color: $color-success;
       transform: scale(1.75);
+    }
+    .top{
+      &-right{
+        top: -5px;
+        right: 38px;
+      }
+      &-left{
+        top: -5px;
+        right: 38px;
+      }
+      &-center{
+        top: -5px;
+        left: 50%;
+      }
+    }
+    .bottom{
+      &-right{
+        bottom: -5px;
+        right: 38px;
+      }
+      &-left{
+        bottom: -5px;
+        right: 38px;
+      }
+      &-center{
+        bottom: -5px;
+        left: 50%;
+      }
     }
     .notification-bubble-content {
       background: $color-success;
@@ -161,6 +244,23 @@ export default defineComponent({
       background: transparent;
       color: white;
     }
+  }
+}
+.fade-enter-active {
+  animation: toast-fade-in 0.5s ease-in-out;
+}
+.fade-leave-active {
+  animation: toast-fade-in 0.5s ease-in-out reverse;
+}
+
+@keyframes toast-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 </style>

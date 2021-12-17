@@ -3,7 +3,7 @@ import LayerConfigurationModel from "@/models/Mediakiwi/LayerConfigurationModel"
 import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
 import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
 import { store } from "@/store";
-import PageModel from "@/store/modules/PageModel";
+import PageModel from "@/models/PageModel";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "@vue/runtime-dom";
 import MediakiwiModalWrapper from "./../components/modal/MediakiwiModalWrapper.vue";
