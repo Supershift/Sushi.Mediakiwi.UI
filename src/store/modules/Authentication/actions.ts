@@ -56,6 +56,8 @@ export const actions: ActionTree<AuthenticationState, RootState> & Actions = {
     store.dispatch(UITypes.SET_LOADING, true);
       return authenticationAPIService.signOutMediakiwiAPI(payload)
       .then(() => {
+        sessionStorage.clear();
+        localStorage.clear();
         router.push("/login");
       })
       .finally(() => {

@@ -10,7 +10,7 @@ import { mutations } from "./mutations";
 export interface ContentState {
   content: GetContentMediakiwiResponseModel | null;
   grids: Grid[] | null;
-  folders: PageItem[] | null;
+  folders: Field[] | null;
   buttons: ButtonModel[] | null;
   page: PageModel | null;
   fields: Field[] | null;

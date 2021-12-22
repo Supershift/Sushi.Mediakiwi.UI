@@ -1,6 +1,7 @@
 <template>
   <div class="content-container row">
     <div class="col main-container">
+      <OverlayLoader />
       <template
         v-if="
           fetchedTopButtons &&
@@ -18,7 +19,7 @@
         v-if="
           fetchedFolders && fetchedFolders.length
         ">
-        <FolderComponent />
+        <FolderComponent/>
       </template>
       <template
         v-if="
@@ -84,6 +85,7 @@ import ButtonListComponent from "./ButtonListComponent.vue";
 import FileUpload from "./file-upload/FileUpload.vue";
 import {getViewTypeName} from "@/models/Mediakiwi/ViewType";
 import ViewModel from "@/models/Mediakiwi/ViewModel";
+import OverlayLoader from "@/components/OverlayLoader.vue";
 
 export default defineComponent({
   name: "MainView",
@@ -94,23 +96,24 @@ export default defineComponent({
     ResourcesComponent,
     ButtonListComponent,
     FileUpload,
+    OverlayLoader,
   },
   setup() {
     const breakpointTablet = 986;
     const fetchedFields = computed(
-      () => store.getters.fields
+      () => store.getters["Content/fields"]
     );
 
     const fetchedGrids = computed(
-      () => store.getters.grids
+      () => store.getters["Content/grids"]
     );
 
     const fetchedFolders = computed(
-      () => store.getters.folders
+      () => store.getters["Content/folders"]
     );
 
     const fetchedResources = computed(
-      () => store.getters.resources
+      () => store.getters["Content/resources"]
     );
     const fetchedTopButtons = computed(
       () => store.getters.topButtons

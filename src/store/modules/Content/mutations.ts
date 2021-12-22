@@ -10,7 +10,7 @@ import { PostContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Con
 export type Mutations<S = ContentState> = {
   [MutationTypes.SET_CONTENT](state: S, payload: GetContentMediakiwiResponseModel): void,
   [MutationTypes.SET_GRIDS](state: S, payload: Grid[]): void,
-  [MutationTypes.SET_FOLDERS](state: S, payload: PageItem[]): void,
+  [MutationTypes.SET_FOLDERS](state: S, payload: Field[]): void,
   [MutationTypes.SET_BUTTONS](state: S, payload: ButtonModel[]): void,
   [MutationTypes.SET_PAGE](state: S, payload: PageModel): void,
   [MutationTypes.SET_FIELDS](state: S, payload: Field[]): void,
@@ -30,7 +30,7 @@ export const mutations: MutationTree<ContentState> & Mutations = {
         state.grids = payload;
       }
     },
-    [MutationTypes.SET_FOLDERS](state: ContentState, payload: PageItem[]): void {
+    [MutationTypes.SET_FOLDERS](state: ContentState, payload: Field[]): void {
       if (payload) {
         state.folders = payload;
       }

@@ -20,7 +20,7 @@ export default defineComponent({
   },
   setup() {
     const folders = computed(
-      () => store.getters.folders
+      () => store.getters["Content/folders"]
     );
     return {
       folders,

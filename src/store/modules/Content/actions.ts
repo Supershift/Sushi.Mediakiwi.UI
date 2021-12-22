@@ -28,7 +28,7 @@ export interface Actions {
   ): void,
   [ActionTypes.SET_FOLDERS](
     { commit }: AugmentedActionContext,
-    payload: PageItem[]
+    payload: Field[]
   ): void,
   [ActionTypes.SET_GRIDS](
     { commit }: AugmentedActionContext,

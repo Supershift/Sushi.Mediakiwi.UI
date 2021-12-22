@@ -6,21 +6,22 @@ import { UIState } from "./index";
 import { RootState } from "../../index";
 
 export type Getters = {
-    dialog (rootState: UIState ): DialogModel,
-    drawer (rootState: UIState ): DrawerModel,
-    isDrawerOpen (rootState: UIState ): boolean,
-    notification (rootState: UIState): NotificationModel | null | undefined,
-    isLayeredMode (rootState: UIState): boolean,
-    mediakiwiLoading (rootState: UIState): boolean,
-    isDialogOpen (rootState: UIState): boolean,
+    dialog (state: UIState ): DialogModel,
+    drawer (state: UIState ): DrawerModel,
+    isDrawerOpen (state: UIState ): boolean,
+    notification (state: UIState): NotificationModel | null | undefined,
+    isLayeredMode (state: UIState): boolean,
+    mediakiwiLoading (state: UIState): boolean,
+    isDialogOpen (state: UIState): boolean,
+   
 };
 
 export const getters: GetterTree<UIState, RootState> & Getters = {
-    dialog: (rootState) => rootState.dialog,
-    drawer: (rootState) => rootState.drawer,
-    isDrawerOpen: (rootState) => rootState.drawer ? rootState.drawer.open : false,
-    isDialogOpen: (rootState) => rootState.dialog ? rootState.dialog.show : false,
-    notification: (rootState) => rootState.notification,
-    isLayeredMode: (rootState) => rootState.isLayerMode,
-    mediakiwiLoading: (rootState) => rootState.mediakiwiLoading,
+    dialog: (state) => state.dialog,
+    drawer: (state) => state.drawer,
+    isDrawerOpen: (state) => state.drawer ? state.drawer.open : false,
+    isDialogOpen: (state) => state.dialog ? state.dialog.show : false,
+    notification: (state) => state.notification,
+    isLayeredMode: (state) => state.isLayerMode,
+    mediakiwiLoading: (state) => state.mediakiwiLoading,
 };

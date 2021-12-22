@@ -47,6 +47,9 @@ export const mediakiwiLogic = {
     if (response.list && response.list.resources) {
       store.dispatch(ContentTypes.SET_RESOURCES, response.list?.resources);
     }
+    if (response.list && response.list.forms) {
+      store.dispatch(ContentTypes.SET_FIELDS, response.list?.forms);
+    }
     // store.dispatch(ContentTypes.SET_BUTTONS, response.buttons);
     // store.dispatch("setViews", response.views);
   },

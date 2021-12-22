@@ -46,7 +46,7 @@
 <script>
 import {defineComponent, computed} from "vue";
 import {store} from "@/store";
-import { UITypes } from "../../store/modules/UI";
+import { AuthenticationTypes } from "../../store/modules/Authentication";
 export default defineComponent({
   name: "Dailog",
   emits: ["sign-out-clicked"],
@@ -58,7 +58,7 @@ export default defineComponent({
       () => store.getters["UI/dialog"]
     );
     function handleSignOut() {
-      store.dispatch(UITypes.SET_DIALOG_OPEN, true);
+      store.dispatch(AuthenticationTypes.UNAUTHENTICATE, "/");
       context.emit("sign-out-clicked");
     }
     return {

@@ -1,13 +1,4 @@
 import { FieldValidationType, FieldValidationTypeMessage } from "@/components/form";
-import { ButtonModel } from "@/models/Mediakiwi/ButtonModel";
-import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
-import FieldModel from "@/models/Mediakiwi/FieldModel";
-import FolderModel from "@/models/Mediakiwi/FolderModel";
-import GridModel from "@/models/Mediakiwi/GridModel";
-import ResourceModel from "@/models/Mediakiwi/ResourceModel";
-import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
-import ViewModel from "@/models/Mediakiwi/ViewModel";
-import axios from "axios";
 import { InjectionKey } from "vue";
 import { createLogger, createStore, Store } from "vuex";
 import { BaseContentModel } from "../models/BaseContentModel";
@@ -16,6 +7,8 @@ import {Navigation} from "./modules/Navigation";
 import  {Authentication}  from "./modules/Authentication";
 import {  UI } from "./modules/UI";
 import { Content } from "./modules/Content";
+import createPersistedState from "vuex-persistedstate";
+
 
 // define your typings for the store state
 export interface RootState {
@@ -28,12 +21,20 @@ export interface RootState {
 }
 
 // define injection key
-export const key: InjectionKey<Store<RootState>> = Symbol()
+export const key: InjectionKey<Store<RootState>> = Symbol();
+
+// define the Storage
+const vuexLocal = window.localStorage;
 
 export const store = createStore<RootState>({
-  plugins: process.env.NODE_ENV === "development" ? [createLogger()] : [],
+  plugins: process.env.NODE_ENV === "development" ? [
+    createLogger(),
+    createPersistedState({
+      storage: vuexLocal,
+    })] : 
+    [],
   state: {
-    rootPath: "",
+    rootPath: "/",
     currentSiteID: 2,
     page: null,
     description: "",
@@ -144,9 +145,9 @@ export const store = createStore<RootState>({
     //     });
     //   });
     // },
-    setChannel(state, newChannel) {
-      state.channel = newChannel;
-    },
+    // setChannel(state, newChannel) {
+    //   state.channel = newChannel;
+    // },
   },
   actions: {
     // getMediakiwiAPI(context, request) {

@@ -22,15 +22,21 @@ library.add(
 
 const DEFAULT_TITLE = `${process.env.VUE_APP_TAB_TITLE}` || "Welcome!";
 
+
 router.beforeEach((to, from, next) => {
+  const isAuthenticated = store.getters["Authentication/isLoggedIn"];
+  /* eslint no-console:0 */
+  console.log(to.matched);
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page
-    if (store.getters["Authentication/isLoggedIn"] === false) {
+    /* eslint no-console:0 */
+    console.log("isAuthenticated", isAuthenticated);
+    
+    if (!isAuthenticated) {
       next({
         path: "/login",
       });
-      // console.log("Please login first", from.fullPath);
     } else {
       // to.meta.title = to.params.project_name_slug;
       if (to.query.openinframe) {
@@ -38,25 +44,24 @@ router.beforeEach((to, from, next) => {
       }
 
       // Fetch the Mediakiwi data
-      store.dispatch(ContentTypes.GET_CONTENT, to.fullPath).then(() => {
+      store.dispatch(ContentTypes.GET_CONTENT, to.fullPath)
+      .then(() => {
         next();
       }).catch(() => {
         // redirect to 500 page
         store.dispatch(UITypes.SET_NOTIFICATION, { type: "error", message: "Error fetching content" });
       });
     }
-    // console.log("I am trying to authorize", store.getters.isLoggedIn);
   } else if (to.matched.some((record) => record.meta.requiresVisitor)) {
     // this route is only available to a visitor which means they should not be logged in
     // if logged in, redirect to home page.
-    if (store.getters["Authentication/isLoggedIn"] && from.fullPath) {
+    if (isAuthenticated && from.fullPath) {
       next({
         path: "/",
       });
     } else {
       next();
     }
-    // console.log("I am a visitor!", store.getters.isLoggedIn);
   }
 });
 

@@ -2,7 +2,7 @@
   <div class="folder">
     <h2>
       <a :href="folder.href">{{
-        folder.folderName
+        folder.title
       }}</a>
     </h2>
     <a
@@ -10,7 +10,7 @@
       :key="item.id"
       :href="item.href"
       :class="classes">
-      {{ item.text }}</a
+      {{ item.title }}</a
     >
   </div>
 </template>
