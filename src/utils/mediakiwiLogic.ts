@@ -10,6 +10,7 @@ import MediakiwiModalWrapper from "./../components/modal/MediakiwiModalWrapper.v
 import { AuthenticationTypes } from "@/store/modules/Authentication";
 import { NavigationTypes } from "@/store/modules/Navigation";
 import { ContentTypes } from "@/store/modules/Content";
+import { PostContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/PostContentMediakiwiRequestModel";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,26 +35,29 @@ export const mediakiwiLogic = {
       settingsUrl: response.list?.settingsUrl
     }
     store.dispatch(ContentTypes.SET_PAGE, localPage);
-    // store.dispatch(AuthenticationTypes.SET_PROFILE, response.profile);
+    //store.dispatch(AuthenticationTypes.SET_PROFILE, response.profile);
     // store.dispatch(NavigationTypes.SET_TOP_NAVIGATION, response.topNavigation);
     // store.dispatch(NavigationTypes.SET_SIDE_NAVIGATION, response.sideNavigation);
-    // store.dispatch(ContentTypes.SET_GRIDS, response.grids);
-    // store.dispatch(ContentTypes.SET_FOLDERS, response.folders);
-    // store.dispatch("setResources", response.resources);
-    // store.dispatch("setFields", response.fields);
+    if (response.list && response.list.grids) {
+      store.dispatch(ContentTypes.SET_GRIDS, response.list?.grids);
+    }
+    if (response.explorer && response.explorer.items) {
+      store.dispatch(ContentTypes.SET_FOLDERS, response.explorer.items);
+    }
+    if (response.list && response.list.resources) {
+      store.dispatch(ContentTypes.SET_RESOURCES, response.list?.resources);
+    }
     // store.dispatch(ContentTypes.SET_BUTTONS, response.buttons);
     // store.dispatch("setViews", response.views);
   },
   /** Creates a @type {PostMediakiwiRequestModel} from the altered data in the vuex store */
-  getMediakiwiModelFromStore(referId: string) {
+  getMediakiwiModelFromStore(url: string) {
+    const siteID = store.getters["navigation/currentSiteId"];
     const request: PostMediakiwiRequestModel = {
-      fields: store.state.fields ? store.state.fields : [],
-      channel: store.state.channel,
-      url: "",
-      referId
+      CurrentSiteID: siteID,
+      url
     }
-
-    return request;
+    store.dispatch(ContentTypes.POST_CONTENT, request);
   },
   /** Fill the sublist select based on the referId */
   fillSublistSelect(referId: string, fields: FieldModel[]) {

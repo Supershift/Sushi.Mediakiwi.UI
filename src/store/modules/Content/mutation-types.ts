@@ -4,4 +4,7 @@ export enum MutationTypes {
      SET_FOLDERS = "SET_FOLDERS",
      SET_BUTTONS = "SET_BUTTONS",
      SET_PAGE = "SET_PAGE",
+     SET_FIELDS = "SET_FIELDS",
+     SET_RESOURCES = "SET_RESOURCES",
+     POST_CONTENT = "POST_CONTENT",
   }

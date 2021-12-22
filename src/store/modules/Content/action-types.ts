@@ -6,4 +6,6 @@ export enum ActionTypes {
     SET_BUTTONS = "SET_BUTTONS",
     POST_CONTENT = "POST_CONTENT",
     SET_PAGE = "SET_PAGE",
+    SET_FIELDS = "SET_FIELDS",
+    SET_RESOURCES = "SET_RESOURCES",
   }

@@ -1,8 +1,4 @@
-export default interface NavigationModel {
-  logoUrl: string;
-  homeUrl: string;
-  items: NavigationItemModel[];
-}
+
 export interface NavigationItemModel {
   href: string;
   iconClass: string;
@@ -11,4 +7,9 @@ export interface NavigationItemModel {
   badgeContent: string;
   items?: NavigationItemModel[];
   text: string;
+}
+export default interface NavigationModel {
+  logoUrl: string;
+  homeUrl: string;
+  items: NavigationItemModel[];
 }

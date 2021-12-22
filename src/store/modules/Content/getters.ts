@@ -1,13 +1,14 @@
 import { GetterTree } from "vuex";
 import { ContentState } from "./index";
 import { RootState } from "../../index";
-import { ButtonModel, GetContentMediakiwiResponseModel, Grid, PageItem } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+import { ButtonModel, Field, GetContentMediakiwiResponseModel, Grid, PageItem } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 
 export type Getters = {
     content (rootState: ContentState): GetContentMediakiwiResponseModel | null,
     grids (rootState: ContentState): Grid[] | null,
     folders (rootState: ContentState): PageItem[] | null,
     buttons (rootState: ContentState): ButtonModel[] | null,
+    fields (rootState: ContentState): Field[] | null,
 };
 
 export const getters: GetterTree<ContentState, RootState> & Getters = {
@@ -15,4 +16,5 @@ export const getters: GetterTree<ContentState, RootState> & Getters = {
     grids: (rootState) => rootState.grids,
     folders: (rootState) => rootState.folders,
     buttons: (rootState) => rootState.buttons,
+    fields: (rootState) => rootState.fields,
 };

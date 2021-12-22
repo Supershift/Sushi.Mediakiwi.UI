@@ -42,31 +42,31 @@ export interface Actions {
 }
 
 export const actions: ActionTree<AuthenticationState, RootState> & Actions = {
-  [ActionTypes.AUTHENTICATE]({ commit }, payload) {
+  [ActionTypes.AUTHENTICATE]({ }, payload) {
     store.dispatch(UITypes.SET_LOADING, true);
     return authenticationAPIService.signInMediakiwiAPI(payload)
-    .then((response) => {
+    .then(() => {
       router.push("/");
     })
     .finally(() => {
       store.dispatch(UITypes.SET_LOADING, false);
     });
   },
-  [ActionTypes.UNAUTHENTICATE]({ commit }, payload) {
+  [ActionTypes.UNAUTHENTICATE]({ }, payload) {
     store.dispatch(UITypes.SET_LOADING, true);
       return authenticationAPIService.signOutMediakiwiAPI(payload)
-      .then((response) => {
+      .then(() => {
         router.push("/login");
       })
       .finally(() => {
         store.dispatch(UITypes.SET_LOADING, false);
       });
   },
-  [ActionTypes.RESET_PASSWORD]({ commit }, payload) {
+  [ActionTypes.RESET_PASSWORD]({ }, payload) {
     const waitforRedirect = 4000;
     store.dispatch(UITypes.SET_LOADING, true);
     return authenticationAPIService.resetPasswordMediakiwiAPI(payload)
-    .then((response) => {
+    .then(() => {
       setTimeout(() => {
         router.push("/");
       }, waitforRedirect);

@@ -1,21 +1,16 @@
-import { ButtonRequestMethodType } from "@/models/Mediakiwi/ButtonRequestMethodType";
 import AuthenticateRequestModel from "@/models/Mediakiwi/Request/Authentication/AuthenticateRequestModel";
 import { GetContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/GetContentMediakiwiRequestModel";
-import GetMediakiwiRequestModel from "@/models/Mediakiwi/Request/getMediakiwiRequestModel";
 import { GetNavigationRequestModel } from "@/models/Mediakiwi/Request/Navigation/GetNavigationRequestModel";
 import { PostContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/PostContentMediakiwiRequestModel";
-import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
 import { ResetPasswordRequestModel } from "@/models/Mediakiwi/Request/Authentication/ResetPasswordRequestModel";
-import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
-import router from "@/router";
 import { store } from "@/store";
 import axios from "axios";
-import { mediakiwiLogic } from "./mediakiwiLogic";
 import { NotificationActionTypes } from "./utils";
 import { AuthenticationTypes } from "@/store/modules/Authentication";
 import { UITypes } from "@/store/modules/UI";
 import { NavigationTypes } from "@/store/modules/Navigation";
 import { ContentTypes }  from "@/store/modules/Content";
+import router from "@/router";
 
 export const serverCodes = {
   OK: 200,
@@ -213,7 +208,7 @@ export const contentAPIService = {
         }
         resolve(response);
       })
-      .catch((err) => {
+      .catch((err) => {        
         if (err.response.status === serverCodes.UNAUTHORIZED ||
           err.response.status === serverCodes.BAD_REQUEST ||
           err.response.status === serverCodes.FORBIDDEN) {

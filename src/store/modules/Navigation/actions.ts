@@ -34,7 +34,7 @@ export interface Actions {
 }
 
 export const actions: ActionTree<NavigationState, RootState> & Actions = {
-  [ActionTypes.GET_TOP_NAVIGATION]({ commit }, payload) {
+  [ActionTypes.GET_TOP_NAVIGATION]({  }, payload) {
       const siteID = store.state.currentSiteID;
       const request = {
         data: { CurrentSiteID: siteID },
@@ -49,7 +49,7 @@ export const actions: ActionTree<NavigationState, RootState> & Actions = {
         store.dispatch(UITypes.SET_LOADING, false);
       });
   },
-  [ActionTypes.GET_SIDE_NAVIGATION]({ commit }, payload) {
+  [ActionTypes.GET_SIDE_NAVIGATION]({  }, payload) {
     const siteID = store.state.currentSiteID;
     const request = {
       data: { CurrentSiteID: siteID },
@@ -64,7 +64,7 @@ export const actions: ActionTree<NavigationState, RootState> & Actions = {
       store.dispatch(UITypes.SET_LOADING, false);
     });
   },
-  [ActionTypes.GET_SITES]({ commit }, payload) {
+  [ActionTypes.GET_SITES]({  }, payload) {
     const siteID = store.state.currentSiteID;
     const request = {
       data: { CurrentSiteID: siteID },

@@ -6,8 +6,9 @@ import { contentAPIService } from "@/utils/api-service"
 import { UITypes } from "../UI"
 import { ContentState } from "./index"
 import { MutationTypes } from "./mutation-types"
-import { ButtonModel, GetContentMediakiwiResponseModel, Grid, PageItem } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
+import { ButtonModel, Field, GetContentMediakiwiResponseModel, Grid, PageItem } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
 import PageModel from "@/models/PageModel"
+import ResourceModel from "@/models/Mediakiwi/ResourceModel"
 
 type AugmentedActionContext = {
   commit<K extends keyof Mutations>(
@@ -41,10 +42,18 @@ export interface Actions {
     { commit }: AugmentedActionContext,
     payload: PageModel
   ): void,
+  [ActionTypes.SET_FIELDS](
+    { commit }: AugmentedActionContext,
+    payload: Field[]
+  ): void,
+  [ActionTypes.SET_RESOURCES](
+    { commit }: AugmentedActionContext,
+    payload: ResourceModel[]
+  ): void,
 }
 
 export const actions: ActionTree<ContentState, RootState> & Actions = {
-  [ActionTypes.GET_CONTENT]({ commit }, payload) {
+  [ActionTypes.GET_CONTENT]({  }, payload) {
       const siteID = store.state.currentSiteID;
       const request = {
         data: { CurrentSiteID: siteID },
@@ -52,14 +61,14 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
       };
       store.dispatch(UITypes.SET_LOADING, true);
       return contentAPIService.getContentMediakiwiAPI(request.data, request.url)
-      .then((response) => {
+      .then(() => {
         // sessionStorage.setItem("content", "true");
       })
       .finally(() => {
         store.dispatch(UITypes.SET_LOADING, false);
       });
   },
-  [ActionTypes.POST_CONTENT]({ commit }, payload) {
+  [ActionTypes.POST_CONTENT]({  }, payload) {
     const siteID = store.state.currentSiteID;
     const request = {
       data: { CurrentSiteID: siteID },
@@ -67,7 +76,7 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
     };
     store.dispatch(UITypes.SET_LOADING, true);
     return contentAPIService.postContentMediakiwiAPI(request.data, request.url)
-    .then((response) => {
+    .then(() => {
       // sessionStorage.setItem("content", "true");
     })
     .finally(() => {
@@ -88,5 +97,11 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
   },
   [ActionTypes.SET_PAGE]({ commit }, payload) {
     commit(MutationTypes.SET_PAGE, payload);
+  },
+  [ActionTypes.SET_FIELDS]({ commit }, payload) {
+    commit(MutationTypes.SET_FIELDS, payload);
+  },
+  [ActionTypes.SET_RESOURCES]({ commit }, payload) {
+    commit(MutationTypes.SET_RESOURCES, payload);
   },
 }

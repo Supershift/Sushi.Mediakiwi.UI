@@ -15,7 +15,6 @@
 
 <script lang="ts">
 import {ButtonModel} from "@/models/Mediakiwi/ButtonModel";
-import {ButtonRequestMethodType} from "@/models/Mediakiwi/ButtonRequestMethodType";
 import {ButtonTargetType} from "@/models/Mediakiwi/ButtonTargetType";
 import {mediakiwiLogic} from "@/utils/mediakiwiLogic";
 import {
@@ -23,8 +22,6 @@ import {
   defineComponent,
   PropType,
 } from "vue";
-import { store } from "../store";
-import { ContentTypes } from "../store/modules/Content";
 import FormButton from "./form/FormButton.vue";
 
 export default defineComponent({
@@ -48,13 +45,7 @@ export default defineComponent({
     ]);
     function handleClicked(value: ButtonModel) {
       if (value) {
-        const request =
-          mediakiwiLogic.getMediakiwiModelFromStore(
-            value.propertyName
-          );
-        if (request) {
-          store.dispatch(ContentTypes.POST_CONTENT, "/");
-        }
+      mediakiwiLogic.getMediakiwiModelFromStore(value.propertyName);
         // switch (value.requestMethod) {
         //   case ButtonRequestMethodType.put:
         //     apiService.putMediakiwiAPI(request);

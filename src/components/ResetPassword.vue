@@ -79,8 +79,6 @@ export default defineComponent({
       }
     }
     function handleTextChanged(value: string, fieldName: string) {
-      /* eslint no-console:0 */
-      console.log(email.value, validEmail.value);
       errorMessages = fieldMixins.methods.emailValidator(value, fieldName, errorMessages);
       if (errorMessages.length === 0) {
         validEmail.value = true;

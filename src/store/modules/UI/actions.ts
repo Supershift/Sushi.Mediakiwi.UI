@@ -1,5 +1,5 @@
 import { ActionTree, ActionContext } from "vuex"
-import { RootState, store } from "../../index"
+import { RootState } from "../../index"
 import { Mutations } from "./mutations"
 import { ActionTypes } from "./action-types"
 import { MutationTypes } from "./mutation-types"

@@ -90,8 +90,8 @@ export default defineComponent({
     },
     onSuccessUpload(file, response) {
       this.loading = false;
-      console.log(response);
-      console.log(file);
+      // console.log(response);
+      // console.log(file);
       this.loading = false;
     },
     post() {
