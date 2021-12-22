@@ -1,4 +1,5 @@
 import MediakiwiModel from "./../MediakiwiModel";
-export default interface MediakiwiResponseModel extends MediakiwiModel {
+import { GetContentMediakiwiResponseModel } from "./Content/GetContentMediakiwiResponseModel";
+export default interface MediakiwiResponseModel extends GetContentMediakiwiResponseModel {
   closeLayer: boolean,
 }

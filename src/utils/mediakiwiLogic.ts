@@ -7,6 +7,9 @@ import PageModel from "@/models/PageModel";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "@vue/runtime-dom";
 import MediakiwiModalWrapper from "./../components/modal/MediakiwiModalWrapper.vue";
+import { AuthenticationTypes } from "@/store/modules/Authentication";
+import { NavigationTypes } from "@/store/modules/Navigation";
+import { ContentTypes } from "@/store/modules/Content";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,24 +25,24 @@ export const mediakiwiLogic = {
   },
   /** Binds the data from the Mediakiwi Response to the vuex store  */
   putResponseToStore(response: MediakiwiResponseModel) {
-    store.dispatch("setChannel", response.currentSiteID);
+    // store.dispatch(NavigationTypes.SET_SITE, response.currentSiteID);
 
     // Create the page model
-    const pageData: PageModel = {
-      title: response.listTitle ? response.listTitle : "",
-      description: response.listDescription ? response.listDescription : "",
-      settingsUrl: response.listSettingsUrl
+    const localPage: PageModel = {
+      title: response.list?.title ? response.list?.title : "",
+      description: response.list?.description ? response.list?.description : "",
+      settingsUrl: response.list?.settingsUrl
     }
-    store.dispatch("setPage", pageData);
-    store.dispatch("setProfileInfomation", response.profile);
-    store.dispatch("setTopNavigation", response.topNavigation);
-    store.dispatch("setSideNavigation", response.sideNavigation);
-    store.dispatch("setGrids", response.grids);
-    store.dispatch("setFolders", response.folders);
-    store.dispatch("setResources", response.resources);
-    store.dispatch("setFields", response.fields);
-    store.dispatch("setButtons", response.buttons);
-    store.dispatch("setViews", response.views);
+    store.dispatch(ContentTypes.SET_PAGE, localPage);
+    // store.dispatch(AuthenticationTypes.SET_PROFILE, response.profile);
+    // store.dispatch(NavigationTypes.SET_TOP_NAVIGATION, response.topNavigation);
+    // store.dispatch(NavigationTypes.SET_SIDE_NAVIGATION, response.sideNavigation);
+    // store.dispatch(ContentTypes.SET_GRIDS, response.grids);
+    // store.dispatch(ContentTypes.SET_FOLDERS, response.folders);
+    // store.dispatch("setResources", response.resources);
+    // store.dispatch("setFields", response.fields);
+    // store.dispatch(ContentTypes.SET_BUTTONS, response.buttons);
+    // store.dispatch("setViews", response.views);
   },
   /** Creates a @type {PostMediakiwiRequestModel} from the altered data in the vuex store */
   getMediakiwiModelFromStore(referId: string) {

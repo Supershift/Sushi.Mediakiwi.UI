@@ -1,7 +1,7 @@
 <template>
   <ul :class="customContainerClass">
     <SideNavigationItem
-      v-for="item in sideNavigationItems.items"
+      v-for="item in sideNavigationItems"
       :key="item.text"
       :item="item"
     />
@@ -9,7 +9,7 @@
       <button
         class="btn btn-dialog-footer"
         @click="handleSignOut">
-        <fa icon="sign-out"/><span v-if="drawerIsOpen"> Sign out</span> 
+        <fa icon="sign-out"/><span v-if="isDrawerOpen"> Sign out</span> 
       </button>
     </div>
   </ul>
@@ -23,6 +23,8 @@ import {
 } from "vue";
 import SideNavigationItem from "./SideNavigationItem.vue";
 import {store} from "@/store";
+import { NavigationTypes } from "../../store/modules/Navigation";
+import { AuthenticationTypes } from "../../store/modules/Authentication";
 export default defineComponent({
   name: "SideNavigation",
   props: {
@@ -32,27 +34,28 @@ export default defineComponent({
       default: "",
     },
   },
-  components: {SideNavigationItem},
+  components: { SideNavigationItem },
   setup(props) {
     onMounted(() => {
-      store.dispatch("loadSideNavigation");
+      store.dispatch(NavigationTypes.GET_SIDE_NAVIGATION, "/");
     });
-    const drawerIsOpen = computed(
-      () => store.getters.openDrawer,
+    const isDrawerOpen = computed(
+      () => store.getters["UI/isDrawerOpen"],
     );
     const customContainerClass = computed(
       () => `list-menu ${props.customClass}`
     );
     const sideNavigationItems = computed(
-      () => store.getters.sideNavigationItems
+      () => store.getters["Navigation/sideNavigationItems"]
     );
+
     function handleSignOut() {
-      store.dispatch("signOut");
+      store.dispatch(AuthenticationTypes.UNAUTHENTICATE);
     }
     return {
       customContainerClass,
       sideNavigationItems,
-      drawerIsOpen,
+      isDrawerOpen,
       handleSignOut,
     };
   },

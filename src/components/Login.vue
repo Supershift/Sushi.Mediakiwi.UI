@@ -37,16 +37,17 @@ import {
   reactive,
   ref,
 } from "vue";
-import { store } from "../store";
+import { store } from "@/store";
 import FormErrors from "./form/FormErrors.vue";
 import CustomInput from "./base-components/CustomInput.vue";
 import CustomButton from "./base-components/CustomButton.vue";
 import InputModel from "../models/InputModel";
 import ButtonModel from "../models/ButtonModel";
 import MessageModel from "../models/MessageModel";
-import AuthenticateRequestModel from "../models/Mediakiwi/Request/AuthenticateRequestModel";
+import AuthenticateRequestModel from "../models/Mediakiwi/Request/Authentication/AuthenticateRequestModel";
 import { fieldMixins, FieldValidationType, FieldValidationTypeMessage } from "./form";
 import Notification from "./notification/Notification.vue";
+import { AuthenticationTypes } from "../store/modules/Authentication";
 
 export default defineComponent({
   name: "Login",
@@ -98,7 +99,7 @@ export default defineComponent({
       readOnly: false,
     });
     function handleLogin() {
-      store.dispatch("signIn", {
+      store.dispatch(AuthenticationTypes.AUTHENTICATE, {
         emailAddress: email.value,
         password: password.value,
       } as AuthenticateRequestModel);

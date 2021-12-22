@@ -1,15 +1,21 @@
 import { ButtonRequestMethodType } from "@/models/Mediakiwi/ButtonRequestMethodType";
-import AuthenticateRequestModel from "@/models/Mediakiwi/Request/AuthenticateRequestModel";
+import AuthenticateRequestModel from "@/models/Mediakiwi/Request/Authentication/AuthenticateRequestModel";
+import { GetContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/GetContentMediakiwiRequestModel";
 import GetMediakiwiRequestModel from "@/models/Mediakiwi/Request/getMediakiwiRequestModel";
-import { GetNavigationRequestModel } from "@/models/Mediakiwi/Request/GetNavigationRequestModel";
+import { GetNavigationRequestModel } from "@/models/Mediakiwi/Request/Navigation/GetNavigationRequestModel";
+import { PostContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/PostContentMediakiwiRequestModel";
 import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
-import { ResetPasswordRequestModel } from "@/models/Mediakiwi/Request/ResetPasswordRequestModel";
+import { ResetPasswordRequestModel } from "@/models/Mediakiwi/Request/Authentication/ResetPasswordRequestModel";
 import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
 import router from "@/router";
 import { store } from "@/store";
 import axios from "axios";
 import { mediakiwiLogic } from "./mediakiwiLogic";
-import { apiUrlBuilder, NotificationActionTypes } from "./utils";
+import { NotificationActionTypes } from "./utils";
+import { AuthenticationTypes } from "@/store/modules/Authentication";
+import { UITypes } from "@/store/modules/UI";
+import { NavigationTypes } from "@/store/modules/Navigation";
+import { ContentTypes }  from "@/store/modules/Content";
 
 export const serverCodes = {
   OK: 200,
@@ -23,19 +29,28 @@ export const serverCodes = {
   GATEWAY_TIMEOUT: 504
 }
 
-export const apiService = {
+// Interceptor for handling calls to the API
+const axiosInstance = axios.create({
+  baseURL: `${process.env.VUE_APP_BASE_API}`,
+  headers: {
+    "Content-Type": "application/json",
+  }
+});
+
+export const authenticationAPIService = {
+  // Authentication
   signInMediakiwiAPI(request: AuthenticateRequestModel) {
     const requestBody: AuthenticateRequestModel = {
       ...request,
-      apiKey: store.getters.apiKey,
+      apiKey: store.getters["Authentication/apiKey"],
     };
     return new Promise((resolve, reject) => {
-      axios.post(apiUrlBuilder("authentication/Login"), requestBody, { withCredentials: true })
+      axiosInstance.post("authentication/Login", requestBody, { withCredentials: true })
         .then((response) => {
           if (response.status === serverCodes.OK) {   
-            store.dispatch("toggleNotification", { message: "Signed In!", actionType: NotificationActionTypes.SUCCESS, actionText: "OK" });         
-            store.dispatch("toggleAuthenticated", true);
-            store.dispatch("setProfileInfomation", response.data);
+            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Signed In!", actionType: NotificationActionTypes.SUCCESS, actionText: "OK" });         
+            store.dispatch(AuthenticationTypes.TOGGLE_LOGIN, true);
+            store.dispatch(AuthenticationTypes.SET_PROFILE, response.data);
           }
           resolve(response);
         })
@@ -43,24 +58,24 @@ export const apiService = {
           if (err.response.status === serverCodes.UNAUTHORIZED ||
             err.response.status === serverCodes.BAD_REQUEST ||
             err.response.status === serverCodes.FORBIDDEN) {
-            store.dispatch("toggleNotification", { message: "Invalid credentials!", actionType: NotificationActionTypes.ALERT, actionText: "OK", hasAction: true });
+            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials!", actionType: NotificationActionTypes.ALERT, actionText: "OK", hasAction: true });
           } else {
-              store.dispatch("toggleNotification", { message: "Something went wrong!", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
+              store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong!", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
           }
           reject(err);
         })
     });
   },
-  signOutMediakiwiAPI() {
+  signOutMediakiwiAPI(url: string) {
     const config = {
-      headers: { "original-url": "/" },
+      headers: { "original-url": url },
       withCredentials: true
     };
     return new Promise((resolve, reject) => {
-      axios.post(apiUrlBuilder("authentication/LogOut"), null, config)
+      axiosInstance.post("authentication/LogOut", null, config)
         .then((response) => {
           if (response.status === serverCodes.OK) {
-            store.dispatch("toggleAuthenticated", false);
+            store.dispatch(AuthenticationTypes.UNAUTHENTICATE, false);
           }
           resolve(response)
         })
@@ -68,9 +83,9 @@ export const apiService = {
           if (err.response.status === serverCodes.UNAUTHORIZED || 
             err.response.status === serverCodes.BAD_REQUEST ||
             err.response.status === serverCodes.FORBIDDEN) {
-            store.dispatch("toggleNotification", { message: "Invalid signout token! Please try again...", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
+            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid signout token! Please try again...", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
           } else {
-            store.dispatch("toggleNotification", { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
+            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
           }
           reject(err);
         })
@@ -81,11 +96,10 @@ export const apiService = {
       ...request,
     };
     return new Promise((resolve, reject) => {
-      axios.post(apiUrlBuilder("authentication/ResetPassword"), requestBody, { withCredentials: true })
+      axiosInstance.post("authentication/ResetPassword", requestBody, { withCredentials: true })
         .then((response) => {
           if (response.status === serverCodes.OK) {
-            store.dispatch("toggleNotification", { message: "Your password has been reset successfully", actionType: NotificationActionTypes.SUCCESS, actionText: "OK" });
-            alert("Password reset successful!");
+            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Your password has been reset successfully", actionType: NotificationActionTypes.SUCCESS, actionText: "OK" });
           }
           resolve(response)
         })
@@ -93,25 +107,28 @@ export const apiService = {
           if (err.response.status === serverCodes.UNAUTHORIZED || 
             err.response.status === serverCodes.BAD_REQUEST ||
             err.response.status === serverCodes.FORBIDDEN) {
-            store.dispatch("toggleNotification", { message: "Invalid credentials!", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
+            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials!", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
           } else {
-            store.dispatch("toggleNotification", { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
+            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
           }
           reject(err);
         })
     })
   },
+}
+export const navigationAPIService = {
+  // Navigation
   getTopNavigationMediakiwiAPI(request: GetNavigationRequestModel, url: string) {
     const config = {
       params: request,
       withCredentials: true,
-      headers: { "original-url": "/" } 
+      headers: { "original-url": url } 
     };
     return new Promise((resolve, reject) => {
-      axios.get(apiUrlBuilder("navigation/GetTopnavigation"), config)
+      axiosInstance.get("navigation/GetTopnavigation", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
-          store.dispatch("setTopNavigation", response.data);
+          store.dispatch(NavigationTypes.SET_TOP_NAVIGATION, response.data);
         }
         resolve(response);
       })
@@ -119,28 +136,25 @@ export const apiService = {
         if (err.response.status === serverCodes.UNAUTHORIZED || 
           err.response.status === serverCodes.BAD_REQUEST ||
           err.response.status === serverCodes.FORBIDDEN) {
-          store.dispatch("toggleNotification", { message: "Invalid credentials! Top Navigation", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials! Top Navigation", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
         } else {
-          store.dispatch("toggleNotification", { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
         }
         reject(err)
       })
-      .finally(() => {
-        store.dispatch("toggleMediakiwiLoading");
-      });
     });
   },
   getSideNavigationMediakiwiAPI(request: GetNavigationRequestModel, url: string) {
     const config = {
       params: request,
       withCredentials: true,
-      headers: { "original-url": "/" }
+      headers: { "original-url": url }
     };
     return new Promise((resolve, reject) => {
-      axios.get(apiUrlBuilder("navigation/GetSidenavigation"), config)
+      axiosInstance.get("navigation/GetSidenavigation", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
-          store.dispatch("setSideNavigation", response.data);
+          store.dispatch(NavigationTypes.SET_SIDE_NAVIGATION, response.data);
         }
         resolve(response);
       })
@@ -148,97 +162,181 @@ export const apiService = {
         if (err.response.status === serverCodes.UNAUTHORIZED ||
           err.response.status === serverCodes.BAD_REQUEST ||
           err.response.status === serverCodes.FORBIDDEN) {
-          store.dispatch("toggleNotification", { message: "Invalid credentials! Side Navigation", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials! Side Navigation", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
         } else {
-          store.dispatch("toggleNotification", { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
         }
         reject(err);
       })
     });
   },
-  fetchMediakiwiAPI(url: string) {
-    const requestBody: GetMediakiwiRequestModel = {
-      channel: store.getters.channel,
-      url
+  getSitesMediakiwiAPI(request: GetNavigationRequestModel, url: string) {
+    const config = {
+      params: request,
+      withCredentials: true,
+      headers: { "original-url": url }
     };
-
     return new Promise((resolve, reject) => {
-      // Start the loader
-      store.dispatch("toggleMediakiwiLoading");
-
-      store.dispatch("getMediakiwiAPI", requestBody).then((response: MediakiwiResponseModel) => {
-        if (response) {
-          // Handle response
-          mediakiwiLogic.putResponseToStore(response)
-
-          // finally resolve the response
-          store.dispatch("toggleMediakiwiLoading");
-          resolve(response)
+      axiosInstance.get("navigation/GetSites", config)
+      .then((response) => {
+        if (response.status === serverCodes.OK) {
+          store.dispatch(NavigationTypes.SET_SITE, response.data);
         }
-        else {
-          store.dispatch("toggleMediakiwiLoading");
-          reject(response);
+        resolve(response);
+      })
+      .catch((err) => {
+        if (err.response.status === serverCodes.UNAUTHORIZED ||
+          err.response.status === serverCodes.BAD_REQUEST ||
+          err.response.status === serverCodes.FORBIDDEN) {
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials! Sites", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
+        } else {
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
         }
-      }).catch((error: unknown) => {
-        // reject the response
-        store.dispatch("toggleMediakiwiLoading");
-        reject(error);
-      });
+        reject(err);
+      })
     });
   },
-  postMediakiwiAPI(request: PostMediakiwiRequestModel, requestMethod: ButtonRequestMethodType = ButtonRequestMethodType.post) {
-    request.url = router.currentRoute.value.fullPath
-
-    // determine the request method
-    let method = "";
-    switch (requestMethod) {
-      case ButtonRequestMethodType.delete:
-        method = "deleteMediakiwiAPI";
-        break;
-      case ButtonRequestMethodType.put:
-        method = "putMediakiwiAPI";
-        break;
-      default:
-        method = "postMediakiwiAPI";
-        break;
-    }
-
+}
+export const contentAPIService = {
+  // Content 
+  getContentMediakiwiAPI(request: GetContentMediakiwiRequestModel, url: string) {
+    const config = {
+      params: request,
+      withCredentials: true,
+      headers: { "original-url": url }
+    };
     return new Promise((resolve, reject) => {
-      // Start the loader
-      store.dispatch("toggleMediakiwiLoading");
-
-      // call the POST method
-      const referId = <string>router.currentRoute.value.query.referid;
-      store.dispatch(method, request).then((response: MediakiwiResponseModel) => {
-        if (response) {
-          if (response.closeLayer && referId) {
-            // trigger the mediakiwi logic on the parent window
-            window.parent.mediakiwiLogic.fillSublistSelect(referId, response.fields);
-            window.parent.mediakiwiLogic.closeLayer();
-          }
-
-          // Handle response
-          mediakiwiLogic.putResponseToStore(response)
-
-          // finally resolve the response
-          store.dispatch("toggleMediakiwiLoading");
-          resolve(response)
+      axiosInstance.get("content/GetContent", config)
+      .then((response) => {
+        if (response.status === serverCodes.OK) {
+          store.dispatch(ContentTypes.SET_CONTENT, response.data);
         }
-        else {
-          store.dispatch("toggleMediakiwiLoading");
-          reject(response);
+        resolve(response);
+      })
+      .catch((err) => {
+        if (err.response.status === serverCodes.UNAUTHORIZED ||
+          err.response.status === serverCodes.BAD_REQUEST ||
+          err.response.status === serverCodes.FORBIDDEN) {
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials! Content", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
+        } else {
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
         }
-      }).catch((error: unknown) => {
-        // reject the response
-        store.dispatch("toggleMediakiwiLoading");
-        reject(error);
-      });
+        reject(err);
+      })
     });
   },
-  deleteMediakiwiAPI(request: PostMediakiwiRequestModel) {
-    return this.postMediakiwiAPI(request, ButtonRequestMethodType.delete);
+  postContentMediakiwiAPI(request: PostContentMediakiwiRequestModel, url: string) {
+    const config = {
+      data: request,
+      withCredentials: true,
+      headers: { "original-url": url }
+    };
+    return new Promise((resolve, reject) => {
+      axiosInstance.post("content/PostContent", config)
+      .then((response) => {
+        if (response.status === serverCodes.OK) {
+          store.dispatch(ContentTypes.SET_CONTENT, response.data);
+        }
+        resolve(response);
+      })
+      .catch((err) => {
+        if (err.response.status === serverCodes.UNAUTHORIZED ||
+          err.response.status === serverCodes.BAD_REQUEST ||
+          err.response.status === serverCodes.FORBIDDEN) {
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials! Content", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
+        } else {
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
+        }
+        reject(err);
+      })
+    });
   },
-  putMediakiwiAPI(request: PostMediakiwiRequestModel) {
-    return this.postMediakiwiAPI(request, ButtonRequestMethodType.put);
-  }
-};
+}
+// export const apiService = {
+//   // Old API
+//   fetchMediakiwiAPI(url: string) {
+//     const requestBody: GetMediakiwiRequestModel = {
+//       channel: store.getters.channel,
+//       url
+//     };
+
+//     return new Promise((resolve, reject) => {
+//       // Start the loader
+//       store.dispatch(UITypes.SET_LOADING, true);
+
+//       store.dispatch("getMediakiwiAPI", requestBody).then((response: MediakiwiResponseModel) => {
+//         if (response) {
+//           // Handle response
+//           mediakiwiLogic.putResponseToStore(response)
+
+//           // finally resolve the response
+//           store.dispatch(UITypes.SET_LOADING, false);
+//           resolve(response)
+//         }
+//         else {
+//           store.dispatch(UITypes.SET_LOADING, false);
+//           reject(response);
+//         }
+//       }).catch((error: unknown) => {
+//         // reject the response
+//         store.dispatch(UITypes.SET_LOADING, false);
+//         reject(error);
+//       });
+//     });
+//   },
+//   postMediakiwiAPI(request: PostMediakiwiRequestModel, requestMethod: ButtonRequestMethodType = ButtonRequestMethodType.post) {
+//     request.url = router.currentRoute.value.fullPath
+
+//     // determine the request method
+//     let method = "";
+//     switch (requestMethod) {
+//       case ButtonRequestMethodType.delete:
+//         method = "deleteMediakiwiAPI";
+//         break;
+//       case ButtonRequestMethodType.put:
+//         method = "putMediakiwiAPI";
+//         break;
+//       default:
+//         method = "postMediakiwiAPI";
+//         break;
+//     }
+
+//     return new Promise((resolve, reject) => {
+//       // Start the loader
+//       store.dispatch(UITypes.SET_LOADING, true);
+
+//       // call the POST method
+//       const referId = <string>router.currentRoute.value.query.referid;
+//       store.dispatch(method, request).then((response: MediakiwiResponseModel) => {
+//         if (response) {
+//           if (response.closeLayer && referId) {
+//             // trigger the mediakiwi logic on the parent window
+//             window.parent.mediakiwiLogic.fillSublistSelect(referId, response.fields);
+//             window.parent.mediakiwiLogic.closeLayer();
+//           }
+
+//           // Handle response
+//           mediakiwiLogic.putResponseToStore(response)
+
+//           // finally resolve the response
+//           store.dispatch(UITypes.SET_LOADING, false);
+//           resolve(response)
+//         }
+//         else {
+//           store.dispatch(UITypes.SET_LOADING, false);
+//           reject(response);
+//         }
+//       }).catch((error: unknown) => {
+//         // reject the response
+//         store.dispatch(UITypes.SET_LOADING, false);
+//         reject(error);
+//       });
+//     });
+//   },
+//   deleteMediakiwiAPI(request: PostMediakiwiRequestModel) {
+//     return this.postMediakiwiAPI(request, ButtonRequestMethodType.delete);
+//   },
+//   putMediakiwiAPI(request: PostMediakiwiRequestModel) {
+//     return this.postMediakiwiAPI(request, ButtonRequestMethodType.put);
+//   }
+// };

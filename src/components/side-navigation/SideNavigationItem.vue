@@ -8,7 +8,7 @@
           class="menu-icon"
           :icon="icons"
           v-if="icons" />
-        <span v-show="openDrawer">{{
+        <span v-show="isDrawerOpen">{{
           item.text
         }}</span>
       </a>
@@ -46,20 +46,18 @@ export default defineComponent({
         : "kiwi-bird"
     );
 
-    const openDrawer = computed(
-      () => store.getters.openDrawer
+    const isDrawerOpen = computed(
+      () => store.getters["UI/isDrawerOpen"]
     );
-
     const classes = computed(() => {
       return {
         active: props.item.isActive,
         back: props.item.isBack,
       };
     });
-
     return {
       icons,
-      openDrawer,
+      isDrawerOpen,
       classes,
     };
   },

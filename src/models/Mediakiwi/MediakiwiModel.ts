@@ -8,7 +8,7 @@ import ProfileModel from "./ProfileModel";
 import ResourceModel from "./ResourceModel";
 import SideNavigationModel from "./SideNavigationModel";
 import SiteModel from "./SiteModel";
-import TopNavigationModel from "./TopNavigationModel";
+import TopNavigationModel from "./NavigationModel";
 import ViewModel from "./ViewModel";
 
 export default interface MediakiwiModel {

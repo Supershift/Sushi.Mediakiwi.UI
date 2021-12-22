@@ -30,7 +30,8 @@ import NavigationMenu from "./NavigationMenu.vue";
 import Profile from "./Profile.vue";
 import Notification from "../notification/Notification.vue";
 import DialogComponent from "../dialog/Dialog.vue";
-import { GetNavigationRequestModel } from "../../models/Mediakiwi/Request/GetNavigationRequestModel";
+import { NavigationTypes } from "../../store/modules/Navigation";
+import { AuthenticationTypes } from "../../store/modules/Authentication";
 
 export default defineComponent({
   name: "NavigationBar",
@@ -42,10 +43,10 @@ export default defineComponent({
   },
   setup() {
     onMounted(() => {
-      store.dispatch("loadTopNavigation");
+      store.dispatch(NavigationTypes.GET_TOP_NAVIGATION, "/");
     });
     const topNavigationItems = computed(
-      () => store.getters.topNavigationItems
+      () => store.getters["Navigation/topNavigationItems"]
     );
     const pageTitle = computed(() =>
       store.getters.page
@@ -58,7 +59,7 @@ export default defineComponent({
         : ""
     );
     function handleSignOut() {
-      store.dispatch("signOut");
+      store.dispatch(AuthenticationTypes.UNAUTHENTICATE);
     }
     return {
       topNavigationItems,

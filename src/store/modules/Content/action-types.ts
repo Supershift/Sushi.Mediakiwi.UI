@@ -1,0 +1,9 @@
+export enum ActionTypes {
+    GET_CONTENT = "GET_CONTENT",
+    SET_CONTENT = "SET_CONTENT",
+    SET_GRIDS = "SET_GRIDS",
+    SET_FOLDERS = "SET_FOLDERS",
+    SET_BUTTONS = "SET_BUTTONS",
+    POST_CONTENT = "POST_CONTENT",
+    SET_PAGE = "SET_PAGE",
+  }

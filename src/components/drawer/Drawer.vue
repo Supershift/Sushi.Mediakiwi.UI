@@ -45,6 +45,7 @@ import {store} from "@/store";
 import SideNavigation from "../side-navigation/SideNavigation.vue";
 import logoS from "../../assets/images/mk-icon.png";
 import logoL from "../../assets/images/mk-logo.png";
+import { UITypes } from "../../store/modules/UI";
 
 export default defineComponent({
   name: "Drawer",
@@ -89,7 +90,7 @@ export default defineComponent({
     );
     function handleToggle() {
       open.value = !open.value;
-      store.dispatch("toggleDrawer");
+      store.dispatch(UITypes.SET_DRAWER_OPEN, open.value);
     }
     return {
       positionCss,

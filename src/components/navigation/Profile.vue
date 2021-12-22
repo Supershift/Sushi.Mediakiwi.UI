@@ -10,7 +10,7 @@
           <img
             :src="profileData.userAvatarUrl"
             class="avatar-image"
-            :alt="profileData.name" />
+            :alt="profileData.userName" />
           <fa
             icon="sort-down"
             class="profile-icon" />
@@ -23,24 +23,26 @@
 <script>
 import {computed, defineComponent} from "vue";
 import {store} from "@/store";
+import { UITypes } from "../../store/modules/UI";
 
 export default defineComponent({
   name: "Profile",
   setup() {
     const breakpointTablet = 986;
     const profileData = computed(
-      () => store.getters.profileData
+      () => store.getters["Authentication/profileData"]
     );
     const brandData = computed(
-      () => store.getters.brandData
+      () => store.getters["Authentication/brandData"]
     );
     const brand = computed(
-      () => store.getters.profileData.company
+      () => store.getters["Authentication/brand"]
     );
     function handleDialogToggle() {
       // Only toggle if the window is small (mobile)
       if (window.innerWidth > breakpointTablet) {
-        store.commit("toggleDialog");
+        const dialog = store.getters["UI/isDialogOpen"];
+        store.dispatch(UITypes.SET_DIALOG_OPEN, !dialog);
       }
     }
     return {

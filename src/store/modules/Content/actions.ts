@@ -1,0 +1,92 @@
+import { ActionTree, ActionContext } from "vuex"
+import { RootState, store } from "../../index"
+import { Mutations } from "./mutations"
+import { ActionTypes } from "./action-types"
+import { contentAPIService } from "@/utils/api-service"
+import { UITypes } from "../UI"
+import { ContentState } from "./index"
+import { MutationTypes } from "./mutation-types"
+import { ButtonModel, GetContentMediakiwiResponseModel, Grid, PageItem } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
+import PageModel from "@/models/PageModel"
+
+type AugmentedActionContext = {
+  commit<K extends keyof Mutations>(
+    key: K,
+    payload: Parameters<Mutations[K]>[1]
+  ): ReturnType<Mutations[K]>
+} & Omit<ActionContext<ContentState, RootState>, "commit">
+
+export interface Actions {
+  [ActionTypes.GET_CONTENT](
+    { commit }: AugmentedActionContext,
+    payload: string
+  ): Promise<void>,
+  [ActionTypes.SET_CONTENT](
+    { commit }: AugmentedActionContext,
+    payload: GetContentMediakiwiResponseModel
+  ): void,
+  [ActionTypes.SET_FOLDERS](
+    { commit }: AugmentedActionContext,
+    payload: PageItem[]
+  ): void,
+  [ActionTypes.SET_GRIDS](
+    { commit }: AugmentedActionContext,
+    payload: Grid[]
+  ): void,
+  [ActionTypes.SET_BUTTONS](
+    { commit }: AugmentedActionContext,
+    payload: ButtonModel[]
+  ): void,
+  [ActionTypes.SET_PAGE](
+    { commit }: AugmentedActionContext,
+    payload: PageModel
+  ): void,
+}
+
+export const actions: ActionTree<ContentState, RootState> & Actions = {
+  [ActionTypes.GET_CONTENT]({ commit }, payload) {
+      const siteID = store.state.currentSiteID;
+      const request = {
+        data: { CurrentSiteID: siteID },
+        url: payload
+      };
+      store.dispatch(UITypes.SET_LOADING, true);
+      return contentAPIService.getContentMediakiwiAPI(request.data, request.url)
+      .then((response) => {
+        // sessionStorage.setItem("content", "true");
+      })
+      .finally(() => {
+        store.dispatch(UITypes.SET_LOADING, false);
+      });
+  },
+  [ActionTypes.POST_CONTENT]({ commit }, payload) {
+    const siteID = store.state.currentSiteID;
+    const request = {
+      data: { CurrentSiteID: siteID },
+      url: payload
+    };
+    store.dispatch(UITypes.SET_LOADING, true);
+    return contentAPIService.postContentMediakiwiAPI(request.data, request.url)
+    .then((response) => {
+      // sessionStorage.setItem("content", "true");
+    })
+    .finally(() => {
+      store.dispatch(UITypes.SET_LOADING, false);
+    });
+  },
+  [ActionTypes.SET_CONTENT]({ commit }, payload) {
+    commit(MutationTypes.SET_CONTENT, payload);
+  },
+  [ActionTypes.SET_GRIDS]({ commit }, payload) {
+    commit(MutationTypes.SET_GRIDS, payload);
+  },
+  [ActionTypes.SET_FOLDERS]({ commit }, payload) {
+    commit(MutationTypes.SET_FOLDERS, payload);
+  },
+  [ActionTypes.SET_BUTTONS]({ commit }, payload) {
+    commit(MutationTypes.SET_BUTTONS, payload);
+  },
+  [ActionTypes.SET_PAGE]({ commit }, payload) {
+    commit(MutationTypes.SET_PAGE, payload);
+  },
+}

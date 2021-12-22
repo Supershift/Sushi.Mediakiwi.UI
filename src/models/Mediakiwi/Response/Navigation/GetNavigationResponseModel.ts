@@ -1,4 +1,4 @@
-import TopNavigationItemModel from "../TopNavigationItemModel";
+import NavigationModel from "../../NavigationModel";
 
 interface NavigationItem {
     href: string;
@@ -9,7 +9,7 @@ interface NavigationItem {
     items: NavigationItem[];
     text: string;
 }
-export interface GetNavigationResponseModel extends TopNavigationItemModel {
+export interface GetNavigationResponseModel extends NavigationModel {
     homeUrl: string;
     items: NavigationItem[];
     logoUrl: string;

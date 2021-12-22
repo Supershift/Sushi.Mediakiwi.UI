@@ -1,4 +1,4 @@
-import { AuthenticateResponseModel } from "./Response/AuthenticateResponseModel";
+import { AuthenticateResponseModel } from "./Response/Authentication/AuthenticateResponseModel";
 
 export default interface ProfileModel extends AuthenticateResponseModel {
   displayName?: string | null;

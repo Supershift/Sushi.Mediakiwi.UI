@@ -17,14 +17,14 @@
             v-if="profileData">
             <div class="avatar">
               <img
-                v-if="profileData.avatarPath"
-                :src="profileData.avatarPath"
+                v-if="profileData.userAvatarUrl"
+                :src="profileData.userAvatarUrl"
                 class="avatar-image"
-                :alt="profileData.name" />
+                :alt="profileData.userName" />
             </div>
             <div class="avatar-info">
-              {{ profileData.fullName }}
-              <sub> {{ profileData.email }} </sub>
+              {{ profileData.userName }}
+              <sub> {{ profileData.userEmail }} </sub>
             </div>
           </div>
         </div>
@@ -46,18 +46,19 @@
 <script>
 import {defineComponent, computed} from "vue";
 import {store} from "@/store";
+import { UITypes } from "../../store/modules/UI";
 export default defineComponent({
   name: "Dailog",
   emits: ["sign-out-clicked"],
   setup(props, context) {
     const profileData = computed(
-      () => store.getters.profileData
+      () => store.getters["Authentication/profileData"]
     );
     const dialog = computed(
-      () => store.getters.dialog
+      () => store.getters["UI/dialog"]
     );
     function handleSignOut() {
-      store.dispatch("toggleDialog");
+      store.dispatch(UITypes.SET_DIALOG_OPEN, true);
       context.emit("sign-out-clicked");
     }
     return {

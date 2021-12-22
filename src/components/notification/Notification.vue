@@ -29,6 +29,7 @@
 import {computed, defineComponent, onMounted} from "vue";
 import { NotificationActionTypes } from "../../utils/utils";
 import {store} from "@/store";
+import { UITypes } from "../../store/modules/UI";
 export default defineComponent({
   name: "Notification",
   props:{
@@ -119,15 +120,15 @@ export default defineComponent({
       return alertColor;
     });
     function hideNotification() {
-      store.commit("toggleNotification", false);
+      store.dispatch(UITypes.TOGGLE_NOTIFICATION, false);
     }
     function handleClick() {
-      store.commit("toggleNotification", false);
+      store.dispatch(UITypes.TOGGLE_NOTIFICATION, false);
       context.emit("notification-action", notification.value.actionText);
     }
     onMounted(() => {
       setTimeout(() => {
-        store.commit("toggleNotification", false);
+        store.dispatch(UITypes.SET_NOTIFICATION, false);
       }, waitForFadeOut);
     });
     return {

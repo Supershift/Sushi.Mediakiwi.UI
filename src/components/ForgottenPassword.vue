@@ -33,9 +33,10 @@ import FormErrors from "./form/FormErrors.vue";
 import MessageModel from "../models/MessageModel";
 import InputModel from "../models/InputModel";
 import ButtonModel from "../models/ButtonModel";
-import { ResetPasswordRequestModel } from "../models/Mediakiwi/Request/ResetPasswordRequestModel";
+import { ResetPasswordRequestModel } from "../models/Mediakiwi/Request/Authentication/ResetPasswordRequestModel";
 import { store } from "../store";
 import { fieldMixins } from "./form";
+import { AuthenticationTypes } from "../store/modules/Authentication";
 
 export default defineComponent({
   name: "ForgottenPassword",
@@ -74,7 +75,7 @@ export default defineComponent({
     });
     function handleReset() {
       if (email.value && validEmail.value) {
-        store.dispatch("resetPassword",  { emailAddress: email.value } as ResetPasswordRequestModel );
+        store.dispatch(AuthenticationTypes.RESET_PASSWORD,  { emailAddress: email.value } as ResetPasswordRequestModel );
       }
     }
     function handleTextChanged(value: string, fieldName: string) {

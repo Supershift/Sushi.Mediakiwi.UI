@@ -17,13 +17,14 @@
 import {ButtonModel} from "@/models/Mediakiwi/ButtonModel";
 import {ButtonRequestMethodType} from "@/models/Mediakiwi/ButtonRequestMethodType";
 import {ButtonTargetType} from "@/models/Mediakiwi/ButtonTargetType";
-import { apiService } from "@/utils/api-service";
 import {mediakiwiLogic} from "@/utils/mediakiwiLogic";
 import {
   computed,
   defineComponent,
   PropType,
 } from "vue";
+import { store } from "../store";
+import { ContentTypes } from "../store/modules/Content";
 import FormButton from "./form/FormButton.vue";
 
 export default defineComponent({
@@ -51,18 +52,20 @@ export default defineComponent({
           mediakiwiLogic.getMediakiwiModelFromStore(
             value.propertyName
           );
-
-        switch (value.requestMethod) {
-          case ButtonRequestMethodType.put:
-            apiService.putMediakiwiAPI(request);
-            break;
-          case ButtonRequestMethodType.delete:
-            apiService.deleteMediakiwiAPI(request);
-            break;
-          default:
-            apiService.postMediakiwiAPI(request);
-            break;
+        if (request) {
+          store.dispatch(ContentTypes.POST_CONTENT, "/");
         }
+        // switch (value.requestMethod) {
+        //   case ButtonRequestMethodType.put:
+        //     apiService.putMediakiwiAPI(request);
+        //     break;
+        //   case ButtonRequestMethodType.delete:
+        //     apiService.deleteMediakiwiAPI(request);
+        //     break;
+        //   default:
+        //     apiService.postMediakiwiAPI(request);
+        //     break;
+        // }
       }
     }
     function buttonPosition(button: ButtonModel) {
