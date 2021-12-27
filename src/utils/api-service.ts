@@ -8,7 +8,6 @@ import axios from "axios";
 import { NotificationActionTypes } from "./utils";
 import { AuthenticationTypes } from "@/store/modules/Authentication";
 import { UITypes } from "@/store/modules/UI";
-import { ContentTypes }  from "@/store/modules/Content";
 import { GetContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 import { GetNavigationResponseModel } from "@/models/Mediakiwi/Response/Navigation/GetNavigationResponseModel";
 import { GetSitesResponseModel } from "@/models/Mediakiwi/Response/Navigation/GetSitesResponseModel";

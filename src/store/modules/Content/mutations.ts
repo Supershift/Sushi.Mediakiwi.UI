@@ -1,7 +1,7 @@
 import { MutationTypes } from "./mutation-types"
 import { MutationTree } from "vuex"
 import { ContentState } from "./index"
-import { ButtonModel, Field, GetContentMediakiwiResponseModel, Grid, PageItem } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
+import { ButtonModel, Field, GetContentMediakiwiResponseModel, Grid } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
 import { mediakiwiLogic } from "@/utils/mediakiwiLogic"
 import PageModel from "@/models/PageModel"
 import ResourceModel from "@/models/Mediakiwi/ResourceModel"
@@ -15,7 +15,7 @@ export type Mutations<S = ContentState> = {
   [MutationTypes.SET_PAGE](state: S, payload: PageModel): void,
   [MutationTypes.SET_FIELDS](state: S, payload: Field[]): void,
   [MutationTypes.SET_RESOURCES](state: S, payload: ResourceModel[]): void,
-  [MutationTypes.SET_POST_CONTENT](state: S, payload: PostContentMediakiwiResponseModel|any): void,
+  [MutationTypes.SET_POST_CONTENT](state: S, payload: PostContentMediakiwiResponseModel|unknown): void,
 }
 
 export const mutations: MutationTree<ContentState> & Mutations = {
