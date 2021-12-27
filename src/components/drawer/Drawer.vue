@@ -48,7 +48,7 @@ import logoL from "../../assets/images/mk-logo.png";
 import { UITypes } from "../../store/modules/UI";
 
 export default defineComponent({
-  name: "Drawer",
+  name: "DrawerComponent",
   props: {
     toggler: {
       type: Boolean,

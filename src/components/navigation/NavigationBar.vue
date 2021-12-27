@@ -24,13 +24,12 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted} from "vue";
+import {computed, defineComponent} from "vue";
 import {store} from "@/store";
 import NavigationMenu from "./NavigationMenu.vue";
 import Profile from "./Profile.vue";
 import Notification from "../notification/Notification.vue";
 import DialogComponent from "../dialog/Dialog.vue";
-import { NavigationTypes } from "../../store/modules/Navigation";
 import { AuthenticationTypes } from "../../store/modules/Authentication";
 
 export default defineComponent({
@@ -42,9 +41,6 @@ export default defineComponent({
     DialogComponent,
   },
   setup() {
-    onMounted(() => {
-      store.dispatch(NavigationTypes.GET_TOP_NAVIGATION, "/");
-    });
     const topNavigationItems = computed(
       () => store.getters["Navigation/topNavigationItems"]
     );

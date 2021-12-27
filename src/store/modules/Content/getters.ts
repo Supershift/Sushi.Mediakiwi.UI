@@ -1,7 +1,7 @@
 import { GetterTree } from "vuex";
 import { ContentState } from "./index";
 import { RootState } from "../../index";
-import { ButtonModel, Field, GetContentMediakiwiResponseModel, Grid, PageItem } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+import { ButtonModel, Field, GetContentMediakiwiResponseModel, Grid } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
 
 export type Getters = {

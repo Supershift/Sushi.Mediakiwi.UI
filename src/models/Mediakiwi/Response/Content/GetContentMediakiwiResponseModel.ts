@@ -72,12 +72,6 @@ export interface ButtonModel {
   triggerSaveEvent: boolean,
   isPrimary: boolean
 }
-export interface Form {
-  className: string;
-  fields?: Field[];
-  buttons?: ButtonModel[],
-  title: string
-}
 
 export interface RowItem {
   value: string,
@@ -206,6 +200,13 @@ export interface Field {
   isMandatory: boolean,
   maxLength: number,
   isAutoPostback: boolean
+}
+
+export interface Form {
+  className: string;
+  fields?: Field[];
+  buttons?: ButtonModel[],
+  title: string
 }
 
 export interface GetContentMediakiwiResponseModel {

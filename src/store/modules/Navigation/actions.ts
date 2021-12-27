@@ -34,7 +34,7 @@ export interface Actions {
 }
 
 export const actions: ActionTree<NavigationState, RootState> & Actions = {
-  [ActionTypes.GET_TOP_NAVIGATION]({  }, payload) {
+  [ActionTypes.GET_TOP_NAVIGATION]({ commit }, payload) {
       const siteID = store.state.currentSiteID;
       const request = {
         data: { CurrentSiteID: siteID },
@@ -43,13 +43,13 @@ export const actions: ActionTree<NavigationState, RootState> & Actions = {
       store.dispatch(UITypes.SET_LOADING, true);
       return navigationAPIService.getTopNavigationMediakiwiAPI(request.data, request.url)
       .then((response) => {
-        sessionStorage.setItem("topNav", "true");
+       commit(MutationTypes.SET_TOP_NAVIGATION, response);
       })
       .finally(() => {
         store.dispatch(UITypes.SET_LOADING, false);
       });
   },
-  [ActionTypes.GET_SIDE_NAVIGATION]({  }, payload) {
+  [ActionTypes.GET_SIDE_NAVIGATION]({ commit  }, payload) {
     const siteID = store.state.currentSiteID;
     const request = {
       data: { CurrentSiteID: siteID },
@@ -58,13 +58,13 @@ export const actions: ActionTree<NavigationState, RootState> & Actions = {
     store.dispatch(UITypes.SET_LOADING, true);
     return navigationAPIService.getSideNavigationMediakiwiAPI(request.data, request.url)
     .then((response) => {
-      sessionStorage.setItem("sideNav", "true");
+      commit(MutationTypes.SET_SIDE_NAVIGATION, response);
     })
     .finally(() => {
       store.dispatch(UITypes.SET_LOADING, false);
     });
   },
-  [ActionTypes.GET_SITES]({  }, payload) {
+  [ActionTypes.GET_SITES]({ commit }, payload) {
     const siteID = store.state.currentSiteID;
     const request = {
       data: { CurrentSiteID: siteID },
@@ -73,7 +73,7 @@ export const actions: ActionTree<NavigationState, RootState> & Actions = {
     store.dispatch(UITypes.SET_LOADING, true);
     return navigationAPIService.getSitesMediakiwiAPI(request.data, request.url)
     .then((response) => {
-      sessionStorage.setItem("sites", "true");
+      commit(MutationTypes.SET_SITES, response.items);
     })
     .finally(() => {
       store.dispatch(UITypes.SET_LOADING, false);

@@ -5,7 +5,7 @@ import { ButtonModel, Field, GetContentMediakiwiResponseModel, Grid, PageItem } 
 import { mediakiwiLogic } from "@/utils/mediakiwiLogic"
 import PageModel from "@/models/PageModel"
 import ResourceModel from "@/models/Mediakiwi/ResourceModel"
-import { PostContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/PostContentMediakiwiRequestModel"
+import { PostContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/PostContentMediakiwiResponseModel"
 
 export type Mutations<S = ContentState> = {
   [MutationTypes.SET_CONTENT](state: S, payload: GetContentMediakiwiResponseModel): void,
@@ -15,7 +15,7 @@ export type Mutations<S = ContentState> = {
   [MutationTypes.SET_PAGE](state: S, payload: PageModel): void,
   [MutationTypes.SET_FIELDS](state: S, payload: Field[]): void,
   [MutationTypes.SET_RESOURCES](state: S, payload: ResourceModel[]): void,
-  [MutationTypes.POST_CONTENT](state: S, payload: string): void,
+  [MutationTypes.SET_POST_CONTENT](state: S, payload: PostContentMediakiwiResponseModel): void,
 }
 
 export const mutations: MutationTree<ContentState> & Mutations = {
@@ -55,9 +55,11 @@ export const mutations: MutationTree<ContentState> & Mutations = {
         state.resources = payload;
       }
     },
-    [MutationTypes.POST_CONTENT](state: ContentState, payload: string): void {
+    [MutationTypes.SET_POST_CONTENT](state: ContentState, payload: PostContentMediakiwiResponseModel): void {
       if (payload) {
-        mediakiwiLogic.getMediakiwiModelFromStore(payload);
+        if (state.content) {
+          state.content.list.forms = payload.forms
+        }
       }
     },
 }

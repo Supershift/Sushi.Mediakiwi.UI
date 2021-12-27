@@ -7,10 +7,7 @@ import PageModel from "@/models/PageModel";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "@vue/runtime-dom";
 import MediakiwiModalWrapper from "./../components/modal/MediakiwiModalWrapper.vue";
-import { AuthenticationTypes } from "@/store/modules/Authentication";
-import { NavigationTypes } from "@/store/modules/Navigation";
 import { ContentTypes } from "@/store/modules/Content";
-import { PostContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/PostContentMediakiwiRequestModel";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,7 +23,6 @@ export const mediakiwiLogic = {
   },
   /** Binds the data from the Mediakiwi Response to the vuex store  */
   putResponseToStore(response: MediakiwiResponseModel) {
-    // store.dispatch(NavigationTypes.SET_SITE, response.currentSiteID);
 
     // Create the page model
     const localPage: PageModel = {
@@ -35,9 +31,7 @@ export const mediakiwiLogic = {
       settingsUrl: response.list?.settingsUrl
     }
     store.dispatch(ContentTypes.SET_PAGE, localPage);
-    //store.dispatch(AuthenticationTypes.SET_PROFILE, response.profile);
-    // store.dispatch(NavigationTypes.SET_TOP_NAVIGATION, response.topNavigation);
-    // store.dispatch(NavigationTypes.SET_SIDE_NAVIGATION, response.sideNavigation);
+    
     if (response.list && response.list.grids) {
       store.dispatch(ContentTypes.SET_GRIDS, response.list?.grids);
     }
@@ -54,13 +48,14 @@ export const mediakiwiLogic = {
     // store.dispatch("setViews", response.views);
   },
   /** Creates a @type {PostMediakiwiRequestModel} from the altered data in the vuex store */
-  getMediakiwiModelFromStore(url: string) {
+  getMediakiwiRequestForButtonActions(url: string): PostMediakiwiRequestModel {
     const siteID = store.getters["navigation/currentSiteId"];
     const request: PostMediakiwiRequestModel = {
       CurrentSiteID: siteID,
       url
     }
-    store.dispatch(ContentTypes.POST_CONTENT, request);
+    return request;
+    //store.dispatch(ContentTypes.POST_CONTENT, request);
   },
   /** Fill the sublist select based on the referId */
   fillSublistSelect(referId: string, fields: FieldModel[]) {

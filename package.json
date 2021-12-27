@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve --mode development",
     "build": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint",
-    "start": "vue-cli-service serve --mode development -o"
+    "start": "vue-cli-service serve --mode development"
   },
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^5.15.4",
@@ -24,6 +24,7 @@
     "js-cookies": "^1.0.4",
     "jwt-decode": "^3.1.2",
     "postcss": "^8.4.4",
+    "secure-ls": "^1.2.6",
     "vue": "^3.0.0",
     "vue-mutation-observer": "^0.1.2",
     "vue-router": "^4.0.0-0",

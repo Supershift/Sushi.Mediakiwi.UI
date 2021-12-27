@@ -11,12 +11,5 @@ export type Getters = {
 export const getters: GetterTree<AuthenticationState, RootState> & Getters = {
     profileData: (state) => state.profileData,
     apiKey: (state) => state.apiKey,
-    isLoggedIn: (state) => {
-        const loginStatus = sessionStorage.getItem("sushi_mediakiwi_ui_loggedin");
-        if (state.isLoggedIn && loginStatus) {
-            return true;
-        } else {
-            return false;
-        }
-    },
+    isLoggedIn: (state) => state.isLoggedIn,
 };

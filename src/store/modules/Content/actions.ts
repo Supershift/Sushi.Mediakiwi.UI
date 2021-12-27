@@ -6,9 +6,10 @@ import { contentAPIService } from "@/utils/api-service"
 import { UITypes } from "../UI"
 import { ContentState } from "./index"
 import { MutationTypes } from "./mutation-types"
-import { ButtonModel, Field, GetContentMediakiwiResponseModel, Grid, PageItem } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
+import { ButtonModel, Field, GetContentMediakiwiResponseModel, Grid } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
 import PageModel from "@/models/PageModel"
 import ResourceModel from "@/models/Mediakiwi/ResourceModel"
+import { PostContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/PostContentMediakiwiResponseModel"
 
 type AugmentedActionContext = {
   commit<K extends keyof Mutations>(
@@ -50,10 +51,18 @@ export interface Actions {
     { commit }: AugmentedActionContext,
     payload: ResourceModel[]
   ): void,
+  [ActionTypes.POST_CONTENT](
+    { commit }: AugmentedActionContext,
+    payload: string
+  ): Promise<void>,
+  [ActionTypes.SET_POST_CONTENT](
+    { commit }: AugmentedActionContext,
+    payload: PostContentMediakiwiResponseModel
+  ): void,
 }
 
 export const actions: ActionTree<ContentState, RootState> & Actions = {
-  [ActionTypes.GET_CONTENT]({  }, payload) {
+  [ActionTypes.GET_CONTENT]({ commit }, payload) {
       const siteID = store.state.currentSiteID;
       const request = {
         data: { CurrentSiteID: siteID },
@@ -61,14 +70,14 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
       };
       store.dispatch(UITypes.SET_LOADING, true);
       return contentAPIService.getContentMediakiwiAPI(request.data, request.url)
-      .then(() => {
-        // sessionStorage.setItem("content", "true");
+      .then((response) => {
+        commit(MutationTypes.SET_CONTENT, response);
       })
       .finally(() => {
         store.dispatch(UITypes.SET_LOADING, false);
       });
   },
-  [ActionTypes.POST_CONTENT]({  }, payload) {
+  [ActionTypes.POST_CONTENT]({ commit }, payload) {
     const siteID = store.state.currentSiteID;
     const request = {
       data: { CurrentSiteID: siteID },
@@ -78,6 +87,7 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
     return contentAPIService.postContentMediakiwiAPI(request.data, request.url)
     .then(() => {
       // sessionStorage.setItem("content", "true");
+      //commit(MutationTypes.SET_POST_CONTENT, response);
     })
     .finally(() => {
       store.dispatch(UITypes.SET_LOADING, false);
@@ -103,5 +113,8 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
   },
   [ActionTypes.SET_RESOURCES]({ commit }, payload) {
     commit(MutationTypes.SET_RESOURCES, payload);
+  },
+  [ActionTypes.SET_POST_CONTENT]({ commit }, payload) {
+    commit(MutationTypes.SET_POST_CONTENT, payload);
   },
 }

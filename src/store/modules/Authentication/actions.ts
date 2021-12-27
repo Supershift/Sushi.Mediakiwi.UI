@@ -1,6 +1,6 @@
 import { ActionTree, ActionContext } from "vuex"
 import { RootState, store } from "../../index"
-import { AuthenticationState } from "./index"
+import { AuthenticationState, AuthenticationTypes } from "./index"
 import { Mutations } from "./mutations"
 import { ActionTypes } from "./action-types"
 import { authenticationAPIService } from "@/utils/api-service"
@@ -24,8 +24,7 @@ export interface Actions {
     payload: AuthenticateRequestModel
   ): Promise<void>,
   [ActionTypes.UNAUTHENTICATE](
-    { commit }: AugmentedActionContext,
-    payload: string
+    { commit }: AugmentedActionContext
   ): Promise<void>,
   [ActionTypes.RESET_PASSWORD](
     { commit }: AugmentedActionContext,
@@ -35,42 +34,38 @@ export interface Actions {
     { commit }: AugmentedActionContext,
     payload: AuthenticateResponseModel
   ): void,
-  [ActionTypes.TOGGLE_LOGIN](
-    { commit }: AugmentedActionContext,
-    payload: boolean
-  ): void,
 }
 
 export const actions: ActionTree<AuthenticationState, RootState> & Actions = {
-  [ActionTypes.AUTHENTICATE]({ }, payload) {
+  [ActionTypes.AUTHENTICATE]({ commit }, payload) {
     store.dispatch(UITypes.SET_LOADING, true);
     return authenticationAPIService.signInMediakiwiAPI(payload)
     .then(() => {
-      router.push("/");
+      commit(MutationTypes.AUTHENTICATE, true)
     })
     .finally(() => {
       store.dispatch(UITypes.SET_LOADING, false);
     });
   },
-  [ActionTypes.UNAUTHENTICATE]({ }, payload) {
+  [ActionTypes.UNAUTHENTICATE]({ commit }) {
+    const originUrl = router.currentRoute.value.fullPath;
     store.dispatch(UITypes.SET_LOADING, true);
-      return authenticationAPIService.signOutMediakiwiAPI(payload)
+      return authenticationAPIService.signOutMediakiwiAPI(originUrl)
       .then(() => {
-        sessionStorage.clear();
-        localStorage.clear();
-        router.push("/login");
+        commit(MutationTypes.UNAUTHENTICATE, true);
+        commit(MutationTypes.SET_PROFILE, null);
       })
       .finally(() => {
         store.dispatch(UITypes.SET_LOADING, false);
       });
   },
-  [ActionTypes.RESET_PASSWORD]({ }, payload) {
+  [ActionTypes.RESET_PASSWORD]({ commit }, payload) {
     const waitforRedirect = 4000;
     store.dispatch(UITypes.SET_LOADING, true);
     return authenticationAPIService.resetPasswordMediakiwiAPI(payload)
     .then(() => {
       setTimeout(() => {
-        router.push("/");
+        commit(MutationTypes.RESET_PASSWORD, true)
       }, waitforRedirect);
     })
     .finally(() => {
@@ -79,8 +74,5 @@ export const actions: ActionTree<AuthenticationState, RootState> & Actions = {
   },
   [ActionTypes.SET_PROFILE]({ commit }, payload) {
     commit(MutationTypes.SET_PROFILE, payload);
-  },
-  [ActionTypes.TOGGLE_LOGIN]({ commit }, payload) {
-    commit(MutationTypes.TOGGLE_LOGIN, payload);
-  },
+  }
 }

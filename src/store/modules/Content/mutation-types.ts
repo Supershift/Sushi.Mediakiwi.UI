@@ -6,5 +6,5 @@ export enum MutationTypes {
      SET_PAGE = "SET_PAGE",
      SET_FIELDS = "SET_FIELDS",
      SET_RESOURCES = "SET_RESOURCES",
-     POST_CONTENT = "POST_CONTENT",
+     SET_POST_CONTENT = "SET_POST_CONTENT",
   }

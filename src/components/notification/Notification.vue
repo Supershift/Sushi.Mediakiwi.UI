@@ -31,7 +31,7 @@ import { NotificationActionTypes } from "../../utils/utils";
 import {store} from "@/store";
 import { UITypes } from "../../store/modules/UI";
 export default defineComponent({
-  name: "Notification",
+  name: "NotificationComponent",
   props:{
     position: {
       type: String,

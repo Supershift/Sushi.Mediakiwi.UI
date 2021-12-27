@@ -47,8 +47,9 @@
 import {defineComponent, computed} from "vue";
 import {store} from "@/store";
 import { AuthenticationTypes } from "../../store/modules/Authentication";
+import { UITypes } from "../../store/modules/UI";
 export default defineComponent({
-  name: "Dailog",
+  name: "DailogComponent",
   emits: ["sign-out-clicked"],
   setup(props, context) {
     const profileData = computed(
@@ -58,7 +59,8 @@ export default defineComponent({
       () => store.getters["UI/dialog"]
     );
     function handleSignOut() {
-      store.dispatch(AuthenticationTypes.UNAUTHENTICATE, "/");
+      store.dispatch(AuthenticationTypes.UNAUTHENTICATE);
+      store.dispatch(UITypes.SET_DIALOG_OPEN, false);
       context.emit("sign-out-clicked");
     }
     return {

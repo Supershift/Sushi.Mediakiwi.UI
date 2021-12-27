@@ -26,7 +26,7 @@ import {store} from "@/store";
 import { UITypes } from "../../store/modules/UI";
 
 export default defineComponent({
-  name: "Profile",
+  name: "ProfileComponent",
   setup() {
     const breakpointTablet = 986;
     const profileData = computed(

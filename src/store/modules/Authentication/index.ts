@@ -13,7 +13,6 @@ export interface AuthenticationState {
 
 export enum AuthenticationTypes {
     SET_PROFILE = "Authentication/SET_PROFILE",
-    TOGGLE_LOGIN = "Authentication/TOGGLE_LOGIN",
     AUTHENTICATE = "Authentication/AUTHENTICATE",
     UNAUTHENTICATE = "Authentication/UNAUTHENTICATE",
     RESET_PASSWORD = "Authentication/RESET_PASSWORD",

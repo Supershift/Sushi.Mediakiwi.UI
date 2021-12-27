@@ -50,7 +50,7 @@ import Notification from "./notification/Notification.vue";
 import { AuthenticationTypes } from "../store/modules/Authentication";
 
 export default defineComponent({
-  name: "Login",
+  name: "LoginComponent",
   mixins: [ fieldMixins],
   components: {
     FormErrors,

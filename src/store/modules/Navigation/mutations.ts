@@ -5,11 +5,13 @@ import { GetNavigationResponseModel } from "@/models/Mediakiwi/Response/Navigati
 import { NavigationState } from "./index"
 import { ContentTypes } from "../Content"
 import { GetContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/GetContentMediakiwiRequestModel"
+import { GetSitesResponseModel, SiteItem } from "@/models/Mediakiwi/Response/Navigation/GetSitesResponseModel"
 
 export type Mutations<S = NavigationState> = {
   [MutationTypes.SET_TOP_NAVIGATION](state: S, payload: GetNavigationResponseModel): void,
   [MutationTypes.SET_SIDE_NAVIGATION](state: S, payload: GetNavigationResponseModel): void,
   [MutationTypes.SET_SITE](state: S, payload: number): void,
+  [MutationTypes.SET_SITES](state: S, payload: SiteItem[]): void,
 }
 
 export const mutations: MutationTree<NavigationState> & Mutations = {
@@ -28,5 +30,10 @@ export const mutations: MutationTree<NavigationState> & Mutations = {
         state.currentSiteID = payload;
         store.dispatch(ContentTypes.GET_CONTENT, { CurrentSiteID: payload } as GetContentMediakiwiRequestModel);
       }
-    }
+    },
+    [MutationTypes.SET_SITES](state: NavigationState, payload: SiteItem[]): void {
+      if (payload) {
+        state.availableSites = payload
+      }
+    },
 }

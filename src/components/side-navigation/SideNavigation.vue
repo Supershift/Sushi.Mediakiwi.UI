@@ -19,11 +19,9 @@
 import {
   computed,
   defineComponent,
-  onMounted,
 } from "vue";
 import SideNavigationItem from "./SideNavigationItem.vue";
 import {store} from "@/store";
-import { NavigationTypes } from "../../store/modules/Navigation";
 import { AuthenticationTypes } from "../../store/modules/Authentication";
 export default defineComponent({
   name: "SideNavigation",
@@ -36,9 +34,6 @@ export default defineComponent({
   },
   components: { SideNavigationItem },
   setup(props) {
-    onMounted(() => {
-      store.dispatch(NavigationTypes.GET_SIDE_NAVIGATION, "/");
-    });
     const isDrawerOpen = computed(
       () => store.getters["UI/isDrawerOpen"],
     );

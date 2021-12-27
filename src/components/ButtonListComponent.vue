@@ -45,7 +45,7 @@ export default defineComponent({
     ]);
     function handleClicked(value: ButtonModel) {
       if (value) {
-      mediakiwiLogic.getMediakiwiModelFromStore(value.propertyName);
+      mediakiwiLogic.getMediakiwiRequestForButtonActions(value.propertyName);
         // switch (value.requestMethod) {
         //   case ButtonRequestMethodType.put:
         //     apiService.putMediakiwiAPI(request);

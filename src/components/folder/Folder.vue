@@ -24,6 +24,7 @@ import {
 } from "vue";
 
 export default defineComponent({
+  name: "FolderComponent",
   props: {
     folder: {
       type: Object as PropType<FolderItemModel>,

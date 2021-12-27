@@ -1,8 +1,7 @@
 import { MutationTypes } from "./mutation-types"
 import { MutationTree } from "vuex"
-import { RootState } from "../../index"
 import NotificationModel from "@/models/Mediakiwi/NotificationModel"
-import { UIState } from "."
+import { UIState } from "./index"
 
 export type Mutations<S = UIState> = {
   [MutationTypes.SET_DRAWER_OPEN](state: S, payload: boolean): void,

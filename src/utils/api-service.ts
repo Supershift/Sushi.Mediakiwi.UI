@@ -8,9 +8,10 @@ import axios from "axios";
 import { NotificationActionTypes } from "./utils";
 import { AuthenticationTypes } from "@/store/modules/Authentication";
 import { UITypes } from "@/store/modules/UI";
-import { NavigationTypes } from "@/store/modules/Navigation";
 import { ContentTypes }  from "@/store/modules/Content";
-import router from "@/router";
+import { GetContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+import { GetNavigationResponseModel } from "@/models/Mediakiwi/Response/Navigation/GetNavigationResponseModel";
+import { GetSitesResponseModel } from "@/models/Mediakiwi/Response/Navigation/GetSitesResponseModel";
 
 export const serverCodes = {
   OK: 200,
@@ -24,12 +25,16 @@ export const serverCodes = {
   GATEWAY_TIMEOUT: 504
 }
 
+const CancelToken = axios.CancelToken;
+const cancelSource = CancelToken.source();
+
 // Interceptor for handling calls to the API
 const axiosInstance = axios.create({
   baseURL: `${process.env.VUE_APP_BASE_API}`,
   headers: {
     "Content-Type": "application/json",
-  }
+  },
+  cancelToken: cancelSource.token
 });
 
 export const authenticationAPIService = {
@@ -44,7 +49,6 @@ export const authenticationAPIService = {
         .then((response) => {
           if (response.status === serverCodes.OK) {   
             store.dispatch(UITypes.SET_NOTIFICATION, { message: "Signed In!", actionType: NotificationActionTypes.SUCCESS, actionText: "OK" });         
-            store.dispatch(AuthenticationTypes.TOGGLE_LOGIN, true);
             store.dispatch(AuthenticationTypes.SET_PROFILE, response.data);
           }
           resolve(response);
@@ -59,6 +63,10 @@ export const authenticationAPIService = {
           }
           reject(err);
         })
+    }).catch((thrown) => {
+      if (axios.isCancel(thrown)) {
+        store.dispatch(UITypes.SET_NOTIFICATION, { message: "Request Canceled", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
+      }
     });
   },
   signOutMediakiwiAPI(url: string) {
@@ -70,7 +78,7 @@ export const authenticationAPIService = {
       axiosInstance.post("authentication/LogOut", null, config)
         .then((response) => {
           if (response.status === serverCodes.OK) {
-            store.dispatch(AuthenticationTypes.UNAUTHENTICATE, false);
+            // store.dispatch(AuthenticationTypes.TOGGLE_LOGIN, false);
           }
           resolve(response)
         })
@@ -83,15 +91,19 @@ export const authenticationAPIService = {
             store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
           }
           reject(err);
-        })
-    })
+      })
+    }).catch((thrown) => {
+      if (axios.isCancel(thrown)) {
+        store.dispatch(UITypes.SET_NOTIFICATION, { message: "Request Canceled", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
+      }
+    });
   },
   resetPasswordMediakiwiAPI(request: ResetPasswordRequestModel) {
     const requestBody: ResetPasswordRequestModel = {
       ...request,
     };
     return new Promise((resolve, reject) => {
-      axiosInstance.post("authentication/ResetPassword", requestBody, { withCredentials: true })
+      axiosInstance.post("authentication/ResetPassword", requestBody)
         .then((response) => {
           if (response.status === serverCodes.OK) {
             store.dispatch(UITypes.SET_NOTIFICATION, { message: "Your password has been reset successfully", actionType: NotificationActionTypes.SUCCESS, actionText: "OK" });
@@ -113,19 +125,18 @@ export const authenticationAPIService = {
 }
 export const navigationAPIService = {
   // Navigation
-  getTopNavigationMediakiwiAPI(request: GetNavigationRequestModel, url: string) {
+  getTopNavigationMediakiwiAPI(request: GetNavigationRequestModel, url: string): Promise<GetNavigationResponseModel> {
     const config = {
       params: request,
       withCredentials: true,
       headers: { "original-url": url } 
     };
     return new Promise((resolve, reject) => {
-      axiosInstance.get("navigation/GetTopnavigation", config)
+      axiosInstance.get<GetNavigationResponseModel>("navigation/GetTopnavigation", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
-          store.dispatch(NavigationTypes.SET_TOP_NAVIGATION, response.data);
+          resolve(response.data);
         }
-        resolve(response);
       })
       .catch((err) => {
         if (err.response.status === serverCodes.UNAUTHORIZED || 
@@ -139,19 +150,18 @@ export const navigationAPIService = {
       })
     });
   },
-  getSideNavigationMediakiwiAPI(request: GetNavigationRequestModel, url: string) {
+  getSideNavigationMediakiwiAPI(request: GetNavigationRequestModel, url: string): Promise<GetNavigationResponseModel> {
     const config = {
       params: request,
       withCredentials: true,
       headers: { "original-url": url }
     };
     return new Promise((resolve, reject) => {
-      axiosInstance.get("navigation/GetSidenavigation", config)
+      axiosInstance.get<GetNavigationResponseModel>("navigation/GetSidenavigation", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
-          store.dispatch(NavigationTypes.SET_SIDE_NAVIGATION, response.data);
+          resolve(response.data);
         }
-        resolve(response);
       })
       .catch((err) => {
         if (err.response.status === serverCodes.UNAUTHORIZED ||
@@ -165,19 +175,18 @@ export const navigationAPIService = {
       })
     });
   },
-  getSitesMediakiwiAPI(request: GetNavigationRequestModel, url: string) {
+  getSitesMediakiwiAPI(request: GetNavigationRequestModel, url: string): Promise<GetSitesResponseModel> {
     const config = {
       params: request,
       withCredentials: true,
       headers: { "original-url": url }
     };
     return new Promise((resolve, reject) => {
-      axiosInstance.get("navigation/GetSites", config)
+      axiosInstance.get<GetSitesResponseModel>("navigation/GetSites", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
-          store.dispatch(NavigationTypes.SET_SITE, response.data);
+          resolve(response.data);
         }
-        resolve(response);
       })
       .catch((err) => {
         if (err.response.status === serverCodes.UNAUTHORIZED ||
@@ -194,19 +203,18 @@ export const navigationAPIService = {
 }
 export const contentAPIService = {
   // Content 
-  getContentMediakiwiAPI(request: GetContentMediakiwiRequestModel, url: string) {
+  getContentMediakiwiAPI(request: GetContentMediakiwiRequestModel, url: string) : Promise<GetContentMediakiwiResponseModel> {
     const config = {
       params: request,
       withCredentials: true,
       headers: { "original-url": url }
     };
     return new Promise((resolve, reject) => {
-      axiosInstance.get("content/GetContent", config)
+      axiosInstance.get<GetContentMediakiwiResponseModel>("content/GetContent", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
-          store.dispatch(ContentTypes.SET_CONTENT, response.data);
-        }
-        resolve(response);
+          resolve(response.data);
+        } 
       })
       .catch((err) => {        
         if (err.response.status === serverCodes.UNAUTHORIZED ||
@@ -222,7 +230,6 @@ export const contentAPIService = {
   },
   postContentMediakiwiAPI(request: PostContentMediakiwiRequestModel, url: string) {
     const config = {
-      data: request,
       withCredentials: true,
       headers: { "original-url": url }
     };
@@ -230,7 +237,7 @@ export const contentAPIService = {
       axiosInstance.post("content/PostContent", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
-          store.dispatch(ContentTypes.SET_CONTENT, response.data);
+          store.dispatch(ContentTypes.SET_POST_CONTENT, response.data);
         }
         resolve(response);
       })

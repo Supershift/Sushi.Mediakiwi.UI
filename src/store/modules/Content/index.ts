@@ -1,5 +1,5 @@
 import ResourceModel from "@/models/Mediakiwi/ResourceModel";
-import { GetContentMediakiwiResponseModel, Grid, PageItem, ButtonModel, Field } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+import { GetContentMediakiwiResponseModel, Grid, ButtonModel, Field } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 import PageModel from "@/models/PageModel";
 import { RootState } from "@/store";
 import { Module } from "vuex";
@@ -27,6 +27,7 @@ export enum ContentTypes {
   SET_PAGE = "Content/SET_PAGE",
   SET_FIELDS = "Content/SET_FIELDS",
   SET_RESOURCES = "Content/SET_RESOURCES",
+  SET_POST_CONTENT = "Content/SET_POST_CONTENT"
 }
 
 export const Content: Module<ContentState, RootState> = {

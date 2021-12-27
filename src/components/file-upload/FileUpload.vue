@@ -55,6 +55,7 @@ export default defineComponent({
       loading: false,
       uploadErrors: 0,
       errorMessage: "",
+      response: null,
       paramName: "file", // The name that will be used to transfer the file
       maxFilesize: 300000000,
       customSubmitButton: {
@@ -84,14 +85,21 @@ export default defineComponent({
         }
         this.errorMessage = messages;
       }
+      else{
+        if (file) {
+          let messages = mess;
+          response = messages;
+        }
+      }
       this.uploadErrors++;
       this.$refs.myDropzone.removeAllFiles();
       this.loading = false;
     },
     onSuccessUpload(file, response) {
       this.loading = false;
-      // console.log(response);
-      // console.log(file);
+      if (file) {
+        this.response = response;
+      }
       this.loading = false;
     },
     post() {

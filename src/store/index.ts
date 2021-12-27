@@ -8,6 +8,7 @@ import  {Authentication}  from "./modules/Authentication";
 import {  UI } from "./modules/UI";
 import { Content } from "./modules/Content";
 import createPersistedState from "vuex-persistedstate";
+import SecureLS from "secure-ls";
 
 
 // define your typings for the store state
@@ -26,13 +27,24 @@ export const key: InjectionKey<Store<RootState>> = Symbol();
 // define the Storage
 const vuexLocal = window.localStorage;
 
+// define security
+const ls = new SecureLS({ isCompression: false });
+
 export const store = createStore<RootState>({
   plugins: process.env.NODE_ENV === "development" ? [
     createLogger(),
     createPersistedState({
       storage: vuexLocal,
-    })] : 
-    [],
+    })
+   ] : 
+    [ 
+      createPersistedState({
+      storage: {
+        getItem: (key) => ls.get(key),
+        setItem: (key, value) => ls.set(key, value),
+        removeItem: (key) => ls.remove(key),
+      }
+    })],
   state: {
     rootPath: "/",
     currentSiteID: 2,
