@@ -108,17 +108,7 @@ export interface Grid {
     rows?: Row[],
     pagination: Pagenation,
 }
-export interface ContentList{
-  title: string,
-  description: string,
-  settingsUrl: string,
-  redirectUrl: string,
-  isEditMode: true,
-  notifications?: Notification[],
-  grids?: Grid[],
-  forms?: Form[],
-  resources: ResourceModel[],
-}
+
 export interface ContentItem {
   contentType: number,
   propertyName: string,
@@ -208,7 +198,17 @@ export interface Form {
   buttons?: ButtonModel[],
   title: string
 }
-
+export interface ContentList{
+  title: string,
+  description: string,
+  settingsUrl: string,
+  redirectUrl: string,
+  isEditMode: true,
+  notifications?: Notification[],
+  grids?: Grid[],
+  forms?: Form[],
+  resources: ResourceModel[],
+}
 export interface GetContentMediakiwiResponseModel {
   statusCode: number;
   message: string;

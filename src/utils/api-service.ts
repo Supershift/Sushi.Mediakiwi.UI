@@ -237,9 +237,8 @@ export const contentAPIService = {
       axiosInstance.post("content/PostContent", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
-          store.dispatch(ContentTypes.SET_POST_CONTENT, response.data);
+          resolve(response.data);
         }
-        resolve(response);
       })
       .catch((err) => {
         if (err.response.status === serverCodes.UNAUTHORIZED ||

@@ -5,7 +5,7 @@ import { GetNavigationResponseModel } from "@/models/Mediakiwi/Response/Navigati
 import { NavigationState } from "./index"
 import { ContentTypes } from "../Content"
 import { GetContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/GetContentMediakiwiRequestModel"
-import { GetSitesResponseModel, SiteItem } from "@/models/Mediakiwi/Response/Navigation/GetSitesResponseModel"
+import {  SiteItem } from "@/models/Mediakiwi/Response/Navigation/GetSitesResponseModel"
 
 export type Mutations<S = NavigationState> = {
   [MutationTypes.SET_TOP_NAVIGATION](state: S, payload: GetNavigationResponseModel): void,

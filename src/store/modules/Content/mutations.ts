@@ -15,7 +15,7 @@ export type Mutations<S = ContentState> = {
   [MutationTypes.SET_PAGE](state: S, payload: PageModel): void,
   [MutationTypes.SET_FIELDS](state: S, payload: Field[]): void,
   [MutationTypes.SET_RESOURCES](state: S, payload: ResourceModel[]): void,
-  [MutationTypes.SET_POST_CONTENT](state: S, payload: PostContentMediakiwiResponseModel): void,
+  [MutationTypes.SET_POST_CONTENT](state: S, payload: PostContentMediakiwiResponseModel|any): void,
 }
 
 export const mutations: MutationTree<ContentState> & Mutations = {

@@ -87,8 +87,7 @@ export default defineComponent({
       }
       else{
         if (file) {
-          let messages = mess;
-          response = messages;
+          this.response = mes;
         }
       }
       this.uploadErrors++;

@@ -1,6 +1,6 @@
 import { ActionTree, ActionContext } from "vuex"
 import { RootState, store } from "../../index"
-import { AuthenticationState, AuthenticationTypes } from "./index"
+import { AuthenticationState } from "./index"
 import { Mutations } from "./mutations"
 import { ActionTypes } from "./action-types"
 import { authenticationAPIService } from "@/utils/api-service"

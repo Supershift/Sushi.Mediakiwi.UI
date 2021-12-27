@@ -85,9 +85,8 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
     };
     store.dispatch(UITypes.SET_LOADING, true);
     return contentAPIService.postContentMediakiwiAPI(request.data, request.url)
-    .then(() => {
-      // sessionStorage.setItem("content", "true");
-      //commit(MutationTypes.SET_POST_CONTENT, response);
+    .then((response) => {
+      commit(MutationTypes.SET_POST_CONTENT, response);
     })
     .finally(() => {
       store.dispatch(UITypes.SET_LOADING, false);
