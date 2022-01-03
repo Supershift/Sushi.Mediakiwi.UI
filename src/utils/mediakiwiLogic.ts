@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "@vue/runtime-dom";
 import MediakiwiModalWrapper from "./../components/modal/MediakiwiModalWrapper.vue";
 import { ContentTypes } from "@/store/modules/Content";
+import { ContentType } from "@/models/Mediakiwi/ContentType";
+import { Field } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,9 +44,11 @@ export const mediakiwiLogic = {
       store.dispatch(ContentTypes.SET_RESOURCES, response.list?.resources);
     }
     if (response.list && response.list.forms) {
-      store.dispatch(ContentTypes.SET_FIELDS, response.list?.forms);
+      store.dispatch(ContentTypes.SET_FORMS, response.list?.forms);
     }
-    // store.dispatch(ContentTypes.SET_BUTTONS, response.buttons);
+    if (response.list && response.list.forms) {
+      store.dispatch(ContentTypes.SET_BUTTONS, response.list?.forms);
+    }
     // store.dispatch("setViews", response.views);
   },
   /** Creates a @type {PostMediakiwiRequestModel} from the altered data in the vuex store */
@@ -58,7 +62,7 @@ export const mediakiwiLogic = {
     //store.dispatch(ContentTypes.POST_CONTENT, request);
   },
   /** Fill the sublist select based on the referId */
-  fillSublistSelect(referId: string, fields: FieldModel[]) {
+  fillSublistSelect(referId: string, fields: Field[]) {
     const field = fields.find((field) => field.propertyName === referId);
 
     const referElement = document.querySelector(`#${referId}`)

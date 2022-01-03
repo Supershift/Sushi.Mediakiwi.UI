@@ -1,7 +1,8 @@
 import FieldModel from "./Mediakiwi/FieldModel";
+import { Field } from "./Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 
 interface FormRowModel {
-    fields: Array<FieldModel>;
+    fields: Array<Field>;
 }
 
 export default FormRowModel;

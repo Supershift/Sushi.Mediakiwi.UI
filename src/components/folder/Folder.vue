@@ -57,7 +57,7 @@ export default defineComponent({
   // transition-duration: 0.6s;
   overflow: hidden;
   flex: 1 0 30%;
-  margin-right: 15px;
+  //margin-right: 15px;
 
   h2 {
     font-size: $font-size-xxl;

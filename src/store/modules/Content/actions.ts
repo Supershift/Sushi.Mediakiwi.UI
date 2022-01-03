@@ -6,9 +6,8 @@ import { contentAPIService } from "@/utils/api-service"
 import { UITypes } from "../UI"
 import { ContentState } from "./index"
 import { MutationTypes } from "./mutation-types"
-import { ButtonModel, Field, GetContentMediakiwiResponseModel, Grid } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
+import { ResourceModel, ButtonModel, Field, GetContentMediakiwiResponseModel, Grid, Form } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
 import PageModel from "@/models/PageModel"
-import ResourceModel from "@/models/Mediakiwi/ResourceModel"
 import { PostContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/PostContentMediakiwiResponseModel"
 
 type AugmentedActionContext = {
@@ -37,13 +36,13 @@ export interface Actions {
   ): void,
   [ActionTypes.SET_BUTTONS](
     { commit }: AugmentedActionContext,
-    payload: ButtonModel[]
+    payload: Form[]
   ): void,
   [ActionTypes.SET_PAGE](
     { commit }: AugmentedActionContext,
     payload: PageModel
   ): void,
-  [ActionTypes.SET_FIELDS](
+  [ActionTypes.SET_FORMS](
     { commit }: AugmentedActionContext,
     payload: Field[]
   ): void,
@@ -59,11 +58,18 @@ export interface Actions {
     { commit }: AugmentedActionContext,
     payload: PostContentMediakiwiResponseModel
   ): void,
+  // [ActionTypes.INCREMENT_SET_GET_CONTENT](
+  //   { commit }: AugmentedActionContext,
+  // ): void,
+  // [ActionTypes.DECREMENT_SET_GET_CONTENT](
+  //   { commit }: AugmentedActionContext,
+  // ): void,
 }
 
 export const actions: ActionTree<ContentState, RootState> & Actions = {
   [ActionTypes.GET_CONTENT]({ commit }, payload) {
-      const siteID = store.state.currentSiteID;
+      commit(MutationTypes.SET_CONTENT, null);
+      const siteID = store.getters.currentSiteID;
       const request = {
         data: { CurrentSiteID: siteID },
         url: payload
@@ -107,8 +113,8 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
   [ActionTypes.SET_PAGE]({ commit }, payload) {
     commit(MutationTypes.SET_PAGE, payload);
   },
-  [ActionTypes.SET_FIELDS]({ commit }, payload) {
-    commit(MutationTypes.SET_FIELDS, payload);
+  [ActionTypes.SET_FORMS]({ commit }, payload) {
+    commit(MutationTypes.SET_FORMS, payload);
   },
   [ActionTypes.SET_RESOURCES]({ commit }, payload) {
     commit(MutationTypes.SET_RESOURCES, payload);
@@ -116,4 +122,10 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
   [ActionTypes.SET_POST_CONTENT]({ commit }, payload) {
     commit(MutationTypes.SET_POST_CONTENT, payload);
   },
+  // [ActionTypes.INCREMENT_SET_GET_CONTENT]({ commit }) {
+  //   commit(MutationTypes.INCREMENT_SET_GET_CONTENT);
+  // },
+  // [ActionTypes.DECREMENT_SET_GET_CONTENT]({ commit }) {
+  //   commit(MutationTypes.DECREMENT_SET_GET_CONTENT);
+  // },
 }

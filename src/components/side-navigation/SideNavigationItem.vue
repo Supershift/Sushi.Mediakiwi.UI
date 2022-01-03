@@ -7,7 +7,7 @@
         <fa
           class="menu-icon"
           :icon="icons"
-          v-if="icons" />
+          v-if="icons" /> 
         <span v-show="isDrawerOpen">{{
           item.text
         }}</span>
@@ -29,29 +29,28 @@ import {
   defineComponent,
   PropType,
 } from "vue";
-import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel";
+import { NavigationItem } from "../../models/Mediakiwi/Response/Navigation/GetNavigationResponseModel";
 
 export default defineComponent({
   name: "SideNavigationItem",
   props: {
     item: {
-      type: Object as PropType<SideNavigationItemModel>,
+      type: Object as PropType<NavigationItem>,
       required: true,
     },
   },
   setup(props) {
     const icons = computed(() =>
       props.item.iconClass
-        ? props.item.iconClass.split(" ")
-        : "kiwi-bird"
+        ? props.item.iconClass.replace("fa-","").split(" ").filter((r) => r !== "first" && r !== "")
+        : props.item.isBack ? "chevron-left" : "kiwi-bird"
     );
-
     const isDrawerOpen = computed(
       () => store.getters["UI/isDrawerOpen"]
     );
     const classes = computed(() => {
       return {
-        active: props.item.isActive,
+        active: props.item.isHighlighted,
         back: props.item.isBack,
       };
     });

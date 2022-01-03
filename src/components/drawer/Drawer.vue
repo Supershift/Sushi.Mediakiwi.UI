@@ -50,10 +50,6 @@ import { UITypes } from "../../store/modules/UI";
 export default defineComponent({
   name: "DrawerComponent",
   props: {
-    toggler: {
-      type: Boolean,
-      required: false,
-    },
     right: {
       type: Boolean,
       required: false,
@@ -63,7 +59,7 @@ export default defineComponent({
     SideNavigation,
   },
   setup(props) {
-    const open = ref(props.toggler);
+    const open = ref(false);
     const customListClass = ref("side-list-menu");
     const positionCss = computed(() =>
       props.right

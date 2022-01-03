@@ -7,6 +7,9 @@ import {
 import {
   fas
 } from "@fortawesome/pro-solid-svg-icons";
+import {
+  far
+} from "@fortawesome/pro-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "vue";
 import App from "./App.vue";
@@ -19,6 +22,7 @@ import { mediakiwiLogic } from "./utils/mediakiwiLogic";
 library.add(
   fas,
   fal,
+  far,
 );
 
 const DEFAULT_TITLE = `${process.env.VUE_APP_TAB_TITLE}` || "Welcome!";
@@ -34,6 +38,7 @@ router.beforeEach((to, from, next) => {
     
     
     if (!isAuthenticated) {
+      store.dispatch("clearCache");
       next({
         path: "/login",
       });
@@ -54,7 +59,8 @@ router.beforeEach((to, from, next) => {
         next();
       }).catch(() => {
         // redirect to 500 page
-        store.dispatch(UITypes.SET_NOTIFICATION, { type: "error", message: "Error fetching content" });
+        router.push("/login")
+        store.dispatch(UITypes.SET_NOTIFICATION, { type: "error", message: "Error 500 fetching content" });
       });
     }
   } else if (to.matched.some((record) => record.meta.requiresVisitor)) {

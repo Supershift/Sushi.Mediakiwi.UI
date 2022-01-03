@@ -32,17 +32,16 @@ import {
   ref,
   watch,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
 import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
 import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
-import ItemModel from "../../models/OptionItemModel";
+import { Field, FieldOption } from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 
 export default defineComponent({
   name: "FormChoiceDropdown",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<Field>,
       required: true,
     },
     classname: {
@@ -56,7 +55,7 @@ export default defineComponent({
   },
   emits: ["on-change"],
   setup(props, context) {
-    let valueRef = ref<FieldModel>(props.field);
+    let valueRef = ref<Field>(props.field);
     const customDropdownClasses = computed(() => [
       "dropdown-primary ",
       props.field.className,
@@ -72,16 +71,16 @@ export default defineComponent({
         props.classname,
       ]);
     const optionData = computed(() => {
-      if (!valueRef.value?.options?.items) {
+      if (!valueRef.value?.options) {
         return [];
       }
       
-      return valueRef.value?.options?.items.map(
-        (r: ItemModel) => {
+      return valueRef.value?.options.map(
+        (r: FieldOption) => {
           return {
             id: r.value,
             label: r.text,
-            disabled: !r.enabled,
+            disabled: !r.isEnabled,
           };
         }
       );
@@ -95,7 +94,7 @@ export default defineComponent({
 
     function handleChange(e?: Event) {
       if (
-        props.field.value?.event !==
+        props.field.event !==
         MediakiwiJSEventType.none
       ) {
         context.emit(

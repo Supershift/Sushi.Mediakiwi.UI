@@ -31,6 +31,7 @@ export interface Actions {
     { commit }: AugmentedActionContext,
     payload: number
   ): void,
+  
 }
 
 export const actions: ActionTree<NavigationState, RootState> & Actions = {

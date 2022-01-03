@@ -12,10 +12,7 @@
       :id="fieldID"
       :aria-label="field.helpText"
       :title="field.helpText"
-      :disabled="field.disabled || field.readOnly"
-      v-on="
-        customEventHandler(field, handleChange)
-      " />
+      :disabled="field.disabled || field.readOnly" />
     <label v-if="undefinedCheck(field.suffix)">{{
       undefinedCheck(field.suffix)
     }}</label>

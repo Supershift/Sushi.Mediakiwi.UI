@@ -42,7 +42,7 @@ export default defineComponent({
   setup(props, context) {
     const waitForFadeOut = 5000;
     const notification = computed(
-      () => store.getters.notification
+      () => store.getters["UI/notification"]
     );
     const chevronPosition = computed(() => {
       let positionCss = "notification-top-icon ";
@@ -123,8 +123,7 @@ export default defineComponent({
       store.dispatch(UITypes.TOGGLE_NOTIFICATION, false);
     }
     function handleClick() {
-      store.dispatch(UITypes.TOGGLE_NOTIFICATION, false);
-      context.emit("notification-action", notification.value.actionText);
+      store.dispatch(UITypes.SET_NOTIFICATION, false);
     }
     onMounted(() => {
       setTimeout(() => {

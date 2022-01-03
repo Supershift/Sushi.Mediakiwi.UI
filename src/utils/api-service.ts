@@ -11,9 +11,11 @@ import { UITypes } from "@/store/modules/UI";
 import { GetContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 import { GetNavigationResponseModel } from "@/models/Mediakiwi/Response/Navigation/GetNavigationResponseModel";
 import { GetSitesResponseModel } from "@/models/Mediakiwi/Response/Navigation/GetSitesResponseModel";
+import router from "@/router";
 
 export const serverCodes = {
   OK: 200,
+  NO_CONTENT: 204,
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
@@ -36,6 +38,23 @@ const axiosInstance = axios.create({
   cancelToken: cancelSource.token
 });
 
+axiosInstance.interceptors.response.use(
+  function (response) { 
+    return response;
+}, function (err) {
+  /* eslint no-console:0*/
+  console.log(err);
+  
+  if (err && err.response && err.response.status !== serverCodes.OK) {
+    store.dispatch("clearCache");
+    router.push("/login");
+    store.dispatch(UITypes.SET_NOTIFICATION, { message: "Your Session might have expired, please login to continue.", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
+    return Promise.reject(err)
+  } else {
+    return Promise.reject(err);
+  }
+})
+
 export const authenticationAPIService = {
   // Authentication
   signInMediakiwiAPI(request: AuthenticateRequestModel) {
@@ -53,13 +72,6 @@ export const authenticationAPIService = {
           resolve(response);
         })
         .catch((err) => {
-          if (err.response.status === serverCodes.UNAUTHORIZED ||
-            err.response.status === serverCodes.BAD_REQUEST ||
-            err.response.status === serverCodes.FORBIDDEN) {
-            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials!", actionType: NotificationActionTypes.ALERT, actionText: "OK", hasAction: true });
-          } else {
-              store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong!", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
-          }
           reject(err);
         })
     }).catch((thrown) => {
@@ -82,13 +94,7 @@ export const authenticationAPIService = {
           resolve(response)
         })
         .catch((err) => {
-          if (err.response.status === serverCodes.UNAUTHORIZED || 
-            err.response.status === serverCodes.BAD_REQUEST ||
-            err.response.status === serverCodes.FORBIDDEN) {
-            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid signout token! Please try again...", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
-          } else {
-            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
-          }
+
           reject(err);
       })
     }).catch((thrown) => {
@@ -110,13 +116,6 @@ export const authenticationAPIService = {
           resolve(response)
         })
         .catch((err) => {
-          if (err.response.status === serverCodes.UNAUTHORIZED || 
-            err.response.status === serverCodes.BAD_REQUEST ||
-            err.response.status === serverCodes.FORBIDDEN) {
-            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials!", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
-          } else {
-            store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
-          }
           reject(err);
         })
     })
@@ -138,13 +137,7 @@ export const navigationAPIService = {
         }
       })
       .catch((err) => {
-        if (err.response.status === serverCodes.UNAUTHORIZED || 
-          err.response.status === serverCodes.BAD_REQUEST ||
-          err.response.status === serverCodes.FORBIDDEN) {
-          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials! Top Navigation", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
-        } else {
-          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
-        }
+
         reject(err)
       })
     });
@@ -163,13 +156,6 @@ export const navigationAPIService = {
         }
       })
       .catch((err) => {
-        if (err.response.status === serverCodes.UNAUTHORIZED ||
-          err.response.status === serverCodes.BAD_REQUEST ||
-          err.response.status === serverCodes.FORBIDDEN) {
-          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials! Side Navigation", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
-        } else {
-          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
-        }
         reject(err);
       })
     });
@@ -188,13 +174,7 @@ export const navigationAPIService = {
         }
       })
       .catch((err) => {
-        if (err.response.status === serverCodes.UNAUTHORIZED ||
-          err.response.status === serverCodes.BAD_REQUEST ||
-          err.response.status === serverCodes.FORBIDDEN) {
-          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials! Sites", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
-        } else {
-          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
-        }
+
         reject(err);
       })
     });
@@ -216,13 +196,7 @@ export const contentAPIService = {
         } 
       })
       .catch((err) => {        
-        if (err.response.status === serverCodes.UNAUTHORIZED ||
-          err.response.status === serverCodes.BAD_REQUEST ||
-          err.response.status === serverCodes.FORBIDDEN) {
-          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials! Content", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
-        } else {
-          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
-        }
+        store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
         reject(err);
       })
     });
@@ -240,13 +214,7 @@ export const contentAPIService = {
         }
       })
       .catch((err) => {
-        if (err.response.status === serverCodes.UNAUTHORIZED ||
-          err.response.status === serverCodes.BAD_REQUEST ||
-          err.response.status === serverCodes.FORBIDDEN) {
-          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Invalid credentials! Content", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
-        } else {
-          store.dispatch(UITypes.SET_NOTIFICATION, { message: "Something went wrong! Please try again...", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
-        }
+
         reject(err);
       })
     });

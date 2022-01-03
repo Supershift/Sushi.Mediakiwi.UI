@@ -1,31 +1,33 @@
 <template>
   <a
-    v-if="button.customUrl"
+    v-if="field?.url"
     :class="customButtonClasses"
-    :href="button.customUrl"
-    :aria-label="button.helpText"
-    :title="button.helpText"
+    :href="field?.url"
+    :aria-label="field?.helpText"
+    :title="field?.helpText"
     :disabled="
-      button?.disabled || button.readOnly
+      field?.isReadOnly
     ">
-    <fa :icon="buttonIconChoice" class="btn-icon" />{{ button.value }}
+    <!-- <fa :icon="buttonIconChoice" class="btn-icon" /> -->
+    {{ field?.title }}
   </a>
   <button
     v-else
     :class="customButtonClasses"
     @click.prevent="handleClicked"
-    :title="button.helpText"
-    :aria-label="button.helpText"
+    :title="field?.helpText"
+    :aria-label="field?.helpText"
     :disabled="
-      button?.disabled || button.readOnly
+      field?.isReadOnly
     ">
-    <fa :icon="buttonIconChoice" class="btn-icon" />{{ button.value }}
+    <!-- <fa :icon="buttonIconChoice" class="btn-icon" /> -->
+    {{ field?.title }}
   </button>
 
 </template>
 
 <script lang="ts">
-import {ButtonModel} from "../../models/Mediakiwi/ButtonModel";
+import {ButtonModel} from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 import {
   computed,
   defineComponent,
@@ -35,7 +37,7 @@ import {
 export default defineComponent({
   name: "FormButton",
   props: {
-    button: {
+    field: {
       type: Object as PropType<ButtonModel>,
       required: true,
     },
@@ -43,17 +45,17 @@ export default defineComponent({
   emits: ["button-clicked"],
   setup(props, context) {
     const customButtonClasses = computed(() => {
-      return ["btn ", props.button?.className, props.button.isPrimary ? "btn-primary" : ""]});
-    const buttonIconChoice = computed(() => ["fal", props.button.icon]);
+      return ["btn ", props.field?.className, props.field?.isPrimary ? "btn-primary" : ""]});
+    // const buttonIconChoice = computed(() => ["fal", props.button.iconClass]);
     function handleClicked() {
       context.emit(
         "button-clicked",
-        props.button
+        props.field
       );
     }
     return {
       customButtonClasses,
-      buttonIconChoice,
+      // buttonIconChoice,
       handleClicked,
     };
   },

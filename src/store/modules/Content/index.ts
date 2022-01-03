@@ -1,5 +1,5 @@
-import ResourceModel from "@/models/Mediakiwi/ResourceModel";
-import { GetContentMediakiwiResponseModel, Grid, ButtonModel, Field } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+import { ResourceModel, GetContentMediakiwiResponseModel, Grid, ButtonModel, Field } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+import ViewModel from "@/models/Mediakiwi/ViewModel";
 import PageModel from "@/models/PageModel";
 import { RootState } from "@/store";
 import { Module } from "vuex";
@@ -13,8 +13,9 @@ export interface ContentState {
   folders: Field[] | null;
   buttons: ButtonModel[] | null;
   page: PageModel | null;
-  fields: Field[] | null;
+  forms: Field[] | null;
   resources: ResourceModel[] | null;
+  views: ViewModel[] | null;
 }
 
 export enum ContentTypes {
@@ -25,7 +26,7 @@ export enum ContentTypes {
   SET_BUTTONS = "Content/SET_BUTTONS",
   POST_CONTENT = "Content/POST_CONTENT",
   SET_PAGE = "Content/SET_PAGE",
-  SET_FIELDS = "Content/SET_FIELDS",
+  SET_FORMS = "Content/SET_FORMS",
   SET_RESOURCES = "Content/SET_RESOURCES",
   SET_POST_CONTENT = "Content/SET_POST_CONTENT"
 }
@@ -38,8 +39,9 @@ export const Content: Module<ContentState, RootState> = {
       folders: null,
       buttons: null,
       page: null,
-      fields: null,
+      forms: null,
       resources: null,
+      views: null,
     }),
     mutations,
     actions,

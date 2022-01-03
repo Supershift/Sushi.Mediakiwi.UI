@@ -154,7 +154,7 @@ export default defineComponent({
       if (!props.options) {
         return false;
       }
-      return props.options.items.filter(
+      return props.options.filter(
         (option) => !tags.value.includes(option)
       );
     });

@@ -11,9 +11,9 @@ import {
   nextTick,
   ref,
 } from "vue";
-import ResourceModel from "@/models/Mediakiwi/ResourceModel";
+import {ResourceModel} from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 import {store} from "@/store";
-import {ResourceType} from "@/models/Mediakiwi/ResourceType";
+import {ResourceTypes} from "../../models/Mediakiwi/ResourceType";
 import {ResourcePositionType} from "@/models/Mediakiwi/ResourcePositionType";
 
 export default defineComponent({
@@ -23,7 +23,7 @@ export default defineComponent({
 
     // Computed
     const resources = computed<ResourceModel[]>(
-      () => store.getters.resources
+      () => store.getters["Content/resources"]
     );
 
     // Functions
@@ -42,7 +42,7 @@ export default defineComponent({
           ""
         );
         script.type = "text/javascript";
-        if (resource.isInline) {
+        if (resource.type === ResourceTypes.script) {
           script.innerHTML = resource.sourceCode
             ? resource.sourceCode
             : "";
@@ -91,7 +91,7 @@ export default defineComponent({
         link.rel = "stylesheet";
         link.type = "text/css";
 
-        if (resource.isInline) {
+        if (resource.type === ResourceTypes.style) {
           link.innerHTML = resource.sourceCode
             ? resource.sourceCode
             : "";
@@ -130,11 +130,11 @@ export default defineComponent({
       resource: ResourceModel
     ): Promise<unknown> {
       switch (resource.type) {
-        case ResourceType.script:
+        case ResourceTypes.script:
           return addScript(resource);
-        case ResourceType.style:
+        case ResourceTypes.style:
           return addStyle(resource);
-        case ResourceType.html:
+        case ResourceTypes.html:
           return addHtml(resource);
         default:
           return new Promise((resolve) => {

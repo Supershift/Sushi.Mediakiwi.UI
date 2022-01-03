@@ -4,7 +4,7 @@
     @click.prevent="handleClicked"
     :disabled="button.disabled"
   >
-    {{ button.value }}
+    <fa v-if="button.buttonIcon" :icon="buttonIconChoice" class="btn-icon" />{{ button.value }}
   </button>
 </template>
 
@@ -26,6 +26,7 @@ export default defineComponent({
   },
   emits: ["button-clicked"],
   setup(props, context) {
+    const buttonIconChoice = computed(() => ["far", props.button.buttonIcon]);
     const customButtonClasses = computed(() => [
       "btn ",
       props.button.customClass,
@@ -35,6 +36,7 @@ export default defineComponent({
     }
     return {
       customButtonClasses,
+      buttonIconChoice,
       handleClicked,
     };
   },

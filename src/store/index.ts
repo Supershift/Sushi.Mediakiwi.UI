@@ -25,16 +25,20 @@ export interface RootState {
 export const key: InjectionKey<Store<RootState>> = Symbol();
 
 // define the Storage
-const vuexLocal = window.localStorage;
+const vuexLocal = window.sessionStorage;
 
 // define security
-const ls = new SecureLS({ isCompression: false });
+const ls = new SecureLS({ 
+  isCompression: false,
+  encodingType: "aes"
+ });
 
 export const store = createStore<RootState>({
   plugins: process.env.NODE_ENV === "development" ? [
     createLogger(),
     createPersistedState({
       storage: vuexLocal,
+      paths:["Authentication","UI", "Navigation"]
     })
    ] : 
     [ 
@@ -129,9 +133,10 @@ export const store = createStore<RootState>({
     channel: 0,
   },
   mutations: {
-    // toggleDrawer(state: RootState) {
-    //   state.drawer.open = !state.drawer.open;
-    // },
+    clearCache(state) {
+      ls.clear()
+      state.currentSiteID = 2
+    }
     // toggleDialog(state) {
     //   state.dialog.show = !state.dialog.show;
     // },
@@ -162,6 +167,9 @@ export const store = createStore<RootState>({
     // },
   },
   actions: {
+    clearCache(context) {
+      context.commit("clearCache");
+    }
     // getMediakiwiAPI(context, request) {
     //   // TODO Replace logic with an axios.post to the request.url
     //   // the request should be passed as the requestBody
@@ -242,6 +250,7 @@ export const store = createStore<RootState>({
     contentLogin: (state) => state.content ? state.content.login : "",
     contentForgotten: (state) => state.content ? state.content.forgotten : "",
     contentResetPassword: (state) => state.content.reset,
+    currentSiteID: (state) => state.currentSiteID,
     // topButtons: (state) => {
     //   return state.buttons?.filter((button) => (button.iconTarget === ButtonTargetType.topLeft || button.iconTarget === ButtonTargetType.topRight));
     // },

@@ -1,5 +1,5 @@
 <template>
-  <li :id="elementID" class="navigation-link">
+  <li :id="elementID" :class="listClass">
     <a :href="item.href">{{ item.text }}</a>
 
     <div class="sub" v-if="item.items">
@@ -36,8 +36,12 @@ export default defineComponent({
     const elementID = computed(
       () => `ID_${props.item.text}`
     );
+    const listClass = computed(() => {
+      return [props.item.iconClass ? props.item.iconClass + " navigation-link" : " navigation-link"]
+    });
     return {
       elementID,
+      listClass
     };
   },
 });
@@ -110,12 +114,17 @@ export default defineComponent({
     color: $color-drakgrey;
     &:hover {
       color: $color-blue;
-      cursor: pointer;
       
       + .sub {
         display: block;
       }
     }
+  }
+}
+.noClick{
+  cursor: default;
+  > a {
+    cursor: default;
   }
 }
 @media (min-width: 786px) {

@@ -11,6 +11,7 @@ export interface NavigationState {
   sideNavigationItems: NavigationItemModel[];
   currentSiteID: number;
   availableSites: SiteItem[];
+  homeURL: string;
 }
 
 export enum NavigationTypes {
@@ -30,6 +31,7 @@ export const Navigation: Module<NavigationState, RootState> = {
       sideNavigationItems: Array<NavigationItemModel>(),
       currentSiteID: 2,
       availableSites: Array<SiteItem>(),
+      homeURL: ""
     }),
     mutations,
     actions,

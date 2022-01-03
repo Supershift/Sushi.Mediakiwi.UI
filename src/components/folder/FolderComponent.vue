@@ -31,7 +31,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .folder-collection {
-  margin-bottom: -20px;
+  //margin-bottom: -20px;
   min-height: 600px;
 
   .column {

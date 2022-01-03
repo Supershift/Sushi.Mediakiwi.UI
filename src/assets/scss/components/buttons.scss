@@ -24,7 +24,7 @@
       border: 2px solid $color-main outset;
   }
 }
-.btn-primary {
+.btn-primary, .action {
   background: $color-main;
   color: #fff;
   &:hover {
@@ -35,4 +35,7 @@
   background: $color-hover-blue;
   color: #fff;
   box-shadow: none;
+}
+.action {
+  float: right;
 }

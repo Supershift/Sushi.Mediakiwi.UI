@@ -2,10 +2,10 @@
   <div class="content-container row">
     <div class="col main-container">
       <OverlayLoader />
+      <!-- <BreadCrumbs /> -->
       <template
         v-if="
-          fetchedTopButtons &&
-          fetchedTopButtons.length &&
+          fetchedTopButtons && false &&
           checkWindowWidth
         ">
         <ButtonListComponent
@@ -23,17 +23,16 @@
       </template>
       <template
         v-if="
-          fetchedFields && fetchedFields.length
+          fetchedForms && fetchedForms.length
         ">
-        <FormComponent
-          :fields="fetchedFields"
-          :notifications="customNotifications" />
+          <FormComponent
+            :forms="fetchedForms"
+            />
       </template>
 
       <template
         v-if="
-          fetchedBottomButtons &&
-          fetchedBottomButtons.length &&
+          fetchedBottomButtons && false &&
           checkWindowWidth
         ">
         <ButtonListComponent
@@ -47,11 +46,11 @@
         <GridComponent
           v-for="(grid, index) in fetchedGrids"
           :key="index"
-          :grid="grid" />
+          :grid="grid"
+          :pagination="grid.pagination" />
       </template>
 
-      <ResourcesComponent
-        v-if="fetchedResources" />
+      <ResourcesComponent />
 
       <template
         v-if="
@@ -83,6 +82,7 @@ import FolderComponent from "./folder/FolderComponent.vue";
 import ResourcesComponent from "./resources/ResourcesComponent.vue";
 import ButtonListComponent from "./ButtonListComponent.vue";
 import FileUpload from "./file-upload/FileUpload.vue";
+import BreadCrumbs from "./breadcrumbs/breadcrumbs.vue";
 import {getViewTypeName} from "@/models/Mediakiwi/ViewType";
 import ViewModel from "@/models/Mediakiwi/ViewModel";
 import OverlayLoader from "@/components/OverlayLoader.vue";
@@ -96,12 +96,13 @@ export default defineComponent({
     ResourcesComponent,
     ButtonListComponent,
     FileUpload,
+    BreadCrumbs,
     OverlayLoader,
   },
   setup() {
     const breakpointTablet = 986;
-    const fetchedFields = computed(
-      () => store.getters["Content/fields"]
+    const fetchedForms = computed(
+      () => store.getters["Content/forms"]
     );
 
     const fetchedGrids = computed(
@@ -112,15 +113,12 @@ export default defineComponent({
       () => store.getters["Content/folders"]
     );
 
-    const fetchedResources = computed(
-      () => store.getters["Content/resources"]
-    );
     const fetchedTopButtons = computed(
-      () => store.getters.topButtons
+      () => store.getters["Content/topButtons"]
     );
 
     const fetchedBottomButtons = computed(
-      () => store.getters.bottomButtons
+      () => store.getters["Content/bottomButtons"]
     );
 
     const fetchedFieldValues = computed(
@@ -128,8 +126,10 @@ export default defineComponent({
     );
 
     const fetchedViews = computed(
-      () => store.getters.views
+      () => store.getters["Content/views"]
     );
+
+    // resources is fetched inside of the component
 
     const customNotifications = ref<
       MessageModel[]
@@ -147,10 +147,9 @@ export default defineComponent({
 
     return {
       customNotifications,
-      fetchedFields,
+      fetchedForms,
       fetchedGrids,
       fetchedFolders,
-      fetchedResources,
       fetchedTopButtons,
       fetchedBottomButtons,
       fetchedFieldValues,

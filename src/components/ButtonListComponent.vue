@@ -6,7 +6,7 @@
         :key="button"
         :class="buttonPosition(button)">
         <FormButton
-          :button="button"
+          :field="button"
           @button-clicked="handleClicked" />
       </li>
     </ul>

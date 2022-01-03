@@ -1,7 +1,11 @@
 <template>
   <ul :class="customContainerClass">
     <SideNavigationItem
-      v-for="item in sideNavigationItems"
+      :key="topItem.text"
+      :item="topItem"
+    />
+    <SideNavigationItem
+      v-for="item in restOfItems"
       :key="item.text"
       :item="item"
     />
@@ -23,6 +27,8 @@ import {
 import SideNavigationItem from "./SideNavigationItem.vue";
 import {store} from "@/store";
 import { AuthenticationTypes } from "../../store/modules/Authentication";
+import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel";
+
 export default defineComponent({
   name: "SideNavigation",
   props: {
@@ -43,7 +49,12 @@ export default defineComponent({
     const sideNavigationItems = computed(
       () => store.getters["Navigation/sideNavigationItems"]
     );
-
+    const topItem = computed(() => {
+      return sideNavigationItems.value.find((a: SideNavigationItemModel) => a.isBack )
+    })
+    const restOfItems = computed(() => {
+      return sideNavigationItems.value.filter((b: SideNavigationItemModel) => !b.isBack )
+    })
     function handleSignOut() {
       store.dispatch(AuthenticationTypes.UNAUTHENTICATE);
     }
@@ -51,6 +62,8 @@ export default defineComponent({
       customContainerClass,
       sideNavigationItems,
       isDrawerOpen,
+      restOfItems,
+      topItem,
       handleSignOut,
     };
   },

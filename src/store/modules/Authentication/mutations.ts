@@ -3,6 +3,7 @@ import { MutationTree } from "vuex"
 import { AuthenticationState } from "./index"
 import { AuthenticateResponseModel } from "@/models/Mediakiwi/Response/Authentication/AuthenticateResponseModel"
 import router from "@/router"
+import { store } from "@/store"
 
 export type Mutations<S = AuthenticationState> = {
   [MutationTypes.SET_PROFILE](state: S, payload: AuthenticateResponseModel|null): void,
@@ -33,6 +34,7 @@ export const mutations: MutationTree<AuthenticationState> & Mutations = {
         window.sessionStorage.clear();
         window.localStorage.clear();
         state.isLoggedIn = false;
+        store.dispatch("clearCache");
         router.push("/login");
       }
     },

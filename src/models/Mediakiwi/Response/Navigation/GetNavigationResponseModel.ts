@@ -1,6 +1,6 @@
 import NavigationModel from "../../NavigationModel";
 
-interface NavigationItem {
+export interface NavigationItem {
     href: string;
     iconClass: string;
     isBack: boolean;

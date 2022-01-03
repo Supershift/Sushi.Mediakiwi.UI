@@ -24,14 +24,14 @@ import {
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
 import TagsInput from "./FormTagsInput.vue";
+import { Field } from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 
 export default defineComponent({
   name: "FormTag",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<Field>,
       required: true,
     },
     classname: {

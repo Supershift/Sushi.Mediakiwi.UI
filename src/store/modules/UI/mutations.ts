@@ -15,9 +15,7 @@ export type Mutations<S = UIState> = {
 
 export const mutations: MutationTree<UIState> & Mutations = {
     [MutationTypes.SET_DRAWER_OPEN](state: UIState, payload: boolean): void {
-      if (payload) {
-        state.drawer.open = payload;
-      }
+      state.drawer.open = payload;
     },
     [MutationTypes.SET_DIALOG_OPEN](state: UIState, payload: boolean): void {
       state.dialog.show = payload;
@@ -31,14 +29,14 @@ export const mutations: MutationTree<UIState> & Mutations = {
     [MutationTypes.SET_NOTIFICATION](state: UIState, payload: NotificationModel): void {
       if (payload) {
         state.notification = payload;
+      } else {
+        state.notification = null;
       }
     },
     [MutationTypes.SET_LOADING](state: UIState, payload: boolean): void {
       state.mediakiwiLoading = payload;
     },
     [MutationTypes.TOGGLE_NOTIFICATION](state: UIState, payload: boolean): void {
-      if (!payload) {
         state.notification = null;
-      }
     },
 }

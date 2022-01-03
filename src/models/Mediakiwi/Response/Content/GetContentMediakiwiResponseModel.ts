@@ -16,7 +16,7 @@ export interface Notification{
 export interface ResourceModel {
   type: number;
   position: number,
-  isSync: true,
+  isSync: boolean,
   path: string;
   sourceCode: string
 }
@@ -30,7 +30,7 @@ export interface LayerConfiguration {
   hasScrollbar: boolean
 }
 
-export interface ContentOptions {
+export interface FieldOption {
   text: string;
   value: string;
   isSelected: boolean;
@@ -44,7 +44,7 @@ export interface ButtonModel {
   vueType: boolean,
   expression: boolean,
   value: string,
-  options: ContentOptions[],
+  options: FieldOption[],
   className: string,
   event: number,
   section: number,
@@ -96,17 +96,17 @@ export interface Column {
   isAverage: boolean
 }
 
-export interface Pagenation {
-  itemsPerPage: boolean,
-  currentPage: boolean,
-  totalItems: boolean
+export interface Pagination {
+  itemsPerPage: number,
+  currentPage: number,
+  totalItems: number
 }
 export interface Grid {
     title: string,
     layerConfiguration: LayerConfiguration,
     columns?: Column[],
     rows?: Row[],
-    pagination: Pagenation,
+    pagination: Pagination,
 }
 
 export interface ContentItem {
@@ -117,7 +117,7 @@ export interface ContentItem {
   vueType: 0,
   expression: 0,
   value: string,
-  options: ContentOptions[],
+  options: FieldOption[],
   className: string,
   event: number,
   section: number,
@@ -172,7 +172,7 @@ export interface Field {
   vueType: number,
   expression: number,
   value: string,
-  options: ContentOptions[],
+  options: FieldOption[],
   className: string,
   event: number,
   section: number,
