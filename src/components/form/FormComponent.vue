@@ -446,10 +446,8 @@ export default defineComponent({
       flex-direction: row;
       .col, .col-xl {
         &.half {
-          width: 40%;
-        }
-        &.full {
-          width: 90%;
+          text-align: center;
+          flex: 2 0 25%;
         }
       }
     }

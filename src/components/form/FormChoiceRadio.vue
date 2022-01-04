@@ -33,7 +33,8 @@
     <label
       class="error-label"
       :for="field.propertyName"
-      >No options found for radios!</label
+      v-if="field.value"
+      >{{ parseEmptyOption }}</label
     >
   </div>
 </template>
@@ -65,6 +66,9 @@ export default defineComponent({
   emits: ["on-change"],
   setup(props, context) {
     let valueRef = ref(props.field.value);
+    const parseEmptyOption  = computed(() => {
+      return (props.field.value === "1" || props.field.value === 1) ? "Allowed" : "Not-Allowed"
+    })
     const radioContainerClasses = computed(
       () => `radio-container ${props.classname}`
     );
@@ -106,6 +110,7 @@ export default defineComponent({
       handleChange,
       radioClasses,
       radioContainerClasses,
+      parseEmptyOption,
     };
   },
 });

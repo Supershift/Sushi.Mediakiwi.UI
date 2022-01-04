@@ -59,6 +59,7 @@ router.beforeEach((to, from, next) => {
         next();
       }).catch(() => {
         // redirect to 500 page
+        store.dispatch("clearCache");
         router.push("/login")
         store.dispatch(UITypes.SET_NOTIFICATION, { type: "error", message: "Error 500 fetching content" });
       });

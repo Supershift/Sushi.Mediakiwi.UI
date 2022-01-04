@@ -4,6 +4,7 @@ import { RootState } from "../../index";
 import { ResourceModel, ButtonModel, Field, GetContentMediakiwiResponseModel, Grid } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
 import ViewModel from "@/models/Mediakiwi/ViewModel";
+import PageModel from "@/models/PageModel";
 
 export type Getters = {
     content (state: ContentState): GetContentMediakiwiResponseModel | null,
@@ -13,6 +14,7 @@ export type Getters = {
     forms (state: ContentState): Field[] | null,
     resources (state: ContentState): ResourceModel[] | null,
     views (state: ContentState): ViewModel[] | null,
+    page (state: ContentState): PageModel | null,
     topButtons: (state: ContentState) => ButtonModel[] | null | undefined,
     bottomButtons: (state: ContentState) => ButtonModel[] | null | undefined,
 };
@@ -25,6 +27,7 @@ export const getters: GetterTree<ContentState, RootState> & Getters = {
     forms: (state) => state.forms,
     resources: (state) => state.resources,
     views: (state) => state.views,
+    page: (state) => state.page,
     topButtons: (state) => {
         return state.buttons?.filter((button) => (button.section === ButtonTargetType.topLeft || button.section === ButtonTargetType.topRight));
     },

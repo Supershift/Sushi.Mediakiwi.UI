@@ -15,7 +15,6 @@ import SecureLS from "secure-ls";
 export interface RootState {
   currentSiteID: number,
   rootPath: string,
-  page?: PageModel | null,
   description: string,
   content: BaseContentModel,
   channel: number,
@@ -52,7 +51,6 @@ export const store = createStore<RootState>({
   state: {
     rootPath: "/",
     currentSiteID: 2,
-    page: null,
     description: "",
     content: {
       errors: [
@@ -137,113 +135,11 @@ export const store = createStore<RootState>({
       ls.clear()
       state.currentSiteID = 2
     }
-    // toggleDialog(state) {
-    //   state.dialog.show = !state.dialog.show;
-    // },
-    //Old API
-    // getMediakiwiContentAPI(state, request: GetContentMediakiwiRequestModel){
-    //   store.dispatch(UITypes.SET_LOADING, true);
-    //   return new Promise((resolve, reject) => {
-    //     // TODO: finish this request!
-    //     axios.get("content/GetContent")
-    //     .then((response) => {
-    //       if (response.status === serverCodes.OK) {
-    //         // TODO: Finish responsemodel and place here!
-    //         sessionStorage.setItem("response", response.data);
-    //       }
-    //       resolve(response);
-    //     })
-    //     .catch((error) => {
-    //       reject(error)
-    //       store.dispatch(UITypes.SET_LOADING, false);
-    //     })
-    //     .finally(() => {
-    //       store.dispatch(UITypes.SET_LOADING, false);
-    //     });
-    //   });
-    // },
-    // setChannel(state, newChannel) {
-    //   state.channel = newChannel;
-    // },
   },
   actions: {
     clearCache(context) {
       context.commit("clearCache");
     }
-    // getMediakiwiAPI(context, request) {
-    //   // TODO Replace logic with an axios.post to the request.url
-    //   // the request should be passed as the requestBody
-
-    //   // Determine what JSON to serve
-    //   let apiPath = "/grids.json";
-    //   if (request.url && request.url.indexOf("folder") > -1) {
-    //     apiPath = "/folders.json";
-    //   }
-    //   else if (request.url && request.url.indexOf("?item=") > -1) {
-    //     apiPath = "/fields.json";
-    //   }
-    //   else if (request.url && request.url.indexOf("custom") > -1) {
-    //     apiPath = "/custom-resources.json";
-    //   }
-    //   else if (request.url && request.url.indexOf("upload") > -1) {
-    //     apiPath = "/file-upload.json";
-    //   }
-
-    //   // Start a promise with an axios call
-    //   // to fetch the mediakiwi json
-    //   return new Promise((resolve, reject) => {
-    //     axios.get(apiPath)
-    //       .then((response) => resolve(response.data))
-    //       .catch((err) => {
-    //         alert("Something went wrong while fetching the page");
-    //         reject(err);
-    //       });
-    //   });
-    // },
-    // postMediakiwiAPI(context, request) {
-    //   return new Promise((resolve, reject) => {
-    //     axios.post(request.url, request)
-    //       .then((response) => resolve(response.data))
-    //       .catch((err) => {
-    //         alert("Something went wrong while fetching the page");
-    //         reject(err);
-    //       });
-    //   });
-    // },
-    // deleteMediakiwiAPI(context, request) {
-    //   return new Promise((resolve, reject) => {
-    //     axios.delete(request.url, request)
-    //       .then((response) => resolve(response.data))
-    //       .catch((err) => {
-    //         alert("Something went wrong while fetching the page");
-    //         reject(err);
-    //       });
-    //   });
-    // },
-    // putMediakiwiAPI() {
-    //   return new Promise((resolve, reject) => {
-    //     // TODO enable REAL the web api
-    //     axios.get("/fields-postback.json")
-    //       .then((response) => {
-    //         const responseData: MediakiwiResponseModel = response.data;
-    //         // TODO Remove
-    //         responseData.closeLayer = true;
-    //         resolve(responseData);
-    //       })
-    //       .catch((err) => {
-    //         alert("Something went wrong while fetching the page");
-    //         reject(err);
-    //       });
-
-    //     // axios.put(request.url, request)
-    //     //   .then((response) => resolve(response.data))
-    //     //   .catch((err) => {
-    //     //     alert("Something went wrong while fetching the page");
-    //     //     reject(err);
-    //     //   });
-    //   });
-    // },
-
   },
   getters: {
     rootPath: (state) => state.rootPath,
@@ -251,21 +147,6 @@ export const store = createStore<RootState>({
     contentForgotten: (state) => state.content ? state.content.forgotten : "",
     contentResetPassword: (state) => state.content.reset,
     currentSiteID: (state) => state.currentSiteID,
-    // topButtons: (state) => {
-    //   return state.buttons?.filter((button) => (button.iconTarget === ButtonTargetType.topLeft || button.iconTarget === ButtonTargetType.topRight));
-    // },
-    // bottomButtons: (state) => {
-    //   return state.buttons?.filter((button) => (button.iconTarget === ButtonTargetType.bottomLeft || button.iconTarget === ButtonTargetType.bottomRight));
-    // },
-    // fieldValues: (state) => {
-    //   return state.fields?.map((field) => {
-    //     return {
-    //       title: field.title,
-    //       value: field.value
-    //     }
-    //   });
-    // },
-    // views: (state) => state.views,
   },
   modules: {
     Navigation,

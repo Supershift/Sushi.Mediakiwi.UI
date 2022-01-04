@@ -58,12 +58,6 @@ export interface Actions {
     { commit }: AugmentedActionContext,
     payload: PostContentMediakiwiResponseModel
   ): void,
-  // [ActionTypes.INCREMENT_SET_GET_CONTENT](
-  //   { commit }: AugmentedActionContext,
-  // ): void,
-  // [ActionTypes.DECREMENT_SET_GET_CONTENT](
-  //   { commit }: AugmentedActionContext,
-  // ): void,
 }
 
 export const actions: ActionTree<ContentState, RootState> & Actions = {
@@ -122,10 +116,4 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
   [ActionTypes.SET_POST_CONTENT]({ commit }, payload) {
     commit(MutationTypes.SET_POST_CONTENT, payload);
   },
-  // [ActionTypes.INCREMENT_SET_GET_CONTENT]({ commit }) {
-  //   commit(MutationTypes.INCREMENT_SET_GET_CONTENT);
-  // },
-  // [ActionTypes.DECREMENT_SET_GET_CONTENT]({ commit }) {
-  //   commit(MutationTypes.DECREMENT_SET_GET_CONTENT);
-  // },
 }

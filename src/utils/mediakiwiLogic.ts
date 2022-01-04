@@ -32,7 +32,10 @@ export const mediakiwiLogic = {
       description: response.list?.description ? response.list?.description : "",
       settingsUrl: response.list?.settingsUrl
     }
-    store.dispatch(ContentTypes.SET_PAGE, localPage);
+    
+    if (localPage) {
+      store.dispatch(ContentTypes.SET_PAGE, localPage);
+    }
     
     if (response.list && response.list.grids) {
       store.dispatch(ContentTypes.SET_GRIDS, response.list?.grids);
@@ -49,7 +52,9 @@ export const mediakiwiLogic = {
     if (response.list && response.list.forms) {
       store.dispatch(ContentTypes.SET_BUTTONS, response.list?.forms);
     }
-    // store.dispatch("setViews", response.views);
+    // if (response.list && response.list.views) {
+    //   store.dispatch("setViews", response.list);
+    // }
   },
   /** Creates a @type {PostMediakiwiRequestModel} from the altered data in the vuex store */
   getMediakiwiRequestForButtonActions(url: string): PostMediakiwiRequestModel {
@@ -59,7 +64,6 @@ export const mediakiwiLogic = {
       url
     }
     return request;
-    //store.dispatch(ContentTypes.POST_CONTENT, request);
   },
   /** Fill the sublist select based on the referId */
   fillSublistSelect(referId: string, fields: Field[]) {

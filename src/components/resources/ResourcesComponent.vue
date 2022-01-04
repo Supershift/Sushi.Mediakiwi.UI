@@ -42,7 +42,7 @@ export default defineComponent({
           ""
         );
         script.type = "text/javascript";
-        if (resource.type === ResourceTypes.script) {
+        if (resource.type !== ResourceTypes.script) {
           script.innerHTML = resource.sourceCode
             ? resource.sourceCode
             : "";
@@ -116,7 +116,7 @@ export default defineComponent({
     function addHtml(resource: ResourceModel) {
       return new Promise((resolve) => {
         // set the innerHTML value to the sourceCode of the resource
-        innerHTML.value = resource.sourceCode;
+        innerHTML.value += resource.sourceCode;
 
         // Wait the the painting is done! before we continue
         nextTick(() => {

@@ -56,15 +56,12 @@ export default defineComponent({
   position: relative;
   text-align: center;
   width: 100%;
-  > a {
-    padding-bottom: 25px;
-  }
   .sub {
     display: none;
     padding: 0;
     border-radius: 2px;
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + -1px);
     left: 0;
     float: left;
     box-sizing: border-box;
@@ -125,6 +122,7 @@ export default defineComponent({
   cursor: default;
   > a {
     cursor: default;
+    pointer-events: none;
   }
 }
 @media (min-width: 786px) {

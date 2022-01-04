@@ -38,18 +38,11 @@ axiosInstance.interceptors.response.use(
   function (response) { 
     return response;
 }, function (err) {
-  /* eslint no-console:0*/
-  console.log(err);
-  
-  if (err && err.response && err.response.status !== serverCodes.OK) {
     store.dispatch("clearCache");
     router.push("/login");
     store.dispatch(UITypes.SET_NOTIFICATION, { message: "Your Session might have expired, please login to continue.", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
     return Promise.reject(err)
-  } else {
-    return Promise.reject(err);
-  }
-})
+});
 
 export const authenticationAPIService = {
   // Authentication
