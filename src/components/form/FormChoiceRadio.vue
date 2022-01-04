@@ -1,12 +1,12 @@
 <template>
   <div
-    v-if="field.options && field.options.items"
+    v-if="field.options && field.options"
     :class="radioContainerClasses">
     <label v-if="undefinedCheck(field.prefix)">{{
       undefinedCheck(field.prefix)
     }}</label>
     <span
-      v-for="option in field.options.items"
+      v-for="option in field.options"
       :key="fieldID(option)">
       <input
         :id="fieldID(option)"

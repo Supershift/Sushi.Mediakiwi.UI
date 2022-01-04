@@ -26,16 +26,12 @@ export const serverCodes = {
   GATEWAY_TIMEOUT: 504
 }
 
-const CancelToken = axios.CancelToken;
-const cancelSource = CancelToken.source();
-
 // Interceptor for handling calls to the API
 const axiosInstance = axios.create({
   baseURL: `${process.env.VUE_APP_BASE_API}`,
   headers: {
     "Content-Type": "application/json",
-  },
-  cancelToken: cancelSource.token
+  }
 });
 
 axiosInstance.interceptors.response.use(
@@ -204,7 +200,10 @@ export const contentAPIService = {
   postContentMediakiwiAPI(request: PostContentMediakiwiRequestModel, url: string) {
     const config = {
       withCredentials: true,
-      headers: { "original-url": url }
+      headers: { 
+        "original-url": url,
+        "Content-Type": "multipart/form-data",
+      }
     };
     return new Promise((resolve, reject) => {
       axiosInstance.post("content/PostContent", config)
@@ -214,7 +213,6 @@ export const contentAPIService = {
         }
       })
       .catch((err) => {
-
         reject(err);
       })
     });

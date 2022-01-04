@@ -198,7 +198,7 @@
 /// @require $breakpoints
 @mixin col {
     .col {
-        flex: 1 0 0%;
+        flex: 1 0 20%;
         @content;
     }
 }

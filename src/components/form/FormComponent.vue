@@ -1,8 +1,18 @@
 <template>
-  <section>
+  <form method="post" enctype="multipart/form-data" action="//mediakiwi/digital_assets/stock_inbox">
     <div class="container" v-if="forms">
-      <div class="row" v-for="formRow in forms" :key="formRow">
-        <div class="col" v-if="formRow.fields">
+      <div class="" v-for="formRow in forms" :key="formRow">
+        <div v-if="formRow.buttons && isTopSection" class="row" >
+          <div class="col">
+            <component
+              :is="checkVueType(field)"
+              v-for="field in formRow.buttons"
+              :key="field.propertyName"
+              :field="field"
+              @onclick="handleButtonClicked" />
+          </div>
+        </div>
+        <div class="row" v-if="formRow.fields">
           <template v-for="field in formRow.fields">
               <component
                 :is="checkVueType(field)"
@@ -68,23 +78,27 @@
               </template>
             </template>
           </div>
-          <div v-if="formRow.buttons">
-          <component
-              :is="checkVueType(field)"
-              v-for="field in formRow.buttons"
-              :key="field.propertyName"
-              :field="field"
-              @onclick="handleButtonClicked" />
-          </div>
+          <div v-if="formRow.buttons && !isTopSection" class="row" >
+            <div class="col">
+              <component
+                :is="checkVueType(field)"
+                v-for="field in formRow.buttons"
+                :key="field.propertyName"
+                :field="field"
+                @onclick="handleButtonClicked" />
+            </div>
+        </div>
       </div>
     </div>
-  </section>
+  </form>
 </template>
 
 <script lang="ts">
 import {
+  computed,
   defineComponent,
   PropType,
+  ref,
 } from "vue";
 import {Field, Form} from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 import FormRowModel from "../../models/FormRowModel";
@@ -111,6 +125,10 @@ import FormSublistSelect from "./FormSublistSelect.vue";
 import FormTooltip from "./FormTooltip.vue"
 import {OutputExpressionType} from "@/models/Mediakiwi/OutputExpressionType";
 import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
+import { store } from "../../store";
+import { ContentTypes } from "../../store/modules/Content";
+import router from "../../router";
+import { ButtonSectionType } from "../../models/Mediakiwi/ButtonSectionType";
 
 export default defineComponent({
   name: "FormComponent",
@@ -150,6 +168,12 @@ export default defineComponent({
     "button-clicked",
   ],
   setup(props, context) {
+    const isTopSection = computed(() => {
+      if (props.forms && props.forms.buttons) {
+        return props.forms?.buttons.some((b) => b.section === ButtonSectionType.top)
+      }
+      return false;
+    });
     function checkVueType(
       field: Field
     ): string {
@@ -235,7 +259,8 @@ export default defineComponent({
       e: Event,
       field: Field
     ) {
-      context.emit("button-clicked", e, field);
+      //context.emit("button-clicked", e, field);
+      //store.dispatch(ContentTypes.POST_CONTENT,"")
     }
     function hideLabelForType(vueType: string) {
       return vueType ===
@@ -369,6 +394,7 @@ export default defineComponent({
     // }
 
     return {
+      isTopSection,
       expressCell,
       getColspan,
       showField,
@@ -406,7 +432,8 @@ export default defineComponent({
       color: #000;
     }
     .col-xl {
-      flex: 2 0 40%
+      flex: 2 0 75%;
+      padding: 5px 0;
     }
   }
   .input-text {
@@ -417,9 +444,12 @@ export default defineComponent({
   .container {
     .row {
       flex-direction: row;
-      .col {
+      .col, .col-xl {
         &.half {
           width: 40%;
+        }
+        &.full {
+          width: 90%;
         }
       }
     }

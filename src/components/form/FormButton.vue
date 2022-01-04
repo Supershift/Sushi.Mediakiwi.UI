@@ -5,10 +5,10 @@
     :href="field?.url"
     :aria-label="field?.helpText"
     :title="field?.helpText"
+    :id="field?.propertyName"
     :disabled="
       field?.isReadOnly
     ">
-    <!-- <fa :icon="buttonIconChoice" class="btn-icon" /> -->
     {{ field?.title }}
   </a>
   <button
@@ -17,10 +17,11 @@
     @click.prevent="handleClicked"
     :title="field?.helpText"
     :aria-label="field?.helpText"
+    :id="field?.propertyName"
+    :value="field?.title"
     :disabled="
       field?.isReadOnly
     ">
-    <!-- <fa :icon="buttonIconChoice" class="btn-icon" /> -->
     {{ field?.title }}
   </button>
 
@@ -79,5 +80,10 @@ export default defineComponent({
 .btn-icon {
   padding-right: 15px;
 }
-
+.right {
+  margin-left: 10px;
+}
+.left {
+  margin-right: 10px;
+}
 </style>

@@ -40,7 +40,11 @@
         </tbody>
       </table>
       <menu class="pager">
-        <li>{{ totalItems }}</li>
+        <li>
+          <CustomButton 
+            :button="allButton"
+            @button-clicked="handleShowAll"/>
+            {{ totalItems }}</li>
         <li>{{ gridItemsPerPage }}</li>
         <li>
           <CustomButton 
@@ -89,9 +93,13 @@ export default defineComponent({
   },
   components: { CustomButton, ButtonListComponent },
   setup(props) {
-    const showNext = computed(() => Math.round(props.pagination.totalItems / props.pagination.itemsPerPage) < props.pagination.currentPage);
-    const showPrev = computed(() => Math.round(props.pagination.totalItems / props.pagination.itemsPerPage) > props.pagination.currentPage);
     let setCount = 1;
+    const maxPages = computed(() => {
+      return Math.round(props.pagination.totalItems / props.pagination.itemsPerPage);
+    });
+    const showNext = computed(() => setCount < Math.round(props.pagination.totalItems / props.pagination.itemsPerPage) && setCount !== Math.round(props.pagination.totalItems / props.pagination.itemsPerPage));
+    const showPrev = computed(() => setCount <= Math.round(props.pagination.totalItems / props.pagination.itemsPerPage) && setCount !== 1);
+
     const gridLayerData = computed(() => {
       if (
         props.grid &&
@@ -109,10 +117,6 @@ export default defineComponent({
       return null;
     });
 
-    const maxPages = computed(() => {
-      return Math.round(props.pagination.totalItems / props.pagination.itemsPerPage);
-    });
-
     const totalItems = computed(() => {
       return `${props.pagination.totalItems} results`;
     });
@@ -122,18 +126,20 @@ export default defineComponent({
     });
 
     const currentPage = computed(() => {
-      return props.pagination.totalItems <= props.pagination.itemsPerPage ? `${props.pagination.currentPage} / ${props.pagination.currentPage}` : `${props.pagination.currentPage}/ ${maxPages.value}` ;
+      return props.pagination.totalItems <= props.pagination.itemsPerPage ? `${setCount} / ${props.pagination.currentPage}` : `${setCount}/ ${maxPages.value}` ;
     });
 
     function handlePrevious() {
-      if (showPrev.value) {
-        store.dispatch(ContentTypes.GET_CONTENT, router.currentRoute.value.fullPath+"?Set="+ setCount--)
-      }
+      setCount--;
+      store.dispatch(ContentTypes.GET_CONTENT, router.currentRoute.value.fullPath+"?Set="+ setCount)
     }
     function handleNext() {
-      if (showNext.value) {
-        store.dispatch(ContentTypes.GET_CONTENT,  router.currentRoute.value.fullPath+"?Set="+ setCount++)
-      }
+      setCount++;
+      store.dispatch(ContentTypes.GET_CONTENT,  router.currentRoute.value.fullPath+"?Set="+ setCount)
+    }
+    function handleShowAll() {
+      setCount = 1;
+      store.dispatch(ContentTypes.GET_CONTENT,  router.currentRoute.value.fullPath+"?Set=all")
     }
     const filteredRows = computed((): Row[] => {
       if (props.grid && props.grid.rows) {
@@ -206,6 +212,15 @@ export default defineComponent({
       readOnly: false,
     });
 
+    const allButton = ref<ButtonModel>({
+      customClass: "grid-btn btn-first",
+      buttonIcon: "th-list",
+      disabled: false,
+      buttondName: "nxt",
+      value: " show all",
+      readOnly: false,
+    });
+
     return {
       gridLayerData,
       gridTitle,
@@ -217,10 +232,12 @@ export default defineComponent({
       currentPage,
       prevButton,
       nextButton,
+      allButton,
       showNext,
       showPrev,
       handlePrevious,
       handleNext,
+      handleShowAll,
       filteredColumns,
       filteredRows,
     };
@@ -238,6 +255,9 @@ export default defineComponent({
   }
   .btn-last {
     margin-right: 0;
+  }
+  .btn-first {
+    margin-left: 0;
   }
   table.selections {
     width: 100%;
@@ -295,8 +315,7 @@ export default defineComponent({
     justify-content: space-between;
     width: 100%;
     margin-right: 0;
-    padding: 10px 20px 0;
-    margin-left: 4px;
+    padding: 10px 0;
     border-top: solid 1px #dcdee0;
     text-align: center;
     margin-top: 0;
