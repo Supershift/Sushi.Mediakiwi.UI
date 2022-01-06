@@ -1,0 +1,40 @@
+trigger:
+  branches:
+    include:
+    - main
+stages:
+- stage: __default
+  jobs:
+  - job: Job
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '10.x'
+      displayName: 'Install Node.js'
+    - 
+- task: CmdLine@2
+  displayName: 'npm config set @fortawesome:registry'
+  inputs:
+    script: |
+      npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+      npm config set "//npm.fontawesome.com/:_authToken" $(FONTAWESOME_NPM_AUTH_TOKEN)
+
+- script: |
+    npm install
+    npm run build
+  displayName: 'npm install and build'
+
+- task: CmdLine@2
+  displayName: 'npm config delete @fortawesome'
+  inputs:
+    script: |
+      npm config delete "@fortawesome:registry:registry
+    - task: CmdLine@2
+      displayName: 'npm install and build'
+      inputs:
+        script: |
+          npm install
+          npm run build
+
