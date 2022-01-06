@@ -17,7 +17,8 @@
       :class="customDropdownClasses"
       :disabled="field.disabled || field.readOnly"
       ref="dropdown"
-      @input="handleChange" />
+      @input="handleChange"
+      @change="handleChange" />
     <label v-if="undefinedCheck(field.suffix)">
       {{ undefinedCheck(field.suffix) }}
     </label>
@@ -53,7 +54,7 @@ export default defineComponent({
   components: {
     dropdown: Dropdown,
   },
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     let valueRef = ref<Field>(props.field);
     const customDropdownClasses = computed(() => [
@@ -92,16 +93,15 @@ export default defineComponent({
         (r) => r.id === valueRef.value.value
       );
 
-    function handleChange(e?: Event) {
+    function handleChange() {
       if (
         props.field.event !==
         MediakiwiJSEventType.none
       ) {
         context.emit(
-          "on-change",
-          e,
-          props.field,
-          selectedValueRef.value.id
+          "value-changed",
+          selectedValueRef.value.id,
+          props.field
         );
       }
     }

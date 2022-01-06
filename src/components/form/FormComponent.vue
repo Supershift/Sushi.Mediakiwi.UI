@@ -81,7 +81,7 @@
               </template>
             </template>
           </div>
-          <div v-if="formRow.buttons && !isTopSection" class="row" >
+          <div v-if="formRow.buttons && !isTopSection" class="row">
             <div class="col">
               <component
                 :is="checkVueType(field)"
@@ -171,7 +171,6 @@ export default defineComponent({
     "button-clicked",
   ],
   setup(props, context) {
-    const uxForm = ref(null);
     //TODO: Finish implementing a parent reference so that we can post it when clicking on a button
     const parentForms = ref<Array<Form>>(props.forms);
     function isTopSection(form: Form) {
@@ -296,8 +295,6 @@ export default defineComponent({
     }
 
     return {
-      isTopSection,
-      uxForm,
       parentForms,
       getIndex,
       expressCell,
@@ -311,6 +308,8 @@ export default defineComponent({
       hideLabelForType,
       isHalfField,
       checkVueType,
+      isTopSection,
+      clean,
     };
   },
 });
