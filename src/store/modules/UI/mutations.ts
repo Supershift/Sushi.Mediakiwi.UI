@@ -10,7 +10,7 @@ export type Mutations<S = UIState> = {
   [MutationTypes.SET_OPEN_IN_FRAME](state: S, payload: boolean): void,
   [MutationTypes.SET_NOTIFICATION](state: S, payload: NotificationModel): void,
   [MutationTypes.TOGGLE_NOTIFICATION](state: S, payload: boolean): void,
-  [MutationTypes.SET_LOADING](state: S, payload: boolean): void,
+  [MutationTypes.SET_LOADING](state: S, payload?: boolean): void,
 }
 
 export const mutations: MutationTree<UIState> & Mutations = {
@@ -36,7 +36,7 @@ export const mutations: MutationTree<UIState> & Mutations = {
     [MutationTypes.SET_LOADING](state: UIState, payload: boolean): void {
       state.mediakiwiLoading = payload;
     },
-    [MutationTypes.TOGGLE_NOTIFICATION](state: UIState, payload: boolean): void {
+    [MutationTypes.TOGGLE_NOTIFICATION](state: UIState): void {
         state.notification = null;
     },
 }

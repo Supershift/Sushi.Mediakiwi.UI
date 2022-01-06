@@ -2,7 +2,6 @@ import { FieldValidationType, FieldValidationTypeMessage } from "@/components/fo
 import { InjectionKey } from "vue";
 import { createLogger, createStore, Store } from "vuex";
 import { BaseContentModel } from "../models/BaseContentModel";
-import PageModel from "../models/PageModel";
 import {Navigation} from "./modules/Navigation";
 import  {Authentication}  from "./modules/Authentication";
 import {  UI } from "./modules/UI";

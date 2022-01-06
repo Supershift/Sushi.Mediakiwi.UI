@@ -1,4 +1,3 @@
-import FieldModel from "@/models/Mediakiwi/FieldModel";
 import LayerConfigurationModel from "@/models/Mediakiwi/LayerConfigurationModel";
 import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
 import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
@@ -8,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "@vue/runtime-dom";
 import MediakiwiModalWrapper from "./../components/modal/MediakiwiModalWrapper.vue";
 import { ContentTypes } from "@/store/modules/Content";
-import { ContentType } from "@/models/Mediakiwi/ContentType";
 import { Field } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 
 declare global {

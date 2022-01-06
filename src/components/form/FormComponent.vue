@@ -26,8 +26,8 @@
                 :field="field"
                 @value-changed="handleFieldsChanged(field)"/>
               <template v-else>
-
-                <div class="col"
+                <div
+                  class="col"
                   v-show="showField(field)"
                   :key="field.propertyName"
                   :class="
@@ -47,8 +47,8 @@
                     {{ field.title }}
                   </label>
                 </div>
-
-                <div class="col-xl"
+                <div
+                  class="col-xl"
                   :key="field.propertyName"
                   :class="
                     expressCell(field.expression)

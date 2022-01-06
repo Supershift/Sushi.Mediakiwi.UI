@@ -39,7 +39,7 @@ export default defineComponent({
     },
   },
   emits: ["notification-action"],
-  setup(props, context) {
+  setup(props) {
     const waitForFadeOut = 5000;
     const notification = computed(
       () => store.getters["UI/notification"]

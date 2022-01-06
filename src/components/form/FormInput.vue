@@ -113,7 +113,7 @@ export default defineComponent({
       }
       return icon;
     });
-    function handleChange(e: Event) {
+    function handleChange() {
       context.emit("value-changed", inputText.value, props.field);
     }
     return {
