@@ -1,6 +1,6 @@
-import { Form } from "./GetContentMediakiwiResponseModel";
+import { Form, GetContentMediakiwiResponseModel } from "./GetContentMediakiwiResponseModel";
 
-export interface PostContentMediakiwiResponseModel {
+export interface PostContentMediakiwiResponseModel extends GetContentMediakiwiResponseModel {
     currentSiteId: number,
     postedField: string,
     forms: Form[],

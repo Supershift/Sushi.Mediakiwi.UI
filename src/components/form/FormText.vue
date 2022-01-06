@@ -12,7 +12,8 @@
       :id="fieldID"
       :aria-label="field.helpText"
       :title="field.helpText"
-      :disabled="field.disabled || field.readOnly" />
+      :disabled="field.disabled || field.readOnly"
+      @input="handleChange"/>
     <label v-if="undefinedCheck(field.suffix)">{{
       undefinedCheck(field.suffix)
     }}</label>
@@ -45,7 +46,7 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     let valueRef = ref(props.field?.value);
     const fieldID = computed(
@@ -70,10 +71,10 @@ export default defineComponent({
 
     function handleChange(e?: Event) {
       context.emit(
-        "on-change",
-        e,
+        "value-changed",
+        valueRef.value,
         props.field,
-        valueRef
+
       );
     }
 

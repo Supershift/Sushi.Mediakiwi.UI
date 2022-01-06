@@ -9,6 +9,8 @@ import { MutationTypes } from "./mutation-types"
 import { ResourceModel, ButtonModel, Field, GetContentMediakiwiResponseModel, Grid, Form } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
 import PageModel from "@/models/PageModel"
 import { PostContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/PostContentMediakiwiResponseModel"
+import { PostContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/PostContentMediakiwiRequestModel"
+import router from "@/router"
 
 type AugmentedActionContext = {
   commit<K extends keyof Mutations>(
@@ -52,7 +54,7 @@ export interface Actions {
   ): void,
   [ActionTypes.POST_CONTENT](
     { commit }: AugmentedActionContext,
-    payload: string
+    payload: PostContentMediakiwiRequestModel,
   ): Promise<void>,
   [ActionTypes.SET_POST_CONTENT](
     { commit }: AugmentedActionContext,
@@ -78,10 +80,10 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
       });
   },
   [ActionTypes.POST_CONTENT]({ commit }, payload) {
-    const siteID = store.state.currentSiteID;
+    const siteID = store.getters["navigation/currentSiteId"];
     const request = {
-      data: { CurrentSiteID: siteID },
-      url: payload
+      data: {...payload, CurrentSiteId: siteID },
+      url: router.currentRoute.value.fullPath,
     };
     store.dispatch(UITypes.SET_LOADING, true);
     return contentAPIService.postContentMediakiwiAPI(request.data, request.url)

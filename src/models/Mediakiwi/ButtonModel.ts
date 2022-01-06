@@ -1,4 +1,4 @@
-import { ButtonRequestMethodType } from "./ButtonRequestMethodType";
+// import { ButtonRequestMethodType } from "./ButtonRequestMethodType";
 import { ButtonTargetType } from "./ButtonTargetType";
 import FieldModel from "./FieldModel";
 import LayerConfigurationModel from "./LayerConfigurationModel";
@@ -21,5 +21,5 @@ export interface ButtonModel extends FieldModel {
   icon: string;
   iconTarget?: ButtonTargetType;
   layerConfiguration?: LayerConfigurationModel;
-  requestMethod?: ButtonRequestMethodType,
+  // requestMethod?: ButtonRequestMethodType,
 }

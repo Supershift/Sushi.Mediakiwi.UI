@@ -13,8 +13,9 @@
       :style="{
         'padding-left': `${paddingLeft}px`,
       }"
-      @keydown.enter="addTag(newTag)"
+      @keydown.prevent.enter="addTag(newTag)"
       @keydown.prevent.tab="addTag(newTag)"
+      @blur="addTag(newTag)"
       @keydown.delete="
         newTag.length ||
           removeTag(tags.length - 1)
@@ -24,8 +25,10 @@
       <option
         v-for="option in availableOptions"
         :key="option"
-        :value="option.name">
-        {{ option.name }}
+        :value="option.value"
+        @click.prevent="addTag(option.value)"
+        >
+        {{ option.text }}
       </option>
     </datalist>
 
@@ -34,8 +37,9 @@
         v-for="(tag, index) in tags"
         :key="tag"
         class="tag"
-        :class="{duplicate: tag === duplicate}">
-        {{ tag }}
+        :class="{duplicate: tag === duplicate}"
+        :title="displayName(tag)?.text">
+        {{ displayName(tag)?.value }}
         <button
           class="delete"
           @click="removeTag(index)">
@@ -49,7 +53,7 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import {
   ref,
   watch,
@@ -57,22 +61,33 @@ import {
   onMounted,
   computed,
   defineComponent,
+  PropType,
 } from "vue";
+
+interface TagsUI extends Window{
+  clientWidth: 0;
+  scrollWidth: 0;
+}
+import { Field, FieldOption } from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 export default defineComponent({
   name: "TagsInput",
   props: {
     field: { 
-      type: Object,
+      type: Object as PropType<Field>,
       required: true
     },
-    modelValue: {
-      type: Array,
+    fieldModel: {
+      type: Array as PropType<Array<string>>,
+      required: false,
       default: () => {
         return [];
       },
     },
-    options: {type: Array, required: false},
-    allowCustom: {type: Boolean, default: true},
+    options: {
+      type: Array as PropType<Array<FieldOption>>,
+      required: false
+    },
+    allowCustom: {type: Boolean, default: false},
     showCount: {type: Boolean, default: false},
   },
   emits: ["change-made"],
@@ -83,7 +98,7 @@ export default defineComponent({
     const radixNumber = 36;
     const startubstring = 7;
     // Tags
-    const tags = ref(props.modelValue);
+    const tags = ref<Array<string>>(props.fieldModel);
     const newTag = ref("");
     const id = Math.random()
       .toString(radixNumber)
@@ -93,25 +108,27 @@ export default defineComponent({
     );
 
     // handling duplicates
-    const duplicate = ref(null);
+    const duplicate = ref("");
     const oneSecond = 1000;
-    const handleDuplicate = (tag) => {
+    const handleDuplicate = (tag: string) => {
       duplicate.value = tag;
       setTimeout(
-        () => (duplicate.value = null),
+        () => (duplicate.value = ""),
         oneSecond
       );
       newTag.value = "";
     };
 
-    const addTag = (tag) => {
+    const addTag = (tag: string) => {
+            
       if (!tag) {
         return;
       } // prevent empty tag
       // only allow predefined tags when allowCustom is false
       if (
-        !props.allowCustom &&
-        !props.options.items.includes(tag)
+        props.allowCustom === false &&
+        props.options &&
+        props.options.find((o) => o.value === tag)
       ) {
         return;
       }
@@ -120,27 +137,30 @@ export default defineComponent({
         handleDuplicate(tag);
         return;
       }
-      tags.value.push(tag);
+      tags.value.push(tag.toUpperCase());
       newTag.value = ""; // reset newTag
     };
-    const removeTag = (index) => {
+    const removeTag = (index: number) => {
       tags.value.splice(index, 1);
     };
 
     // positioning and handling tag change
     const tenPadding = 10;
     const paddingLeft = ref(tenPadding);
-    const tagsUl = ref(null);
+    const tagsUl = ref<TagsUI>();
     const onTagsChange = () => {
+      if (tagsUl.value && tagsUl.value.scrollWidth && tagsUl.value.clientWidth) {
       // position cursor
       const extraCushion = 15;
       paddingLeft.value =
         tagsUl.value.clientWidth + extraCushion;
       // scroll to end of tags
-      tagsUl.value.scrollTo(
+        tagsUl.value.scrollTo(
         tagsUl.value.scrollWidth,
         0
       );
+      }
+      
       // emit value on tags change
       emit("change-made", tags.value);
     };
@@ -155,9 +175,16 @@ export default defineComponent({
         return false;
       }
       return props.options.filter(
-        (option) => !tags.value.includes(option)
+        (option: FieldOption) => !tags.value.includes(option.value)
       );
     });
+
+    function displayName(tagValue: string) {
+      if (props.options) {
+        return props.options.find((o: FieldOption) => o.value === tagValue);
+      }
+      return ""
+    }
 
     return {
       tags,
@@ -170,6 +197,7 @@ export default defineComponent({
       id,
       duplicate,
       tagsLength,
+      displayName,
     };
   },
 });
@@ -196,6 +224,8 @@ ul {
   color: white;
   white-space: nowrap;
   transition: 0.1s ease;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .tag-input {

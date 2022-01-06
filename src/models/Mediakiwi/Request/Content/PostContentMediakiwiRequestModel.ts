@@ -1,3 +1,7 @@
+import { Form } from "../../Response/Content/GetContentMediakiwiResponseModel";
+
 export interface PostContentMediakiwiRequestModel { 
-    CurrentSiteID: number;
+    currentSiteId: number;
+    postedField: string;
+    forms: Form[];
 }

@@ -21,9 +21,7 @@
           field.disabled || field.readOnly
         "
         @change="handleChange" />
-      <label :for="fieldID(option)">{{
-        option.text
-      }}</label>
+      <label class="" :for="fieldID(option)" v-html="option.text"/>
     </span>
     <label v-if="undefinedCheck(field.suffix)">{{
       undefinedCheck(field.suffix)
@@ -120,6 +118,8 @@ export default defineComponent({
 .radio-container {
   font-family: $font-primary;
   font-size: $font-size-l;
+  display: flex;
+  flex-direction: column;
   input {
     margin: 0;
     &:disabled {

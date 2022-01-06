@@ -1,15 +1,16 @@
 <template>
-  <form method="post" enctype="multipart/form-data" action="//mediakiwi/digital_assets/stock_inbox">
-    <div class="container" v-if="forms">
-      <div class="" v-for="formRow in forms" :key="formRow">
-        <div v-if="formRow.buttons && isTopSection" class="row" >
+  <form id="uxForm" ref="uxForm">
+    <div class="container" v-if="parentForms">
+      <div class="" v-for="formRow in parentForms" :key="formRow">
+        <div v-if="formRow.buttons && isTopSection(formRow)" class="row" >
           <div class="col">
             <component
               :is="checkVueType(field)"
               v-for="field in formRow.buttons"
               :key="field.propertyName"
               :field="field"
-              @onclick="handleButtonClicked" />
+              @onclick="handleSubmit" 
+              @button-clicked="handleSubmit"/>
           </div>
         </div>
         <div class="row" v-if="formRow.fields">
@@ -22,8 +23,10 @@
                 "
                 :key="field.propertyName"
                 v-model="field.value"
-                :field="field" />
+                :field="field"
+                @value-changed="handleFieldsChanged(field)"/>
               <template v-else>
+
                 <div class="col"
                   v-show="showField(field)"
                   :key="field.propertyName"
@@ -44,6 +47,7 @@
                     {{ field.title }}
                   </label>
                 </div>
+
                 <div class="col-xl"
                   :key="field.propertyName"
                   :class="
@@ -59,7 +63,8 @@
                       :key="field.propertyName"
                       @onclick="
                         handleButtonClicked
-                      " />
+                      "
+                      @button-clicked="handleButtonClicked" />
                   <component
                     :is="
                       checkVueType(field) ===
@@ -71,9 +76,7 @@
                     :key="field"
                     :field="field"
                     v-model="field.value"
-                    @on-change="
-                      handleFieldsChanged
-                    " />
+                    @value-changed="handleFieldsChanged" />
                 </div>
               </template>
             </template>
@@ -85,7 +88,8 @@
                 v-for="field in formRow.buttons"
                 :key="field.propertyName"
                 :field="field"
-                @onclick="handleButtonClicked" />
+                @onclick="handleSubmit" 
+                @button-clicked="handleSubmit"/>
             </div>
         </div>
       </div>
@@ -95,7 +99,6 @@
 
 <script lang="ts">
 import {
-  computed,
   defineComponent,
   PropType,
   ref,
@@ -125,16 +128,16 @@ import FormSublistSelect from "./FormSublistSelect.vue";
 import FormTooltip from "./FormTooltip.vue"
 import {OutputExpressionType} from "@/models/Mediakiwi/OutputExpressionType";
 import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
+import { ButtonSectionType } from "../../models/Mediakiwi/ButtonSectionType";
 import { store } from "../../store";
 import { ContentTypes } from "../../store/modules/Content";
-import router from "../../router";
-import { ButtonSectionType } from "../../models/Mediakiwi/ButtonSectionType";
+import {PostContentMediakiwiRequestModel} from "../../models/Mediakiwi/Request/Content/PostContentMediakiwiRequestModel";
 
 export default defineComponent({
   name: "FormComponent",
   props: {
     forms: {
-      type: Object as PropType<Form>,
+      type: Object as PropType<Array<Form>>,
       required: true,
     }
   },
@@ -168,12 +171,15 @@ export default defineComponent({
     "button-clicked",
   ],
   setup(props, context) {
-    const isTopSection = computed(() => {
-      if (props.forms && props.forms.buttons) {
-        return props.forms?.buttons.some((b) => b.section === ButtonSectionType.top)
+    const uxForm = ref(null);
+    //TODO: Finish implementing a parent reference so that we can post it when clicking on a button
+    const parentForms = ref<Array<Form>>(props.forms);
+    function isTopSection(form: Form) {
+      if (props.forms && form.buttons) {
+        return form.buttons.some((b) => b.section === ButtonSectionType.top)
       }
       return false;
-    });
+    }
     function checkVueType(
       field: Field
     ): string {
@@ -230,6 +236,9 @@ export default defineComponent({
 
       return true;
     }
+    function getIndex(list: Field[], propertyName: string ) {
+      return list.findIndex((el) => el.propertyName === propertyName)
+    }
     function handleToggle(section: SectionModel) {
       context.emit("toggle", section);
     }
@@ -243,25 +252,34 @@ export default defineComponent({
     ) {
       context.emit("remove-fields", fields);
     }
+    function handleSubmit(
+      field: Field
+    ) { 
+      const siteID: number = store.getters["Navigation/currentSiteID"];
+      const request: PostContentMediakiwiRequestModel = {
+        currentSiteId: siteID,
+        postedField: field.title,
+        forms: parentForms.value
+      }      
+      store.dispatch(ContentTypes.POST_CONTENT, request)
+    }
     function handleFieldsChanged(
-      e: Event,
+      value: string,
       field: Field,
-      value: string
     ) {
       // Update the field's value
-      field.value = value;
-
+      //field.value = value;
+      parentForms.value.forEach((element: Form) => {
+        if (element && element.fields) {
+          element.fields[getIndex(element.fields, field.propertyName)].value = value;
+        }
+      });      
+      
       if (field.isAutoPostback) {
-        // TODO trigger API
+        handleSubmit(field);
       }
     }
-    function handleButtonClicked(
-      e: Event,
-      field: Field
-    ) {
-      //context.emit("button-clicked", e, field);
-      //store.dispatch(ContentTypes.POST_CONTENT,"")
-    }
+    
     function hideLabelForType(vueType: string) {
       return vueType ===
         MediakiwiFormVueType.formButton.toString()
@@ -277,124 +295,11 @@ export default defineComponent({
         : " long";
     }
 
-    // Create the collection of rows
-    // with fields sorted according to their cofiguration
-    /* eslint complexity:["error", 22]*/
-    // let rowArray = ref<Array<FormRowModel>>([]);
-
-    // let currentFormSection = "baseSection";
-    // const cellLimit = 2;
-
-    // // create a new row
-    // let currentRow = ref<FormRowModel>();
-    
-    // if (props.form && props.form.fields) {
-    //   props.form.fields.forEach((field: Field) => {
-    //     if (!field.formSection && props.form.fields) {
-    //       if (
-    //         field.vueType ===
-    //         MediakiwiFormVueType.formSection
-    //       ) {
-    //         currentFormSection = `${clean(
-    //           field.title
-    //         )}_${props.form.fields.indexOf(field)}`;
-    //       }
-    //       field.formSection = currentFormSection;
-    //     }
-
-    //     // Check if there is a notification for this field
-    //     if (
-    //       props.notifications &&
-    //       props.notifications.length
-    //     ) {
-    //       let notification =
-    //         props.notifications.find(
-    //           (message: MessageModel) => {
-    //             return (
-    //               message.propertyName ===
-    //               field.propertyName
-    //             );
-    //           }
-    //         );
-    //       //field.error = notification;
-    //     }
-
-    //     // is this a full width field?
-    //     if (
-    //       field.expression ===
-    //       OutputExpressionType.full
-    //     ) {
-    //       // add the current row object to the list
-    //       if (currentRow.value && currentRow.value.fields) {
-    //         rowArray.value.push(currentRow.value);
-    //       }
-    //       // create a new row
-    //       currentRow.value = {fields: []};
-    //       // add push it to the list
-    //       currentRow.value.fields.push(field);
-    //     } else {
-    //       if (currentRow.value) {
-    //         const mapped = currentRow.value.fields.map(
-    //             (mappedField) =>
-    //               mappedField.vueType
-    //           ).every(
-    //             (val) =>
-    //               val ===
-    //               MediakiwiFormVueType.formButton
-    //           );
-    //       if (
-    //         currentRow.value.fields.length >=
-    //           cellLimit &&
-    //         mapped
-    //       ) {
-    //         if (
-    //           currentRow.value &&
-    //           field.vueType !==
-    //           MediakiwiFormVueType.formButton
-    //         ) {
-    //           // currentRow.isButtonRow = true;
-    //           rowArray.value.push(
-    //             currentRow.value
-    //           );
-    //           // create a new row
-    //           currentRow.value = {fields: []};
-    //         }
-    //       }
-    //       currentRow.value.fields.push(field);
-    //       }
-    //     }
-
-    //     if (currentRow.value) {
- 
-    //     // Check if we need to add the current row the rowcollection
-    //     // When the current field is fullwidth
-    //     // or the fields collection for the currentrow exceed the limit?
-    //     let addRows = false;
-    //     if (
-    //       currentRow.value.fields &&
-    //       field.expression ===
-    //         OutputExpressionType.full ||
-    //       currentRow.value.fields.length >=
-    //         cellLimit
-    //     ) {
-    //       addRows = true;
-    //     }
-
-    //     if (
-    //       currentRow.value.fields &&
-    //       addRows &&
-    //       currentRow.value.fields.length
-    //     ) {
-    //       // currentRow.isButtonRow = currentRow.fields.map((r) => r.vueType).every((val) => val === MediakiwiFormVueType.formButton);
-    //       rowArray.value.push(currentRow.value);
-    //       currentRow.value = {fields: []};
-    //     }
-    //     }
-    //   });
-    // }
-
     return {
       isTopSection,
+      uxForm,
+      parentForms,
+      getIndex,
       expressCell,
       getColspan,
       showField,
@@ -402,7 +307,7 @@ export default defineComponent({
       handleAddFields,
       handleRemoveFields,
       handleFieldsChanged,
-      handleButtonClicked,
+      handleSubmit,
       hideLabelForType,
       isHalfField,
       checkVueType,

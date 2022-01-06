@@ -26,7 +26,7 @@
         :disabled="
           field.disabled || field.readOnly
         "
-        @change="handleChange" />
+        @input="handleChange" />
     </label>
     <label
       v-if="undefinedCheck(field.suffix)"
@@ -113,8 +113,8 @@ export default defineComponent({
       }
       return icon;
     });
-    function handleChange() {
-      context.emit("value-changed");
+    function handleChange(e: Event) {
+      context.emit("value-changed", inputText.value, props.field);
     }
     return {
       id,

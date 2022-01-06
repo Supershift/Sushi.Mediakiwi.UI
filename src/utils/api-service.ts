@@ -12,6 +12,7 @@ import { GetContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Co
 import { GetNavigationResponseModel } from "@/models/Mediakiwi/Response/Navigation/GetNavigationResponseModel";
 import { GetSitesResponseModel } from "@/models/Mediakiwi/Response/Navigation/GetSitesResponseModel";
 import router from "@/router";
+import { PostContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/PostContentMediakiwiResponseModel";
 
 export const serverCodes = {
   OK: 200,
@@ -26,15 +27,7 @@ export const serverCodes = {
   GATEWAY_TIMEOUT: 504
 }
 
-// Interceptor for handling calls to the API
-const axiosInstance = axios.create({
-  baseURL: `${process.env.VUE_APP_BASE_API}`,
-  headers: {
-    "Content-Type": "application/json",
-  }
-});
-
-axiosInstance.interceptors.response.use(
+axios.interceptors.response.use(
   function (response) { 
     return response;
 }, function (err) {
@@ -42,6 +35,14 @@ axiosInstance.interceptors.response.use(
     router.push("/login");
     store.dispatch(UITypes.SET_NOTIFICATION, { message: "Your Session might have expired, please login to continue.", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
     return Promise.reject(err)
+});
+
+// Interceptor for handling calls to the API
+const axiosInstance = axios.create({
+  baseURL: `${process.env.VUE_APP_BASE_API}`,
+  headers: {
+    "Content-Type": "application/json",
+  }
 });
 
 export const authenticationAPIService = {
@@ -190,16 +191,15 @@ export const contentAPIService = {
       })
     });
   },
-  postContentMediakiwiAPI(request: PostContentMediakiwiRequestModel, url: string) {
+  postContentMediakiwiAPI(request: PostContentMediakiwiRequestModel, url: string): Promise<PostContentMediakiwiResponseModel> {
     const config = {
       withCredentials: true,
       headers: { 
         "original-url": url,
-        "Content-Type": "multipart/form-data",
       }
     };
     return new Promise((resolve, reject) => {
-      axiosInstance.post("content/PostContent", config)
+      axiosInstance.post<any>("content/PostContent", request, config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
           resolve(response.data);
@@ -211,91 +211,3 @@ export const contentAPIService = {
     });
   },
 }
-// export const apiService = {
-//   // Old API
-//   fetchMediakiwiAPI(url: string) {
-//     const requestBody: GetMediakiwiRequestModel = {
-//       channel: store.getters.channel,
-//       url
-//     };
-
-//     return new Promise((resolve, reject) => {
-//       // Start the loader
-//       store.dispatch(UITypes.SET_LOADING, true);
-
-//       store.dispatch("getMediakiwiAPI", requestBody).then((response: MediakiwiResponseModel) => {
-//         if (response) {
-//           // Handle response
-//           mediakiwiLogic.putResponseToStore(response)
-
-//           // finally resolve the response
-//           store.dispatch(UITypes.SET_LOADING, false);
-//           resolve(response)
-//         }
-//         else {
-//           store.dispatch(UITypes.SET_LOADING, false);
-//           reject(response);
-//         }
-//       }).catch((error: unknown) => {
-//         // reject the response
-//         store.dispatch(UITypes.SET_LOADING, false);
-//         reject(error);
-//       });
-//     });
-//   },
-//   postMediakiwiAPI(request: PostMediakiwiRequestModel, requestMethod: ButtonRequestMethodType = ButtonRequestMethodType.post) {
-//     request.url = router.currentRoute.value.fullPath
-
-//     // determine the request method
-//     let method = "";
-//     switch (requestMethod) {
-//       case ButtonRequestMethodType.delete:
-//         method = "deleteMediakiwiAPI";
-//         break;
-//       case ButtonRequestMethodType.put:
-//         method = "putMediakiwiAPI";
-//         break;
-//       default:
-//         method = "postMediakiwiAPI";
-//         break;
-//     }
-
-//     return new Promise((resolve, reject) => {
-//       // Start the loader
-//       store.dispatch(UITypes.SET_LOADING, true);
-
-//       // call the POST method
-//       const referId = <string>router.currentRoute.value.query.referid;
-//       store.dispatch(method, request).then((response: MediakiwiResponseModel) => {
-//         if (response) {
-//           if (response.closeLayer && referId) {
-//             // trigger the mediakiwi logic on the parent window
-//             window.parent.mediakiwiLogic.fillSublistSelect(referId, response.fields);
-//             window.parent.mediakiwiLogic.closeLayer();
-//           }
-
-//           // Handle response
-//           mediakiwiLogic.putResponseToStore(response)
-
-//           // finally resolve the response
-//           store.dispatch(UITypes.SET_LOADING, false);
-//           resolve(response)
-//         }
-//         else {
-//           store.dispatch(UITypes.SET_LOADING, false);
-//           reject(response);
-//         }
-//       }).catch((error: unknown) => {
-//         // reject the response
-//         store.dispatch(UITypes.SET_LOADING, false);
-//         reject(error);
-//       });
-//     });
-//   },
-//   deleteMediakiwiAPI(request: PostMediakiwiRequestModel) {
-//     return this.postMediakiwiAPI(request, ButtonRequestMethodType.delete);
-//   },
-//   putMediakiwiAPI(request: PostMediakiwiRequestModel) {
-//     return this.postMediakiwiAPI(request, ButtonRequestMethodType.put);
-//   }
-// };

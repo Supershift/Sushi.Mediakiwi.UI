@@ -15,9 +15,7 @@ export type Mutations<S = ContentState> = {
   [MutationTypes.SET_PAGE](state: S, payload: PageModel): void,
   [MutationTypes.SET_FORMS](state: S, payload: Field[]): void,
   [MutationTypes.SET_RESOURCES](state: S, payload: ResourceModel[]): void,
-  // [MutationTypes.INCREMENT_SET_GET_CONTENT](state: S): void,
-  // [MutationTypes.DECREMENT_SET_GET_CONTENT](state: S): void,
-  [MutationTypes.SET_POST_CONTENT](state: S, payload: PostContentMediakiwiResponseModel|unknown): void,
+  [MutationTypes.SET_POST_CONTENT](state: S, payload: PostContentMediakiwiResponseModel): void,
 }
 
 export const mutations: MutationTree<ContentState> & Mutations = {
@@ -70,18 +68,10 @@ export const mutations: MutationTree<ContentState> & Mutations = {
     [MutationTypes.SET_POST_CONTENT](state: ContentState, payload: PostContentMediakiwiResponseModel): void {
       if (payload) {
         if (state.content) {
-          state.content.list.forms = payload.forms
+          //state.content.list.forms = payload.forms
+          state.content = payload;
+          mediakiwiLogic.putResponseToStore({...payload, closeLayer: false});
         }
       }
     },
-    // [MutationTypes.INCREMENT_SET_GET_CONTENT](state: ContentState): void {
-    //   // let path = router.currentRoute.value.params;
-    //   // if (params === "set") {
-        
-    //   // }
-    //   // store.dispatch(ContentTypes.GET_CONTENT, )
-    // },
-    // [MutationTypes.DECREMENT_SET_GET_CONTENT](state: ContentState): void {
-
-    // },
 }

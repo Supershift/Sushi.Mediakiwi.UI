@@ -1,11 +1,13 @@
 <template>
     <div class="overlay-loader" v-if="loading">
+      <div class="lds-container"> 
         <div class="lds-ring">
             <div></div>
             <div></div>
             <div></div>
             <div></div>
         </div>
+      </div>
     </div>
 </template>
 
@@ -16,7 +18,7 @@ import { store } from "../store";
 export default defineComponent({
     name: "OverlayLoader",
     setup() {
-        const loading = computed(() => store.getters["Content/mediakiwiLoading"]);
+        const loading = computed(() => store.getters["UI/mediakiwiLoading"]);
         return {
             loading,
         };
@@ -33,6 +35,11 @@ export default defineComponent({
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 9999;
+}
+.lds-container {
+  position: relative;
+  top: 50%;
+  left: 50%;
 }
 .lds-ring {
   display: inline-block;

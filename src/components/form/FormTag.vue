@@ -4,7 +4,7 @@
       {{ undefinedCheck(field.prefix) }}
     </label>
     <TagsInput
-      :model-value="valueRef"
+      :field-model="valueRef"
       :options="field?.options"
       :allow-custom="true"
       :show-count="false"
@@ -46,7 +46,7 @@ export default defineComponent({
   emits: ["on-change"],
   setup(props, context) {
     let valueRef = ref(
-      props.field.value ? props.field.value : []
+      props.field.value ? props.field.value.split(",") : []
     );
     let tagRef = ref("");
     const customRichtextContainerClasses =

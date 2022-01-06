@@ -49,7 +49,7 @@ export const store = createStore<RootState>({
       }
     })],
   state: {
-    rootPath: "/",
+    rootPath: `${process.env.VUE_APP_BASE_DOMAIN}` ? `${process.env.VUE_APP_BASE_DOMAIN}` : "/",
     currentSiteID: 2,
     description: "",
     content: {
