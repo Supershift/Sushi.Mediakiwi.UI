@@ -61,7 +61,7 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     let valueRef = ref(props.field.value);
     const parseEmptyOption  = computed(() => {
@@ -95,10 +95,10 @@ export default defineComponent({
         MediakiwiJSEventType.none
       ) {
         context.emit(
-          "on-change",
-          e,
+          "value-changed",
+          valueRef,
           props.field,
-          valueRef
+
         );
       }
     }

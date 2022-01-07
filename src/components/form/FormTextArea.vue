@@ -40,7 +40,7 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     let offset = ref<number>(0);
     let valueRef = ref(props.field.value);
@@ -58,12 +58,11 @@ export default defineComponent({
         "textarea-container ",
         props?.classname,
       ]);
-    function handleChange(e: Event) {
+    function handleChange() {
       context.emit(
-        "on-change",
-        e,
+        "value-changed",
+        valueRef,
         props.field,
-        valueRef
       );
     }
     function autoResize(element: HTMLElement) {

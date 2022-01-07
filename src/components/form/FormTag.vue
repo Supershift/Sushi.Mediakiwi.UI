@@ -6,7 +6,7 @@
     <TagsInput
       :field-model="valueRef"
       :options="field?.options"
-      :allow-custom="true"
+      :allow-custom="false"
       :show-count="false"
       :field="field"
       @change-made="handleChange" />
@@ -43,7 +43,7 @@ export default defineComponent({
   components: {
     TagsInput,
   },
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     let valueRef = ref(
       props.field.value ? props.field.value.split(",") : []
@@ -56,10 +56,10 @@ export default defineComponent({
       ]);
     function handleChange() {
       context.emit(
-        "on-change",
-        null,
+        "value-changed",
+        valueRef,
         props.field,
-        valueRef
+        
       );
     }
 

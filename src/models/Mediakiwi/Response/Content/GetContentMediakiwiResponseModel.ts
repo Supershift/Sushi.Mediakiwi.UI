@@ -27,7 +27,8 @@ export interface LayerConfiguration {
   widthUnitType: number,
   heightUnitType: number,
   title: string,
-  hasScrollbar: boolean
+  hasScrollbar: boolean,
+  iframe: boolean,
 }
 
 export interface FieldOption {

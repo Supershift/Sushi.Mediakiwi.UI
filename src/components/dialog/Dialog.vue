@@ -121,12 +121,12 @@ export default defineComponent({
             background: white;
             border-radius: 50%;
             margin-bottom: 15px;
+            border: 4px solid white;
             img {
               width: 100%;
               border-radius: 50%;
               height: 100%;
               object-fit: cover;
-              border: 4px solid white;
             }
           }
           .avatar-info {

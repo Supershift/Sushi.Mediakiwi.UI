@@ -60,7 +60,7 @@ export default defineComponent({
     FormPlus,
     FormNameValue,
   },
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     let valueNameValueRef = ref<Array<FieldModel>>([]);
     const nameValueCollectionClasses = computed(
@@ -87,8 +87,8 @@ export default defineComponent({
         valueNameValueRef.value.push(emptyField);
       }
     }
-    function handleChange(e: Event) {
-      context.emit("on-change",e,valueNameValueRef);
+    function handleChange() {
+      context.emit("value-changed", valueNameValueRef, props.field);
     }
     function removeNameValuePair(
       nameValuePair: string

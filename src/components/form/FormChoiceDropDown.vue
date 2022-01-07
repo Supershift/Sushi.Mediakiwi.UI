@@ -18,7 +18,9 @@
       :disabled="field.disabled || field.readOnly"
       ref="dropdown"
       @input="handleChange"
-      @change="handleChange" />
+      @change="handleChange"
+      @option:selected="handleChange"
+      @option:deselecting="clear"/>
     <label v-if="undefinedCheck(field.suffix)">
       {{ undefinedCheck(field.suffix) }}
     </label>
@@ -35,7 +37,6 @@ import {
 } from "vue";
 import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
-import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
 import { Field, FieldOption } from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
 
 export default defineComponent({
@@ -94,16 +95,23 @@ export default defineComponent({
       );
 
     function handleChange() {
-      if (
-        props.field.event !==
-        MediakiwiJSEventType.none
-      ) {
+      if (selectedValueRef.value) {
         context.emit(
           "value-changed",
           selectedValueRef.value.id,
           props.field
         );
+      } else {
+        context.emit(
+          "value-changed",
+          null,
+          props.field
+        );
       }
+    }
+
+    function clear() {
+      selectedValueRef.value = "";
     }
 
     watch(
@@ -116,6 +124,7 @@ export default defineComponent({
       fieldID,
       optionData,
       handleChange,
+      clear,
       customDropdownClasses,
       customDropdownContainerClasses,
       valueRef,

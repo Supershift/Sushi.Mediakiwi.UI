@@ -61,7 +61,7 @@ export default defineComponent({
     padding: 0;
     border-radius: 2px;
     position: absolute;
-    top: calc(100% + -1px);
+    top: calc(100% + 5px);
     left: 0;
     float: left;
     box-sizing: border-box;

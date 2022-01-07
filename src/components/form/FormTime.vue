@@ -26,14 +26,13 @@ export default defineComponent({
   components: {
     FormDateTime,
   },
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     function handleChange(
-      e: Event,
       field: FieldModel,
       value: Date
     ) {
-      context.emit("on-change", e, field, value);
+      context.emit("value-changed", value,  field);
     }
     return {
       handleChange,

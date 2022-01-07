@@ -39,7 +39,7 @@ export default defineComponent({
   components: {
     editor: Editor,
   },
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     let valueRef = ref(props.field.value);
 
@@ -55,10 +55,9 @@ export default defineComponent({
 
     function handleChange(e: Event) {
       context.emit(
-        "on-change",
-        e,
-        props.field,
-        valueRef
+        "value-changed",
+        valueRef,
+        props.field
       );
     }
     const tinymceInit = {

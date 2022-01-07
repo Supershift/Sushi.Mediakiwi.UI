@@ -103,12 +103,12 @@ export default defineComponent({
       background: white;
       border-radius: 50%;
       position: absolute;
+      border: 2px solid white;
       img {
         width: 100%;
         border-radius: 50%;
         height: 100%;
         object-fit: cover;
-        border: 2px solid white;
       }
     }
     .profile-icon {
@@ -129,7 +129,7 @@ export default defineComponent({
     .profile-avatar-container {
       margin-top: 15px;
       .avatar {
-        right: 54px;
+        right: 50px;
         top: unset;
       }
     }

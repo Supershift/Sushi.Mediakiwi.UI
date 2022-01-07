@@ -4,7 +4,7 @@
     v-if="grid && grid.rows.length">
     <h1 v-if="grid.title">{{ grid.title }}</h1>
     <ButtonListComponent 
-    v-if="grid && grid.buttons"
+    v-if="grid && grid.buttons && grid.buttons.length"
     :buttons="grid.buttons"/>
     <article class="data-block">
       <table class="selections">
@@ -105,7 +105,7 @@ export default defineComponent({
         props.grid &&
         props.grid.layerConfiguration
       ) {
-        return `width: ${props.grid.layerConfiguration.width}; height: ${props.grid.layerConfiguration.height}`;
+        return `width: ${props.grid.layerConfiguration.width}; height: ${props.grid.layerConfiguration.height}; iframe:${props.grid.layerConfiguration.iframe}`;
       }
       return null;
     });

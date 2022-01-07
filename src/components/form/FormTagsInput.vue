@@ -15,6 +15,7 @@
       }"
       @keydown.prevent.enter="addTag(newTag)"
       @keydown.prevent.tab="addTag(newTag)"
+      @keydown.prevent.esc="clear()"
       @blur="addTag(newTag)"
       @keydown.delete="
         newTag.length ||
@@ -26,7 +27,7 @@
         v-for="option in availableOptions"
         :key="option"
         :value="option.value"
-        @click.prevent="addTag(option.value)"
+        @click="addTag(option.value)"
         >
         {{ option.text }}
       </option>
@@ -110,36 +111,41 @@ export default defineComponent({
     // handling duplicates
     const duplicate = ref("");
     const oneSecond = 1000;
+    function clear() {
+      newTag.value = "";
+    }
     const handleDuplicate = (tag: string) => {
       duplicate.value = tag;
       setTimeout(
         () => (duplicate.value = ""),
         oneSecond
       );
-      newTag.value = "";
+      clear();
     };
 
-    const addTag = (tag: string) => {
+    function addTag(tag: string) {
             
       if (!tag) {
         return;
       } // prevent empty tag
-      // only allow predefined tags when allowCustom is false
-      if (
-        props.allowCustom === false &&
-        props.options &&
-        props.options.find((o) => o.value === tag)
-      ) {
-        return;
-      }
+
       // return early if duplicate
       if (tags.value.includes(tag)) {
         handleDuplicate(tag);
         return;
       }
-      tags.value.push(tag.toUpperCase());
-      newTag.value = ""; // reset newTag
-    };
+      // only allow predefined tags when allowCustom is false
+      if (
+        props.allowCustom === false &&
+        props.options &&
+        props.options.findIndex((o) => o.value === tag) !== -1
+      ) {
+        //trim and strip all special char and whitespace and post
+        tags.value.push(tag.toUpperCase().trim().replace(/[^a-zA-Z ]/g, ""));
+        clear(); // reset newTag
+        return;
+      } 
+    }
     const removeTag = (index: number) => {
       tags.value.splice(index, 1);
     };
@@ -191,6 +197,7 @@ export default defineComponent({
       newTag,
       addTag,
       removeTag,
+      clear,
       paddingLeft,
       tagsUl,
       availableOptions,

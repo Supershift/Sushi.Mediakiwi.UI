@@ -6,6 +6,7 @@
     :aria-label="field?.helpText"
     :title="field?.helpText"
     :id="field?.propertyName"
+    :data-layer="layerData"
     :disabled="
       field?.isReadOnly
     ">
@@ -19,6 +20,7 @@
     :aria-label="field?.helpText"
     :id="field?.propertyName"
     :value="field?.title"
+    :data-layer="layerData"
     :disabled="
       field?.isReadOnly
     ">
@@ -47,6 +49,15 @@ export default defineComponent({
   setup(props, context) {
     const customButtonClasses = computed(() => {
       return ["btn ", props.field?.className, props.field?.isPrimary ? "btn-primary" : ""]});
+      const layerData = computed(() => {
+      if (
+        props.field &&
+        props.field.layerConfiguration
+      ) {        
+        return `width: ${props.field.layerConfiguration.width}${props.field.layerConfiguration.widthUnitType}; height: ${props.field.layerConfiguration.height}${props.field.layerConfiguration.heightUnitType}; iframe:${props.field.layerConfiguration.iframe}`;
+      }
+      return null;
+    });
     // const buttonIconChoice = computed(() => ["fal", props.button.iconClass]);
     function handleClicked() {
       context.emit(
@@ -56,6 +67,7 @@ export default defineComponent({
     }
     return {
       customButtonClasses,
+      layerData,
       // buttonIconChoice,
       handleClicked,
     };

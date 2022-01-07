@@ -51,7 +51,7 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     const valueRef = ref(props.field.value);
     const sublistClasses = computed(() => {
@@ -72,10 +72,9 @@ export default defineComponent({
 
     function handleChange() {
       context.emit(
-        "on-change",
-        null,
+        "value-changed",
+        valueRef,
         props.field,
-        valueRef
       );
     }
 
