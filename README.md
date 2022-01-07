@@ -5,4 +5,9 @@ Sushi.MediaKiwi.UI is a Vue3 project that serves as a User Interface for [Sushi.
 
 #### FontAwesome Pro:
 Register your authorization token to use the FontAwesome Pro npm packages 
-> npm config set "//npm.fontawesome.com/:_authToken" [YOUR_TOKEN]
+> npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+> 
+> npm config set "//npm.fontawesome.com/:_authToken" [NPM_TOKEN]
+
+Delete by running:
+> npm config delete "@fortawesome:registry"
