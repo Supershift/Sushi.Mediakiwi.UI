@@ -1,22 +1,21 @@
 import { GetterTree } from "vuex";
 import { ContentState } from "./index";
 import { RootState } from "../../index";
-import { ResourceModel, ButtonModel, Field, GetContentMediakiwiResponseModel, Grid } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
-import { ButtonTargetType } from "@/models/Mediakiwi/ButtonTargetType";
-import ViewModel from "@/models/Mediakiwi/ViewModel";
-import PageModel from "@/models/PageModel";
+import { IResource, IButton, IField, IGrid, IGetContentMediakiwiResponse, IContentList } from "@/models/Mediakiwi/Interfaces";
+import { ButtonTargetTypeEnum } from "@/models/Mediakiwi/Enums";
+import { IView } from "@/models/Local/Interfaces";
 
 export type Getters = {
-    content (state: ContentState): GetContentMediakiwiResponseModel | null,
-    grids (state: ContentState): Grid[] | null,
-    folders (state: ContentState): Field[] | null,
-    buttons (state: ContentState): ButtonModel[] | null,
-    forms (state: ContentState): Field[] | null,
-    resources (state: ContentState): ResourceModel[] | null,
-    views (state: ContentState): ViewModel[] | null,
-    page (state: ContentState): PageModel | null,
-    topButtons: (state: ContentState) => ButtonModel[] | null | undefined,
-    bottomButtons: (state: ContentState) => ButtonModel[] | null | undefined,
+    content (state: ContentState): IGetContentMediakiwiResponse | null,
+    grids (state: ContentState): IGrid[] | null,
+    folders (state: ContentState): IField[] | null,
+    buttons (state: ContentState): IButton[] | null,
+    forms (state: ContentState): IField[] | null,
+    resources (state: ContentState): IResource[] | null,
+    views (state: ContentState): IView[] | null,
+    page (state: ContentState): IContentList | null,
+    topButtons: (state: ContentState) => IButton[] | null | undefined,
+    bottomButtons: (state: ContentState) => IButton[] | null | undefined,
 };
 
 export const getters: GetterTree<ContentState, RootState> & Getters = {
@@ -29,9 +28,9 @@ export const getters: GetterTree<ContentState, RootState> & Getters = {
     views: (state) => state.views,
     page: (state) => state.page,
     topButtons: (state) => {
-        return state.buttons?.filter((button) => (button.section === ButtonTargetType.topLeft || button.section === ButtonTargetType.topRight));
+        return state.buttons?.filter((button) => (button.section === ButtonTargetTypeEnum.topLeft || button.section === ButtonTargetTypeEnum.topRight));
     },
     bottomButtons: (state) => {
-        return state.buttons?.filter((button) => (button.section === ButtonTargetType.bottomLeft || button.section === ButtonTargetType.bottomRight));
+        return state.buttons?.filter((button) => (button.section === ButtonTargetTypeEnum.bottomLeft || button.section === ButtonTargetTypeEnum.bottomRight));
     },
 };

@@ -1,6 +1,6 @@
 import { MutationTypes } from "./mutation-types"
 import { MutationTree } from "vuex"
-import NotificationModel from "@/models/Mediakiwi/NotificationModel"
+import {INotification, INotificationModel} from "@/models/Mediakiwi/Interfaces"
 import { UIState } from "./index"
 
 export type Mutations<S = UIState> = {
@@ -8,7 +8,7 @@ export type Mutations<S = UIState> = {
   [MutationTypes.SET_DIALOG_OPEN](state: S, payload: boolean): void,
   [MutationTypes.SET_DIALOG_SETTINGS](state: S, payload: boolean): void,
   [MutationTypes.SET_OPEN_IN_FRAME](state: S, payload: boolean): void,
-  [MutationTypes.SET_NOTIFICATION](state: S, payload: NotificationModel): void,
+  [MutationTypes.SET_NOTIFICATION](state: S, payload: INotification): void,
   [MutationTypes.TOGGLE_NOTIFICATION](state: S, payload: boolean): void,
   [MutationTypes.SET_LOADING](state: S, payload?: boolean): void,
 }
@@ -26,7 +26,7 @@ export const mutations: MutationTree<UIState> & Mutations = {
     [MutationTypes.SET_OPEN_IN_FRAME](state: UIState, payload: boolean): void {
       state.isLayerMode = payload;
     },
-    [MutationTypes.SET_NOTIFICATION](state: UIState, payload: NotificationModel): void {
+    [MutationTypes.SET_NOTIFICATION](state: UIState, payload: INotification): void {
       if (payload) {
         state.notification = payload;
       } else {

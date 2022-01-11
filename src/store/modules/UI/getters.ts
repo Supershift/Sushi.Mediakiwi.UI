@@ -1,19 +1,17 @@
-import DialogModel from "@/models/DialogModel";
-import DrawerModel from "@/models/DrawerModel";
-import NotificationModel from "@/models/Mediakiwi/NotificationModel";
+import { IDialog, IDrawer } from "@/models/Local/Interfaces";
+import {INotification} from "@/models/Mediakiwi/Interfaces";
 import { GetterTree } from "vuex";
 import { UIState } from "./index";
 import { RootState } from "../../index";
 
 export type Getters = {
-    dialog (state: UIState ): DialogModel,
-    drawer (state: UIState ): DrawerModel,
+    dialog (state: UIState ): IDialog,
+    drawer (state: UIState ): IDrawer,
     isDrawerOpen (state: UIState ): boolean,
-    notification (state: UIState): NotificationModel | null | undefined,
+    notification (state: UIState): INotification | null | undefined,
     isLayeredMode (state: UIState): boolean,
     mediakiwiLoading (state: UIState): boolean,
     isDialogOpen (state: UIState): boolean,
-   
 };
 
 export const getters: GetterTree<UIState, RootState> & Getters = {

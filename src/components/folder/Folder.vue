@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import FolderItemModel from "@/models/Mediakiwi/FolderItemModel";
+import {IFolderItem} from "@/models/Mediakiwi/Interfaces";
 import {
   computed,
   defineComponent,
@@ -27,7 +27,7 @@ export default defineComponent({
   name: "FolderComponent",
   props: {
     folder: {
-      type: Object as PropType<FolderItemModel>,
+      type: Object as PropType<IFolderItem>,
       required: true,
     },
   },

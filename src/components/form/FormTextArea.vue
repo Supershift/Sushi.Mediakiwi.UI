@@ -25,13 +25,13 @@ import {
   customEventHandler,
   fieldMixins,
 } from "./index";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {IField} from "../../models/Mediakiwi/Interfaces";
 
 export default defineComponent({
   name: "FormTextArea",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {

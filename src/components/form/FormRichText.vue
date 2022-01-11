@@ -21,14 +21,14 @@ import {
   ref,
   computed,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {IField} from "../../models/Mediakiwi/Interfaces";
 import Editor from "@tinymce/tinymce-vue";
 import {customEventHandler} from "./index";
 export default defineComponent({
   name: "RichText",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {

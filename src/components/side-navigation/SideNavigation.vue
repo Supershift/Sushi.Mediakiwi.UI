@@ -27,7 +27,7 @@ import {
 import SideNavigationItem from "./SideNavigationItem.vue";
 import {store} from "@/store";
 import { AuthenticationTypes } from "../../store/modules/Authentication";
-import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel";
+import { ISideNavigationItem } from "../../models/Local/Interfaces";
 
 export default defineComponent({
   name: "SideNavigation",
@@ -50,10 +50,10 @@ export default defineComponent({
       () => store.getters["Navigation/sideNavigationItems"]
     );
     const topItem = computed(() => {
-      return sideNavigationItems.value.find((a: SideNavigationItemModel) => a.isBack )
+      return sideNavigationItems.value.find((a: ISideNavigationItem) => a.isBack )
     })
     const restOfItems = computed(() => {
-      return sideNavigationItems.value.filter((b: SideNavigationItemModel) => !b.isBack )
+      return sideNavigationItems.value.filter((b: ISideNavigationItem) => !b.isBack )
     })
     function handleSignOut() {
       store.dispatch(AuthenticationTypes.UNAUTHENTICATE);

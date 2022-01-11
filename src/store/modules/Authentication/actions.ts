@@ -5,10 +5,8 @@ import { Mutations } from "./mutations"
 import { ActionTypes } from "./action-types"
 import { authenticationAPIService } from "@/utils/api-service"
 import router from "@/router"
-import AuthenticateRequestModel from "@/models/Mediakiwi/Request/Authentication/AuthenticateRequestModel"
-import { ResetPasswordRequestModel } from "@/models/Mediakiwi/Request/Authentication/ResetPasswordRequestModel"
 import { UITypes } from "../UI"
-import { AuthenticateResponseModel } from "@/models/Mediakiwi/Response/Authentication/AuthenticateResponseModel"
+import { IAuthenticateResponse, IResetPasswordRequest, IAuthenticateRequest } from "@/models/Mediakiwi/Interfaces";
 import { MutationTypes } from "./mutation-types"
 
 type AugmentedActionContext = {
@@ -21,18 +19,18 @@ type AugmentedActionContext = {
 export interface Actions {
   [ActionTypes.AUTHENTICATE](
     { commit }: AugmentedActionContext,
-    payload: AuthenticateRequestModel
+    payload: IAuthenticateRequest
   ): Promise<void>,
   [ActionTypes.UNAUTHENTICATE](
     { commit }: AugmentedActionContext
   ): Promise<void>,
   [ActionTypes.RESET_PASSWORD](
     { commit }: AugmentedActionContext,
-    payload: ResetPasswordRequestModel
+    payload: IResetPasswordRequest
   ): Promise<void>,
   [ActionTypes.SET_PROFILE](
     { commit }: AugmentedActionContext,
-    payload: AuthenticateResponseModel
+    payload: IAuthenticateResponse
   ): void,
 }
 

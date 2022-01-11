@@ -6,10 +6,7 @@ import { contentAPIService } from "@/utils/api-service"
 import { UITypes } from "../UI"
 import { ContentState } from "./index"
 import { MutationTypes } from "./mutation-types"
-import { ResourceModel, Field, GetContentMediakiwiResponseModel, Grid, Form } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel"
-import PageModel from "@/models/PageModel"
-import { PostContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/PostContentMediakiwiResponseModel"
-import { PostContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/PostContentMediakiwiRequestModel"
+import { IResource, IField, IGrid, IForm, IGetContentMediakiwiResponse, IPostContentMediakiwiResponse, IContentList } from "@/models/Mediakiwi/Interfaces"
 import router from "@/router"
 
 type AugmentedActionContext = {
@@ -26,39 +23,39 @@ export interface Actions {
   ): Promise<void>,
   [ActionTypes.SET_CONTENT](
     { commit }: AugmentedActionContext,
-    payload: GetContentMediakiwiResponseModel
+    payload: IGetContentMediakiwiResponse
   ): void,
   [ActionTypes.SET_FOLDERS](
     { commit }: AugmentedActionContext,
-    payload: Field[]
+    payload: IField[]
   ): void,
   [ActionTypes.SET_GRIDS](
     { commit }: AugmentedActionContext,
-    payload: Grid[]
+    payload: IGrid[]
   ): void,
   [ActionTypes.SET_BUTTONS](
     { commit }: AugmentedActionContext,
-    payload: Form[]
+    payload: IForm[]
   ): void,
   [ActionTypes.SET_PAGE](
     { commit }: AugmentedActionContext,
-    payload: PageModel
+    payload: IContentList
   ): void,
   [ActionTypes.SET_FORMS](
     { commit }: AugmentedActionContext,
-    payload: Field[]
+    payload: IField[]
   ): void,
   [ActionTypes.SET_RESOURCES](
     { commit }: AugmentedActionContext,
-    payload: ResourceModel[]
+    payload: IResource[]
   ): void,
   [ActionTypes.POST_CONTENT](
     { commit }: AugmentedActionContext,
-    payload: PostContentMediakiwiRequestModel,
+    payload: IPostContentMediakiwiResponse,
   ): Promise<void>,
   [ActionTypes.SET_POST_CONTENT](
     { commit }: AugmentedActionContext,
-    payload: PostContentMediakiwiResponseModel
+    payload: IPostContentMediakiwiResponse
   ): void,
 }
 
@@ -67,7 +64,7 @@ export const actions: ActionTree<ContentState, RootState> & Actions = {
       commit(MutationTypes.SET_CONTENT, null);
       const siteID = store.getters.currentSiteID;
       const request = {
-        data: { CurrentSiteID: siteID },
+        data: { currentSiteID: siteID },
         url: payload
       };
       store.dispatch(UITypes.SET_LOADING, true);

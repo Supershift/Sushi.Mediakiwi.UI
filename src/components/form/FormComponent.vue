@@ -103,9 +103,7 @@ import {
   PropType,
   ref,
 } from "vue";
-import {Field, Form} from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
-import FormRowModel from "../../models/FormRowModel";
-import SectionModel from "../../models/SectionModel";
+import {ILocalSection} from "../../models/Local/Interfaces";
 import {fieldMixins} from "./index";
 import FormButton from "./FormButton.vue";
 import FormInput from "./FormInput.vue";
@@ -126,22 +124,20 @@ import FormTime from "./FormTime.vue";
 import FormDateTime from "./FormDateTime.vue";
 import FormSublistSelect from "./FormSublistSelect.vue";
 import FormTooltip from "./FormTooltip.vue"
-import {OutputExpressionType} from "@/models/Mediakiwi/OutputExpressionType";
-import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
-import { ButtonSectionType } from "../../models/Mediakiwi/ButtonSectionType";
+import {OutputExpressionTypeEnum, MediakiwiFormVueTypeEnum, ButtonSectionTypeEnum} from "@/models/Mediakiwi/Enums";
 import { store } from "../../store";
 import { ContentTypes } from "../../store/modules/Content";
-import {PostContentMediakiwiRequestModel} from "../../models/Mediakiwi/Request/Content/PostContentMediakiwiRequestModel";
+import { IField, IForm, IPostContentMediakiwiRequest } from "../../models/Mediakiwi/Interfaces";
 
 export default defineComponent({
   name: "FormComponent",
   props: {
     forms: {
-      type: Object as PropType<Array<Form>>,
+      type: Object as PropType<Array<IForm>>,
       required: true,
     }
   },
-  mixins: [OutputExpressionType, fieldMixins],
+  mixins: [OutputExpressionTypeEnum, fieldMixins],
   components: {
     FormPlus,
     FormButton,
@@ -172,17 +168,17 @@ export default defineComponent({
   ],
   setup(props, context) {
     //TODO: Finish implementing a parent reference so that we can post it when clicking on a button
-    const parentForms = ref<Array<Form>>(props.forms);
-    function isTopSection(form: Form) {
+    const parentForms = ref<Array<IForm>>(props.forms);
+    function isTopSection(form: IForm) {
       if (props.forms && form.buttons) {
-        return form.buttons.some((b) => b.section === ButtonSectionType.top)
+        return form.buttons.some((b) => b.section === ButtonSectionTypeEnum.top)
       }
       return false;
     }
     function checkVueType(
-      field: Field
+      field: IField
     ): string {
-      return MediakiwiFormVueType[field.vueType];
+      return MediakiwiFormVueTypeEnum[field.vueType];
     }
     function clean(label: string): string {
       return label
@@ -197,34 +193,36 @@ export default defineComponent({
         .replace(/\s+/g, "");
     }
     function expressCell(
-      expression: OutputExpressionType
+      expression: OutputExpressionTypeEnum
     ) {
       return expression !==
-        OutputExpressionType.full
+        OutputExpressionTypeEnum.full
         ? "half"
         : "full";
     }
-    function getColspan(row: FormRowModel) {
+    function getColspan(row: IForm) {
       const threeCols = 3;
       const oneCol = 1;
       if (!row) {
         return 1;
       }
 
-      // With 2 fields on single row the TD has a colspan of 1
-      // With 1 field on single row; the TD has a colspan of 3 (4 minus the td title)
-      return row.fields.length === 1
-        ? threeCols
-        : oneCol;
+      if (row.fields) {
+        // With 2 fields on single row the TD has a colspan of 1
+        // With 1 field on single row; the TD has a colspan of 3 (4 minus the td title)
+        return row.fields.length === 1
+          ? threeCols
+          : oneCol;
+      }
     }
-    function showField(field: Field) {
+    function showField(field: IField) {
       if (field.isHidden) {
         return false;
       }
 
       if (
         field.vueType !==
-        MediakiwiFormVueType.formSection
+        MediakiwiFormVueTypeEnum.formSection
       ) {
         return true;
       }
@@ -235,27 +233,27 @@ export default defineComponent({
 
       return true;
     }
-    function getIndex(list: Field[], propertyName: string ) {
+    function getIndex(list: IField[], propertyName: string ) {
       return list.findIndex((el) => el.propertyName === propertyName)
     }
-    function handleToggle(section: SectionModel) {
+    function handleToggle(section: ILocalSection) {
       context.emit("toggle", section);
     }
     function handleAddFields(
-      fields: Field[]
+      fields: IField[]
     ) {
       context.emit("add-fields", fields);
     }
     function handleRemoveFields(
-      fields: Field[]
+      fields: IField[]
     ) {
       context.emit("remove-fields", fields);
     }
     function handleSubmit(
-      field: Field
+      field: IField
     ) { 
       const siteID: number = store.getters["Navigation/currentSiteID"];
-      const request: PostContentMediakiwiRequestModel = {
+      const request: IPostContentMediakiwiRequest = {
         currentSiteId: siteID,
         postedField: field.title,
         forms: parentForms.value
@@ -264,11 +262,11 @@ export default defineComponent({
     }
     function handleFieldsChanged(
       value: string,
-      field: Field,
+      field: IField,
     ) {
       // Update the field's value
       //field.value = value;
-      parentForms.value.forEach((element: Form) => {
+      parentForms.value.forEach((element: IForm) => {
         if (element && element.fields) {
           element.fields[getIndex(element.fields, field.propertyName)].value = value;
         }
@@ -281,15 +279,15 @@ export default defineComponent({
     
     function hideLabelForType(vueType: string) {
       return vueType ===
-        MediakiwiFormVueType.formButton.toString()
+        MediakiwiFormVueTypeEnum.formButton.toString()
         ? true
         : false;
     }
     function isHalfField(
-      expression: OutputExpressionType
+      expression: OutputExpressionTypeEnum
     ) {
       return expression !==
-        OutputExpressionType.full
+        OutputExpressionTypeEnum.full
         ? " half"
         : " long";
     }

@@ -1,7 +1,7 @@
 import { FieldValidationType, FieldValidationTypeMessage } from "@/components/form";
 import { InjectionKey } from "vue";
 import { createLogger, createStore, Store } from "vuex";
-import { BaseContentModel } from "../models/BaseContentModel";
+import { IBaseContent } from "../models/Local/Interfaces";
 import {Navigation} from "./modules/Navigation";
 import  {Authentication}  from "./modules/Authentication";
 import {  UI } from "./modules/UI";
@@ -15,7 +15,7 @@ export interface RootState {
   currentSiteID: number,
   rootPath: string,
   description: string,
-  content: BaseContentModel,
+  content: IBaseContent,
   channel: number,
 }
 

@@ -39,14 +39,13 @@ import {
   reactive,
 } from "vue";
 import {fieldMixins} from "../form/index";
-import RadioModel from "../../models/RadioModel";
-import OptionItemModel from "../../models/OptionItemModel";
+import {ILocalRadio, ILocalOption} from "../../models/Local/Interfaces";
 
 export default defineComponent({
   name: "RadioChoice",
   props: {
     radio: {
-      type: Object as PropType<RadioModel>,
+      type: Object as PropType<ILocalRadio>,
       required: true,
     },
   },
@@ -86,7 +85,7 @@ export default defineComponent({
         );
       }
     }
-    function fieldID(option: OptionItemModel) {
+    function fieldID(option: ILocalOption) {
       return `${props.radio.fieldValue}_${props.radio.fieldName}_${option.value}`;
     }
     const radioContainerClasses = computed(() => {

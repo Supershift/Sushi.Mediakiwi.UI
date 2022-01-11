@@ -49,7 +49,7 @@ import {store} from "@/store";
 import { AuthenticationTypes } from "../../store/modules/Authentication";
 import { UITypes } from "../../store/modules/UI";
 export default defineComponent({
-  name: "DailogComponent",
+  name: "DialogComponent",
   emits: ["sign-out-clicked"],
   setup(props, context) {
     const profileData = computed(

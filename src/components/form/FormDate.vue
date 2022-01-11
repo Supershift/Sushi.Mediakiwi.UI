@@ -9,13 +9,13 @@
 <script lang="ts">
 import FormDateTime from "./FormDateTime.vue";
 import {defineComponent, PropType} from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import { IField } from "../../models/Mediakiwi/Interfaces";
 
 export default defineComponent({
   name: "FormDate",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -29,9 +29,8 @@ export default defineComponent({
   emits: ["value-changed"],
   setup(props, context) {
     function handleChange(
-      e: Event,
-      field: FieldModel,
-      value: Date
+      value: Date,
+      field: IField
     ) {
       context.emit("value-changed", value,  field);
     }

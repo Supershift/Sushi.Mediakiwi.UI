@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import {ButtonModel} from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+import {IButton} from "../../models/Mediakiwi/Interfaces";
 import {
   computed,
   defineComponent,
@@ -41,7 +41,7 @@ export default defineComponent({
   name: "FormButton",
   props: {
     field: {
-      type: Object as PropType<ButtonModel>,
+      type: Object as PropType<IButton>,
       required: true,
     },
   },

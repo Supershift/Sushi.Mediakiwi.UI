@@ -17,21 +17,21 @@
   </div>
 </template>
 <script lang="ts">
-import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
+import {MediakiwiFormVueTypeEnum} from "@/models/Mediakiwi/Enums";
 import {
   computed,
   defineComponent,
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {IField} from "../../models/Mediakiwi/Interfaces";
 import {fieldMixins} from "./index";
 
 export default defineComponent({
   name: "FormTextLine",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -52,7 +52,7 @@ export default defineComponent({
     if (
       props.field?.expression &&
       props.field.vueType ===
-        MediakiwiFormVueType.formChoiceRadio
+        MediakiwiFormVueTypeEnum.formChoiceRadio
     ) {
       props.field.value
         ? (valueRef.value = "Yes")
@@ -62,7 +62,7 @@ export default defineComponent({
       if (
         props.field?.expression &&
         props.field.vueType ===
-          MediakiwiFormVueType.formChoiceCheckbox
+          MediakiwiFormVueTypeEnum.formChoiceCheckbox
       ) {
         return `textline-primary half short ${props.field?.className}`;
       }

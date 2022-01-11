@@ -1,5 +1,4 @@
-import {NavigationItemModel} from "@/models/Mediakiwi/NavigationModel";
-import { SiteItem } from "@/models/Mediakiwi/Response/Navigation/GetSitesResponseModel";
+import { INavigationItem, ISite } from "@/models/Mediakiwi/Interfaces";
 import { RootState } from "@/store";
 import { Module } from "vuex";
 import { actions } from "./actions";
@@ -7,10 +6,11 @@ import { getters } from "./getters";
 import { mutations } from "./mutations";
 
 export interface NavigationState {
-  topNavigationItems: NavigationItemModel[];
-  sideNavigationItems: NavigationItemModel[];
+  topNavigationItems: INavigationItem[];
+  sideNavigationItems: INavigationItem[];
   currentSiteID: number;
-  availableSites: SiteItem[];
+  currentSite: ISite | null;
+  availableSites: ISite[];
   homeURL: string;
 }
 
@@ -27,11 +27,12 @@ export enum NavigationTypes {
 export const Navigation: Module<NavigationState, RootState> = {
     namespaced: true,
     state: (): NavigationState => ({
-      topNavigationItems: Array<NavigationItemModel>(),
-      sideNavigationItems: Array<NavigationItemModel>(),
+      topNavigationItems: Array<INavigationItem>(),
+      sideNavigationItems: Array<INavigationItem>(),
       currentSiteID: 2,
-      availableSites: Array<SiteItem>(),
-      homeURL: ""
+      availableSites: Array<ISite>(),
+      homeURL: "",
+      currentSite: null,
     }),
     mutations,
     actions,

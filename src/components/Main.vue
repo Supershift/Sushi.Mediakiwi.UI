@@ -74,8 +74,7 @@ import {
 } from "vue";
 
 import {store} from "../store";
-import MessageModel from "../models/MessageModel";
-
+import {IMessage, IView} from "../models/Local/Interfaces";
 import GridComponent from "./grid/GridComponent.vue";
 import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
@@ -83,8 +82,7 @@ import ResourcesComponent from "./resources/ResourcesComponent.vue";
 import ButtonListComponent from "./ButtonListComponent.vue";
 import FileUpload from "./file-upload/FileUpload.vue";
 import BreadCrumbs from "./breadcrumbs/breadcrumbs.vue";
-import {getViewTypeName} from "@/models/Mediakiwi/ViewType";
-import ViewModel from "@/models/Mediakiwi/ViewModel";
+import {getViewTypeName} from "@/models/Local/Enums";
 import OverlayLoader from "@/components/OverlayLoader.vue";
 
 export default defineComponent({
@@ -132,13 +130,13 @@ export default defineComponent({
     // resources is fetched inside of the component
 
     const customNotifications = ref<
-      MessageModel[]
+      IMessage[]
     >([]);
 
     const checkWindowWidth = computed(
       () => window.innerWidth > breakpointTablet
     );
-    function getTypeName(view: ViewModel) {
+    function getTypeName(view: IView) {
       if (view && view.type) {
         return getViewTypeName(view.type);
       }

@@ -1,6 +1,5 @@
-import DialogModel from "@/models/DialogModel";
-import DrawerModel from "@/models/DrawerModel";
-import NotificationModel from "@/models/Mediakiwi/NotificationModel";
+import { IDialog, IDrawer } from "@/models/Local/Interfaces";
+import {INotification} from "@/models/Mediakiwi/Interfaces";
 import { RootState } from "@/store";
 import { Module } from "vuex";
 import { actions } from "./actions";
@@ -10,9 +9,9 @@ import { mutations } from "./mutations";
 export interface UIState {
     mediakiwiLoading: boolean;
     isLayerMode: boolean;
-    drawer: DrawerModel;
-    dialog: DialogModel;
-    notification?: NotificationModel | null ;
+    drawer: IDrawer;
+    dialog: IDialog;
+    notification?: INotification | null ;
 }
 
 export enum UITypes {

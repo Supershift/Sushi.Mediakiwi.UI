@@ -38,7 +38,7 @@ export const actions: ActionTree<NavigationState, RootState> & Actions = {
   [ActionTypes.GET_TOP_NAVIGATION]({ commit }, payload) {
       const siteID = store.state.currentSiteID;
       const request = {
-        data: { CurrentSiteID: siteID },
+        data: { currentSiteID: siteID },
         url: payload
       };
       store.dispatch(UITypes.SET_LOADING, true);
@@ -53,7 +53,7 @@ export const actions: ActionTree<NavigationState, RootState> & Actions = {
   [ActionTypes.GET_SIDE_NAVIGATION]({ commit  }, payload) {
     const siteID = store.state.currentSiteID;
     const request = {
-      data: { CurrentSiteID: siteID },
+      data: { currentSiteID: siteID },
       url: payload
     };
     store.dispatch(UITypes.SET_LOADING, true);
@@ -68,7 +68,7 @@ export const actions: ActionTree<NavigationState, RootState> & Actions = {
   [ActionTypes.GET_SITES]({ commit }, payload) {
     const siteID = store.state.currentSiteID;
     const request = {
-      data: { CurrentSiteID: siteID },
+      data: { currentSiteID: siteID },
       url: payload
     };
     store.dispatch(UITypes.SET_LOADING, true);

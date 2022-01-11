@@ -1,13 +1,9 @@
-import LayerConfigurationModel from "@/models/Mediakiwi/LayerConfigurationModel";
-import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
-import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
 import { store } from "@/store";
-import PageModel from "@/models/PageModel";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "@vue/runtime-dom";
 import MediakiwiModalWrapper from "./../components/modal/MediakiwiModalWrapper.vue";
 import { ContentTypes } from "@/store/modules/Content";
-import { Field } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+import { IField, ILayerConfiguration, IMediakiwiResponse, IPostMediakiwiRequest, IContentList } from "@/models/Mediakiwi/Interfaces";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,17 +18,15 @@ export const mediakiwiLogic = {
     window.mediakiwiLogic = window.mediakiwiLogic || mediakiwiLogic;
   },
   /** Binds the data from the Mediakiwi Response to the vuex store  */
-  putResponseToStore(response: MediakiwiResponseModel) {
+  putResponseToStore(response: IMediakiwiResponse) {
 
     // Create the page model
-    const localPage: PageModel = {
-      title: response.list?.title ? response.list?.title : "",
-      description: response.list?.description ? response.list?.description : "",
-      settingsUrl: response.list?.settingsUrl
-    }
-    
-    if (localPage) {
-      store.dispatch(ContentTypes.SET_PAGE, localPage);
+    // const localPage: IPage = {
+    //   ...response.list
+    // }
+     
+    if (response.list) {
+      store.dispatch(ContentTypes.SET_PAGE, response.list);
     }
     
     if (response.list && response.list.grids) {
@@ -55,16 +49,16 @@ export const mediakiwiLogic = {
     // }
   },
   /** Creates a @type {PostMediakiwiRequestModel} from the altered data in the vuex store */
-  getMediakiwiRequestForButtonActions(url: string): PostMediakiwiRequestModel {
+  getMediakiwiRequestForButtonActions(url: string): IPostMediakiwiRequest {
     const siteID = store.getters["navigation/currentSiteId"];
-    const request: PostMediakiwiRequestModel = {
-      CurrentSiteID: siteID,
+    const request: IPostMediakiwiRequest = {
+      currentSiteID: siteID,
       url
     }
     return request;
   },
   /** Fill the sublist select based on the referId */
-  fillSublistSelect(referId: string, fields: Field[]) {
+  fillSublistSelect(referId: string, fields: IField[]) {
     const field = fields.find((field) => field.propertyName === referId);
 
     const referElement = document.querySelector(`#${referId}`)
@@ -78,8 +72,8 @@ export const mediakiwiLogic = {
       }
     }
   },
-  /** Open a layer with @type { LayerConfigurationModel } configuration */
-  openLayer(config: LayerConfigurationModel) {
+  /** Open a layer with @type { ILayerConfiguration } configuration */
+  openLayer(config: ILayerConfiguration) {
     const modalApp = createApp(MediakiwiModalWrapper, { config });
     // eslint-disable-next-line vue/component-definition-name-casing
     modalApp.component("fa", FontAwesomeIcon)

@@ -40,14 +40,14 @@ import {
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
-import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
+import {IField} from "../../models/Mediakiwi/Interfaces/IField";
+import {MediakiwiFormVueTypeEnum} from "@/models/Mediakiwi/Enums";
 
 export default defineComponent({
   name: "FormNameValueCollection",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -62,7 +62,7 @@ export default defineComponent({
   },
   emits: ["value-changed"],
   setup(props, context) {
-    let valueNameValueRef = ref<Array<FieldModel>>([]);
+    let valueNameValueRef = ref<Array<IField>>([]);
     const nameValueCollectionClasses = computed(
       () =>
         `name-value-collection ${props.field.className}`
@@ -73,17 +73,17 @@ export default defineComponent({
           `name-value-collection-container ${props.classname}`
       );
     const plusField = computed(() =>
-      Object.assign(emptyField, {propertyName:"plusField", fieldIcon:"plus", readOnly: props.field.readOnly, vueType: MediakiwiFormVueType.formPlus, placeholder: "Empty value"}) as FieldModel
+      Object.assign(emptyField, {propertyName:"plusField", fieldIcon:"plus", readOnly: props.field.isReadOnly, vueType: MediakiwiFormVueTypeEnum.formPlus, placeholder: "Empty value"}) as IField
     );
     function getField(
       nameValue: string,
       index: number
     ) {
-      const field = Object.assign(emptyField, {vueType: MediakiwiFormVueType.formNameValue, propertyName: `${props.field.propertyName}_${index}`, value: nameValue, event: props.field.event, readOnly: props.field.readOnly});
+      const field = Object.assign(emptyField, {vueType: MediakiwiFormVueTypeEnum.formNameValue, propertyName: `${props.field.propertyName}_${index}`, value: nameValue, event: props.field.event, readOnly: props.field.isReadOnly});
       return field;
     }
     function addNameValuePair() {
-      if (!props.field.readOnly ) {
+      if (!props.field.isReadOnly ) {
         valueNameValueRef.value.push(emptyField);
       }
     }
@@ -95,7 +95,7 @@ export default defineComponent({
     ) {
       let index =
         valueNameValueRef.value.findIndex(
-          (r: FieldModel) =>
+          (r: IField) =>
             r.value === nameValuePair &&
             r.value === nameValuePair
         );

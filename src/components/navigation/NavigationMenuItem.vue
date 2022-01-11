@@ -22,13 +22,13 @@ import {
   defineComponent,
   PropType,
 } from "vue";
-import { NavigationItemModel } from "../../models/Mediakiwi/NavigationModel";
+import { INavigationItem } from "../../models/Mediakiwi/Interfaces";
 
 export default defineComponent({
   name: "NavigationMenuItem",
   props: {
     item: {
-      type: Object as PropType<NavigationItemModel>,
+      type: Object as PropType<INavigationItem>,
       required: true,
     },
   },

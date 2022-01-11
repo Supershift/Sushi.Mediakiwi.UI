@@ -41,13 +41,11 @@ import { store } from "@/store";
 import FormErrors from "./form/FormErrors.vue";
 import CustomInput from "./base-components/CustomInput.vue";
 import CustomButton from "./base-components/CustomButton.vue";
-import InputModel from "../models/InputModel";
-import ButtonModel from "../models/ButtonModel";
-import MessageModel from "../models/MessageModel";
-import AuthenticateRequestModel from "../models/Mediakiwi/Request/Authentication/AuthenticateRequestModel";
-import { fieldMixins, FieldValidationType, FieldValidationTypeMessage } from "./form";
+import {IAuthenticateRequest} from "../models/Mediakiwi/Interfaces";
+import { fieldMixins } from "./form";
 import Notification from "./notification/Notification.vue";
 import { AuthenticationTypes } from "../store/modules/Authentication";
+import { IMessage, ILocalButton, ILocalInput } from "../models/Local/Interfaces";
 
 export default defineComponent({
   name: "LoginComponent",
@@ -62,11 +60,11 @@ export default defineComponent({
     const validForm = ref(false);
     const email = ref("");
     const password = ref("");
-    let errorMessages = reactive<Array<MessageModel>>([]);
+    let errorMessages = reactive<Array<IMessage>>([]);
     const contentLogin = computed(
       () => store.getters.contentLogin
     );
-    const customEmailInput = ref<InputModel>({
+    const customEmailInput = ref<ILocalInput>({
       customClass: "input-email",
       fieldIcon: "email",
       fieldPlaceholder: contentLogin.value.loginEmailPlaceholder,
@@ -78,7 +76,7 @@ export default defineComponent({
       fieldType: "email",
       readOnly: false,
     });
-    const customPasswordInput = ref<InputModel>({
+    const customPasswordInput = ref<ILocalInput>({
       customClass: "input-password",
       fieldIcon: "password",
       fieldPlaceholder: contentLogin.value.loginPasswordPlaceholder,
@@ -90,7 +88,7 @@ export default defineComponent({
       fieldType: "password",
       readOnly: false,
     });
-    const customLoginButton = ref<ButtonModel>({
+    const customLoginButton = ref<ILocalButton>({
       customClass: "btn-login",
       buttonIcon: "",
       disabled: true,
@@ -102,7 +100,7 @@ export default defineComponent({
       store.dispatch(AuthenticationTypes.AUTHENTICATE, {
         emailAddress: email.value,
         password: password.value,
-      } as AuthenticateRequestModel);
+      } as IAuthenticateRequest);
     }
     function handleTextChanged(value: string, fieldName: string) {
       //errorMessages = fieldMixins.methods.emptyValidator(value, fieldName, errorMessages);

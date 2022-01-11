@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import ButtonModel from "../../models/ButtonModel";
+import { ILocalButton } from "../../models/Local/Interfaces";
 import {
   computed,
   defineComponent,
@@ -20,7 +20,7 @@ export default defineComponent({
   name: "FormButton",
   props: {
     button: {
-      type: Object as PropType<ButtonModel>,
+      type: Object as PropType<ILocalButton>,
       required: true,
     },
   },

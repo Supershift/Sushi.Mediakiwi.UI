@@ -1,6 +1,5 @@
-import { ResourceModel, GetContentMediakiwiResponseModel, Grid, ButtonModel, Field } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
-import ViewModel from "@/models/Mediakiwi/ViewModel";
-import PageModel from "@/models/PageModel";
+import { IView } from "@/models/Local/Interfaces";
+import { IGrid, IField, IButton, IResource, IGetContentMediakiwiResponse, IContentList} from "@/models/Mediakiwi/Interfaces";
 import { RootState } from "@/store";
 import { Module } from "vuex";
 import { actions } from "./actions";
@@ -8,14 +7,14 @@ import { getters } from "./getters";
 import { mutations } from "./mutations";
 
 export interface ContentState {
-  content: GetContentMediakiwiResponseModel | null;
-  grids: Grid[] | null;
-  folders: Field[] | null;
-  buttons: ButtonModel[] | null;
-  page: PageModel | null;
-  forms: Field[] | null;
-  resources: ResourceModel[] | null;
-  views: ViewModel[] | null;
+  content: IGetContentMediakiwiResponse | null;
+  grids: IGrid[] | null;
+  folders: IField[] | null;
+  buttons: IButton[] | null;
+  page: IContentList | null;
+  forms: IField[] | null;
+  resources: IResource[] | null;
+  views: IView[] | null;
 }
 
 export enum ContentTypes {

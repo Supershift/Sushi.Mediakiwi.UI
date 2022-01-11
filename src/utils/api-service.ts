@@ -1,18 +1,10 @@
-import AuthenticateRequestModel from "@/models/Mediakiwi/Request/Authentication/AuthenticateRequestModel";
-import { GetContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/GetContentMediakiwiRequestModel";
-import { GetNavigationRequestModel } from "@/models/Mediakiwi/Request/Navigation/GetNavigationRequestModel";
-import { PostContentMediakiwiRequestModel } from "@/models/Mediakiwi/Request/Content/PostContentMediakiwiRequestModel";
-import { ResetPasswordRequestModel } from "@/models/Mediakiwi/Request/Authentication/ResetPasswordRequestModel";
 import { store } from "@/store";
 import axios from "axios";
 import { NotificationActionTypes } from "./utils";
 import { AuthenticationTypes } from "@/store/modules/Authentication";
 import { UITypes } from "@/store/modules/UI";
-import { GetContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
-import { GetNavigationResponseModel } from "@/models/Mediakiwi/Response/Navigation/GetNavigationResponseModel";
-import { GetSitesResponseModel } from "@/models/Mediakiwi/Response/Navigation/GetSitesResponseModel";
+import { IGetContentMediakiwiResponse, IGetNavigationResponse, IGetSitesResponse, IPostContentMediakiwiResponse, IAuthenticateRequest, IResetPasswordRequest, IPostContentMediakiwiRequest, IGetNavigationRequest, IGetContentMediakiwiRequest } from "@/models/Mediakiwi/Interfaces";
 import router from "@/router";
-import { PostContentMediakiwiResponseModel } from "@/models/Mediakiwi/Response/Content/PostContentMediakiwiResponseModel";
 
 export const serverCodes = {
   OK: 200,
@@ -47,8 +39,8 @@ const axiosInstance = axios.create({
 
 export const authenticationAPIService = {
   // Authentication
-  signInMediakiwiAPI(request: AuthenticateRequestModel) {
-    const requestBody: AuthenticateRequestModel = {
+  signInMediakiwiAPI(request: IAuthenticateRequest) {
+    const requestBody: IAuthenticateRequest = {
       ...request,
       apiKey: store.getters["Authentication/apiKey"],
     };
@@ -93,8 +85,8 @@ export const authenticationAPIService = {
       }
     });
   },
-  resetPasswordMediakiwiAPI(request: ResetPasswordRequestModel) {
-    const requestBody: ResetPasswordRequestModel = {
+  resetPasswordMediakiwiAPI(request: IResetPasswordRequest) {
+    const requestBody: IResetPasswordRequest = {
       ...request,
     };
     return new Promise((resolve, reject) => {
@@ -113,14 +105,14 @@ export const authenticationAPIService = {
 }
 export const navigationAPIService = {
   // Navigation
-  getTopNavigationMediakiwiAPI(request: GetNavigationRequestModel, url: string): Promise<GetNavigationResponseModel> {
+  getTopNavigationMediakiwiAPI(request: IGetNavigationRequest, url: string): Promise<IGetNavigationResponse> {
     const config = {
       params: request,
       withCredentials: true,
       headers: { "original-url": url } 
     };
     return new Promise((resolve, reject) => {
-      axiosInstance.get<GetNavigationResponseModel>("navigation/GetTopnavigation", config)
+      axiosInstance.get<IGetNavigationResponse>("navigation/GetTopnavigation", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
           resolve(response.data);
@@ -132,14 +124,14 @@ export const navigationAPIService = {
       })
     });
   },
-  getSideNavigationMediakiwiAPI(request: GetNavigationRequestModel, url: string): Promise<GetNavigationResponseModel> {
+  getSideNavigationMediakiwiAPI(request: IGetNavigationRequest, url: string): Promise<IGetNavigationResponse> {
     const config = {
       params: request,
       withCredentials: true,
       headers: { "original-url": url }
     };
     return new Promise((resolve, reject) => {
-      axiosInstance.get<GetNavigationResponseModel>("navigation/GetSidenavigation", config)
+      axiosInstance.get<IGetNavigationResponse>("navigation/GetSidenavigation", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
           resolve(response.data);
@@ -150,14 +142,14 @@ export const navigationAPIService = {
       })
     });
   },
-  getSitesMediakiwiAPI(request: GetNavigationRequestModel, url: string): Promise<GetSitesResponseModel> {
+  getSitesMediakiwiAPI(request: IGetNavigationRequest, url: string): Promise<IGetSitesResponse> {
     const config = {
       params: request,
       withCredentials: true,
       headers: { "original-url": url }
     };
     return new Promise((resolve, reject) => {
-      axiosInstance.get<GetSitesResponseModel>("navigation/GetSites", config)
+      axiosInstance.get<IGetSitesResponse>("navigation/GetSites", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
           resolve(response.data);
@@ -172,14 +164,14 @@ export const navigationAPIService = {
 }
 export const contentAPIService = {
   // Content 
-  getContentMediakiwiAPI(request: GetContentMediakiwiRequestModel, url: string) : Promise<GetContentMediakiwiResponseModel> {
+  getContentMediakiwiAPI(request: IGetContentMediakiwiRequest, url: string) : Promise<IGetContentMediakiwiResponse> {
     const config = {
       params: request,
       withCredentials: true,
       headers: { "original-url": url }
     };
     return new Promise((resolve, reject) => {
-      axiosInstance.get<GetContentMediakiwiResponseModel>("content/GetContent", config)
+      axiosInstance.get<IGetContentMediakiwiResponse>("content/GetContent", config)
       .then((response) => {
         if (response.status === serverCodes.OK) {
           resolve(response.data);
@@ -191,7 +183,7 @@ export const contentAPIService = {
       })
     });
   },
-  postContentMediakiwiAPI(request: PostContentMediakiwiRequestModel, url: string): Promise<PostContentMediakiwiResponseModel> {
+  postContentMediakiwiAPI(request: IPostContentMediakiwiRequest, url: string): Promise<IPostContentMediakiwiResponse> {
     const config = {
       withCredentials: true,
       headers: { 
@@ -199,6 +191,7 @@ export const contentAPIService = {
       }
     };
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       axiosInstance.post<any>("content/PostContent", request, config)
       .then((response) => {
         if (response.status === serverCodes.OK) {

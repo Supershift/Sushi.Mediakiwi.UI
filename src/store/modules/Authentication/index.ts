@@ -1,4 +1,4 @@
-import { AuthenticateResponseModel } from "@/models/Mediakiwi/Response/Authentication/AuthenticateResponseModel";
+import { IAuthenticateResponse } from "@/models/Mediakiwi/Interfaces";
 import { RootState } from "@/store";
 import { Module } from "vuex";
 import { actions } from "./actions";
@@ -6,7 +6,7 @@ import { getters } from "./getters";
 import { mutations } from "./mutations";
 
 export interface AuthenticationState {
-  profileData: AuthenticateResponseModel | null;
+  profileData: IAuthenticateResponse | null;
   apiKey: string | null;
   isLoggedIn: boolean;
 }

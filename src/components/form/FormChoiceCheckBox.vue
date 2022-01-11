@@ -12,7 +12,7 @@
       :name="field.propertyName"
       :aria-label="field.helpText"
       :title="field.helpText"
-      :disabled="field.disabled || field.readOnly"
+      :disabled="field.disabled || field.isReadOnly"
       v-on="
         customEventHandler(field, handleChange)
       " />
@@ -37,13 +37,13 @@ import {
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import { IField } from "../../models/Mediakiwi/Interfaces";
 
 export default defineComponent({
   name: "ChoiceCheckBox",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {

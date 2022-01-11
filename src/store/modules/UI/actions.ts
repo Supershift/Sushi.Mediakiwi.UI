@@ -3,7 +3,7 @@ import { RootState } from "../../index"
 import { Mutations } from "./mutations"
 import { ActionTypes } from "./action-types"
 import { MutationTypes } from "./mutation-types"
-import NotificationModel from "@/models/Mediakiwi/NotificationModel"
+import {INotification, INotificationModel} from "@/models/Mediakiwi/Interfaces"
 import { UIState } from "./"
 
 type AugmentedActionContext = {
@@ -36,7 +36,7 @@ export interface Actions {
   ): void,
   [ActionTypes.SET_NOTIFICATION](
     { commit }: AugmentedActionContext,
-    payload: NotificationModel
+    payload: INotification
   ): void,
 }
 

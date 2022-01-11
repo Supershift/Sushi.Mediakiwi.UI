@@ -4,8 +4,8 @@
     v-if="grid && grid.rows.length">
     <h1 v-if="grid.title">{{ grid.title }}</h1>
     <ButtonListComponent 
-    v-if="grid && grid.buttons && grid.buttons.length"
-    :buttons="grid.buttons"/>
+      v-if="grid && grid.buttons && grid.buttons.length"
+      :buttons="grid.buttons"/>
     <article class="data-block">
       <table class="selections">
         <thead>
@@ -63,16 +63,14 @@
 </template>
 
 <script lang="ts">
-import GridItemModel from "@/models/Mediakiwi/GridItemModel";
-import GridRowModel from "@/models/Mediakiwi/GridRowModel";
 import {
   computed,
   defineComponent,
   PropType,
   ref,
 } from "vue";
-import ButtonModel from "../../models/ButtonModel";
-import { Column, Grid, Pagination, Row } from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+import {ILocalButton} from "../../models/Local/Interfaces";
+import { IColumn, IGrid, IPagination, IRow, IRowItem } from "../../models/Mediakiwi/Interfaces";
 import router from "../../router";
 import { store } from "../../store";
 import { ContentTypes } from "../../store/modules/Content";
@@ -83,11 +81,11 @@ export default defineComponent({
   name: "GridComponent",
   props: {
     grid: {
-      type: Object as PropType<Grid>,
+      type: Object as PropType<IGrid>,
       required: true,
     },
     pagination: {
-      type: Object as PropType<Pagination>,
+      type: Object as PropType<IPagination>,
       required: true
     }
   },
@@ -141,13 +139,13 @@ export default defineComponent({
       setCount = 1;
       store.dispatch(ContentTypes.GET_CONTENT,  router.currentRoute.value.fullPath+"?Set=all")
     }
-    const filteredRows = computed((): Row[] => {
+    const filteredRows = computed((): IRow[] => {
       if (props.grid && props.grid.rows) {
-          return props.grid.rows.map((row: Row) => {
-          let filtered = Object.assign({} as Row, row)
+          return props.grid.rows.map((row: IRow) => {
+          let filtered = Object.assign({} as IRow, row)
           if (props.grid && props.grid.columns) {
             let index = 0
-            props.grid.columns.forEach((col: Column) => {
+            props.grid.columns.forEach((col: IColumn) => {
               if(col.isHidden) {  filtered.items.splice(index, 1) }
               index++ 
             });
@@ -166,7 +164,7 @@ export default defineComponent({
     });
 
     function getGridItemStyle(
-      gridItem: GridItemModel
+      gridItem: IRowItem
     ) {
       let style = "";
       if (gridItem) {
@@ -178,7 +176,7 @@ export default defineComponent({
     }
 
     function getGridRowHref(
-      gridRow: GridRowModel
+      gridRow: IRow
     ) {
       if (!gridRow) {
         return null;
@@ -186,7 +184,7 @@ export default defineComponent({
       return `${gridRow.href}`;
     }
 
-    function onRowClick(gridRow: GridRowModel) {
+    function onRowClick(gridRow: IRow) {
       if (gridRow.href) {
         window.location.href = gridRow.href;
         return true;
@@ -194,7 +192,7 @@ export default defineComponent({
       return false;
     }
 
-    const prevButton = ref<ButtonModel>({
+    const prevButton = ref<ILocalButton>({
       customClass: "grid-btn",
       buttonIcon: "chevron-left",
       disabled: false,
@@ -203,7 +201,7 @@ export default defineComponent({
       readOnly: false,
     });
 
-    const nextButton = ref<ButtonModel>({
+    const nextButton = ref<ILocalButton>({
       customClass: "grid-btn btn-last",
       buttonIcon: "chevron-right",
       disabled: false,
@@ -212,7 +210,7 @@ export default defineComponent({
       readOnly: false,
     });
 
-    const allButton = ref<ButtonModel>({
+    const allButton = ref<ILocalButton>({
       customClass: "grid-btn btn-first",
       buttonIcon: "th-list",
       disabled: false,

@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import LayerConfigurationModel from "@/models/Mediakiwi/LayerConfigurationModel";
+import {ILayerConfiguration} from "@/models/Mediakiwi/Interfaces";
 import {mediakiwiLogic} from "@/utils/mediakiwiLogic";
 import {
   defineComponent,
@@ -20,7 +20,7 @@ import MediakiwiModal from "./MediakiwiModal.vue";
 export default defineComponent({
   props: {
     config: {
-      type: Object as PropType<LayerConfigurationModel>,
+      type: Object as PropType<ILayerConfiguration>,
       required: false,
     },
   },

@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import LayerConfigurationModel from "@/models/Mediakiwi/LayerConfigurationModel";
+import {ILayerConfiguration} from "@/models/Mediakiwi/Interfaces";
 import {
   defineComponent,
   PropType,
@@ -43,7 +43,7 @@ export default defineComponent({
       required: true,
     },
     config: {
-      type: Object as PropType<LayerConfigurationModel>,
+      type: Object as PropType<ILayerConfiguration>,
       required: false,
     },
   },

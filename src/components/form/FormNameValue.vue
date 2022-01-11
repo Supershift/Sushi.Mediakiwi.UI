@@ -12,14 +12,14 @@
       :id="fieldName"
       :aria-label="field.helpText"
       :title="field.helpText"
-      :disabled="field.disabled || field.readOnly"
+      :disabled="field.disabled || field.isReadOnly"
       :class="customNameValueClasses" />
     <input
       type="text"
       v-model="valueNameValueRef"
       :name="fieldNameValue"
       :id="fieldNameValue"
-      :disabled="field.disabled || field.readOnly"
+      :disabled="field.disabled || field.isReadOnly"
       :aria-label="field.helpText"
       :title="field.helpText"
       @change="handleChange"
@@ -37,12 +37,12 @@ import {
   computed,
 } from "vue";
 import {fieldMixins} from "./../form";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {IField} from "../../models/Mediakiwi/Interfaces";
 export default defineComponent({
   name: "FormNamValue",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -54,10 +54,10 @@ export default defineComponent({
   emits: ["value-changed"],
   setup(props, context) {
     const valueNameRef = ref(
-      props.field.value.name
+      props.field.value
     );
     const valueNameValueRef = ref(
-      props.field.value.text
+      props.field.title
     );
     const fieldName = computed(
       () => `${props.field.propertyName}_name`

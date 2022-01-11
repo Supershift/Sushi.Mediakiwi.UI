@@ -1,10 +1,10 @@
-import { AuthenticateResponseModel } from "@/models/Mediakiwi/Response/Authentication/AuthenticateResponseModel";
+import { IAuthenticateResponse } from "@/models/Mediakiwi/Interfaces";
 import { GetterTree } from "vuex";
 import { RootState } from "../../index";
 import { AuthenticationState } from "./index"
 
 export type Getters = {
-    profileData (state: AuthenticationState): AuthenticateResponseModel | null,
+    profileData (state: AuthenticationState): IAuthenticateResponse | null,
     apiKey (state: AuthenticationState): string | null,
     isLoggedIn (state: AuthenticationState): boolean,};
 

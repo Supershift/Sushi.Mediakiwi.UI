@@ -30,13 +30,11 @@ import {
 import CustomButton from "./base-components/CustomButton.vue";
 import CustomInput from "./base-components/CustomInput.vue";
 import FormErrors from "./form/FormErrors.vue";
-import MessageModel from "../models/MessageModel";
-import InputModel from "../models/InputModel";
-import ButtonModel from "../models/ButtonModel";
-import { ResetPasswordRequestModel } from "../models/Mediakiwi/Request/Authentication/ResetPasswordRequestModel";
+import { IResetPasswordRequest } from "../models/Mediakiwi/Interfaces";
 import { store } from "../store";
 import { fieldMixins } from "./form";
 import { AuthenticationTypes } from "../store/modules/Authentication";
+import { IMessage, ILocalButton, ILocalInput } from "../models/Local/Interfaces";
 
 export default defineComponent({
   name: "ForgottenPassword",
@@ -47,13 +45,13 @@ export default defineComponent({
     CustomButton,
   },
   setup() {
-    let errorMessages = reactive<MessageModel[]>([]);
+    let errorMessages = reactive<IMessage[]>([]);
     const validEmail = ref(false);
     const email = ref("");
     const contentForgottenPassword = computed(
       () => store.getters.contentForgotten,
     );
-    const customEmailInput = ref<InputModel>({
+    const customEmailInput = ref<ILocalInput>({
       customClass: "input-email",
       fieldIcon: "email",
       fieldPlaceholder: contentForgottenPassword.value.forgottenEmailPlaceholder,
@@ -65,7 +63,7 @@ export default defineComponent({
       fieldType: "email",
       readOnly: false,
     });
-    const customSubmitButton = ref<ButtonModel>({
+    const customSubmitButton = ref<ILocalButton>({
       customClass: "btn-login ",
       buttonIcon: "",
       disabled: true,
@@ -75,7 +73,7 @@ export default defineComponent({
     });
     function handleReset() {
       if (email.value && validEmail.value) {
-        store.dispatch(AuthenticationTypes.RESET_PASSWORD,  { emailAddress: email.value } as ResetPasswordRequestModel );
+        store.dispatch(AuthenticationTypes.RESET_PASSWORD,  { emailAddress: email.value } as IResetPasswordRequest );
       }
     }
     function handleTextChanged(value: string, fieldName: string) {

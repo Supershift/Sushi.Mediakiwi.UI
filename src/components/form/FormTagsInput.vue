@@ -64,17 +64,15 @@ import {
   defineComponent,
   PropType,
 } from "vue";
+import { ITagsUI } from "../../models/Local/Interfaces";
 
-interface TagsUI extends Window{
-  clientWidth: 0;
-  scrollWidth: 0;
-}
-import { Field, FieldOption } from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+
+import { IField, IFieldOption } from "../../models/Mediakiwi/Interfaces";
 export default defineComponent({
   name: "TagsInput",
   props: {
     field: { 
-      type: Object as PropType<Field>,
+      type: Object as PropType<IField>,
       required: true
     },
     fieldModel: {
@@ -85,7 +83,7 @@ export default defineComponent({
       },
     },
     options: {
-      type: Array as PropType<Array<FieldOption>>,
+      type: Array as PropType<Array<IFieldOption>>,
       required: false
     },
     allowCustom: {type: Boolean, default: false},
@@ -153,7 +151,7 @@ export default defineComponent({
     // positioning and handling tag change
     const tenPadding = 10;
     const paddingLeft = ref(tenPadding);
-    const tagsUl = ref<TagsUI>();
+    const tagsUl = ref<ITagsUI>();
     const onTagsChange = () => {
       if (tagsUl.value && tagsUl.value.scrollWidth && tagsUl.value.clientWidth) {
       // position cursor
@@ -181,13 +179,13 @@ export default defineComponent({
         return false;
       }
       return props.options.filter(
-        (option: FieldOption) => !tags.value.includes(option.value)
+        (option: IFieldOption) => !tags.value.includes(option.value)
       );
     });
 
     function displayName(tagValue: string) {
       if (props.options) {
-        return props.options.find((o: FieldOption) => o.value === tagValue);
+        return props.options.find((o: IFieldOption) => o.value === tagValue);
       }
       return ""
     }

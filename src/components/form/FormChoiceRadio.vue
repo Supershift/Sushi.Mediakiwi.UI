@@ -18,7 +18,7 @@
         :aria-label="field.helpText"
         :title="field.helpText"
         :disabled="
-          field.disabled || field.readOnly
+          field.disabled || field.isReadOnly
         "
         @change="handleChange" />
       <label class="" :for="fieldID(option)" v-html="option.text"/>
@@ -37,22 +37,21 @@
   </div>
 </template>
 <script lang="ts">
-import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
+import { JSEventTypeEnum } from "@/models/Mediakiwi/Enums";
 import {
   computed,
   defineComponent,
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
-import OptionItemModel from "../../models/OptionItemModel";
+import { IField, IFieldOption } from "../../models/Mediakiwi/Interfaces";
 import {fieldMixins} from "./index";
 
 export default defineComponent({
   name: "FormChoiceRadio",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -65,7 +64,7 @@ export default defineComponent({
   setup(props, context) {
     let valueRef = ref(props.field.value);
     const parseEmptyOption  = computed(() => {
-      return (props.field.value === "1" || props.field.value === 1) ? "Allowed" : "Not-Allowed"
+      return (props.field.value === "1") ? "Allowed" : "Not-Allowed"
     })
     const radioContainerClasses = computed(
       () => `radio-container ${props.classname}`
@@ -79,20 +78,20 @@ export default defineComponent({
         props.field.value.toLowerCase() ===
         "false"
       ) {
-        valueRef.value = 0;
+        valueRef.value = "0";
       } else if (
         props.field.value.toLowerCase() === "true"
       ) {
-        valueRef.value = 1;
+        valueRef.value = "1";
       }
     }
-    function fieldID(option: OptionItemModel) {
+    function fieldID(option: IFieldOption) {
       return `${props.field.propertyName}_${option.value}`;
     }
     function handleChange(e: Event) {
       if (
         props.field.event !==
-        MediakiwiJSEventType.none
+        JSEventTypeEnum.none
       ) {
         context.emit(
           "value-changed",

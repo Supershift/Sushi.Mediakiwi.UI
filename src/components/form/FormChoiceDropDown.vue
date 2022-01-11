@@ -15,7 +15,7 @@
       :aria-label="field.helpText"
       :title="field.helpText"
       :class="customDropdownClasses"
-      :disabled="field.disabled || field.readOnly"
+      :disabled="field.disabled || field.isReadOnly"
       ref="dropdown"
       @input="handleChange"
       @change="handleChange"
@@ -37,13 +37,14 @@ import {
 } from "vue";
 import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
-import { Field, FieldOption } from "../../models/Mediakiwi/Response/Content/GetContentMediakiwiResponseModel";
+import { IField } from "../../models/Mediakiwi/Interfaces/IField";
+import { IFieldOption } from "../../models/Mediakiwi/Interfaces/IFieldOption";
 
 export default defineComponent({
   name: "FormChoiceDropdown",
   props: {
     field: {
-      type: Object as PropType<Field>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -57,7 +58,7 @@ export default defineComponent({
   },
   emits: ["value-changed"],
   setup(props, context) {
-    let valueRef = ref<Field>(props.field);
+    let valueRef = ref<IField>(props.field);
     const customDropdownClasses = computed(() => [
       "dropdown-primary ",
       props.field.className,
@@ -78,7 +79,7 @@ export default defineComponent({
       }
       
       return valueRef.value?.options.map(
-        (r: FieldOption) => {
+        (r: IFieldOption) => {
           return {
             id: r.value,
             label: r.text,

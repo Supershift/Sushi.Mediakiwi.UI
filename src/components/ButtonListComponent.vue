@@ -14,8 +14,8 @@
 </template>
 
 <script lang="ts">
-import {ButtonModel} from "@/models/Mediakiwi/ButtonModel";
-import {ButtonTargetType} from "@/models/Mediakiwi/ButtonTargetType";
+import { IButton } from "../models/Mediakiwi/Interfaces";
+import {ButtonTargetTypeEnum} from "../models/Mediakiwi/Enums";
 import {mediakiwiLogic} from "@/utils/mediakiwiLogic";
 import {
   computed,
@@ -28,7 +28,7 @@ export default defineComponent({
   name: "TopBottomButtonComponent",
   props: {
     buttons: {
-      type: Array as PropType<Array<ButtonModel>>,
+      type: Array as PropType<Array<IButton>>,
       required: true,
     },
     classname: {
@@ -43,7 +43,7 @@ export default defineComponent({
     const tbbcContainerClasses = computed(() => [
       "action-list-container " + props.classname,
     ]);
-    function handleClicked(value: ButtonModel) {
+    function handleClicked(value: IButton) {
       if (value) {
       mediakiwiLogic.getMediakiwiRequestForButtonActions(value.propertyName);
         // switch (value.requestMethod) {
@@ -59,15 +59,15 @@ export default defineComponent({
         // }
       }
     }
-    function buttonPosition(button: ButtonModel) {
+    function buttonPosition(button: IButton) {
       if (!button) {
         return "";
       }
       if (
-        button.iconTarget ===
-          ButtonTargetType.topRight ||
-        button.iconTarget ===
-          ButtonTargetType.bottomRight
+        button.section ===
+          ButtonTargetTypeEnum.topRight ||
+        button.section ===
+          ButtonTargetTypeEnum.bottomRight
       ) {
         return "right";
       }

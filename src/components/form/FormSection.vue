@@ -31,13 +31,13 @@ import {
   defineComponent,
   PropType,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {IField} from "../../models/Mediakiwi/Interfaces";
 
 export default defineComponent({
   name: "FormSection",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -103,9 +103,9 @@ export default defineComponent({
     function getToggleClass() {
       // VISIBLE
       if (
-        typeof props.field.hidden ===
+        typeof props.field.isHidden ===
           "undefined" ||
-        props.field.hidden
+        props.field.isHidden
       ) {
         return "icon-angle-up";
       } else {

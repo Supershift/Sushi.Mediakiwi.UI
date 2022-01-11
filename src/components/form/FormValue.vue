@@ -12,7 +12,7 @@
       :name="fieldName"
       :aria-label="field.helpText"
       :title="field.helpText"
-      :disabled="field.disabled || field.readOnly"
+      :disabled="field.disabled || field.isReadOnly"
       :class="valueClasses" />
     <label v-if="undefinedCheck(field)">
       {{ undefinedCheck(field.suffix) }}
@@ -26,14 +26,14 @@ import {
   defineComponent,
   computed,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {IField} from "../../models/Mediakiwi/Interfaces";
 import {fieldMixins} from "./../form";
 
 export default defineComponent({
   name: "FormValue",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -56,7 +56,7 @@ export default defineComponent({
     const fieldID = computed(
       () => `${props.field.propertyName}_id`
     );
-    const valueRef = ref(props.field.value.text);
+    const valueRef = ref(props.field.value);
     function handleChange() {
       context.emit("value-changed", valueRef, props.field);
     }
