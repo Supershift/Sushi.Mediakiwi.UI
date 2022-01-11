@@ -5,6 +5,7 @@
     <img
       src="../assets/images/mk-logo.png"
       class="login-logo" />
+    <NotificationComponent position="top-center" />
     <h1>{{ contentLogin.loginHeadlineText }}</h1>
     <CustomInput
       :input="customEmailInput"
@@ -26,7 +27,6 @@
     <CustomButton
       :button="customLoginButton"
       @button-clicked="handleLogin" />
-    <Notification position="top-center" />
   </form>
 </template>
 
@@ -43,9 +43,10 @@ import CustomInput from "./base-components/CustomInput.vue";
 import CustomButton from "./base-components/CustomButton.vue";
 import {IAuthenticateRequest} from "../models/Mediakiwi/Interfaces";
 import { fieldMixins } from "./form";
-import Notification from "./notification/Notification.vue";
 import { AuthenticationTypes } from "../store/modules/Authentication";
 import { IMessage, ILocalButton, ILocalInput } from "../models/Local/Interfaces";
+import NotificationComponent from "./notification/NotificationComponent.vue";
+
 
 export default defineComponent({
   name: "LoginComponent",
@@ -54,7 +55,7 @@ export default defineComponent({
     FormErrors,
     CustomInput,
     CustomButton,
-    Notification,
+    NotificationComponent
   },
   setup() {
     const validForm = ref(false);

@@ -25,7 +25,6 @@ axios.interceptors.response.use(
 }, function (err) {
     store.dispatch("clearCache");
     router.push("/login");
-    store.dispatch(UITypes.SET_NOTIFICATION, { message: "Your Session might have expired, please login to continue.", actionType: NotificationActionTypes.ALERT, actionText: "OK" });
     return Promise.reject(err)
 });
 
@@ -50,16 +49,13 @@ export const authenticationAPIService = {
           if (response.status === serverCodes.OK) {   
             store.dispatch(UITypes.SET_NOTIFICATION, { message: "Signed In!", actionType: NotificationActionTypes.SUCCESS, actionText: "OK" });         
             store.dispatch(AuthenticationTypes.SET_PROFILE, response.data);
+            resolve(response);
           }
-          resolve(response);
         })
         .catch((err) => {
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: err?.response?.data.title, actionType: NotificationActionTypes.ERROR, actionText: "OK" });
           reject(err);
         })
-    }).catch((thrown) => {
-      if (axios.isCancel(thrown)) {
-        store.dispatch(UITypes.SET_NOTIFICATION, { message: "Request Canceled", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
-      }
     });
   },
   signOutMediakiwiAPI(url: string) {
@@ -70,19 +66,12 @@ export const authenticationAPIService = {
     return new Promise((resolve, reject) => {
       axiosInstance.post("authentication/LogOut", null, config)
         .then((response) => {
-          if (response.status === serverCodes.OK) {
-            // store.dispatch(AuthenticationTypes.TOGGLE_LOGIN, false);
-          }
           resolve(response)
         })
         .catch((err) => {
-
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: err?.response.data.title, actionType: NotificationActionTypes.ERROR, actionText: "OK" });
           reject(err);
       })
-    }).catch((thrown) => {
-      if (axios.isCancel(thrown)) {
-        store.dispatch(UITypes.SET_NOTIFICATION, { message: "Request Canceled", actionType: NotificationActionTypes.ERROR, actionText: "OK" });
-      }
     });
   },
   resetPasswordMediakiwiAPI(request: IResetPasswordRequest) {
@@ -98,6 +87,7 @@ export const authenticationAPIService = {
           resolve(response)
         })
         .catch((err) => {
+          store.dispatch(UITypes.SET_NOTIFICATION, { message: err?.response.data.title, actionType: NotificationActionTypes.ERROR, actionText: "OK" });
           reject(err);
         })
     })
@@ -119,7 +109,7 @@ export const navigationAPIService = {
         }
       })
       .catch((err) => {
-
+        store.dispatch(UITypes.SET_NOTIFICATION, { message: err?.response?.data.title, actionType: NotificationActionTypes.ERROR, actionText: "OK" });
         reject(err)
       })
     });
@@ -138,6 +128,7 @@ export const navigationAPIService = {
         }
       })
       .catch((err) => {
+        store.dispatch(UITypes.SET_NOTIFICATION, { message: err?.response?.data.title, actionType: NotificationActionTypes.ERROR, actionText: "OK" });
         reject(err);
       })
     });
@@ -156,7 +147,7 @@ export const navigationAPIService = {
         }
       })
       .catch((err) => {
-
+        store.dispatch(UITypes.SET_NOTIFICATION, { message: err?.response?.data.title, actionType: NotificationActionTypes.ERROR, actionText: "OK" });
         reject(err);
       })
     });
@@ -199,6 +190,7 @@ export const contentAPIService = {
         }
       })
       .catch((err) => {
+        store.dispatch(UITypes.SET_NOTIFICATION, { message: err?.response?.data.title, actionType: NotificationActionTypes.ERROR, actionText: "OK" });
         reject(err);
       })
     });

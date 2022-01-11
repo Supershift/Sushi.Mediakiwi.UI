@@ -3,6 +3,7 @@
     <img
       src="../assets/images/mk-logo.png"
       class="login-logo" />
+    <NotificationComponent position="top-center" />
     <h1>
       {{
         contentForgottenPassword.forgottenHeadlineText
@@ -35,6 +36,8 @@ import { store } from "../store";
 import { fieldMixins } from "./form";
 import { AuthenticationTypes } from "../store/modules/Authentication";
 import { IMessage, ILocalButton, ILocalInput } from "../models/Local/Interfaces";
+import NotificationComponent from "./notification/NotificationComponent.vue";
+
 
 export default defineComponent({
   name: "ForgottenPassword",
@@ -43,6 +46,7 @@ export default defineComponent({
     FormErrors,
     CustomInput,
     CustomButton,
+    NotificationComponent
   },
   setup() {
     let errorMessages = reactive<IMessage[]>([]);

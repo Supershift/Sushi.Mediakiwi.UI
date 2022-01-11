@@ -18,7 +18,6 @@
         :items="topNavigationItems" />
     </div>
     <Profile />
-    <Notification />
     <DialogComponent @sign-out-clicked="handleSignOut"/>
   </div>
 </template>
@@ -28,7 +27,6 @@ import {computed, defineComponent} from "vue";
 import {store} from "@/store";
 import NavigationMenu from "./NavigationMenu.vue";
 import Profile from "./Profile.vue";
-import Notification from "../notification/Notification.vue";
 import DialogComponent from "../dialog/Dialog.vue";
 import { AuthenticationTypes } from "../../store/modules/Authentication";
 
@@ -37,7 +35,6 @@ export default defineComponent({
   components: {
     NavigationMenu,
     Profile,
-    Notification,
     DialogComponent,
   },
   setup() {

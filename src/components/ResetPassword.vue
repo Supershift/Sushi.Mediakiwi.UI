@@ -5,6 +5,7 @@
     <img
       src="../assets/images/mk-logo.png"
       class="login-logo" />
+    <NotificationComponent position="top-center" />
     <h1>
       {{ contentResetPassword.resetHeadlineText }}
     </h1>
@@ -35,6 +36,8 @@ import { IResetPasswordRequest} from "../models/Mediakiwi/Interfaces";
 import {fieldMixins} from "./form/index";
 import {store} from "../store";
 import { AuthenticationTypes } from "../store/modules/Authentication";
+import NotificationComponent from "./notification/NotificationComponent.vue";
+
 
 export default defineComponent({
   name: "ForgottenPassword",
@@ -43,6 +46,7 @@ export default defineComponent({
     FormErrors,
     CustomInput,
     CustomButton,
+    NotificationComponent
   },
   setup() {
     let errorMessages = reactive<IMessage[]>([]);

@@ -5,15 +5,16 @@
       <!-- <BreadCrumbs /> -->
       <template
         v-if="
-          fetchedTopButtons && false &&
+          fetchedTopButtons && fetchedForms && false &&
           checkWindowWidth
         ">
         <ButtonListComponent
-          :buttons="fetchedTopButtons" 
+          :buttons="fetchedTopButtons"
+          :forms="fetchedForms"
         />
       </template>
 
-      <!-- TODO ADD NOTIFICATIONS HERE -->
+      <NotificationComponent />
 
       <template
         v-if="
@@ -32,11 +33,12 @@
 
       <template
         v-if="
-          fetchedBottomButtons && false &&
+          fetchedBottomButtons && fetchedForms && false &&
           checkWindowWidth
         ">
         <ButtonListComponent
-          :buttons="fetchedBottomButtons" />
+          :buttons="fetchedBottomButtons"
+          :forms="fetchedForms" />
       </template>
 
       <template
@@ -80,6 +82,7 @@ import FormComponent from "./form/FormComponent.vue";
 import FolderComponent from "./folder/FolderComponent.vue";
 import ResourcesComponent from "./resources/ResourcesComponent.vue";
 import ButtonListComponent from "./ButtonListComponent.vue";
+import NotificationComponent from "./notification/NotificationComponent.vue";
 import FileUpload from "./file-upload/FileUpload.vue";
 import BreadCrumbs from "./breadcrumbs/breadcrumbs.vue";
 import {getViewTypeName} from "@/models/Local/Enums";
@@ -93,6 +96,7 @@ export default defineComponent({
     FolderComponent,
     ResourcesComponent,
     ButtonListComponent,
+    NotificationComponent,
     FileUpload,
     BreadCrumbs,
     OverlayLoader,

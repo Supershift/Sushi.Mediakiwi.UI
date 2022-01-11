@@ -16,7 +16,6 @@ export interface RootState {
   rootPath: string,
   description: string,
   content: IBaseContent,
-  channel: number,
 }
 
 // define injection key
@@ -127,7 +126,6 @@ export const store = createStore<RootState>({
         resetHeadlineText: "Reset password via email",
       },
     },
-    channel: 0,
   },
   mutations: {
     clearCache(state) {

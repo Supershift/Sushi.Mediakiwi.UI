@@ -6,7 +6,8 @@ import { AuthenticationState } from "./index"
 export type Getters = {
     profileData (state: AuthenticationState): IAuthenticateResponse | null,
     apiKey (state: AuthenticationState): string | null,
-    isLoggedIn (state: AuthenticationState): boolean,};
+    isLoggedIn (state: AuthenticationState): boolean
+};
 
 export const getters: GetterTree<AuthenticationState, RootState> & Getters = {
     profileData: (state) => state.profileData,

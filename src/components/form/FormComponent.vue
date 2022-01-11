@@ -214,6 +214,7 @@ export default defineComponent({
           ? threeCols
           : oneCol;
       }
+      return 1;
     }
     function showField(field: IField) {
       if (field.isHidden) {
@@ -265,7 +266,6 @@ export default defineComponent({
       field: IField,
     ) {
       // Update the field's value
-      //field.value = value;
       parentForms.value.forEach((element: IForm) => {
         if (element && element.fields) {
           element.fields[getIndex(element.fields, field.propertyName)].value = value;

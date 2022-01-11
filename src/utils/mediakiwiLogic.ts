@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "@vue/runtime-dom";
 import MediakiwiModalWrapper from "./../components/modal/MediakiwiModalWrapper.vue";
 import { ContentTypes } from "@/store/modules/Content";
-import { IField, ILayerConfiguration, IMediakiwiResponse, IPostMediakiwiRequest, IContentList } from "@/models/Mediakiwi/Interfaces";
+import { IField, ILayerConfiguration, IMediakiwiResponse, IPostMediakiwiRequest } from "@/models/Mediakiwi/Interfaces";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,11 +20,6 @@ export const mediakiwiLogic = {
   /** Binds the data from the Mediakiwi Response to the vuex store  */
   putResponseToStore(response: IMediakiwiResponse) {
 
-    // Create the page model
-    // const localPage: IPage = {
-    //   ...response.list
-    // }
-     
     if (response.list) {
       store.dispatch(ContentTypes.SET_PAGE, response.list);
     }

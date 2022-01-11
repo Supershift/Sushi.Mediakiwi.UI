@@ -38,8 +38,10 @@ export const actions: ActionTree<AuthenticationState, RootState> & Actions = {
   [ActionTypes.AUTHENTICATE]({ commit }, payload) {
     store.dispatch(UITypes.SET_LOADING, true);
     return authenticationAPIService.signInMediakiwiAPI(payload)
-    .then(() => {
-      commit(MutationTypes.AUTHENTICATE, true)
+    .then((response) => {
+      if (response) {
+        commit(MutationTypes.AUTHENTICATE, true)
+      }
     })
     .finally(() => {
       store.dispatch(UITypes.SET_LOADING, false);

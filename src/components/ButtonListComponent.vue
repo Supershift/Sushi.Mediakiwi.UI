@@ -14,15 +14,16 @@
 </template>
 
 <script lang="ts">
-import { IButton } from "../models/Mediakiwi/Interfaces";
+import { IButton, IForm, IPostContentMediakiwiRequest } from "../models/Mediakiwi/Interfaces";
 import {ButtonTargetTypeEnum} from "../models/Mediakiwi/Enums";
-import {mediakiwiLogic} from "@/utils/mediakiwiLogic";
 import {
   computed,
   defineComponent,
   PropType,
 } from "vue";
 import FormButton from "./form/FormButton.vue";
+import { store } from "../store";
+import { ContentTypes } from "../store/modules/Content";
 
 export default defineComponent({
   name: "TopBottomButtonComponent",
@@ -35,6 +36,10 @@ export default defineComponent({
       type: String,
       required: false,
     },
+    forms: {
+      type: Object as PropType<Array<IForm>>,
+      required: true,
+    }
   },
   components: {
     FormButton,
@@ -43,20 +48,15 @@ export default defineComponent({
     const tbbcContainerClasses = computed(() => [
       "action-list-container " + props.classname,
     ]);
-    function handleClicked(value: IButton) {
-      if (value) {
-      mediakiwiLogic.getMediakiwiRequestForButtonActions(value.propertyName);
-        // switch (value.requestMethod) {
-        //   case ButtonRequestMethodType.put:
-        //     apiService.putMediakiwiAPI(request);
-        //     break;
-        //   case ButtonRequestMethodType.delete:
-        //     apiService.deleteMediakiwiAPI(request);
-        //     break;
-        //   default:
-        //     apiService.postMediakiwiAPI(request);
-        //     break;
-        // }
+    function handleClicked(button: IButton) {
+      if (button) {
+      const siteID: number = store.getters["Navigation/currentSiteID"];
+      const request: IPostContentMediakiwiRequest = {
+        currentSiteId: siteID,
+        postedField: button.title,
+        forms: props.forms
+      }      
+      store.dispatch(ContentTypes.POST_CONTENT, request)
       }
     }
     function buttonPosition(button: IButton) {
@@ -97,7 +97,8 @@ export default defineComponent({
 
       &.right {
         float: right;
-        margin-right: 0;
+        margin: 0;
+        margin-left : 10px;
       }
 
       button {
