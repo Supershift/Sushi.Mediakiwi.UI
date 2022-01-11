@@ -83,8 +83,8 @@ export const authenticationAPIService = {
         .then((response) => {
           if (response.status === serverCodes.OK) {
             store.dispatch(UITypes.SET_NOTIFICATION, { message: "Your password has been reset successfully", actionType: NotificationActionTypes.SUCCESS, actionText: "OK" });
+            resolve(response)
           }
-          resolve(response)
         })
         .catch((err) => {
           store.dispatch(UITypes.SET_NOTIFICATION, { message: err?.response.data.title, actionType: NotificationActionTypes.ERROR, actionText: "OK" });
