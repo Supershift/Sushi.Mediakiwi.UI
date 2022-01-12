@@ -1,5 +1,5 @@
 <template>
-  <li :id="elementID" class="navigation-link">
+  <li :id="elementID" :class="listClass">
     <a :href="item.href">{{ item.text }}</a>
 
     <div class="sub" v-if="item.items">
@@ -22,22 +22,26 @@ import {
   defineComponent,
   PropType,
 } from "vue";
-import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
+import { INavigationItem } from "../../models/Mediakiwi/Interfaces";
 
 export default defineComponent({
   name: "NavigationMenuItem",
   props: {
     item: {
-      type: Object as PropType<TopNavigationItemModel>,
+      type: Object as PropType<INavigationItem>,
       required: true,
     },
   },
   setup(props) {
     const elementID = computed(
-      () => `${props.item.id}_${props.item.text}`
+      () => `ID_${props.item.text}`
     );
+    const listClass = computed(() => {
+      return [props.item.iconClass ? props.item.iconClass + " navigation-link" : " navigation-link"]
+    });
     return {
       elementID,
+      listClass
     };
   },
 });
@@ -52,13 +56,12 @@ export default defineComponent({
   position: relative;
   text-align: center;
   width: 100%;
-
   .sub {
     display: none;
     padding: 0;
     border-radius: 2px;
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + 5px);
     left: 0;
     float: left;
     box-sizing: border-box;
@@ -78,6 +81,10 @@ export default defineComponent({
           white-space: nowrap;
         }
       }
+    }
+
+    &:hover {
+      display: block;
     }
   }
 
@@ -104,7 +111,18 @@ export default defineComponent({
     color: $color-drakgrey;
     &:hover {
       color: $color-blue;
+      
+      + .sub {
+        display: block;
+      }
     }
+  }
+}
+.noClick{
+  cursor: default;
+  > a {
+    cursor: default;
+    pointer-events: none;
   }
 }
 @media (min-width: 786px) {

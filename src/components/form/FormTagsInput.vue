@@ -13,8 +13,10 @@
       :style="{
         'padding-left': `${paddingLeft}px`,
       }"
-      @keydown.enter="addTag(newTag)"
+      @keydown.prevent.enter="addTag(newTag)"
       @keydown.prevent.tab="addTag(newTag)"
+      @keydown.prevent.esc="clear()"
+      @blur="addTag(newTag)"
       @keydown.delete="
         newTag.length ||
           removeTag(tags.length - 1)
@@ -24,8 +26,10 @@
       <option
         v-for="option in availableOptions"
         :key="option"
-        :value="option.name">
-        {{ option.name }}
+        :value="option.value"
+        @click="addTag(option.value)"
+        >
+        {{ option.text }}
       </option>
     </datalist>
 
@@ -34,8 +38,9 @@
         v-for="(tag, index) in tags"
         :key="tag"
         class="tag"
-        :class="{duplicate: tag === duplicate}">
-        {{ tag }}
+        :class="{duplicate: tag === duplicate}"
+        :title="displayName(tag)?.text">
+        {{ displayName(tag)?.value }}
         <button
           class="delete"
           @click="removeTag(index)">
@@ -49,7 +54,7 @@
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import {
   ref,
   watch,
@@ -57,22 +62,31 @@ import {
   onMounted,
   computed,
   defineComponent,
+  PropType,
 } from "vue";
+import { ITagsUI } from "../../models/Local/Interfaces";
+
+
+import { IField, IFieldOption } from "../../models/Mediakiwi/Interfaces";
 export default defineComponent({
   name: "TagsInput",
   props: {
     field: { 
-      type: Object,
+      type: Object as PropType<IField>,
       required: true
     },
-    modelValue: {
-      type: Array,
+    fieldModel: {
+      type: Array as PropType<Array<string>>,
+      required: false,
       default: () => {
         return [];
       },
     },
-    options: {type: Array, required: false},
-    allowCustom: {type: Boolean, default: true},
+    options: {
+      type: Array as PropType<Array<IFieldOption>>,
+      required: false
+    },
+    allowCustom: {type: Boolean, default: false},
     showCount: {type: Boolean, default: false},
   },
   emits: ["change-made"],
@@ -83,7 +97,7 @@ export default defineComponent({
     const radixNumber = 36;
     const startubstring = 7;
     // Tags
-    const tags = ref(props.modelValue);
+    const tags = ref<Array<string>>(props.fieldModel);
     const newTag = ref("");
     const id = Math.random()
       .toString(radixNumber)
@@ -93,54 +107,64 @@ export default defineComponent({
     );
 
     // handling duplicates
-    const duplicate = ref(null);
+    const duplicate = ref("");
     const oneSecond = 1000;
-    const handleDuplicate = (tag) => {
+    function clear() {
+      newTag.value = "";
+    }
+    const handleDuplicate = (tag: string) => {
       duplicate.value = tag;
       setTimeout(
-        () => (duplicate.value = null),
+        () => (duplicate.value = ""),
         oneSecond
       );
-      newTag.value = "";
+      clear();
     };
 
-    const addTag = (tag) => {
+    function addTag(tag: string) {
+            
       if (!tag) {
         return;
       } // prevent empty tag
-      // only allow predefined tags when allowCustom is false
-      if (
-        !props.allowCustom &&
-        !props.options.items.includes(tag)
-      ) {
-        return;
-      }
+
       // return early if duplicate
       if (tags.value.includes(tag)) {
         handleDuplicate(tag);
         return;
       }
-      tags.value.push(tag);
-      newTag.value = ""; // reset newTag
-    };
-    const removeTag = (index) => {
+      // only allow predefined tags when allowCustom is false
+      if (
+        props.allowCustom === false &&
+        props.options &&
+        props.options.findIndex((o) => o.value === tag) !== -1
+      ) {
+        //trim and strip all special char and whitespace and post
+        tags.value.push(tag.toUpperCase().trim().replace(/[^a-zA-Z ]/g, ""));
+        clear(); // reset newTag
+        return;
+      } 
+    }
+    const removeTag = (index: number) => {
       tags.value.splice(index, 1);
     };
 
     // positioning and handling tag change
     const tenPadding = 10;
     const paddingLeft = ref(tenPadding);
-    const tagsUl = ref(null);
+    const tagsUl = ref<ITagsUI>();
     const onTagsChange = () => {
+      if (tagsUl.value && tagsUl.value.scrollWidth && tagsUl.value.clientWidth) {
       // position cursor
       const extraCushion = 15;
       paddingLeft.value =
         tagsUl.value.clientWidth + extraCushion;
       // scroll to end of tags
-      tagsUl.value.scrollTo(
+        tagsUl.value.scrollTo(
         tagsUl.value.scrollWidth,
         0
       );
+      }
+      
       // emit value on tags change
       emit("change-made", tags.value);
     };
@@ -154,22 +178,31 @@ export default defineComponent({
       if (!props.options) {
         return false;
       }
-      return props.options.items.filter(
-        (option) => !tags.value.includes(option)
+      return props.options.filter(
+        (option: IFieldOption) => !tags.value.includes(option.value)
       );
     });
+
+    function displayName(tagValue: string) {
+      if (props.options) {
+        return props.options.find((o: IFieldOption) => o.value === tagValue);
+      }
+      return ""
+    }
 
     return {
       tags,
       newTag,
       addTag,
       removeTag,
+      clear,
       paddingLeft,
       tagsUl,
       availableOptions,
       id,
       duplicate,
       tagsLength,
+      displayName,
     };
   },
 });
@@ -196,6 +229,8 @@ ul {
   color: white;
   white-space: nowrap;
   transition: 0.1s ease;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .tag-input {

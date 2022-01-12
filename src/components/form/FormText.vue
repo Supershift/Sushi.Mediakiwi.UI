@@ -12,10 +12,8 @@
       :id="fieldID"
       :aria-label="field.helpText"
       :title="field.helpText"
-      :disabled="field.disabled || field.readOnly"
-      v-on="
-        customEventHandler(field, handleChange)
-      " />
+      :disabled="field.disabled || field.isReadOnly"
+      @input="handleChange"/>
     <label v-if="undefinedCheck(field.suffix)">{{
       undefinedCheck(field.suffix)
     }}</label>
@@ -32,14 +30,14 @@ import {
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
-import {MediakiwiFormVueType} from "@/models/Mediakiwi/MediakiwiFormVueType";
+import {IField} from "../../models/Mediakiwi/Interfaces";
+import {MediakiwiFormVueTypeEnum} from "@/models/Mediakiwi/Enums";
 
 export default defineComponent({
   name: "FormText",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -48,7 +46,7 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     let valueRef = ref(props.field?.value);
     const fieldID = computed(
@@ -64,19 +62,19 @@ export default defineComponent({
       if (
         props.field.expression &&
         props.field.vueType ===
-          MediakiwiFormVueType.formChoiceCheckbox
+          MediakiwiFormVueTypeEnum.formChoiceCheckbox
       ) {
         return `text-primary half short ${props.field.className}`;
       }
       return `text-primary ${props.field.className}`;
     });
 
-    function handleChange(e?: Event) {
+    function handleChange() {
       context.emit(
-        "on-change",
-        e,
+        "value-changed",
+        valueRef.value,
         props.field,
-        valueRef
+
       );
     }
 

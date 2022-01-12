@@ -1,12 +1,12 @@
 <template>
   <div
-    v-if="field.options && field.options.items"
+    v-if="field.options && field.options"
     :class="radioContainerClasses">
     <label v-if="undefinedCheck(field.prefix)">{{
       undefinedCheck(field.prefix)
     }}</label>
     <span
-      v-for="option in field.options.items"
+      v-for="option in field.options"
       :key="fieldID(option)">
       <input
         :id="fieldID(option)"
@@ -18,12 +18,10 @@
         :aria-label="field.helpText"
         :title="field.helpText"
         :disabled="
-          field.disabled || field.readOnly
+          field.disabled || field.isReadOnly
         "
         @change="handleChange" />
-      <label :for="fieldID(option)">{{
-        option.text
-      }}</label>
+      <label class="" :for="fieldID(option)" v-html="option.text"/>
     </span>
     <label v-if="undefinedCheck(field.suffix)">{{
       undefinedCheck(field.suffix)
@@ -33,27 +31,27 @@
     <label
       class="error-label"
       :for="field.propertyName"
-      >No options found for radios!</label
+      v-if="field.value"
+      >{{ parseEmptyOption }}</label
     >
   </div>
 </template>
 <script lang="ts">
-import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
+import { JSEventTypeEnum } from "@/models/Mediakiwi/Enums";
 import {
   computed,
   defineComponent,
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
-import OptionItemModel from "../../models/OptionItemModel";
+import { IField, IFieldOption } from "../../models/Mediakiwi/Interfaces";
 import {fieldMixins} from "./index";
 
 export default defineComponent({
   name: "FormChoiceRadio",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -62,9 +60,12 @@ export default defineComponent({
     },
   },
   mixins: [fieldMixins],
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     let valueRef = ref(props.field.value);
+    const parseEmptyOption  = computed(() => {
+      return (props.field.value === "1") ? "Allowed" : "Not-Allowed"
+    })
     const radioContainerClasses = computed(
       () => `radio-container ${props.classname}`
     );
@@ -77,26 +78,26 @@ export default defineComponent({
         props.field.value.toLowerCase() ===
         "false"
       ) {
-        valueRef.value = 0;
+        valueRef.value = "0";
       } else if (
         props.field.value.toLowerCase() === "true"
       ) {
-        valueRef.value = 1;
+        valueRef.value = "1";
       }
     }
-    function fieldID(option: OptionItemModel) {
+    function fieldID(option: IFieldOption) {
       return `${props.field.propertyName}_${option.value}`;
     }
     function handleChange(e: Event) {
       if (
         props.field.event !==
-        MediakiwiJSEventType.none
+        JSEventTypeEnum.none
       ) {
         context.emit(
-          "on-change",
-          e,
+          "value-changed",
+          valueRef,
           props.field,
-          valueRef
+
         );
       }
     }
@@ -106,6 +107,7 @@ export default defineComponent({
       handleChange,
       radioClasses,
       radioContainerClasses,
+      parseEmptyOption,
     };
   },
 });
@@ -115,6 +117,8 @@ export default defineComponent({
 .radio-container {
   font-family: $font-primary;
   font-size: $font-size-l;
+  display: flex;
+  flex-direction: column;
   input {
     margin: 0;
     &:disabled {

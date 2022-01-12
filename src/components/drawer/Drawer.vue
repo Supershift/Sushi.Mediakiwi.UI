@@ -45,14 +45,11 @@ import {store} from "@/store";
 import SideNavigation from "../side-navigation/SideNavigation.vue";
 import logoS from "../../assets/images/mk-icon.png";
 import logoL from "../../assets/images/mk-logo.png";
+import { UITypes } from "../../store/modules/UI";
 
 export default defineComponent({
-  name: "Drawer",
+  name: "DrawerComponent",
   props: {
-    toggler: {
-      type: Boolean,
-      required: false,
-    },
     right: {
       type: Boolean,
       required: false,
@@ -62,7 +59,7 @@ export default defineComponent({
     SideNavigation,
   },
   setup(props) {
-    const open = ref(props.toggler);
+    const open = ref(false);
     const customListClass = ref("side-list-menu");
     const positionCss = computed(() =>
       props.right
@@ -89,7 +86,7 @@ export default defineComponent({
     );
     function handleToggle() {
       open.value = !open.value;
-      store.dispatch("toggleDrawer");
+      store.dispatch(UITypes.SET_DRAWER_OPEN, open.value);
     }
     return {
       positionCss,

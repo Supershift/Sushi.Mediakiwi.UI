@@ -4,9 +4,9 @@
       {{ undefinedCheck(field.prefix) }}
     </label>
     <TagsInput
-      :model-value="valueRef"
+      :field-model="valueRef"
       :options="field?.options"
-      :allow-custom="true"
+      :allow-custom="false"
       :show-count="false"
       :field="field"
       @change-made="handleChange" />
@@ -24,14 +24,14 @@ import {
   PropType,
   ref,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
 import TagsInput from "./FormTagsInput.vue";
+import { IField } from "../../models/Mediakiwi/Interfaces";
 
 export default defineComponent({
   name: "FormTag",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -43,10 +43,10 @@ export default defineComponent({
   components: {
     TagsInput,
   },
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     let valueRef = ref(
-      props.field.value ? props.field.value : []
+      props.field.value ? props.field.value.split(",") : []
     );
     let tagRef = ref("");
     const customRichtextContainerClasses =
@@ -56,10 +56,10 @@ export default defineComponent({
       ]);
     function handleChange() {
       context.emit(
-        "on-change",
-        null,
+        "value-changed",
+        valueRef,
         props.field,
-        valueRef
+        
       );
     }
 

@@ -20,7 +20,7 @@ export default defineComponent({
   },
   setup() {
     const folders = computed(
-      () => store.getters.folders
+      () => store.getters["Content/folders"]
     );
     return {
       folders,
@@ -31,7 +31,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .folder-collection {
-  margin-bottom: -20px;
+  //margin-bottom: -20px;
   min-height: 600px;
 
   .column {

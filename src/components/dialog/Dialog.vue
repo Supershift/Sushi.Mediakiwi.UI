@@ -17,14 +17,14 @@
             v-if="profileData">
             <div class="avatar">
               <img
-                v-if="profileData.avatarPath"
-                :src="profileData.avatarPath"
+                v-if="profileData.userAvatarUrl"
+                :src="profileData.userAvatarUrl"
                 class="avatar-image"
-                :alt="profileData.name" />
+                :alt="profileData.userName" />
             </div>
             <div class="avatar-info">
-              {{ profileData.fullName }}
-              <sub> {{ profileData.email }} </sub>
+              {{ profileData.userName }}
+              <sub> {{ profileData.userEmail }} </sub>
             </div>
           </div>
         </div>
@@ -46,18 +46,21 @@
 <script>
 import {defineComponent, computed} from "vue";
 import {store} from "@/store";
+import { AuthenticationTypes } from "../../store/modules/Authentication";
+import { UITypes } from "../../store/modules/UI";
 export default defineComponent({
-  name: "Dailog",
+  name: "DialogComponent",
   emits: ["sign-out-clicked"],
   setup(props, context) {
     const profileData = computed(
-      () => store.getters.profileData
+      () => store.getters["Authentication/profileData"]
     );
     const dialog = computed(
-      () => store.getters.dialog
+      () => store.getters["UI/dialog"]
     );
     function handleSignOut() {
-      store.dispatch("toggleDialog");
+      store.dispatch(AuthenticationTypes.UNAUTHENTICATE);
+      store.dispatch(UITypes.SET_DIALOG_OPEN, false);
       context.emit("sign-out-clicked");
     }
     return {
@@ -118,12 +121,12 @@ export default defineComponent({
             background: white;
             border-radius: 50%;
             margin-bottom: 15px;
+            border: 4px solid white;
             img {
               width: 100%;
               border-radius: 50%;
               height: 100%;
               object-fit: cover;
-              border: 4px solid white;
             }
           }
           .avatar-info {

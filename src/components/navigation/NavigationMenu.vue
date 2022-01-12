@@ -14,14 +14,14 @@ import {
   PropType,
 } from "vue";
 import NavigationMenuItem from "./NavigationMenuItem.vue";
-import TopNavigationItemModel from "@/models/Mediakiwi/TopNavigationItemModel";
+import {INavigationItem} from "../../models/Mediakiwi/Interfaces";
 
 export default defineComponent({
   name: "NavigationMenu",
   props: {
     items: {
       type: Array as PropType<
-        Array<TopNavigationItemModel>
+        Array<INavigationItem>
       >,
       required: true,
     },

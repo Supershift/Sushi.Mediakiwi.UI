@@ -14,7 +14,7 @@
         :class="customCheckboxClasses"
         :value="valueRef.value"
         :disabled="
-          field.disabled || field.readOnly
+          field.disabled || field.isReadOnly
         "
         @change="handleChange" />
       <span class="checkmark" />
@@ -34,8 +34,7 @@
 </template>
 <script lang="ts">
 import {fieldMixins} from "../form/index";
-import CheckboxModel from "../../models/CheckboxModel";
-import OptionItemModel from "../../models/OptionItemModel";
+import {ILocalCheckbox, ILocalOption} from "../../models/Local/Interfaces";
 import {
   computed,
   defineComponent,
@@ -47,7 +46,7 @@ export default defineComponent({
   name: "CheckboxChoice",
   props: {
     field: {
-      type: Object as PropType<CheckboxModel>,
+      type: Object as PropType<ILocalCheckbox>,
       required: true,
     },
   },
@@ -68,7 +67,7 @@ export default defineComponent({
         );
       }
     }
-    function fieldID(option: OptionItemModel) {
+    function fieldID(option: ILocalOption) {
       return `${props.field.fieldValue}_${props.field.fieldName}_${option.value}`;
     }
     const checkboxContainerClasses = computed(

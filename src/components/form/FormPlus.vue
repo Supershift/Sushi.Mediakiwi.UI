@@ -4,30 +4,30 @@
       :id="fieldID"
       :class="plusClasses"
       @click="handleClick"
-      :disabled="field?.disabled || field.readOnly"
+      :disabled="field?.disabled || field.isReadOnly"
       :aria-label="field.helpText"
       :title="field.helpText"
-      :aria-readonly="field.readOnly"
+      :aria-readonly="field.isReadOnly"
       ><!-- eslint-disable-next-line vue/no-unregistered-components -->
       <fa icon="plus" class="plus-svg" />
     </a>
   </div>
 </template>
 <script lang="ts">
-import {OutputExpressionType} from "@/models/Mediakiwi/OutputExpressionType";
+import {OutputExpressionTypeEnum} from "@/models/Mediakiwi/Enums";
 import {
   PropType,
   computed,
   defineComponent,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {IField} from "../../models/Mediakiwi/Interfaces/IField";
 import {fieldMixins} from "./../form";
 
 export default defineComponent({
   name: "FormPlus",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -42,7 +42,7 @@ export default defineComponent({
       return [
         "plus-primary ",
         props.field.className,
-        { " disabled": props.field.readOnly },
+        { " disabled": props.field.isReadOnly },
       ];
     });
     const plusContainerClasses = computed(() => {
@@ -56,11 +56,11 @@ export default defineComponent({
     const isHalf = computed(() => {
       return (
         props.field.expression !==
-        OutputExpressionType.full
+        OutputExpressionTypeEnum.full
       );
     });
     function handleClick(e: Event) {
-      if (props.field.readOnly) {
+      if (props.field.isReadOnly) {
         return;
       } else {
         context.emit("plus-click", e);

@@ -27,13 +27,13 @@ import {
   defineComponent,
   PropType,
 } from "vue";
-import SectionModel from "../../models/SectionModel";
+import {ILocalSection} from "../../models/Local/Interfaces";
 
 export default defineComponent({
   name: "FormSection",
   props: {
     field: {
-      type: Object as PropType<SectionModel>,
+      type: Object as PropType<ILocalSection>,
       required: true,
     },
   },

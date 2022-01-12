@@ -34,14 +34,14 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from "vue";
-import InputModel from "../../models/InputModel";
+import { ILocalInput } from "../../models/Local/Interfaces";
 import {fieldMixins} from "../form/index";
 
 export default defineComponent({
   name: "FormInput",
   props: {
     input: {
-      type: Object as PropType<InputModel>,
+      type: Object as PropType<ILocalInput>,
       required: true,
     },
   },

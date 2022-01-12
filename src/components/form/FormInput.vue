@@ -24,9 +24,9 @@
         :aria-label="field.helpText"
         :title="field.helpText"
         :disabled="
-          field.disabled || field.readOnly
+          field.disabled || field.isReadOnly
         "
-        @change="handleChange" />
+        @input="handleChange" />
     </label>
     <label
       v-if="undefinedCheck(field.suffix)"
@@ -42,14 +42,14 @@ import {
   PropType,
   reactive,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import {IField} from "../../models/Mediakiwi/Interfaces";
 import {fieldMixins} from "../form/index";
 
 export default defineComponent({
   name: "FormInput",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
   },
@@ -114,7 +114,7 @@ export default defineComponent({
       return icon;
     });
     function handleChange() {
-      context.emit("value-changed");
+      context.emit("value-changed", inputText.value, props.field);
     }
     return {
       id,

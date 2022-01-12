@@ -7,8 +7,8 @@
         <fa
           class="menu-icon"
           :icon="icons"
-          v-if="icons" />
-        <span v-show="openDrawer">{{
+          v-if="icons" /> 
+        <span v-show="isDrawerOpen">{{
           item.text
         }}</span>
       </a>
@@ -16,7 +16,7 @@
     <ul v-if="item.items && item.items.length">
       <SideNavigationItem
         v-for="subItem in item.items"
-        :key="subItem.id"
+        :key="subItem.text"
         :item="subItem" />
     </ul>
   </li>
@@ -29,37 +29,34 @@ import {
   defineComponent,
   PropType,
 } from "vue";
-import SideNavigationItemModel from "@/models/Mediakiwi/SideNavigationItemModel";
+import { INavigationItem } from "../../models/Mediakiwi/Interfaces";
 
 export default defineComponent({
   name: "SideNavigationItem",
   props: {
     item: {
-      type: Object as PropType<SideNavigationItemModel>,
+      type: Object as PropType<INavigationItem>,
       required: true,
     },
   },
   setup(props) {
     const icons = computed(() =>
       props.item.iconClass
-        ? props.item.iconClass.split(" ")
-        : ""
+        ? props.item.iconClass.replace("fa-","").split(" ").filter((r) => r !== "first" && r !== "")
+        : props.item.isBack ? "chevron-left" : "kiwi-bird"
     );
-
-    const openDrawer = computed(
-      () => store.getters.openDrawer
+    const isDrawerOpen = computed(
+      () => store.getters["UI/isDrawerOpen"]
     );
-
     const classes = computed(() => {
       return {
-        active: props.item.isActive,
+        active: props.item.isHighlighted,
         back: props.item.isBack,
       };
     });
-
     return {
       icons,
-      openDrawer,
+      isDrawerOpen,
       classes,
     };
   },

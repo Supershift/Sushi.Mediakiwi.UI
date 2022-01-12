@@ -58,14 +58,14 @@ import {
   PropType,
   ref,
 } from "vue";
-import SelectModel from "../../models/SelectModel";
+import { ILocalSelect } from "../../models/Local/Interfaces";
 import {fieldMixins} from "../form/index";
 
 export default defineComponent({
   name: "FormSelect",
   props: {
     select: {
-      type: Object as PropType<SelectModel>,
+      type: Object as PropType<ILocalSelect>,
       required: true,
     },
   },

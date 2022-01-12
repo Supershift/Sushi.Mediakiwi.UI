@@ -1,15 +1,19 @@
 <template>
   <ul :class="customContainerClass">
     <SideNavigationItem
-      v-for="item in sideNavigationItems"
-      :key="item.id"
+      :key="topItem.text"
+      :item="topItem"
+    />
+    <SideNavigationItem
+      v-for="item in restOfItems"
+      :key="item.text"
       :item="item"
     />
     <div class="side-nav-footer">
       <button
         class="btn btn-dialog-footer"
         @click="handleSignOut">
-        <fa icon="sign-out"/><span v-if="drawerIsOpen"> Sign out</span> 
+        <fa icon="sign-out"/><span v-if="isDrawerOpen"> Sign out</span> 
       </button>
     </div>
   </ul>
@@ -22,6 +26,9 @@ import {
 } from "vue";
 import SideNavigationItem from "./SideNavigationItem.vue";
 import {store} from "@/store";
+import { AuthenticationTypes } from "../../store/modules/Authentication";
+import { ISideNavigationItem } from "../../models/Local/Interfaces";
+
 export default defineComponent({
   name: "SideNavigation",
   props: {
@@ -31,24 +38,32 @@ export default defineComponent({
       default: "",
     },
   },
-  components: {SideNavigationItem},
+  components: { SideNavigationItem },
   setup(props) {
-    const drawerIsOpen = computed(
-      () => store.getters.openDrawer,
+    const isDrawerOpen = computed(
+      () => store.getters["UI/isDrawerOpen"],
     );
     const customContainerClass = computed(
       () => `list-menu ${props.customClass}`
     );
     const sideNavigationItems = computed(
-      () => store.getters.sideNavigationItems
+      () => store.getters["Navigation/sideNavigationItems"]
     );
+    const topItem = computed(() => {
+      return sideNavigationItems.value.find((a: ISideNavigationItem) => a.isBack )
+    })
+    const restOfItems = computed(() => {
+      return sideNavigationItems.value.filter((b: ISideNavigationItem) => !b.isBack )
+    })
     function handleSignOut() {
-      store.dispatch("signOut");
+      store.dispatch(AuthenticationTypes.UNAUTHENTICATE);
     }
     return {
       customContainerClass,
       sideNavigationItems,
-      drawerIsOpen,
+      isDrawerOpen,
+      restOfItems,
+      topItem,
       handleSignOut,
     };
   },
@@ -62,7 +77,7 @@ export default defineComponent({
   list-style-type: none;
   margin: 0;
   z-index: 21;
-  height: -webkit-fill-available;
+  height: 100%;
 }
 
 .side-nav-footer {
@@ -70,7 +85,7 @@ export default defineComponent({
   border-radius: 0 0 $b-radius-6 $b-radius-6;
   position: absolute;
   bottom: 150px;
-  width: -webkit-fill-available;
+  width: fit-content;
   .btn {
     padding: 15px;
     width: 100%;

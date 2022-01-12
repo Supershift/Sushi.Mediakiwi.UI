@@ -40,18 +40,18 @@ import {
   onMounted,
   PropType,
 } from "vue";
-import FieldModel from "@/models/Mediakiwi/FieldModel";
+import { IField } from "@/models/Mediakiwi/Interfaces";
 import {getSublistSelectValueLabel} from ".";
 import {mediakiwiLogic} from "@/utils/mediakiwiLogic";
 
 export default defineComponent({
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
   },
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
     const valueRef = ref(props.field.value);
     const sublistClasses = computed(() => {
@@ -72,10 +72,9 @@ export default defineComponent({
 
     function handleChange() {
       context.emit(
-        "on-change",
-        null,
+        "value-changed",
+        valueRef,
         props.field,
-        valueRef
       );
     }
 

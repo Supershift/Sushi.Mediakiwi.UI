@@ -1,31 +1,36 @@
 <template>
   <a
-    v-if="button.customUrl"
+    v-if="field?.url"
     :class="customButtonClasses"
-    :href="button.customUrl"
-    :aria-label="button.helpText"
-    :title="button.helpText"
+    :href="field?.url"
+    :aria-label="field?.helpText"
+    :title="field?.helpText"
+    :id="field?.propertyName"
+    :data-layer="layerData"
     :disabled="
-      button?.disabled || button.readOnly
+      field?.isReadOnly
     ">
-    <fa :icon="buttonIconChoice" class="btn-icon" />{{ button.value }}
+    {{ field?.title }}
   </a>
   <button
     v-else
     :class="customButtonClasses"
     @click.prevent="handleClicked"
-    :title="button.helpText"
-    :aria-label="button.helpText"
+    :title="field?.helpText"
+    :aria-label="field?.helpText"
+    :id="field?.propertyName"
+    :value="field?.title"
+    :data-layer="layerData"
     :disabled="
-      button?.disabled || button.readOnly
+      field?.isReadOnly
     ">
-    <fa :icon="buttonIconChoice" class="btn-icon" />{{ button.value }}
+    {{ field?.title }}
   </button>
 
 </template>
 
 <script lang="ts">
-import {ButtonModel} from "../../models/Mediakiwi/ButtonModel";
+import {IButton} from "../../models/Mediakiwi/Interfaces";
 import {
   computed,
   defineComponent,
@@ -35,25 +40,35 @@ import {
 export default defineComponent({
   name: "FormButton",
   props: {
-    button: {
-      type: Object as PropType<ButtonModel>,
+    field: {
+      type: Object as PropType<IButton>,
       required: true,
     },
   },
   emits: ["button-clicked"],
   setup(props, context) {
     const customButtonClasses = computed(() => {
-      return ["btn ", props.button?.className, props.button.isPrimary ? "btn-primary" : ""]});
-    const buttonIconChoice = computed(() => ["fal", props.button.icon]);
+      return ["btn ", props.field?.className, props.field?.isPrimary ? "btn-primary" : ""]});
+      const layerData = computed(() => {
+      if (
+        props.field &&
+        props.field.layerConfiguration
+      ) {        
+        return `width: ${props.field.layerConfiguration.width}${props.field.layerConfiguration.widthUnitType}; height: ${props.field.layerConfiguration.height}${props.field.layerConfiguration.heightUnitType}; iframe:${props.field.layerConfiguration.iframe}`;
+      }
+      return null;
+    });
+    // const buttonIconChoice = computed(() => ["fal", props.button.iconClass]);
     function handleClicked() {
       context.emit(
         "button-clicked",
-        props.button
+        props.field
       );
     }
     return {
       customButtonClasses,
-      buttonIconChoice,
+      layerData,
+      // buttonIconChoice,
       handleClicked,
     };
   },
@@ -77,5 +92,10 @@ export default defineComponent({
 .btn-icon {
   padding-right: 15px;
 }
-
+.right {
+  margin-left: 10px;
+}
+.left {
+  margin-right: 10px;
+}
 </style>

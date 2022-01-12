@@ -1,7 +1,9 @@
 // vetur.config.js
 /** @type {import('vls').VeturConfig} */
 module.exports = {
+  
   projects: [
+    "./src",
     {
       root: "./src", // Shorthand for specifying only the project root location
       package: "./package.json", // Shorthand for specifying only the package.json location

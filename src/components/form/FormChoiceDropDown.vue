@@ -15,9 +15,12 @@
       :aria-label="field.helpText"
       :title="field.helpText"
       :class="customDropdownClasses"
-      :disabled="field.disabled || field.readOnly"
+      :disabled="field.disabled || field.isReadOnly"
       ref="dropdown"
-      @input="handleChange" />
+      @input="handleChange"
+      @change="handleChange"
+      @option:selected="handleChange"
+      @option:deselecting="clear"/>
     <label v-if="undefinedCheck(field.suffix)">
       {{ undefinedCheck(field.suffix) }}
     </label>
@@ -32,17 +35,16 @@ import {
   ref,
   watch,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
 import Dropdown from "vue-select";
 import "vue-select/dist/vue-select.css";
-import {MediakiwiJSEventType} from "@/models/Mediakiwi/MediakiwiJSEventType";
-import ItemModel from "../../models/OptionItemModel";
+import { IField } from "../../models/Mediakiwi/Interfaces/IField";
+import { IFieldOption } from "../../models/Mediakiwi/Interfaces/IFieldOption";
 
 export default defineComponent({
   name: "FormChoiceDropdown",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -54,9 +56,9 @@ export default defineComponent({
   components: {
     dropdown: Dropdown,
   },
-  emits: ["on-change"],
+  emits: ["value-changed"],
   setup(props, context) {
-    let valueRef = ref<FieldModel>(props.field);
+    let valueRef = ref<IField>(props.field);
     const customDropdownClasses = computed(() => [
       "dropdown-primary ",
       props.field.className,
@@ -72,16 +74,16 @@ export default defineComponent({
         props.classname,
       ]);
     const optionData = computed(() => {
-      if (!valueRef.value?.options?.items) {
+      if (!valueRef.value?.options) {
         return [];
       }
       
-      return valueRef.value?.options?.items.map(
-        (r: ItemModel) => {
+      return valueRef.value?.options.map(
+        (r: IFieldOption) => {
           return {
             id: r.value,
             label: r.text,
-            disabled: !r.enabled,
+            disabled: !r.isEnabled,
           };
         }
       );
@@ -93,18 +95,24 @@ export default defineComponent({
         (r) => r.id === valueRef.value.value
       );
 
-    function handleChange(e?: Event) {
-      if (
-        props.field.value?.event !==
-        MediakiwiJSEventType.none
-      ) {
+    function handleChange() {
+      if (selectedValueRef.value) {
         context.emit(
-          "on-change",
-          e,
-          props.field,
-          selectedValueRef.value.id
+          "value-changed",
+          selectedValueRef.value.id,
+          props.field
+        );
+      } else {
+        context.emit(
+          "value-changed",
+          null,
+          props.field
         );
       }
+    }
+
+    function clear() {
+      selectedValueRef.value = "";
     }
 
     watch(
@@ -117,6 +125,7 @@ export default defineComponent({
       fieldID,
       optionData,
       handleChange,
+      clear,
       customDropdownClasses,
       customDropdownContainerClasses,
       valueRef,

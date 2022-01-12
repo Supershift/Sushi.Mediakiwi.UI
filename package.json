@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --mode dev",
-    "build": "vue-cli-service build --mode dev",
-    "lint": "vue-cli-service lint"
+    "serve": "vue-cli-service serve --mode development",
+    "build": "vue-cli-service build --mode development",
+    "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve --mode development"
   },
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^5.15.4",
@@ -15,13 +16,15 @@
     "@fortawesome/pro-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^3.0.0-4",
     "@tinymce/tinymce-vue": "^4.0.4",
+    "@types/js-cookie": "^3.0.1",
     "@vueup/vue-quill": "^1.0.0-beta.7",
     "axios": "^0.22.0",
     "core-js": "^3.6.5",
-    "postcss": "^8.4.4",
     "dropzone-vue": "^0.1.10",
     "js-cookies": "^1.0.4",
     "jwt-decode": "^3.1.2",
+    "postcss": "^8.4.4",
+    "secure-ls": "^1.2.6",
     "vue": "^3.0.0",
     "vue-mutation-observer": "^0.1.2",
     "vue-router": "^4.0.0-0",
@@ -29,9 +32,11 @@
     "vue3-date-time-picker": "^2.3.1",
     "vue3-datepicker": "^0.2.5",
     "vue3-dropzone": "0.0.7",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0-0",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
+    "@types/node": "^16.11.12",
     "@types/vue-select": "^3.11.2",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.33.0",

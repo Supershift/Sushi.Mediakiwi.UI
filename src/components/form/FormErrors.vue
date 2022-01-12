@@ -28,13 +28,13 @@ import {
   defineComponent,
   PropType,
 } from "vue";
-import MessageModel from "../../models//MessageModel";
+import {IMessage} from "../../models/Local/Interfaces";
 
 export default defineComponent({
   name: "FormErrors",
   props: {
     messages: {
-      type: Object as PropType<MessageModel[]>,
+      type: Object as PropType<IMessage[]>,
       required: true,
     },
   },
@@ -45,7 +45,7 @@ export default defineComponent({
         props.messages.length
       ) {
         const msgs = props.messages.filter(
-          (message: MessageModel) =>
+          (message: IMessage) =>
             !message.isError
         );
         if (msgs) {
@@ -56,7 +56,7 @@ export default defineComponent({
     });
     const errorList = computed(() => {
       if (props.messages && props.messages.length) {
-        const errs = props.messages.filter((message: MessageModel) => message.isError);
+        const errs = props.messages.filter((message: IMessage) => message.isError);
         if (errs) {
           return errs.map((m) => m.message);
         }

@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import FieldModel from "@/models/Mediakiwi/FieldModel";
-import { MediakiwiFormVueType } from "@/models/Mediakiwi/MediakiwiFormVueType";
-import { getEvents, MediakiwiJSEventType } from "@/models/Mediakiwi/MediakiwiJSEventType";
-import MessageModel from "@/models/MessageModel";
+import {IField} from "@/models/Mediakiwi/Interfaces";
+import { getEvents, JSEventTypeEnum } from "@/models/Mediakiwi/Enums";
+import { IMessage } from "@/models/Local/Interfaces";
 
 export enum ExpressionType {
   Full = 0,
@@ -88,8 +87,8 @@ export const fieldMixins = {
     undefinedCheck(param: string): string {
       return (typeof (param) !== "undefined" && param) ? param : "";
     },
-    errorClass(field: FieldModel): string {
-      if (field.error) { return " error "; }
+    errorClass(field: IField): string {
+      if (field.className.includes("error")) { return " error "; }
       return "";
     },
     validateEmail(email: string): boolean {
@@ -97,12 +96,12 @@ export const fieldMixins = {
       const re2 =/\S+@\S+\.\S+/;
       return re2.test(email);
     },
-    emailValidator(value: string, fieldName:string, errorMessages: MessageModel[]): Array<MessageModel> {
+    emailValidator(value: string, fieldName:string, errorMessages: IMessage[]): Array<IMessage> {
       if (value.length > 0) {
         // validate email
         if (fieldName.toLowerCase().includes("email")) {
           if (!this.validateEmail(value)) {
-            if (errorMessages.findIndex((x: MessageModel) => x.code === FieldValidationType.email) === -1) {
+            if (errorMessages.findIndex((x: IMessage) => x.code === FieldValidationType.email) === -1) {
               errorMessages.push({
                 message: FieldValidationTypeMessage.email,
                 isError: true,
@@ -111,18 +110,18 @@ export const fieldMixins = {
               });
             }
           } else {
-            errorMessages.splice(errorMessages.findIndex((x: MessageModel) => x.code === FieldValidationType.email), 1);
+            errorMessages.splice(errorMessages.findIndex((x: IMessage) => x.code === FieldValidationType.email), 1);
           }
         }
       }
       return errorMessages;
     },
-    emptyValidator(value: string, fieldName:string, errorMessages: MessageModel[]): Array<MessageModel> {
+    emptyValidator(value: string, fieldName:string, errorMessages: IMessage[]): Array<IMessage> {
       if (value.length > 0) {
-        errorMessages.splice(errorMessages.findIndex((x: MessageModel) => x.code === FieldValidationType.empty), 1);
+        errorMessages.splice(errorMessages.findIndex((x: IMessage) => x.code === FieldValidationType.empty), 1);
         return errorMessages; 
       } else {
-        if (errorMessages.findIndex((x: MessageModel) => x.code === FieldValidationType.empty) === -1) {
+        if (errorMessages.findIndex((x: IMessage) => x.code === FieldValidationType.empty) === -1) {
           errorMessages.push({ message: FieldValidationTypeMessage.empty, isError: true, code: FieldValidationType.empty, propertyName: fieldName });
           return errorMessages;
         }
@@ -133,45 +132,50 @@ export const fieldMixins = {
 };
 
 export const emptyField = {
-  contentTypeID: 10,
-  propertyName: "EmptyProp",
-  propertyType: "string",
-  fieldIcon: "",
-  title: "Test Property",
-  vueType: MediakiwiFormVueType.formText,
-  expression: 1,
+  contentType: 10,
+  propertyName: "Empty",
+  propertyType: "0",
+  title: "Empty",
+  vueType: 0,
+  expression: 0,
   value: "",
-  options: null,
-  className: null,
-  event: MediakiwiJSEventType.none,
-  inputPost: null,
+  options: [],
+  className: "",
+  event: 0,
   section: 0,
-  hidden: null,
-  groupName: null,
-  suffix: null,
-  prefix: null,
-  formSection: null,
+  isHidden: false,
+  groupName: "",
+  suffix: "",
+  prefix: "",
+  formSection: "",
   canToggleSection: false,
   canDeleteSection: false,
   toggleDefaultClosed: false,
-  readOnly: true,
-  helpText: "This field is an empty prop",
-  componentKey: 0,
-  error: { message: FieldValidationTypeMessage.none, isError: false, propertyName: "", code: FieldValidationType.none },
-  locale: "en",
-  weekStart: null,
-  mandatory: false
-} as FieldModel;
+  isReadOnly: false,
+  helpText: "",
+  layerConfiguration: {
+    width: 0,
+    height: 0,
+    widthUnitType: 0,
+    heightUnitType: 0,
+    title: "",
+    hasScrollbar: false,
+    iframe: false,
+  },
+  isMandatory: false,
+  maxLength: 0,
+  isAutoPostback: false,
+} as IField;
 
 
-/** Add events based on the @type {FieldModel} event @type {MediakiwiJSEventType} */
-export function customEventHandler(field: FieldModel, callback: any) {
-  if (field?.event === MediakiwiJSEventType.none) {
+/** Add events based on the @type {IField} event @type {JSEventTypeEnum} */
+export function customEventHandler(field: IField, callback: any) {
+  if (field?.event === JSEventTypeEnum.none) {
     return null;
   }
   const eventTypes = getEvents(field.event);
   const events: any = {};
-  eventTypes?.forEach((eventType) => {
+  eventTypes?.forEach((eventType: string) => {
     events[eventType] = callback; // nameof the method
   });
   const e = Object.entries(events).reduce((acc: any, [eventName, callback]) => {

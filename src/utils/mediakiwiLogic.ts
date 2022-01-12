@@ -1,12 +1,9 @@
-import FieldModel from "@/models/Mediakiwi/FieldModel";
-import LayerConfigurationModel from "@/models/Mediakiwi/LayerConfigurationModel";
-import PostMediakiwiRequestModel from "@/models/Mediakiwi/Request/postMediakiwiRequestModel";
-import MediakiwiResponseModel from "@/models/Mediakiwi/Response/MediakiwiResponseModel";
 import { store } from "@/store";
-import PageModel from "@/store/modules/PageModel";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createApp } from "@vue/runtime-dom";
 import MediakiwiModalWrapper from "./../components/modal/MediakiwiModalWrapper.vue";
+import { ContentTypes } from "@/store/modules/Content";
+import { IField, ILayerConfiguration, IMediakiwiResponse, IPostMediakiwiRequest } from "@/models/Mediakiwi/Interfaces";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,39 +18,42 @@ export const mediakiwiLogic = {
     window.mediakiwiLogic = window.mediakiwiLogic || mediakiwiLogic;
   },
   /** Binds the data from the Mediakiwi Response to the vuex store  */
-  putResponseToStore(response: MediakiwiResponseModel) {
-    store.dispatch("setChannel", response.currentSiteID);
+  putResponseToStore(response: IMediakiwiResponse) {
 
-    // Create the page model
-    const pageData: PageModel = {
-      title: response.listTitle ? response.listTitle : "",
-      description: response.listDescription ? response.listDescription : "",
-      settingsUrl: response.listSettingsUrl
+    if (response.list) {
+      store.dispatch(ContentTypes.SET_PAGE, response.list);
     }
-    store.dispatch("setPage", pageData);
-    store.dispatch("setProfileInfomation", response.profile);
-    store.dispatch("setTopNavigation", response.topNavigation);
-    store.dispatch("setSideNavigation", response.sideNavigation);
-    store.dispatch("setGrids", response.grids);
-    store.dispatch("setFolders", response.folders);
-    store.dispatch("setResources", response.resources);
-    store.dispatch("setFields", response.fields);
-    store.dispatch("setButtons", response.buttons);
-    store.dispatch("setViews", response.views);
+    
+    if (response.list && response.list.grids) {
+      store.dispatch(ContentTypes.SET_GRIDS, response.list?.grids);
+    }
+    if (response.explorer && response.explorer.items) {
+      store.dispatch(ContentTypes.SET_FOLDERS, response.explorer.items);
+    }
+    if (response.list && response.list.resources) {
+      store.dispatch(ContentTypes.SET_RESOURCES, response.list?.resources);
+    }
+    if (response.list && response.list.forms) {
+      store.dispatch(ContentTypes.SET_FORMS, response.list?.forms);
+    }
+    if (response.list && response.list.forms) {
+      store.dispatch(ContentTypes.SET_BUTTONS, response.list?.forms);
+    }
+    // if (response.list && response.list.views) {
+    //   store.dispatch("setViews", response.list);
+    // }
   },
   /** Creates a @type {PostMediakiwiRequestModel} from the altered data in the vuex store */
-  getMediakiwiModelFromStore(referId: string) {
-    const request: PostMediakiwiRequestModel = {
-      fields: store.state.fields ? store.state.fields : [],
-      channel: store.state.channel,
-      url: "",
-      referId
+  getMediakiwiRequestForButtonActions(url: string): IPostMediakiwiRequest {
+    const siteID = store.getters["navigation/currentSiteId"];
+    const request: IPostMediakiwiRequest = {
+      currentSiteID: siteID,
+      url
     }
-
     return request;
   },
   /** Fill the sublist select based on the referId */
-  fillSublistSelect(referId: string, fields: FieldModel[]) {
+  fillSublistSelect(referId: string, fields: IField[]) {
     const field = fields.find((field) => field.propertyName === referId);
 
     const referElement = document.querySelector(`#${referId}`)
@@ -67,8 +67,8 @@ export const mediakiwiLogic = {
       }
     }
   },
-  /** Open a layer with @type { LayerConfigurationModel } configuration */
-  openLayer(config: LayerConfigurationModel) {
+  /** Open a layer with @type { ILayerConfiguration } configuration */
+  openLayer(config: ILayerConfiguration) {
     const modalApp = createApp(MediakiwiModalWrapper, { config });
     // eslint-disable-next-line vue/component-definition-name-casing
     modalApp.component("fa", FontAwesomeIcon)

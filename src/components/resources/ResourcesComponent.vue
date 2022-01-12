@@ -11,10 +11,9 @@ import {
   nextTick,
   ref,
 } from "vue";
-import ResourceModel from "@/models/Mediakiwi/ResourceModel";
+import {IResource} from "../../models/Mediakiwi/Interfaces";
 import {store} from "@/store";
-import {ResourceType} from "@/models/Mediakiwi/ResourceType";
-import {ResourcePositionType} from "@/models/Mediakiwi/ResourcePositionType";
+import {ResourceTypesEnum, ResourcePositionTypeEnum} from "../../models/Mediakiwi/Enums";
 
 export default defineComponent({
   setup() {
@@ -22,13 +21,13 @@ export default defineComponent({
     const innerHTML = ref<string>();
 
     // Computed
-    const resources = computed<ResourceModel[]>(
-      () => store.getters.resources
+    const resources = computed<IResource[]>(
+      () => store.getters["Content/resources"]
     );
 
     // Functions
     /** Adds a script resource to the page */
-    function addScript(resource: ResourceModel) {
+    function addScript(resource: IResource) {
       // Create a promis to wait for
       return new Promise((resolve, reject) => {
         if (!resource) {
@@ -42,7 +41,7 @@ export default defineComponent({
           ""
         );
         script.type = "text/javascript";
-        if (resource.isInline) {
+        if (resource.type !== ResourceTypesEnum.script) {
           script.innerHTML = resource.sourceCode
             ? resource.sourceCode
             : "";
@@ -61,7 +60,7 @@ export default defineComponent({
         // Add the resource to the desired location
         if (
           resource.position ===
-          ResourcePositionType.body
+          ResourcePositionTypeEnum.body
         ) {
           document.body.appendChild(script);
         } else {
@@ -76,7 +75,7 @@ export default defineComponent({
     }
 
     /** Adds a stylesheet to the page */
-    function addStyle(resource: ResourceModel) {
+    function addStyle(resource: IResource) {
       return new Promise((resolve) => {
         if (!resource) {
           return;
@@ -91,7 +90,7 @@ export default defineComponent({
         link.rel = "stylesheet";
         link.type = "text/css";
 
-        if (resource.isInline) {
+        if (resource.type === ResourceTypesEnum.style) {
           link.innerHTML = resource.sourceCode
             ? resource.sourceCode
             : "";
@@ -102,7 +101,7 @@ export default defineComponent({
         // Add the resource to the desired location
         if (
           resource.position ===
-          ResourcePositionType.body
+          ResourcePositionTypeEnum.body
         ) {
           document.body.appendChild(link);
         } else {
@@ -113,10 +112,12 @@ export default defineComponent({
     }
 
     /** Adds html to the page */
-    function addHtml(resource: ResourceModel) {
+    function addHtml(resource: IResource) {
       return new Promise((resolve) => {
-        // set the innerHTML value to the sourceCode of the resource
-        innerHTML.value = resource.sourceCode;
+        if (resource && resource.sourceCode) {
+          // set the innerHTML value to the sourceCode of the resource
+          innerHTML.value += resource.sourceCode;
+        }
 
         // Wait the the painting is done! before we continue
         nextTick(() => {
@@ -127,14 +128,14 @@ export default defineComponent({
 
     /** Add a single resource to the page */
     function addResource(
-      resource: ResourceModel
+      resource: IResource
     ): Promise<unknown> {
       switch (resource.type) {
-        case ResourceType.script:
+        case ResourceTypesEnum.script:
           return addScript(resource);
-        case ResourceType.style:
+        case ResourceTypesEnum.style:
           return addStyle(resource);
-        case ResourceType.html:
+        case ResourceTypesEnum.html:
           return addHtml(resource);
         default:
           return new Promise((resolve) => {
@@ -145,7 +146,7 @@ export default defineComponent({
 
     /** Add the resources to the page */
     async function addResources(
-      resources: ResourceModel[]
+      resources: IResource[]
     ) {
       for (let resource of resources.filter(
         (r) => {

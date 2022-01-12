@@ -2,7 +2,7 @@
   <div class="folder">
     <h2>
       <a :href="folder.href">{{
-        folder.folderName
+        folder.title
       }}</a>
     </h2>
     <a
@@ -10,13 +10,13 @@
       :key="item.id"
       :href="item.href"
       :class="classes">
-      {{ item.text }}</a
+      {{ item.title }}</a
     >
   </div>
 </template>
 
 <script lang="ts">
-import FolderItemModel from "@/models/Mediakiwi/FolderItemModel";
+import {IFolderItem} from "@/models/Mediakiwi/Interfaces";
 import {
   computed,
   defineComponent,
@@ -24,9 +24,10 @@ import {
 } from "vue";
 
 export default defineComponent({
+  name: "FolderComponent",
   props: {
     folder: {
-      type: Object as PropType<FolderItemModel>,
+      type: Object as PropType<IFolderItem>,
       required: true,
     },
   },
@@ -56,7 +57,7 @@ export default defineComponent({
   // transition-duration: 0.6s;
   overflow: hidden;
   flex: 1 0 30%;
-  margin-right: 15px;
+  //margin-right: 15px;
 
   h2 {
     font-size: $font-size-xxl;

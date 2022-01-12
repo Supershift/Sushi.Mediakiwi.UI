@@ -12,9 +12,9 @@
       :placeholder="componentFormat"
       :aria-label="field.helpText"
       :title="field.helpText"
-      :disabled="field.readOnly"
-      :readonly="field.readOnly"
-      :text-input="!field.readOnly"
+      :disabled="field.isReadOnly"
+      :readonly="field.isReadOnly"
+      :text-input="!field.isReadOnly"
       :locale="field.locale"
       :teleport="'#'+ field.propertyName"
       >
@@ -31,6 +31,7 @@ import {fieldMixins} from "./index";
 import DateTimePicker from "vue3-date-time-picker";
 import "vue3-date-time-picker/src/Vue3DatePicker/style/main.scss";
 
+
 import {
   computed,
   defineComponent,
@@ -39,13 +40,14 @@ import {
   reactive,
   ref,
 } from "vue";
-import FieldModel from "../../models/Mediakiwi/FieldModel";
+import { IField, ISite } from "../../models/Mediakiwi/Interfaces";
+import { store } from "../../store";
 
 export default defineComponent({
   name: "FormDateTime",
   props: {
     field: {
-      type: Object as PropType<FieldModel>,
+      type: Object as PropType<IField>,
       required: true,
     },
     classname: {
@@ -68,6 +70,9 @@ export default defineComponent({
       () =>
         `datetime-container ${props.classname}`
     );
+    const siteSettings = computed<ISite>(() => {
+      return store.getters["Navigation/currentSite"]
+    })
 
     const hasTimePicker = computed(() =>
       props.valueType === "time" ||
@@ -87,15 +92,15 @@ export default defineComponent({
         cancel: "Cancel",
         next: "Next",
       },
-      weekStart: props.field.weekStart
-        ? props.field.weekStart
+      weekStart: siteSettings.value.weekStart
+        ? siteSettings.value.weekStart
         : daysOfTheWeek,
-      defaultlocale: props.field.locale
-        ? props.field.locale
+      defaultlocale: siteSettings.value.culture
+        ? siteSettings.value.culture
         : "en-US",
     });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let valueRef = ref<any>();
+    let valueRef = ref();
     let currentValue = new Date(
       props.field.value
     );
@@ -147,16 +152,15 @@ export default defineComponent({
 
       context.emit(
         "on-change",
-        null,
-        props.field,
-        outputValue
+        outputValue,
+        props.field
       );
     }
 
     function checkLocale() {
-      if (props.field.locale) {
+      if (siteSettings.value.culture) {
         switch (
-          props.field.locale.toLowerCase()
+          siteSettings.value.culture.toLowerCase()
         ) {
           case "nl":
           case "nl-nl":

@@ -10,10 +10,10 @@ export default defineComponent({
   name: "App",
   setup() {
     const openDrawer = computed(
-      () => store.getters.openDrawer
+      () => store.getters["UI/openDrawer"]
     );
     const isLoggedIn = computed(
-      () => store.getters.isLoggedIn
+      () => store.getters["Authentication/isLoggedIn"]
     );
     return {
       openDrawer,

@@ -18,30 +18,28 @@
         :items="topNavigationItems" />
     </div>
     <Profile />
-    <Notification />
     <DialogComponent @sign-out-clicked="handleSignOut"/>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {computed, defineComponent} from "vue";
 import {store} from "@/store";
 import NavigationMenu from "./NavigationMenu.vue";
 import Profile from "./Profile.vue";
-import Notification from "../notification/Notification.vue";
 import DialogComponent from "../dialog/Dialog.vue";
+import { AuthenticationTypes } from "../../store/modules/Authentication";
 
 export default defineComponent({
   name: "NavigationBar",
   components: {
     NavigationMenu,
     Profile,
-    Notification,
     DialogComponent,
   },
   setup() {
     const topNavigationItems = computed(
-      () => store.getters.topNavigationItems
+      () => store.getters["Navigation/topNavigationItems"]
     );
     const pageTitle = computed(() =>
       store.getters.page
@@ -54,7 +52,7 @@ export default defineComponent({
         : ""
     );
     function handleSignOut() {
-      store.dispatch("signOut");
+      store.dispatch(AuthenticationTypes.UNAUTHENTICATE);
     }
     return {
       topNavigationItems,
@@ -62,7 +60,7 @@ export default defineComponent({
       pageSettings,
       handleSignOut
     };
-  },
+  }
 });
 </script>
 
@@ -125,7 +123,6 @@ export default defineComponent({
     }
     h2 {
       padding-left: 15px;
-      z-index: 999;
     }
   }
   .navigation-settings {

@@ -3,6 +3,7 @@
     <img
       src="../assets/images/mk-logo.png"
       class="login-logo" />
+    <NotificationComponent position="top-center" />
     <h1>
       {{
         contentForgottenPassword.forgottenHeadlineText
@@ -16,7 +17,7 @@
       :messages="errorMessages" />
     <CustomButton
       :button="customSubmitButton"
-      @button-clicked="handleSubmit" />
+      @button-clicked="handleReset" />
   </form>
 </template>
 
@@ -30,11 +31,13 @@ import {
 import CustomButton from "./base-components/CustomButton.vue";
 import CustomInput from "./base-components/CustomInput.vue";
 import FormErrors from "./form/FormErrors.vue";
-import MessageModel from "../models/MessageModel";
-import InputModel from "../models/InputModel";
-import ButtonModel from "../models/ButtonModel";
+import { IResetPasswordRequest } from "../models/Mediakiwi/Interfaces";
 import { store } from "../store";
 import { fieldMixins } from "./form";
+import { AuthenticationTypes } from "../store/modules/Authentication";
+import { IMessage, ILocalButton, ILocalInput } from "../models/Local/Interfaces";
+import NotificationComponent from "./notification/NotificationComponent.vue";
+
 
 export default defineComponent({
   name: "ForgottenPassword",
@@ -43,14 +46,16 @@ export default defineComponent({
     FormErrors,
     CustomInput,
     CustomButton,
+    NotificationComponent
   },
   setup() {
-    let errorMessages = reactive<MessageModel[]>([]);
+    let errorMessages = reactive<IMessage[]>([]);
     const validEmail = ref(false);
+    const email = ref("");
     const contentForgottenPassword = computed(
       () => store.getters.contentForgotten,
     );
-    const customEmailInput = ref<InputModel>({
+    const customEmailInput = ref<ILocalInput>({
       customClass: "input-email",
       fieldIcon: "email",
       fieldPlaceholder: contentForgottenPassword.value.forgottenEmailPlaceholder,
@@ -62,7 +67,7 @@ export default defineComponent({
       fieldType: "email",
       readOnly: false,
     });
-    const customSubmitButton = ref<ButtonModel>({
+    const customSubmitButton = ref<ILocalButton>({
       customClass: "btn-login ",
       buttonIcon: "",
       disabled: true,
@@ -70,15 +75,16 @@ export default defineComponent({
       value: contentForgottenPassword.value.fogottenButtonText,
       readOnly: false,
     });
-    function handleSubmit() {
-      if (customEmailInput.value.fieldValue && validEmail) {
-        store.dispatch("forgottenPassword", customEmailInput.value.fieldValue);
+    function handleReset() {
+      if (email.value && validEmail.value) {
+        store.dispatch(AuthenticationTypes.RESET_PASSWORD,  { emailAddress: email.value } as IResetPasswordRequest );
       }
     }
     function handleTextChanged(value: string, fieldName: string) {
       errorMessages = fieldMixins.methods.emailValidator(value, fieldName, errorMessages);
       if (errorMessages.length === 0) {
         validEmail.value = true;
+        email.value = value;
       } else {
         validEmail.value = false;
       }
@@ -89,7 +95,7 @@ export default defineComponent({
       errorMessages,
       customSubmitButton,
       contentForgottenPassword,
-      handleSubmit,
+      handleReset,
       handleTextChanged,
     };
   },

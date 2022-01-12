@@ -4,12 +4,12 @@
     @click.prevent="handleClicked"
     :disabled="button.disabled"
   >
-    {{ button.value }}
+    <fa v-if="button.buttonIcon" :icon="buttonIconChoice" class="btn-icon" />{{ button.value }}
   </button>
 </template>
 
 <script lang="ts">
-import ButtonModel from "../../models/ButtonModel";
+import { ILocalButton } from "../../models/Local/Interfaces";
 import {
   computed,
   defineComponent,
@@ -20,12 +20,13 @@ export default defineComponent({
   name: "FormButton",
   props: {
     button: {
-      type: Object as PropType<ButtonModel>,
+      type: Object as PropType<ILocalButton>,
       required: true,
     },
   },
   emits: ["button-clicked"],
   setup(props, context) {
+    const buttonIconChoice = computed(() => ["far", props.button.buttonIcon]);
     const customButtonClasses = computed(() => [
       "btn ",
       props.button.customClass,
@@ -35,6 +36,7 @@ export default defineComponent({
     }
     return {
       customButtonClasses,
+      buttonIconChoice,
       handleClicked,
     };
   },
