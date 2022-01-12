@@ -332,10 +332,11 @@ export default defineComponent({
     .col {
       padding: 5px 0;
       color: #000;
+      margin-right: 10px;
     }
     .col-xl {
-      flex: 2 0 75%;
       padding: 5px 0;
+      margin-right: 10px;
     }
   }
   .input-text {
@@ -346,10 +347,21 @@ export default defineComponent({
   .container {
     .row {
       flex-direction: row;
-      .col, .col-xl {
+      justify-content: space-between;
+      .col {
         &.half {
-          text-align: center;
-          flex: 2 0 25%;
+          flex: 0 1 10%;
+        }
+      }
+      .col-xl {
+        &.half {
+          flex: 2 0 35%;
+        }
+        &.full {
+          flex: 0 1 100%;
+        }
+        &.long {
+          flex: 2 0 75%;
         }
       }
     }
