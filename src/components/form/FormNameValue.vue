@@ -12,6 +12,9 @@
       :id="fieldName"
       :aria-label="field.helpText"
       :title="field.helpText"
+      :maxlength="field?.maxLength"
+      :required="field?.isMandatory"
+      :hidden="field?.isHidden"
       :disabled="field.disabled || field.isReadOnly"
       :class="customNameValueClasses" />
     <input
@@ -21,6 +24,9 @@
       :id="fieldNameValue"
       :disabled="field.disabled || field.isReadOnly"
       :aria-label="field.helpText"
+      :maxlength="field?.maxLength"
+      :required="field?.isMandatory"
+      :hidden="field?.isHidden"
       :title="field.helpText"
       @change="handleChange"
       :class="customNameValueClasses" />
