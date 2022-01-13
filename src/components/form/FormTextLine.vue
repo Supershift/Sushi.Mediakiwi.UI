@@ -41,7 +41,7 @@ export default defineComponent({
   },
   mixins: [fieldMixins],
   setup(props) {
-    let valueRef = ref(props.field?.value);
+    let valueRef = ref(props.field.value);
     const fieldID = computed(
       () => `${props.field?.propertyName}_id`
     );

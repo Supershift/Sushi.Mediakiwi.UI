@@ -10,6 +10,9 @@
       :name="field.propertyName"
       :aria-label="field.helpText"
       :title="field.helpText"
+      :maxlength="field?.maxLength"
+      :required="field?.isMandatory"
+      :hidden="field?.isHidden"
       :style="{
         'padding-left': `${paddingLeft}px`,
       }"
