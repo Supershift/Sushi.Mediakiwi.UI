@@ -33,17 +33,13 @@ jobs:
 
       - name: NPM build
         run: npm run build
-
+  
       - name: Create .env file
-        uses: SpicyPizza/create-envfile@v1
+        uses: alekangelov/secret-envfile@v1
         with:
-          VUE_APP_BASE_API: ${{ secrets.VUE_APP_BASE_API }}
-          VUE_APP_MK_API_KEY: ${{ secrets.VUE_APP_MK_API_KEY }}
-          VUE_APP_TAB_TITLE: ${{ secrets.VUE_APP_TAB_TITLE }}
-          VUE_APP_BASE_DOMAIN: ${{ secrets.VUE_APP_BASE_DOMAIN }}
-          directory: dist
-          file_name: .env
-        
+          content: ${{ secrets.ENVIRONMENT_SETTINGS }}
+          filename: dist/.env.local
+     
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
