@@ -15,24 +15,30 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
+      - name: Checkout code
+      
+      - uses: actions/setup-node@v2
         with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
+          node-version: '14'
+      - name: Set up NodeJS
+      
+      - name: Set FontAwesome Registry
+        run: npm config set "@fortawesome:registry" https://npm.fontawesome.com/
+        
+      - name: Set FontAwesome Credentials
+        run: npm config set "//npm.fontawesome.com/:_authToken=${{secrets.FORTAWESOME_KEY
+        
+      - name: NPM Install
+        run: npm install
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+      - name: NPM build
+        run: npm run build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{env.DOTNET_ROOT}}/dist
 
   deploy:
     runs-on: windows-latest
