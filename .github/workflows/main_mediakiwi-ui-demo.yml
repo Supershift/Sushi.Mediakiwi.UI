@@ -26,7 +26,7 @@ jobs:
         run: npm config set "@fortawesome:registry" https://npm.fontawesome.com/
         
       - name: Set FontAwesome Credentials
-        run: npm config set "//npm.fontawesome.com/:_authToken=${{secrets.FORTAWESOME_KEY
+        run: npm config set "//npm.fontawesome.com/:_authToken=${{secrets.FORTAWESOME_KEY}}"
         
       - name: NPM Install
         run: npm install
