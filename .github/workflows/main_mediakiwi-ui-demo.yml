@@ -31,15 +31,15 @@ jobs:
       - name: NPM Install
         run: npm install
 
-      - name: NPM build
-        run: npm run build
-  
       - name: Create .env file
         uses: alekangelov/secret-envfile@v1
         with:
           content: ${{ secrets.ENVIRONMENT_SETTINGS }}
-          filename: dist/.env.local
+          filename: .env.local
      
+      - name: NPM build
+        run: npm run build
+  
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
