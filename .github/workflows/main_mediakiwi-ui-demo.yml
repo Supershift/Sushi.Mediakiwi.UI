@@ -37,8 +37,8 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/dist
+          name: .ui-app
+          path: dist
 
   deploy:
     runs-on: windows-latest
@@ -51,7 +51,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: .net-app
+          name: .ui-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
