@@ -11,10 +11,3 @@ Register your authorization token to use the FontAwesome Pro npm packages
 
 Delete by running:
 > npm config delete "@fortawesome:registry"
-
-#### Env.local
-Add a .env.local in your root with the following code to be able to connect to the right environment:
-> VUE_APP_BASE_API=<MK API URL>
-> VUE_APP_MK_API_KEY=<MK API KEY>
-> VUE_APP_TAB_TITLE=Welcome to DEV
-> VUE_APP_BASE_DOMAIN=<BASE DOMAIN YOU WILL BE WORKING ON>
